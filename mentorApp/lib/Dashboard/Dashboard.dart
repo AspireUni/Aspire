@@ -13,7 +13,7 @@ class Dashboard extends StatelessWidget {
             "images/DashboardBg.png",
             height: MediaQuery.of(context).size.height,
             width: MediaQuery.of(context).size.width,
-            fit: BoxFit.cover,
+            fit: BoxFit.fill,
           ),
           Scaffold(
               backgroundColor: Colors.transparent,
