@@ -7,12 +7,12 @@ class Dashboard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: ListView.builder(itemBuilder: (context, index) {
-        return ListTile(
-          title: Text('Dashboard'),
-          subtitle: Text('$index'),
-        );
-      }),
+      backgroundColor: Colors.black,
+      body: Container(
+        child: Center(
+          child: Text("Home Page", style: TextStyle(color: Colors.white, fontSize: 30.0))
+        )
+      )
     );
   }
 }

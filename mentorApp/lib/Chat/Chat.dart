@@ -7,12 +7,12 @@ class Chat extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: ListView.builder(itemBuilder: (context, index) {
-        return ListTile(
-          title: Text('Chat message'),
-          subtitle: Text('$index'),
-        );
-      }),
+      backgroundColor: Colors.black,
+      body: Container(
+        child: Center(
+          child: Text("Matches", style: TextStyle(color: Colors.white, fontSize: 30.0))
+        )
+      )
     );
   }
 }

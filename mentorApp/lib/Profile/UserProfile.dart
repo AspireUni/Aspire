@@ -7,12 +7,12 @@ class UserProfile extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: ListView.builder(itemBuilder: (context, index) {
-        return ListTile(
-          title: Text('Lorem Ipsum'),
-          subtitle: Text('$index'),
-        );
-      }),
+      backgroundColor: Colors.black,
+      body: Container(
+        child: Center(
+          child: Text("Profile", style: TextStyle(color: Colors.white, fontSize: 30.0))
+        )
+      )
     );
   }
 }
