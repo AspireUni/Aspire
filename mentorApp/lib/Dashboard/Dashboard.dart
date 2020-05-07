@@ -63,7 +63,7 @@ buildHeader() {
           color: Colors.grey, 
           letterSpacing: .5, 
           fontSize: 20, 
-          fontWeight: FontWeight.bold
+          fontWeight: FontWeight.w600
         )
       )
     ), 
