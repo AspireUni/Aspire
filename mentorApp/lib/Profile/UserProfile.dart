@@ -8,15 +8,11 @@ class UserProfile extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.black,
-      body: Center(
-        child: RaisedButton(
-          onPressed: () {
-            // Navigate back to first route when tapped.
-            Navigator.pop(context);
-          },
-          child: Text('Go back!'),
-        ),
-      ),
+      body: Container(
+        child: Center(
+          child: Text("User Profile", style: TextStyle(color: Colors.white, fontSize: 30.0))
+        )
+      )
       );
   }
 }
