@@ -39,6 +39,7 @@ buildDashboardView() {
   return (
     <Widget>[
       ...buildHeader(), 
+      buildCurrentMatch(),
     ]
   );
 }
@@ -70,3 +71,31 @@ buildHeader() {
   ];
 }
 
+buildCurrentMatch() {
+  return Container(
+    margin: const EdgeInsets.fromLTRB(60.0, 75.0, 60.0, 60.0),
+    padding: const EdgeInsets.all(25.0),
+    child: Text(
+      """Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud""",
+      textAlign: TextAlign.left, 
+      style: GoogleFonts.muli(
+        textStyle: TextStyle(
+          color: Colors.black, 
+          letterSpacing: .5, 
+          height: 1.75,
+          fontSize: 13.0, 
+          fontWeight: FontWeight.bold
+        ), 
+      ) 
+    ), 
+    decoration: BoxDecoration(
+      border: Border.all(
+        color: Colors.grey[400],
+        width: 0.75
+      ),
+      borderRadius: BorderRadius.all(
+          Radius.circular(10.0)
+      ),
+    )
+  );
+}
