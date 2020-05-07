@@ -21,7 +21,7 @@ class _MyAppState extends State<AppController> {
             home: Scaffold(
                 body: _widgets[pageIndex],
                 bottomNavigationBar: CurvedNavigationBar(
-                backgroundColor: Colors.black, 
+                backgroundColor: Color(0xFF0e1134), 
                 index: 1,
                 onTap: tapped,
                 items: <Widget>[
