@@ -87,10 +87,10 @@ buildPotentialMatch() {
 
 buildDescriptionTextBox() {
   return Container(
-    margin: const EdgeInsets.fromLTRB(60.0, 75.0, 60.0, 10.0),
+    margin: const EdgeInsets.fromLTRB(60.0, 75.0, 60.0, 25.0),
     padding: const EdgeInsets.fromLTRB(25.0, 25.0, 25.0, 90.0),
     child: Text(
-      """Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud""",
+      """Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud.""",
       textAlign: TextAlign.left, 
       style: GoogleFonts.muli(
         textStyle: TextStyle(
@@ -98,7 +98,7 @@ buildDescriptionTextBox() {
           letterSpacing: .5, 
           height: 1.75,
           fontSize: 13.0, 
-          fontWeight: FontWeight.bold
+          fontWeight: FontWeight.w600
         ), 
       ) 
     ), 
