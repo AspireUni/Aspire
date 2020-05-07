@@ -10,9 +10,9 @@ class UserProfile extends StatelessWidget {
       backgroundColor: Colors.black,
       body: Container(
         child: Center(
-          child: Text("Profile", style: TextStyle(color: Colors.white, fontSize: 30.0))
+          child: Text("User Profile", style: TextStyle(color: Colors.white, fontSize: 30.0))
         )
       )
-    );
+      );
   }
 }

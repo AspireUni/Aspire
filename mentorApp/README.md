@@ -1,4 +1,4 @@
-# mentorApp
+# MentorApp
 
 A new Flutter project.
 

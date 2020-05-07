@@ -7,6 +7,7 @@ import "./Chat/Chat.dart";
 class AppController extends StatefulWidget {
     @override _MyAppState createState() => _MyAppState();
 }
+
 class _MyAppState extends State<AppController> {
     int pageIndex = 1; 
     double navBarIconSize = 30; 
@@ -30,7 +31,7 @@ class _MyAppState extends State<AppController> {
                  ],
                  animationDuration: Duration(milliseconds: 200),
                  animationCurve: Curves.bounceInOut
-             ),
+             ), 
          ),
      );
    }
