@@ -9,12 +9,13 @@ class SignUp extends StatelessWidget {
     return Scaffold(
       backgroundColor: Colors.black,
       appBar: new AppBar(
-        title: new Text("Filters", style: TextStyle(color: Colors.white, fontSize: 30.0))
+        title: new Text("Select up to 3 options", style: TextStyle(color: Colors.white, fontSize: 20.0))
       ),
       body: InkWell(
         onTap: (){
-          Scaffold.of(context).showSnackBar(SnackBar(
-          content: Text('Tap'),));
+          //Scaffold.of(context).showSnackBar(SnackBar(
+          //content: Text('Tap'),));
+          Scaffold.of(context);
         },
         child: Container(
           padding: EdgeInsets.all(12.0),
