@@ -3,15 +3,16 @@ import 'package:flutter/material.dart';
 import "./Profile/UserProfile.dart";
 import './Dashboard/Dashboard.dart';
 import "./Chat/Chat.dart";
-import "./SignUp/SignUp.dart";
+import 'SignUp/Filters.dart';
 
 class AppController extends StatefulWidget {
     @override _MyAppState createState() => _MyAppState();
 }
+
 class _MyAppState extends State<AppController> {
     int pageIndex = 1; 
     double navBarIconSize = 30; 
-    List<Widget> _widgets = [UserProfile(), Dashboard(), Chat(), SignUp()];
+    List<Widget> _widgets = [UserProfile(), Dashboard(), Chat(), Filters()];
 
     tapped(int tappedIndex) {
         setState(() {pageIndex = tappedIndex;});
@@ -20,6 +21,7 @@ class _MyAppState extends State<AppController> {
         return MaterialApp(
             home: Scaffold(
                 body: _widgets[pageIndex],
+
                 bottomNavigationBar: CurvedNavigationBar(
                 backgroundColor: Colors.black, 
                 index: 1,
@@ -32,7 +34,7 @@ class _MyAppState extends State<AppController> {
                  ],
                  animationDuration: Duration(milliseconds: 200),
                  animationCurve: Curves.bounceInOut
-             ),
+             ), 
          ),
      );
    }

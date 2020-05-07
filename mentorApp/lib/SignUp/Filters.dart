@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 
 // TODO: Update this placeholder widget
-class SignUp extends StatelessWidget {
-  const SignUp({Key key}) : super(key: key);
+class Filters extends StatelessWidget {
+  const Filters({Key key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
