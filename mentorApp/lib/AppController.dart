@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import "./Profile/UserProfile.dart";
 import './Dashboard/Dashboard.dart';
 import "./Chat/Chat.dart";
-import "./LogIn/LogIn.dart";
+import "./SignUp/SignUp.dart";
 
 class AppController extends StatefulWidget {
     @override _MyAppState createState() => _MyAppState();
@@ -11,7 +11,7 @@ class AppController extends StatefulWidget {
 class _MyAppState extends State<AppController> {
     int pageIndex = 1; 
     double navBarIconSize = 30; 
-    List<Widget> _widgets = [UserProfile(), Dashboard(), Chat(), LogIn()];
+    List<Widget> _widgets = [UserProfile(), Dashboard(), Chat(), SignUp()];
 
     tapped(int tappedIndex) {
         setState(() {pageIndex = tappedIndex;});
@@ -28,6 +28,7 @@ class _MyAppState extends State<AppController> {
                   Icon(Icons.person, size: navBarIconSize),
                   Icon(Icons.home, size: navBarIconSize),
                   Icon(Icons.chat_bubble, size: navBarIconSize),
+                  Icon(Icons.build, size: navBarIconSize),
                  ],
                  animationDuration: Duration(milliseconds: 200),
                  animationCurve: Curves.bounceInOut
