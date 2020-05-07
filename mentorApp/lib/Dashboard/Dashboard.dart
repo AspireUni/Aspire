@@ -39,7 +39,7 @@ buildDashboardView() {
   return (
     <Widget>[
       ...buildHeader(), 
-      buildCurrentMatch(),
+      ...buildPotentialMatch(),
     ]
   );
 }
@@ -63,7 +63,7 @@ buildHeader() {
         textStyle: TextStyle(
           color: Colors.grey, 
           letterSpacing: .5, 
-          fontSize: 20, 
+          fontSize: 18, 
           fontWeight: FontWeight.w600
         )
       )
@@ -71,10 +71,24 @@ buildHeader() {
   ];
 }
 
-buildCurrentMatch() {
+buildPotentialMatch() {
+  return <Container> [
+    Container(
+      child: Stack(
+        alignment: FractionalOffset.bottomCenter,
+        children: <Container>[
+          buildDescriptionTextBox(), 
+          buildNameTextBox()
+        ]
+      )
+    )
+  ];
+}
+
+buildDescriptionTextBox() {
   return Container(
-    margin: const EdgeInsets.fromLTRB(60.0, 75.0, 60.0, 60.0),
-    padding: const EdgeInsets.all(25.0),
+    margin: const EdgeInsets.fromLTRB(60.0, 75.0, 60.0, 10.0),
+    padding: const EdgeInsets.fromLTRB(25.0, 25.0, 25.0, 90.0),
     child: Text(
       """Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud""",
       textAlign: TextAlign.left, 
@@ -93,8 +107,68 @@ buildCurrentMatch() {
         color: Colors.grey[400],
         width: 0.75
       ),
-      borderRadius: BorderRadius.all(
-          Radius.circular(10.0)
+      borderRadius: BorderRadius.only(
+          topLeft: Radius.circular(20.0),
+          topRight: Radius.circular(20.0),
+          bottomLeft: Radius.circular(20.0)
+      ),
+    )
+  );
+}
+
+buildNameTextBox() {
+  return Container(
+    width: 295.0, 
+    height: 90.0, 
+    child: Row(
+      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+      children: <Widget> [
+        Container(
+          width: 50.0, 
+          height: 50.00, 
+          decoration: BoxDecoration(
+            color: Color(0xFF45cab9), 
+            shape: BoxShape.circle
+          )
+        ),
+        Column(
+          mainAxisAlignment: MainAxisAlignment.center ,
+          children: <Widget> [
+            Text(
+              "Khalida Rafique",
+              style: GoogleFonts.muli(
+                textStyle: TextStyle(
+                  color: Colors.white, 
+                  letterSpacing: .5, 
+                  fontSize: 21.0, 
+                  fontWeight: FontWeight.bold
+                ), 
+              )
+            ), 
+            Text(
+              "Mentor", 
+                style: GoogleFonts.muli(
+                textStyle: TextStyle(
+                  color: Color(0xFF45cab9),  
+                  letterSpacing: .5, 
+                  height: 1.5, 
+                  fontSize: 15.0, 
+                ), 
+              )
+            ) 
+          ]
+        )
+      ]
+    ),
+      decoration: BoxDecoration(
+        color: Colors.black, 
+      border: Border.all(
+        width: 3.0
+      ),
+      borderRadius: BorderRadius.only(
+          topLeft: Radius.circular(20.0),
+          topRight: Radius.circular(20.0),
+          bottomLeft: Radius.elliptical(40.0, 40.0)
       ),
     )
   );
