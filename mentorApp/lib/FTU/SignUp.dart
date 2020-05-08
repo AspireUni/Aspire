@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 
+//TODO: This file is currently a placeholder for the 2 sign-up pages.
+
 class FirstRoute extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
