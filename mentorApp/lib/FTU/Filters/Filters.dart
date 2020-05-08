@@ -4,7 +4,8 @@ import 'package:flutter/material.dart';
 class Filters extends StatelessWidget {
   const Filters({Key key}) : super(key: key);
 
-  @override
+
+@override
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.black,
@@ -25,3 +26,4 @@ class Filters extends StatelessWidget {
       );
   }
 }
+

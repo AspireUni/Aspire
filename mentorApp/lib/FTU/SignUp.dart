@@ -14,7 +14,7 @@ class FirstRoute extends StatelessWidget {
           child: Text('Sign-Up', style: TextStyle(color: Colors.black) ),
           onPressed: () {
             // Navigate to second route when tapped.
-            Navigator.pushNamed(context, '/second');
+            Navigator.pushNamed(context, '/Second');
           },
         ),
       ),
@@ -34,9 +34,9 @@ class SecondRoute extends StatelessWidget {
         child: RaisedButton(
           onPressed: () {
             // Navigate back to first route when tapped.
-            Navigator.pushNamed(context, '/UserProfile');
+            Navigator.pushNamed(context, '/Filters');
           },
-          child: Text('Done. To the profile!'),
+          child: Text('Done. Intialize filteres!'),
         ),
       ),
     );
