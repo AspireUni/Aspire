@@ -25,6 +25,7 @@ dependencies:
   cupertino_icons: ^0.1.2
   curved_navigation_bar: ^0.3.2
   google_fonts: ^1.0.0
+  auto_size_text: ^2.1.0
 
 dev_dependencies:
   flutter_test:
