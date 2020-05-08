@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'FTU/SignUp.dart';
 import 'AppController.dart';
+import 'FTU/Filters/DropDownPage.dart';
+import 'FTU/Completion.dart';
 
 void main() => runApp(App()); 
 
@@ -15,8 +17,10 @@ class App extends StatelessWidget {
       // When navigating to the "/" route, build the FirstScreen widget.
       '/': (context) => FirstRoute(),
       // When navigating to the "/second" route, build the SecondScreen widget.
-      '/second': (context) => SecondRoute(),
-      '/UserProfile': (context) => AppController(),
+      '/Second': (context) => SecondRoute(),
+      '/Filters': (context) => DropDownPage(),
+      '/Completion': (context) => Completed(),
+      '/Profiles': (context) => AppController(),
       },
     );
   }
