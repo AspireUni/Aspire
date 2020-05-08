@@ -87,7 +87,7 @@ buildPotentialMatch() {
 
 buildDescriptionTextBox() {
   return Container(
-    margin: const EdgeInsets.fromLTRB(60.0, 75.0, 60.0, 25.0),
+    margin: const EdgeInsets.fromLTRB(60.0, 25.0, 60.0, 25.0),
     padding: const EdgeInsets.fromLTRB(25.0, 25.0, 25.0, 90.0),
     child: Text(
       """Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud.""",
