@@ -11,7 +11,7 @@ class Completed extends StatelessWidget {
       body: Center(
         child: RaisedButton(
           //child: Container(decoration: new BoxDecoration(color: Colors.black)),
-          child: Text("Congrats, you have completed sign-up", style: TextStyle(color: Colors.black) ),
+          child: Text("Congrats, you have completed sign-up!", style: TextStyle(color: Colors.black) ),
           onPressed: () {
             // Navigate to second route when tapped.
             Navigator.pushNamed(context, '/Profiles');
