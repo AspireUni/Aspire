@@ -36,7 +36,7 @@ class SecondRoute extends StatelessWidget {
             // Navigate back to first route when tapped.
             Navigator.pushNamed(context, '/Filters');
           },
-          child: Text('Done. Intialize filteres!'),
+          child: Text('Done. Initialize filters!'),
         ),
       ),
     );
