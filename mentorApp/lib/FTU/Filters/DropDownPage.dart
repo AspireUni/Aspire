@@ -6,20 +6,19 @@ class DropDownPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      //title: _title,
-      home: Scaffold(
-        //appBar: AppBar(title: const Text(_title)),
+    return Scaffold(
+        appBar: AppBar(
+        backgroundColor: Colors.transparent,
+        elevation: 0.0,),
         body: Center(
           child: MyStatefulWidget(),
         ),
         floatingActionButton: FloatingActionButton(
           child: Text("Next"),
           onPressed: (){
-            Navigator.pushNamed(context, '/Completion');
+            Navigator.pushNamed(context, '/completion');
           },
         ),
-      ),
-    );
+      );
   }
 }

@@ -17,10 +17,10 @@ class App extends StatelessWidget {
       // When navigating to the "/" route, build the FirstScreen widget.
       '/': (context) => FirstRoute(),
       // When navigating to the "/second" route, build the SecondScreen widget.
-      '/Second': (context) => SecondRoute(),
-      '/Filters': (context) => DropDownPage(),
-      '/Completion': (context) => Completed(),
-      '/Profiles': (context) => AppController(),
+      '/second': (context) => SecondRoute(),
+      '/filters': (context) => DropDownPage(),
+      '/completion': (context) => Completed(),
+      '/profiles': (context) => AppController(),
       },
     );
   }
