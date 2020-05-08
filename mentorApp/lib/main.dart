@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
-import 'SignUp/FTU.dart';
+import 'FTU/SignUp.dart';
 import 'AppController.dart';
-import 'Profile/UserProfile.dart';
 
 void main() => runApp(App()); 
 
