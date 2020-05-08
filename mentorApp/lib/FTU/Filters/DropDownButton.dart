@@ -15,7 +15,7 @@ class _MyStatefulWidgetState extends State<MyStatefulWidget> {
   Widget build(BuildContext context) {
     return DropdownButton<String>(
       value: dropdownValue,
-      icon: Icon(Icons.arrow_downward),
+      icon: Icon(Icons.keyboard_arrow_down),
       iconSize: 24,
       elevation: 16,
       style: TextStyle(color: Colors.deepPurple),
