@@ -1,8 +1,9 @@
 import 'package:curved_navigation_bar/curved_navigation_bar.dart';
 import 'package:flutter/material.dart';
-import "./Profile/UserProfile.dart";
+import './Profile/UserProfile.dart';
 import './Dashboard/Dashboard.dart';
-import "./Chat/Chat.dart";
+import './Funnel/Funnel.dart';
+import './Chat/Chat.dart';
 
 class AppController extends StatefulWidget {
     @override _MyAppState createState() => _MyAppState();
@@ -11,7 +12,7 @@ class AppController extends StatefulWidget {
 class _MyAppState extends State<AppController> {
     int pageIndex = 1; 
     double navBarIconSize = 30; 
-    List<Widget> _widgets = [UserProfile(), Dashboard(), Chat()];
+    List<Widget> _widgets = [UserProfile(), Dashboard(), Chat(), Funnel()];
 
     tapped(int tappedIndex) {
         setState(() {pageIndex = tappedIndex;});

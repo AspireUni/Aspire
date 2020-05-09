@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'FTU/SignUp.dart';
+import 'Funnel/Funnel.dart';
 import 'AppController.dart';
 
 void main() => runApp(App()); 
@@ -16,6 +17,7 @@ class App extends StatelessWidget {
       '/': (context) => FirstRoute(),
       // When navigating to the "/second" route, build the SecondScreen widget.
       '/second': (context) => SecondRoute(),
+      '/funnel': (context) => Funnel(),
       '/UserProfile': (context) => AppController(),
       },
     );
