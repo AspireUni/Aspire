@@ -15,8 +15,6 @@ class App extends StatelessWidget {
       routes: {
       // When navigating to the "/" route, build the FirstScreen widget.
       '/': (context) => FirstRoute(),
-      // When navigating to the "/second" route, build the SecondScreen widget.
-      '/second': (context) => SecondRoute(),
       '/funnel': (context) => Funnel(),
       '/UserProfile': (context) => AppController(),
       },
