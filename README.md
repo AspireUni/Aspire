@@ -1,7 +1,7 @@
 # MentorApp
 
 #### TravisCI
-<img src="https://travis-ci.com/HelenGezahegn/MentorApp.svg?branch=master" alt="Travis badge" />
+[![Build Status](https://travis-ci.org/IndustryBear/MentorApp.svg?branch=master)](https://travis-ci.org/IndustryBear/MentorApp)
 
 #### CodeCov
 [![codecov](https://codecov.io/gh/IndustryBear/MentorApp/branch/master/graph/badge.svg)](https://codecov.io/gh/IndustryBear/MentorApp)
