@@ -1,24 +1,26 @@
+import 'package:device_simulator/device_simulator.dart';
 import 'package:flutter/material.dart';
-import 'FTU/SignUp.dart';
-import 'AppController.dart';
+import "./Navigation/Root.dart";
 
+//const bool debugEnableDeviceSimulator = false;
+const bool debugEnableDeviceSimulator = true;
 void main() => runApp(App()); 
 
 class App extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'MentorApp',
-      //home: AppController(),
-      initialRoute: '/',
-      routes: {
-      // When navigating to the "/" route, build the FirstScreen widget.
-      '/': (context) => FirstRoute(),
-      // When navigating to the "/second" route, build the SecondScreen widget.
-      '/second': (context) => SecondRoute(),
-      '/UserProfile': (context) => AppController(),
-      },
-    );
+    final app = debugEnableDeviceSimulator ? 
+      MaterialApp(
+        home: DeviceSimulator(
+          brightness: Brightness.dark, 
+          enable: debugEnableDeviceSimulator, 
+          child: Root()
+        )
+      ) 
+    : 
+      Root();
+
+    return app;
   }
 }
 
