@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
+import 'package:mentorApp/AppController.dart';
+//import 'package:google_fonts/google_fonts.dart';
 
 class Funnel extends StatelessWidget {
   const Funnel({Key key}) : super(key: key);
@@ -23,7 +24,7 @@ class Funnel extends StatelessWidget {
               body: Container(
                 child: Center(
                   child: Column(
-                    children: buildFunnelView()
+                    children: buildFunnelView(context)
                   )
                 )
               )
@@ -32,45 +33,35 @@ class Funnel extends StatelessWidget {
       );
   }
 
-  buildFunnelView(){
-      return (
-    <Widget>[
-      ...mentorFunnel(), 
-      ...menteeFunnel(),
-      ]
-    );
-  }
-  
-  mentorFunnel(){
-  return <Text>[
-    Text(
-      "I am a Mentor", 
-      style: GoogleFonts.muli(
-        textStyle: TextStyle(
-          color: Colors.black, 
-          letterSpacing: .5, 
-          fontSize: 40.0, 
-          fontWeight: FontWeight.bold
-        )
-      )
-    )
-    ];
+  buildFunnelView(BuildContext context){
+   return <Widget>[
+          RaisedButton(
+            onPressed: () {
+              //TODO: navigate to mentor sign up page
+              Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => AppController())
+                );
+              },
+            child: Text('I am a mentor', style: TextStyle(fontSize: 20)),
+          ),
+          const SizedBox(height: 30),
+          RaisedButton(
+            onPressed: () {
+              //TODO: navigate to mentee sign up page
+              Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => AppController())
+                );
+              },
+            child: const Text('I am a mentee', style: TextStyle(fontSize: 20)),
+          ),
+        ];
   }
 
-  menteeFunnel(){
-      return <Text>[
-        Text(
-      "I am a Mentee", 
-      style: GoogleFonts.muli(
-        textStyle: TextStyle(
-          color: Colors.black, 
-          letterSpacing: .5, 
-          fontSize: 40.0, 
-          fontWeight: FontWeight.bold
-        )
-      )
-    )
-    ];
+  routeToMentorHomePage(){
+
   }
 
 }
+
