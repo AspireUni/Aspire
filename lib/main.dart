@@ -1,6 +1,6 @@
 import 'package:device_simulator/device_simulator.dart';
 import 'package:flutter/material.dart';
-import "./Navigation/Root.dart";
+import "./navigation/root.dart";
 
 const bool debugEnableDeviceSimulator = true;
 void main() => runApp(App()); 
