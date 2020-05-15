@@ -12,7 +12,7 @@ class Root extends StatelessWidget {
         routes: {
           '/': (context) => FirstRoute(),
           '/second': (context) => SecondRoute(),
-          '/completion': (context) => MyStatefulWidget(),
+          '/completion': (context) => DropDownPage(),
           '/UserProfile': (context) => AppController(),
         },
       );
