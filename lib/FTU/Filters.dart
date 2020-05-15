@@ -13,26 +13,62 @@ class MyStatefulWidget extends StatefulWidget {
   _MyStatefulWidgetState createState() => _MyStatefulWidgetState();
 }
 
+// class _MyStatefulWidgetState extends State<MyStatefulWidget> {
+//   Item selectedItem;
+//   List<Item> users = <Item>[const Item('Tech', 'hi'), const Item('Arts','Bar')];
+
+//   @override
+//   Widget build(BuildContext context) {
+//     return new MaterialApp(
+//       home: new Scaffold(
+//         body: new Column(
+//           mainAxisAlignment: MainAxisAlignment.center,
+//           children: <Widget>[
+//             new Center(
+//               child: buildButton(),
+//             ),
+//           ],
+//         ),
+//       ),
+//     );
+//   }
+// }
+
+
 class _MyStatefulWidgetState extends State<MyStatefulWidget> {
   Item selectedItem;
   List<Item> users = <Item>[const Item('Tech', 'hi'), const Item('Arts','Bar')];
 
-  @override
-  Widget build(BuildContext context) {
-    return new MaterialApp(
-      home: new Scaffold(
-        body: new Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
-            new Center(
-              child: buildButton(),
-            ),
-          ],
-        ),
-      ),
-    );
-  }
-}
+ @override
+   Widget build(BuildContext context) {
+     return Stack(
+         children: <Widget>[
+           Image.asset(
+             "images/DashboardBg.png",
+             height: MediaQuery.of(context).size.height,
+             width: MediaQuery.of(context).size.width,
+             fit: BoxFit.fill,
+           ),
+           Scaffold(
+               backgroundColor: Colors.transparent,
+               appBar: AppBar(
+                 backgroundColor: Colors.transparent,
+                 elevation: 0.0,
+               ),
+               body: Center(
+               child: buildButton(),
+               ),
+               floatingActionButton: FloatingActionButton(
+               child: Text("Next"),
+               onPressed: (){
+               Navigator.pushNamed(context, '/second');
+               },
+           )
+           )
+         ]
+       );
+   }
+ }
 
 buildButton(){
   return DropdownButtonHideUnderline(
@@ -55,3 +91,38 @@ buildButton(){
   );
 }
 
+// import 'package:flutter/material.dart';
+// import 'package:mentorApp/FTU/Filters/DropDownButton.dart';
+
+// class DropDownPage extends StatelessWidget {
+
+// @override
+//   Widget build(BuildContext context) {
+//     return Stack(
+//         children: <Widget>[
+//           Image.asset(
+//             "images/DashboardBg.png",
+//             height: MediaQuery.of(context).size.height,
+//             width: MediaQuery.of(context).size.width,
+//             fit: BoxFit.fill,
+//           ),
+//           Scaffold(
+//               backgroundColor: Colors.transparent,
+//               appBar: AppBar(
+//                 backgroundColor: Colors.transparent,
+//                 elevation: 0.0,
+//               ),
+//               body: Center(
+//               child: buildButton(),
+//               ),
+//               floatingActionButton: FloatingActionButton(
+//               child: Text("Next"),
+//               onPressed: (){
+//               Navigator.pushNamed(context, '/completion');
+//               },
+//           )
+//           )
+//         ]
+//       );
+//   }
+// }
