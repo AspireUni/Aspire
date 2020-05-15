@@ -1,8 +1,8 @@
 import 'package:curved_navigation_bar/curved_navigation_bar.dart';
 import 'package:flutter/material.dart';
-import "../Profile/UserProfile.dart";
-import '../Dashboard/Dashboard.dart';
-import "../Chat/Chat.dart";
+import "../profile/user_profile.dart";
+import '../dashboard/dashboard.dart';
+import "../chat/chat.dart";
 
 class AppController extends StatefulWidget {
     @override _MyAppState createState() => _MyAppState();
