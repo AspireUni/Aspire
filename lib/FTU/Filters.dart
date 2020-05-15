@@ -6,14 +6,14 @@ class Item {
   final String selection;
 }
 
-class DropDownPage extends StatefulWidget {
-  DropDownPage({Key key}) : super(key: key);
+class MyStatefulWidget extends StatefulWidget {
+  MyStatefulWidget({Key key}) : super(key: key);
 
   @override
   _MyStatefulWidgetState createState() => _MyStatefulWidgetState();
 }
 
-class _MyStatefulWidgetState extends State<DropDownPage> {
+class _MyStatefulWidgetState extends State<MyStatefulWidget> {
   Item selectedItem;
   List<Item> users = <Item>[const Item('Tech', 'hi'), const Item('Arts','Bar')];
 
