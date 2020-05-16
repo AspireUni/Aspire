@@ -13,15 +13,13 @@ class Filters extends StatelessWidget {
       ),
       body: InkWell(
         onTap: (){
-          //Scaffold.of(context).showSnackBar(SnackBar(
-          //content: Text('Tap'),));
           Scaffold.of(context);
         },
         child: Container(
           padding: EdgeInsets.all(12.0),
           child: Text('Flat Button', style: TextStyle(color: Colors.white)),
+        )
       )
-      )
-      );
+    );
   }
 }
