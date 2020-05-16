@@ -6,5 +6,6 @@ jobs:
     steps:
       - checkout
       - run: flutter channel stable
+      - run: flutter pub get
       - run: flutter doctor
       - run: flutter test
