@@ -1,4 +1,3 @@
-# This code is licensed from CircleCI to the user under the MIT license. See
 version: 2
 jobs:
   build:    
