@@ -7,11 +7,6 @@ jobs:
     steps:
       - checkout
 
-      - restore_cache:
-          keys:
-            - 'dart-dependencies-{{ checksum "pubspec.lock" }}'
-            - dart-dependencies-
-
       - run:
           name: Install dependencies
           command: flutter pub get
@@ -28,9 +23,5 @@ jobs:
           name: Build the Android version
           command: flutter build apk 
       
-      - run:
-          name: Build the iOS version
-          command: flutter build ios 
-
       - store_artifacts:
           path: build/app/outputs/apk/release/app-release.apk
