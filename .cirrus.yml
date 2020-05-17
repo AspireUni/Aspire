@@ -8,7 +8,7 @@ task:
   devices_script: flutter devices
 
 task:
-  name: Unit Tests
+  name: Flutter Unit Tests
   pub_cache:
     folder: ~/.pub-cache
   test_script: flutter test
