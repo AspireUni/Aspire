@@ -6,13 +6,22 @@ jobs:
 
     steps:
       - checkout
+      
+      - restore_cache:
+          keys:
+            - 'dart-dependencies-{{ checksum "pubspec.lock" }}'
+            - dart-dependencies-
 
       - run:
-          name: Run Flutter doctor
+          name: Install dependencies
+          command: flutter pub get
+
+      - run:
+          name: Run Flutter's doctor
           command: flutter doctor
 
       - run:
-          name: Run the application tests
+          name: Run the application's unit tests
           command: flutter test
 
       - run:
