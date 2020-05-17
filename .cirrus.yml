@@ -1,0 +1,14 @@
+# For more details, visit cirrus-ci.com
+container:
+    image: cirrusci/flutter:stable
+
+task:
+  name: Flutter Doctor
+  doctor_script: flutter doctor -v
+  devices_script: flutter devices
+
+task:
+  name: Unit Tests
+  pub_cache:
+    folder: ~/.pub-cache
+  test_script: flutter test
