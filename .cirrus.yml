@@ -1,6 +1,9 @@
-# For more details, visit cirrus-ci.com
+# View the builds at cirrus-ci.com
 container:
     image: cirrusci/flutter:stable
+    
+env: 
+    CODECOV_TOKEN: ab8d1a19-3ac7-42d5-a741-c275e1710b56
 
 task:
   name: Flutter Doctor
