@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import './header.dart';
 import './bio.dart';
-import './icon_button.dart';
+import './section_icons.dart';
 
  
 // TODO: Replace with real data
@@ -48,18 +48,7 @@ buildUserProfileView() {
       emailAddress: dummyData["emailAddress"],
       ),
      ProfileBio(bio: dummyData["bio"]),
-     buildBottomIcons(),
+     ProfileSectionIcons(),
    ]
  );
-}
- 
-buildBottomIcons() {
- return Row(
-    mainAxisSize: MainAxisSize.min,
-    children: <Widget>[
-      ProfileIconButton(name: Icons.done, caption: "Skills"),
-      ProfileIconButton(name: Icons.subject, caption: "Bio"),
-      ProfileIconButton(name: Icons.person_outline, caption: "Info"),
-    ],
-  );
 }
