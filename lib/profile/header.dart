@@ -27,7 +27,7 @@ class ProfileHeader extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: <Text> [
                   Text(
-                    "Khalida Rafique",
+                    fullName,
                     style: GoogleFonts.muli(
                       textStyle: TextStyle(
                         color: Colors.white, 
@@ -38,7 +38,7 @@ class ProfileHeader extends StatelessWidget {
                     )
                   ), 
                   Text(
-                    "Mentor", 
+                    emailAddress, 
                       style: GoogleFonts.muli(
                       textStyle: TextStyle(
                         color: Colors.white,  
