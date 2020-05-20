@@ -9,7 +9,13 @@ class ProfileHeader extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       width: MediaQuery.of(context).size.width, 
-      height: 200.0, 
+      height: 200.0,
+      decoration: BoxDecoration(
+        color: Color(0xFF0F1236), 
+        borderRadius: BorderRadius.only(
+          bottomLeft: Radius.elliptical(40.0, 40.0)
+        ),
+      ),
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: <Widget> [
@@ -39,7 +45,7 @@ class ProfileHeader extends StatelessWidget {
                 ), 
                 Text(
                   emailAddress, 
-                    style: GoogleFonts.muli(
+                  style: GoogleFonts.muli(
                     textStyle: TextStyle(
                       color: Colors.white,  
                       letterSpacing: .5, 
@@ -53,12 +59,6 @@ class ProfileHeader extends StatelessWidget {
           )
         ]
       ),
-        decoration: BoxDecoration(
-          color: Color(0xFF0F1236), 
-        borderRadius: BorderRadius.only(
-          bottomLeft: Radius.elliptical(40.0, 40.0)
-        ),
-      )
     );
   }
 }
