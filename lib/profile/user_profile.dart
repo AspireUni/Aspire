@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import './header.dart';
-import './bio.dart';
+import './sections/bio.dart';
 import './section_icons.dart';
 
  
@@ -14,7 +14,7 @@ const dummyData = {
 class UserProfile extends StatelessWidget {
  const UserProfile({Key key}) : super(key: key);
  
- @override
+  @override
   Widget build(BuildContext context) {
     return Stack(
       children: <Widget>[
