@@ -69,11 +69,9 @@ buildChatView() {
   return (
     <Widget>[
       ...buildHeader(),
-      NewMatches(
-
-      ),
-      Messages(
-
+      NewMatches(),
+      Flexible(
+        child: Messages(),
       )
     ]
   );

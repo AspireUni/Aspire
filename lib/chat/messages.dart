@@ -13,7 +13,7 @@ const dummyData = [
     "lastMessage": "Hey there 😛",
   },
   {
-    "name": "Elizabeth",
+    "name": "Mike",
     "color": Colors.green,
     "lastMessage": "I'm taking that as a yes",
   },
@@ -71,15 +71,17 @@ buildMessages(context) {
     messagesList.add(Row(
         mainAxisSize: MainAxisSize.max, 
         children: <Widget>[
-          Center(
-            widthFactor: 1.3333333333,
-            heightFactor: 1.3333333333,
-            child: Container(
-              width: 60.0, 
-              height: 60.0, 
-              decoration: BoxDecoration(
-                color: dummyData[i]["color"], 
-                shape: BoxShape.circle
+          Container(
+            width: 80.0,
+            height: 80.0,
+            child: Center(
+              child: Container(
+                width: 60.0, 
+                height: 60.0, 
+                decoration: BoxDecoration(
+                  color: dummyData[i]["color"], 
+                  shape: BoxShape.circle
+                )
               )
             )
           ),
@@ -117,7 +119,7 @@ buildMessages(context) {
     );
   }
 
-  return Container(
+  return Expanded(    
     child: ListView(
       scrollDirection: Axis.vertical,
       shrinkWrap: true,

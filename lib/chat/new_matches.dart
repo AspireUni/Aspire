@@ -30,6 +30,10 @@ const dummyData = [
     "name": "Simp",
     "color": Colors.indigo,
   },
+  {
+    "name": "Igotalongnamewowitisreallysosolong",
+    "color": Colors.black,
+  },
 ];
 
 class NewMatches extends StatelessWidget {
@@ -77,6 +81,7 @@ buildNewMatches() {
             ),
             Text(
               dummyData[i]["name"],
+              overflow: TextOverflow.ellipsis,
               style: GoogleFonts.muli(
                 textStyle: TextStyle(
                   color: Colors.black, 
