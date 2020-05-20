@@ -6,7 +6,6 @@ jobs:
 
     steps:
       - checkout
-      
       - run:
           name: Dart version
           command: dart --version
@@ -21,10 +20,6 @@ jobs:
           command: flutter test
       - run:
           name: Build the Android version
-          command: flutter build apk 
-      - run:
-          name: Build the iOS version
-          command: flutter build ios 
-
+          command: flutter build apk
       - store_artifacts:
           path: build/app/outputs/apk/release/app-release.apk
