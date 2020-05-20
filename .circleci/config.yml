@@ -9,7 +9,7 @@ jobs:
 
       - run:
           name: Install dependencies
-          command: flutter pub get
+          command: pub get
       - run:
           name: Run Flutter's doctor
           command: flutter doctor
