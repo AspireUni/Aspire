@@ -82,6 +82,7 @@ buildNewMatches() {
                   color: Colors.black, 
                   letterSpacing: .5, 
                   fontSize: 12.0, 
+                  fontWeight: FontWeight.w600
                 )
               )
             )

@@ -24,6 +24,7 @@ class Chat extends StatelessWidget {
             elevation: 0.0,
           ),
           body: Container(
+            height: MediaQuery.of(context).size.height,
             margin: const EdgeInsets.all(0),
             child: Center(
               child: Column(

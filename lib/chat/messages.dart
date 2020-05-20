@@ -58,7 +58,7 @@ class Messages extends StatelessWidget {
             )
           )
         ),
-        buildMessages(context),
+        buildMessages(context)
       ]
     );
   }
@@ -68,8 +68,7 @@ buildMessages(context) {
 
   List<Widget> messagesList = new List<Widget>();
   for (int i = 0; i < dummyData.length; i++) {
-    messagesList.add(
-      Row(
+    messagesList.add(Row(
         mainAxisSize: MainAxisSize.max, 
         children: <Widget>[
           Center(
@@ -84,41 +83,45 @@ buildMessages(context) {
               )
             )
           ),
-          Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: <Text>[
-              Text(
-                dummyData[i]["name"],
-                style: GoogleFonts.muli(
-                  textStyle: TextStyle(
-                    color: Colors.black, 
-                    letterSpacing: .5, 
-                    fontSize: 14.0, 
-                    fontWeight: FontWeight.bold
+          Expanded(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: <Text>[
+                Text(
+                  dummyData[i]["name"],
+                  style: GoogleFonts.muli(
+                    textStyle: TextStyle(
+                      color: Colors.black, 
+                      letterSpacing: .5, 
+                      fontSize: 14.0, 
+                      fontWeight: FontWeight.bold
+                    )
+                  )
+                ),
+                Text(
+                  dummyData[i]["lastMessage"],
+                  overflow: TextOverflow.ellipsis,
+                  style: GoogleFonts.muli(
+                    textStyle: TextStyle(
+                      color: Colors.grey,
+                      letterSpacing: .5, 
+                      fontSize: 12.0, 
+                    )
                   )
                 )
-              ),
-              Text(
-                dummyData[i]["lastMessage"],
-                overflow: TextOverflow.ellipsis,
-                style: GoogleFonts.muli(
-                  textStyle: TextStyle(
-                    color: Colors.grey,
-                    letterSpacing: .5, 
-                    fontSize: 12.0, 
-                  )
-                )
-              )
-            ]
+              ]
+            )
           )
         ]
       ),
     );
   }
 
-  return ListView(
-    scrollDirection: Axis.vertical,
-    shrinkWrap: true,
-    children: messagesList,
+  return Container(
+    child: ListView(
+      scrollDirection: Axis.vertical,
+      shrinkWrap: true,
+      children: messagesList,
+    )
   );
 }
