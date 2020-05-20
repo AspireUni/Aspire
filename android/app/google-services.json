@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "314127594273",
+    "firebase_url": "https://mentorapp-19fcf.firebaseio.com",
+    "project_id": "mentorapp-19fcf",
+    "storage_bucket": "mentorapp-19fcf.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:314127594273:android:b889533edbf37a07dec460",
+        "android_client_info": {
+          "package_name": "com.example.mentorApp"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "314127594273-thg7uamlfph16esvs2bqhnaftetc1iqa.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBluSu4Dg8NWNzBcJWreSDA4GX47lYpAuI"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "314127594273-thg7uamlfph16esvs2bqhnaftetc1iqa.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "314127594273-h0uinb2r9ah106nl7mk9bfu4qjvduvjc.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.example.mentorApp"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
