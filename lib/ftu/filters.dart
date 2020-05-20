@@ -1,25 +1,70 @@
 import 'package:flutter/material.dart';
 
-// TODO: Update this placeholder widget
-class Filters extends StatelessWidget {
-  const Filters({Key key}) : super(key: key);
+class Item {
+  const Item(this.industry,this.selection);
+  final String industry;
+  final String selection;
+}
+
+class FiltersPage extends StatefulWidget {
+  FiltersPage({Key key}) : super(key: key);
 
   @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: Colors.black,
-      appBar: new AppBar(
-        title: new Text("Select up to 3 options", style: TextStyle(color: Colors.white, fontSize: 20.0))
-      ),
-      body: InkWell(
-        onTap: (){
-          Scaffold.of(context);
-        },
-        child: Container(
-          padding: EdgeInsets.all(12.0),
-          child: Text('Flat Button', style: TextStyle(color: Colors.white)),
-        )
-      )
-    );
-  }
+  FiltersState createState() => FiltersState();
+}
+
+class FiltersState extends State<FiltersPage> {
+  Item selectedItem;
+  List<Item> users = <Item>[const Item('Tech', 'hi'), const Item('Arts','Bar')];
+
+ @override
+   Widget build(BuildContext context) {
+     return Stack(
+         children: <Widget>[
+           Image.asset(
+             "images/DashboardBg.png",
+             height: MediaQuery.of(context).size.height,
+             width: MediaQuery.of(context).size.width,
+             fit: BoxFit.fill,
+           ),
+           Scaffold(
+               backgroundColor: Colors.transparent,
+               appBar: AppBar(
+                 backgroundColor: Colors.transparent,
+                 elevation: 0.0,
+               ),
+               body: Center(
+               child: buildButton(),
+               ),
+               floatingActionButton: FloatingActionButton(
+               child: Text("Next"),
+               onPressed: (){
+               Navigator.pushNamed(context, '/second');
+               },
+           )
+           )
+         ]
+       );
+   }
+ }
+
+buildButton(){
+  return DropdownButtonHideUnderline(
+    child: new DropdownButton<Item>(
+                hint: new Text("Select an industry"),
+                value: FiltersState().selectedItem,
+                onChanged: (Item newValue) {
+                    FiltersState().selectedItem = newValue;
+                },
+                items: FiltersState().users.map((Item user) {
+                  return new DropdownMenuItem<Item>(
+                    value: user,
+                    child: new Text(
+                      user.industry,
+                      style: new TextStyle(color: Colors.black),
+                    ),
+                  );
+                }).toList(),
+              ),
+  );
 }

@@ -9,7 +9,7 @@ class FirstRoute extends StatelessWidget {
         child: RaisedButton(
           child: Text('Sign-Up', style: TextStyle(color: Colors.black) ),
           onPressed: () {
-            Navigator.pushNamed(context, '/second');
+            Navigator.pushNamed(context, '/filters');
           },
         ),
       ),
@@ -25,7 +25,7 @@ class SecondRoute extends StatelessWidget {
       body: Center(
         child: RaisedButton(
           onPressed: () {
-            Navigator.pushNamed(context, '/UserProfile');
+            Navigator.pushNamed(context, '/userprofile');
           },
           child: Text('Done. To the profile!'),
         ),

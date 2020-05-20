@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 
+import '../ftu/filters.dart';
 import '../ftu/signup.dart';
 import 'app_controller.dart';
+
 
 class Root extends StatelessWidget {
   @override
@@ -11,8 +13,9 @@ class Root extends StatelessWidget {
         initialRoute: '/',
         routes: {
           '/': (context) => FirstRoute(),
+          '/filters': (context) => FiltersPage(),
           '/second': (context) => SecondRoute(),
-          '/UserProfile': (context) => AppController(),
+          '/userprofile': (context) => AppController(),
         },
         theme: ThemeData(
           primaryColor: Color(0xFF0F1236),
