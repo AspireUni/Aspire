@@ -18,7 +18,7 @@ class Chat extends StatelessWidget {
           fit: BoxFit.fill,
         ),
         Scaffold(
-          backgroundColor: Colors.transparent,
+          backgroundColor: Colors.white,
           appBar: AppBar(
             backgroundColor: Colors.transparent,
             elevation: 0.0,

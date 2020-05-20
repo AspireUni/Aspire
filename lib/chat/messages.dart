@@ -6,36 +6,43 @@ const dummyData = [
     "name": "Lydia",
     "color": Colors.blue,
     "lastMessage": "What's that snap",
+    "isSent": true,
   },
   {
     "name": "Ashley",
     "color": Colors.purple,
     "lastMessage": "Hey there 😛",
+    "isSent": true,
   },
   {
     "name": "Mike",
     "color": Colors.green,
     "lastMessage": "I'm taking that as a yes",
+    "isSent": true,
   },
   {
     "name": "Hawk",
     "color": Colors.orange,
     "lastMessage": "U can get this dick",
+    "isSent": true,
   },
   {
     "name": "Pat",
     "color": Colors.yellow,
     "lastMessage": "Your welcome handsome! I'm fine just doing some laundry!",
+    "isSent": false,
   },
   {
     "name": "Maweenie",
     "color": Colors.red,
     "lastMessage": "Damn that's crazy",
+    "isSent": false,
   },
   {
     "name": "Simp",
     "color": Colors.indigo,
     "lastMessage": "wow",
+    "isSent": false,
   },
 ];
 
@@ -88,7 +95,7 @@ buildMessages(context) {
           Expanded(
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
-              children: <Text>[
+              children: <Widget>[
                 Text(
                   dummyData[i]["name"],
                   style: GoogleFonts.muli(
@@ -100,16 +107,25 @@ buildMessages(context) {
                     )
                   )
                 ),
-                Text(
-                  dummyData[i]["lastMessage"],
+                RichText(
                   overflow: TextOverflow.ellipsis,
-                  style: GoogleFonts.muli(
-                    textStyle: TextStyle(
-                      color: Colors.grey,
-                      letterSpacing: .5, 
-                      fontSize: 12.0, 
-                    )
-                  )
+                  text: TextSpan(
+                    style: GoogleFonts.muli(
+                      textStyle: TextStyle(
+                        color: Colors.grey,
+                        letterSpacing: .5, 
+                        fontSize: 12.0, 
+                      )
+                    ),
+                    children: [
+                      if(dummyData[i]["isSent"]) WidgetSpan(
+                        child: Icon(Icons.send, size: 12, color: Colors.grey,),
+                      ),
+                      TextSpan(
+                        text: dummyData[i]["lastMessage"]
+                      )
+                    ]
+                  ),
                 )
               ]
             )
