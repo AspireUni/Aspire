@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 import './new_matches.dart';
 import './messages.dart';
 
-// TODO: Update this placeholder widget
 class Chat extends StatelessWidget {
   const Chat({Key key}) : super(key: key);
 
@@ -11,18 +10,8 @@ class Chat extends StatelessWidget {
   Widget build(BuildContext context) {
     return Stack(
       children: <Widget>[
-        Image.asset(
-          "images/DefaultBg.png",
-          height: MediaQuery.of(context).size.height,
-          width: MediaQuery.of(context).size.width,
-          fit: BoxFit.fill,
-        ),
         Scaffold(
-          backgroundColor: Colors.white,
-          appBar: AppBar(
-            backgroundColor: Colors.transparent,
-            elevation: 0.0,
-          ),
+          backgroundColor: Colors.transparent,
           body: Container(
             height: MediaQuery.of(context).size.height,
             margin: const EdgeInsets.all(0),
@@ -39,36 +28,41 @@ class Chat extends StatelessWidget {
 }
 
 buildHeader() {
-  return <Text> [
-    Text(
-      "Chat", 
-      style: GoogleFonts.muli(
-        textStyle: TextStyle(
-          color: Colors.black, 
-          letterSpacing: .5, 
-          fontSize: 30.0, 
-          fontWeight: FontWeight.bold
-        )
-      )
-    ), 
-    Text(
-      "Connect with your matches", 
-      style: GoogleFonts.muli(
-        textStyle: TextStyle(
-          color: Colors.grey, 
-          letterSpacing: .5, 
-          fontSize: 18, 
-          fontWeight: FontWeight.w600
-        )
-      )
-    ), 
-  ];
+  return Container (
+    margin: const EdgeInsets.all(30.0),
+    child: Column(
+      children: <Text>[
+        Text(
+          "Chat", 
+          style: GoogleFonts.muli(
+            textStyle: TextStyle(
+              color: Colors.black, 
+              letterSpacing: .5, 
+              fontSize: 30.0, 
+              fontWeight: FontWeight.bold
+            )
+          )
+        ), 
+        Text(
+          "Connect with your matches", 
+          style: GoogleFonts.muli(
+            textStyle: TextStyle(
+              color: Colors.grey, 
+              letterSpacing: .5, 
+              fontSize: 18, 
+              fontWeight: FontWeight.w600
+            )
+          )
+        ), 
+      ]
+    )
+  );
 }
 
 buildChatView() {
   return (
     <Widget>[
-      ...buildHeader(),
+      buildHeader(),
       NewMatches(),
       Flexible(
         child: Messages(),

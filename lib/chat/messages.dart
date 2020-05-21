@@ -53,29 +53,32 @@ class Messages extends StatelessWidget {
   Widget build(BuildContext context) {
     return Column(
       children: <Widget>[
-        Text(
-          "Messages", 
-          textAlign: TextAlign.left,
-          style: GoogleFonts.muli(
-            textStyle: TextStyle(
-              color: Colors.black, 
-              letterSpacing: .5, 
-              fontSize: 18.0, 
-              fontWeight: FontWeight.bold
+        Padding (
+          padding: const EdgeInsets.only(top: 20, bottom: 10),
+          child:Text(
+            "Messages", 
+            textAlign: TextAlign.left,
+            style: GoogleFonts.muli(
+              textStyle: TextStyle(
+                color: Colors.black, 
+                letterSpacing: .5, 
+                fontSize: 18.0, 
+                fontWeight: FontWeight.bold
+              )
             )
           )
         ),
-        buildMessages(context)
+        buildMessages()
       ]
     );
   }
 }
 
-buildMessages(context) {
-
+buildMessages() {
   List<Widget> messagesList = new List<Widget>();
   for (int i = 0; i < dummyData.length; i++) {
     messagesList.add(Row(
+        crossAxisAlignment: CrossAxisAlignment.center,
         mainAxisSize: MainAxisSize.max, 
         children: <Widget>[
           Container(
@@ -119,7 +122,7 @@ buildMessages(context) {
                     ),
                     children: [
                       if(dummyData[i]["isSent"]) WidgetSpan(
-                        child: Icon(Icons.send, size: 12, color: Colors.grey,),
+                        child: Icon(Icons.send, size: 12, color: Colors.grey),
                       ),
                       TextSpan(
                         text: dummyData[i]["lastMessage"]
@@ -131,12 +134,13 @@ buildMessages(context) {
             )
           )
         ]
-      ),
+      )
     );
   }
 
-  return Expanded(    
+  return Flexible(    
     child: ListView(
+      padding: EdgeInsets.all(0.0),
       scrollDirection: Axis.vertical,
       shrinkWrap: true,
       children: messagesList,

@@ -43,15 +43,18 @@ class NewMatches extends StatelessWidget {
   Widget build(BuildContext context) {
     return Column(
       children: <Widget>[
-        Text(
-          "New Matches", 
-          textAlign: TextAlign.left,
-          style: GoogleFonts.muli(
-            textStyle: TextStyle(
-              color: Colors.black, 
-              letterSpacing: .5, 
-              fontSize: 18.0, 
-              fontWeight: FontWeight.bold
+        Padding(
+          padding: const EdgeInsets.only(top: 20, bottom: 10),
+          child: Text(
+            "New Matches", 
+            textAlign: TextAlign.left,
+            style: GoogleFonts.muli(
+              textStyle: TextStyle(
+                color: Colors.black, 
+                letterSpacing: .5, 
+                fontSize: 18.0, 
+                fontWeight: FontWeight.bold
+              )
             )
           )
         ),
