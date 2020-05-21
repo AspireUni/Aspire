@@ -9,7 +9,7 @@ class ProfileHeader extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       width: MediaQuery.of(context).size.width, 
-      height: 200.0,
+      height: MediaQuery.of(context).size.height * 0.25,
       decoration: BoxDecoration(
         color: Color(0xFF0F1236), 
         borderRadius: BorderRadius.only(

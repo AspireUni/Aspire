@@ -7,8 +7,7 @@ class ProfileBio extends StatelessWidget {
   
   @override
   Widget build(BuildContext context) {
-    return Container(
-      margin: const EdgeInsets.all(60.0),
+    return SingleChildScrollView(
       child: Text(
         bio,
         textAlign: TextAlign.left,
@@ -21,7 +20,7 @@ class ProfileBio extends StatelessWidget {
             fontWeight: FontWeight.w600
           ),
         )
-      ),
+      )
     );
   }
 }
