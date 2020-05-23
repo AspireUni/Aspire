@@ -1,5 +1,6 @@
 import 'package:google_fonts/google_fonts.dart';
 import 'package:flutter/material.dart';
+import './chat_messenger.dart';
 
 const dummyData = [
   {
@@ -68,72 +69,78 @@ class Messages extends StatelessWidget {
             )
           )
         ),
-        buildMessages()
+        buildMessages(context)
       ]
     );
   }
 }
 
-buildMessages() {
+buildMessages(context) {
   List<Widget> messagesList = new List<Widget>();
   for (int i = 0; i < dummyData.length; i++) {
-    messagesList.add(Row(
-        crossAxisAlignment: CrossAxisAlignment.center,
-        mainAxisSize: MainAxisSize.max, 
-        children: <Widget>[
-          Container(
-            width: 80.0,
-            height: 80.0,
-            child: Center(
-              child: Container(
-                width: 60.0, 
-                height: 60.0, 
-                decoration: BoxDecoration(
-                  color: dummyData[i]["color"], 
-                  shape: BoxShape.circle
+    messagesList.add(
+      GestureDetector(
+        onTap: () {
+          Navigator.push(context, MaterialPageRoute(builder: (context) => ChatMessenger(recipient: dummyData[i]["name"])));
+        },
+        child: Row(
+          crossAxisAlignment: CrossAxisAlignment.center,
+          mainAxisSize: MainAxisSize.max, 
+          children: <Widget>[
+            Container(
+              width: 80.0,
+              height: 80.0,
+              child: Center(
+                child: Container(
+                  width: 60.0, 
+                  height: 60.0, 
+                  decoration: BoxDecoration(
+                    color: dummyData[i]["color"], 
+                    shape: BoxShape.circle
+                  )
                 )
               )
-            )
-          ),
-          Expanded(
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: <Widget>[
-                Text(
-                  dummyData[i]["name"],
-                  style: GoogleFonts.muli(
-                    textStyle: TextStyle(
-                      color: Colors.black, 
-                      letterSpacing: .5, 
-                      fontSize: 14.0, 
-                      fontWeight: FontWeight.bold
-                    )
-                  )
-                ),
-                RichText(
-                  overflow: TextOverflow.ellipsis,
-                  text: TextSpan(
+            ),
+            Expanded(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: <Widget>[
+                  Text(
+                    dummyData[i]["name"],
                     style: GoogleFonts.muli(
                       textStyle: TextStyle(
-                        color: Colors.grey,
+                        color: Colors.black, 
                         letterSpacing: .5, 
-                        fontSize: 12.0, 
+                        fontSize: 14.0, 
+                        fontWeight: FontWeight.bold
                       )
-                    ),
-                    children: [
-                      if(dummyData[i]["isSent"]) WidgetSpan(
-                        child: Icon(Icons.send, size: 12, color: Colors.grey),
-                      ),
-                      TextSpan(
-                        text: dummyData[i]["lastMessage"]
-                      )
-                    ]
+                    )
                   ),
-                )
-              ]
+                  RichText(
+                    overflow: TextOverflow.ellipsis,
+                    text: TextSpan(
+                      style: GoogleFonts.muli(
+                        textStyle: TextStyle(
+                          color: Colors.grey,
+                          letterSpacing: .5, 
+                          fontSize: 12.0, 
+                        )
+                      ),
+                      children: [
+                        if(dummyData[i]["isSent"]) WidgetSpan(
+                          child: Icon(Icons.send, size: 12, color: Colors.grey),
+                        ),
+                        TextSpan(
+                          text: dummyData[i]["lastMessage"]
+                        )
+                      ]
+                    ),
+                  )
+                ]
+              )
             )
-          )
-        ]
+          ]
+        )
       )
     );
   }
