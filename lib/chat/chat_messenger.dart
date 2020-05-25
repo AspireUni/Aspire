@@ -53,12 +53,10 @@ class ChatMessengerState extends State<ChatMessenger> {
               color: (messages[i] as Map)["isSent"] ? Color(0x8F0F1236) : Colors.grey,
               borderRadius: BorderRadius.all(Radius.circular(8.0)),
             ),
-            // margin: EdgeInsets.all(10.0),
             margin: (messages[i] as Map)["isSent"] ? EdgeInsets.fromLTRB(50.0, 10.0, 10.0, 10.0) : EdgeInsets.fromLTRB(10.0, 10.0, 50.0, 10.0),
             padding: EdgeInsets.all(10.0),
             child: Text(
               (messages[i] as Map)["text"],
-              overflow: TextOverflow.visible,
               style: GoogleFonts.muli(
                 textStyle: TextStyle(
                   color: Colors.white, 
@@ -86,6 +84,7 @@ class ChatMessengerState extends State<ChatMessenger> {
           padding: EdgeInsets.only(left: 20.0, right: 20.0),
           color: Colors.grey,
           child: TextFormField(
+            maxLines: null, // this allows for multi-line input
             textInputAction: TextInputAction.send,
             controller: textInputController,
             onFieldSubmitted: (String value) {
@@ -145,7 +144,7 @@ class ChatMessengerState extends State<ChatMessenger> {
 
 class ChatMessenger extends StatefulWidget {
   final String recipient;
-  var messages;
+  final List<Object> messages;
   ChatMessenger({Key key, this.recipient, this.messages = dummyData}) : super(key: key);
 
   @override
