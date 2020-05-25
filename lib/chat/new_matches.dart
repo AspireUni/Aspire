@@ -1,5 +1,6 @@
 import 'package:google_fonts/google_fonts.dart';
 import 'package:flutter/material.dart';
+import './chat_messenger.dart';
 
 const dummyData = [
   {
@@ -58,43 +59,48 @@ class NewMatches extends StatelessWidget {
             )
           )
         ),
-        buildNewMatches(),
+        buildNewMatches(context),
       ]
     );
   }
 }
 
-buildNewMatches() {
+buildNewMatches(context) {
   List<Widget> newMatchesList = new List<Widget>();
   for (int i = 0; i < dummyData.length; i++) {
     newMatchesList.add(
-      Container(
-        width: 80.0,
-        height: 80.0,
-        color: Colors.transparent,
-        child: Column(
-          children: <Widget>[
-            Container(
-              width: 60.0, 
-              height: 60.0, 
-              decoration: BoxDecoration(
-                color: dummyData[i]["color"], 
-                shape: BoxShape.circle
-              )
-            ),
-            Text(
-              dummyData[i]["name"],
-              overflow: TextOverflow.ellipsis,
-              style: GoogleFonts.muli(
-                textStyle: TextStyle(
-                  color: Colors.black, 
-                  letterSpacing: .5, 
-                  fontSize: 12.0, 
-                  fontWeight: FontWeight.w600
+      GestureDetector(
+        onTap: () {
+          Navigator.push(context, MaterialPageRoute(builder: (context) => ChatMessenger(recipient: dummyData[i]["name"])));
+        },
+        child: Container(
+          width: 80.0,
+          height: 80.0,
+          color: Colors.transparent,
+          child: Column(
+            children: <Widget>[
+              Container(
+                width: 60.0, 
+                height: 60.0, 
+                decoration: BoxDecoration(
+                  color: dummyData[i]["color"], 
+                  shape: BoxShape.circle
+                )
+              ),
+              Text(
+                dummyData[i]["name"],
+                overflow: TextOverflow.ellipsis,
+                style: GoogleFonts.muli(
+                  textStyle: TextStyle(
+                    color: Colors.black, 
+                    letterSpacing: .5, 
+                    fontSize: 12.0, 
+                    fontWeight: FontWeight.w600
+                  )
                 )
               )
-            )
-          ]
+            ]
+          )
         )
       ),
     );
