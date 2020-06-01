@@ -6,6 +6,10 @@ class Item {
   final String selection;
 }
 
+Item selectedItem;
+List<Item> users = <Item>[const Item('Tech', 'hi'), const Item('Arts','Bar')];
+
+
 class FiltersPage extends StatefulWidget {
   FiltersPage({Key key}) : super(key: key);
 
@@ -14,8 +18,8 @@ class FiltersPage extends StatefulWidget {
 }
 
 class FiltersState extends State<FiltersPage> {
-  Item selectedItem;
-  List<Item> users = <Item>[const Item('Tech', 'hi'), const Item('Arts','Bar')];
+  //Item selectedItem;
+  //List<Item> users = <Item>[const Item('Tech', 'hi'), const Item('Arts','Bar')];
 
  @override
    Widget build(BuildContext context) {
@@ -48,15 +52,18 @@ class FiltersState extends State<FiltersPage> {
    }
  }
 
+
+
 buildButton(){
   return DropdownButtonHideUnderline(
     child: new DropdownButton<Item>(
-                hint: new Text("Select an industry"),
-                value: FiltersState().selectedItem,
+                isExpanded: true,
+                hint: Text("Select an industry"),
+                value: selectedItem,
                 onChanged: (Item newValue) {
-                    FiltersState().selectedItem = newValue;
+                    selectedItem = newValue;
                 },
-                items: FiltersState().users.map((Item user) {
+                items: users.map((Item user) {
                   return new DropdownMenuItem<Item>(
                     value: user,
                     child: new Text(
