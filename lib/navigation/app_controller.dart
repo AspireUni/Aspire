@@ -23,7 +23,7 @@ class _MyAppState extends State<AppController> {
             home: Scaffold(
                 body: _widgets[pageIndex],
                 bottomNavigationBar: CurvedNavigationBar(
-                backgroundColor: PrimaryColor,
+                backgroundColor: kPrimaryColor,
                 height: kAppNavBarHeight,  
                 index: 1,
                 onTap: tapped,

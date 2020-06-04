@@ -96,7 +96,7 @@ class ProfileSkills extends StatelessWidget {
       lineHeight: 9.0,
       percent: rating / 10,
       backgroundColor: Colors.black12,
-      progressColor: SecondaryColor,
+      progressColor: kSecondaryColor,
       animation: true,
       animationDuration: 500,
     );

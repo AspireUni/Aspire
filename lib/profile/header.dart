@@ -15,7 +15,7 @@ class ProfileHeader extends StatelessWidget {
       width: MediaQuery.of(context).size.width, 
       height: kProfileHeaderHeight,
       decoration: BoxDecoration(
-        color: PrimaryColor, 
+        color: kPrimaryColor, 
         borderRadius: BorderRadius.only(
           bottomLeft: Radius.elliptical(40.0, 40.0)
         ),
@@ -39,7 +39,7 @@ class ProfileHeader extends StatelessWidget {
       width: 60.0, 
       height: 60.0, 
       decoration: BoxDecoration(
-        color: SecondaryColor, 
+        color: kSecondaryColor, 
         shape: BoxShape.circle
       )
     );
@@ -86,7 +86,7 @@ class ProfileHeader extends StatelessWidget {
             key.currentContext, 
             duration: Duration(milliseconds: 500)
         ),
-        color: PrimaryColor,
+        color: kPrimaryColor,
         itemBuilder: (BuildContext menuContext) => <PopupMenuEntry<GlobalKey>>[
           buildPopUpItem(
             context, 
