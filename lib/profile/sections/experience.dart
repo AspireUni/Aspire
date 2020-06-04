@@ -47,9 +47,9 @@ class ProfileExperience extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: <Widget>[
-          buildJobTitle(jobTitle),
-          buildCompany(company),
-          buildDateRange(dateRange)
+          buildExperienceText(jobTitle, true, false),
+          buildExperienceText(company, false, false),
+          buildExperienceText(dateRange, false, true)
         ]
       )
     );
@@ -75,49 +75,17 @@ class ProfileExperience extends StatelessWidget {
     );
   }
 
-  buildJobTitle(String jobTitle) {
+  buildExperienceText(String text, bool isJobTitle, bool isDateRange) {
     return Text(
-      jobTitle,
+      text,
       textAlign: TextAlign.left,
       style: GoogleFonts.muli(
         textStyle: TextStyle(
-          color: Colors.black,
+          color: isDateRange ? Colors.black54 : Colors.black,
           letterSpacing: .5,
           height: 1.2,
           fontSize: 13.0,
-          fontWeight: FontWeight.w700
-        ),
-      )
-    );
-  }
-
-  buildCompany(String company) {
-    return Text(
-      company,
-      textAlign: TextAlign.left,
-      style: GoogleFonts.muli(
-        textStyle: TextStyle(
-          color: Colors.black,
-          letterSpacing: .5,
-          height: 1.2,
-          fontSize: 13.0,
-          fontWeight: FontWeight.w500
-        ),
-      )
-    );
-  }
-
-  buildDateRange(String dateRange) {
-    return Text(
-      dateRange,
-      textAlign: TextAlign.left,
-      style: GoogleFonts.muli(
-        textStyle: TextStyle(
-          color: Colors.black54,
-          letterSpacing: .5,
-          height: 1.2,
-          fontSize: 13.0,
-          fontWeight: FontWeight.w500
+          fontWeight: isJobTitle ? FontWeight.w700 : FontWeight.w500
         ),
       )
     );

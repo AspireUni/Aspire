@@ -74,19 +74,19 @@ class ProfileSkills extends StatelessWidget {
   buildSkill(String label) {
     return Container(
       padding: EdgeInsets.only(bottom: 5.0),
-      child: Text(
-      label,
-      textAlign: TextAlign.left,
-      style: GoogleFonts.muli(
-        textStyle: TextStyle(
-          color: Colors.black,
-          letterSpacing: .5,
-          height: 1.2,
-          fontSize: 13.0,
-          fontWeight: FontWeight.w700
-        ),
+        child: Text(
+        label,
+        textAlign: TextAlign.left,
+        style: GoogleFonts.muli(
+          textStyle: TextStyle(
+            color: Colors.black,
+            letterSpacing: .5,
+            height: 1.2,
+            fontSize: 13.0,
+            fontWeight: FontWeight.w700
+          ),
+        )
       )
-    )
     );
   }
 

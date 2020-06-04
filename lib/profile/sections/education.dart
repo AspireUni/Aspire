@@ -47,9 +47,9 @@ class ProfileEducation extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: <Widget>[
-          buildSchool(school),
-          buildProgram(program),
-          buildDateRange(dateRange)
+          buildEducationText(school, true, false),
+          buildEducationText(program, false, false),
+          buildEducationText(dateRange, false, true)
         ]
       )
     );
@@ -75,49 +75,17 @@ class ProfileEducation extends StatelessWidget {
     );
   }
 
-  buildSchool(String school) {
+  buildEducationText(String text, bool isSchool, bool isDateRange) {
     return Text(
-      school,
+      text,
       textAlign: TextAlign.left,
       style: GoogleFonts.muli(
         textStyle: TextStyle(
-          color: Colors.black,
+          color: isDateRange ? Colors.black54 : Colors.black,
           letterSpacing: .5,
           height: 1.2,
           fontSize: 13.0,
-          fontWeight: FontWeight.w700
-        ),
-      )
-    );
-  }
-
-  buildProgram(String program) {
-    return Text(
-      program,
-      textAlign: TextAlign.left,
-      style: GoogleFonts.muli(
-        textStyle: TextStyle(
-          color: Colors.black,
-          letterSpacing: .5,
-          height: 1.2,
-          fontSize: 13.0,
-          fontWeight: FontWeight.w500
-        ),
-      )
-    );
-  }
-
-  buildDateRange(String dateRange) {
-    return Text(
-      dateRange,
-      textAlign: TextAlign.left,
-      style: GoogleFonts.muli(
-        textStyle: TextStyle(
-          color: Colors.black54,
-          letterSpacing: .5,
-          height: 1.2,
-          fontSize: 13.0,
-          fontWeight: FontWeight.w500
+          fontWeight: isSchool ? FontWeight.w700 : FontWeight.w500
         ),
       )
     );

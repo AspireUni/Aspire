@@ -96,8 +96,8 @@ class ProfileContact extends StatelessWidget {
             Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: <Widget>[
-                buildLabel(label),
-                buildInfo(info)
+                buildContactText(label, true),
+                buildContactText(info, false)
               ]
             )
           ]
@@ -106,33 +106,17 @@ class ProfileContact extends StatelessWidget {
     );
   }
 
-  buildLabel(String label) {
+  buildContactText(String text, bool isLabel) {
     return Text(
-      label,
+      text,
       textAlign: TextAlign.left,
       style: GoogleFonts.muli(
         textStyle: TextStyle(
-          color: Colors.black,
+          color: isLabel ? Colors.black : Colors.black54,
           letterSpacing: .5,
           height: 1.2,
           fontSize: 13.0,
-          fontWeight: FontWeight.w700
-        ),
-      )
-    );
-  }
-
-  buildInfo(String info) {
-    return Text(
-      info,
-      textAlign: TextAlign.left,
-      style: GoogleFonts.muli(
-        textStyle: TextStyle(
-          color: Colors.black54,
-          letterSpacing: .5,
-          height: 1.2,
-          fontSize: 13.0,
-          fontWeight: FontWeight.w500
+          fontWeight: isLabel ? FontWeight.w700 : FontWeight.w500
         ),
       )
     );

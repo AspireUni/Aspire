@@ -17,7 +17,7 @@ class ProfileHeader extends StatelessWidget {
       decoration: BoxDecoration(
         color: kPrimaryColor, 
         borderRadius: BorderRadius.only(
-          bottomLeft: Radius.elliptical(40.0, 40.0)
+          bottomLeft: Radius.circular(40.0)
         ),
       ),
       child: Container(
