@@ -86,7 +86,7 @@ class ProfileHeader extends StatelessWidget {
             key.currentContext, 
             duration: Duration(milliseconds: 500)
         ),
-        color: Color(0xFF0F1236),
+        color: PrimaryColor,
         itemBuilder: (BuildContext menuContext) => <PopupMenuEntry<GlobalKey>>[
           buildPopUpItem(
             context, 
