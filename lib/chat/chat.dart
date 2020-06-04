@@ -1,7 +1,7 @@
 import 'package:google_fonts/google_fonts.dart';
 import 'package:flutter/material.dart';
 import './new_matches.dart';
-import './messages.dart';
+import './user_message_rows.dart';
 
 class Chat extends StatelessWidget {
   const Chat({Key key}) : super(key: key);
@@ -65,7 +65,7 @@ buildChatView() {
       buildHeader(),
       NewMatches(),
       Flexible(
-        child: Messages(),
+        child: UserMessageRows(),
       )
     ]
   );

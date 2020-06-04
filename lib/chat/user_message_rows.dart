@@ -47,8 +47,8 @@ const dummyData = [
   },
 ];
 
-class Messages extends StatelessWidget {
-  Messages({Key key}) : super(key: key);
+class UserMessageRows extends StatelessWidget {
+  UserMessageRows({Key key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -69,13 +69,13 @@ class Messages extends StatelessWidget {
             )
           )
         ),
-        buildMessages(context)
+        buildMessageRows(context)
       ]
     );
   }
 }
 
-buildMessages(context) {
+buildMessageRows(context) {
   List<Widget> messagesList = new List<Widget>();
   for (int i = 0; i < dummyData.length; i++) {
     messagesList.add(
