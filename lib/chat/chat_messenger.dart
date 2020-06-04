@@ -1,3 +1,4 @@
+import 'package:flutter/services.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:flutter/material.dart';
 
@@ -40,6 +41,14 @@ class ChatMessengerState extends State<ChatMessenger> {
     setState(() {messages = [...messages, {"text": message, "isSent": isSent}];});
   }
 
+  void submitMessage (String value) {
+    textInputController.text = "";
+    if (value != "") {
+      addMessage(value, true);
+      SystemSound.play(SystemSoundType.click);
+    }
+  }
+
   final TextEditingController textInputController = new TextEditingController();
 
   List<Widget> buildMessages() {
@@ -50,7 +59,7 @@ class ChatMessengerState extends State<ChatMessenger> {
           alignment: (messages[i] as Map)["isSent"] ? Alignment.centerRight : Alignment.centerLeft,
           child: Container(
             decoration: BoxDecoration(
-              color: (messages[i] as Map)["isSent"] ? Color(0xFF45cab9) : Colors.grey,
+              color: (messages[i] as Map)["isSent"] ? Theme.of(context).accentColor : Colors.grey,
               borderRadius: BorderRadius.all(Radius.circular(8.0)),
             ),
             margin: (messages[i] as Map)["isSent"] ? EdgeInsets.fromLTRB(50.0, 10.0, 10.0, 10.0) : EdgeInsets.fromLTRB(10.0, 10.0, 50.0, 10.0),
@@ -73,33 +82,55 @@ class ChatMessengerState extends State<ChatMessenger> {
     return (
       <Widget>[
         Expanded(
-          child: ListView(
-            reverse: true,
-            scrollDirection: Axis.vertical,
-            children: messagesList,
+          child: GestureDetector(
+            onTap: () => FocusScope.of(context).unfocus(),
+            child: ListView(
+              reverse: true,
+              scrollDirection: Axis.vertical,
+              children: messagesList,
+            )
           )
         ),
         Container(
-          height: 100.0,
-          padding: EdgeInsets.only(left: 20.0, right: 20.0),
-          color: Colors.grey,
-          child: TextFormField(
-            style: GoogleFonts.muli(
-              textStyle: TextStyle(
-                color: Colors.black, 
-                letterSpacing: .5, 
-                fontSize: 14.0, 
-              )
-            ),
-            maxLines: null, // this allows for multi-line input
-            textInputAction: TextInputAction.send,
-            controller: textInputController,
-            onFieldSubmitted: (String value) {
-              textInputController.text = "";
-              if (value != "") {
-                addMessage(value, true);
-              }
-            },
+          constraints: BoxConstraints(minHeight: 70.0, maxHeight: 200.0),
+          padding: EdgeInsets.only(bottom: 15.0),
+          color: Colors.white,
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+            crossAxisAlignment: CrossAxisAlignment.end,
+            children: <Widget>[
+              IconButton(
+                icon: Icon(Icons.photo),
+                iconSize: 25.0,
+                color: Theme.of(context).primaryColor,
+                onPressed: () {},
+              ),
+              Expanded(
+                child: TextField(
+                  textCapitalization: TextCapitalization.sentences,
+                  decoration: InputDecoration.collapsed(
+                    hintText: 'Send a message...'
+                  ),
+                  style: GoogleFonts.muli(
+                    textStyle: TextStyle(
+                      color: Colors.black, 
+                      letterSpacing: .5, 
+                      fontSize: 14.0, 
+                    )
+                  ),
+                  maxLines: null, // this allows for multi-line input
+                  textInputAction: TextInputAction.send,
+                  controller: textInputController,
+                  onSubmitted: submitMessage,
+                )
+              ),
+              IconButton(
+                icon: Icon(Icons.send),
+                iconSize: 25.0,
+                color: Theme.of(context).primaryColor,
+                onPressed: () => submitMessage(textInputController.value.text),
+              ),
+            ]
           )
         ),
       ]
@@ -118,18 +149,18 @@ class ChatMessengerState extends State<ChatMessenger> {
               },
               icon: Icon(Icons.arrow_back, color: Colors.white)
             ),
-            backgroundColor: Color(0xFF0F1236),
+            backgroundColor: Theme.of(context).primaryColor,
             centerTitle: true,
             title: Text(
               widget.recipient,
               style: GoogleFonts.muli(
-              textStyle: TextStyle(
-                color: Colors.white, 
-                letterSpacing: .5, 
-                fontSize: 30.0, 
-                fontWeight: FontWeight.bold
+                textStyle: TextStyle(
+                  color: Colors.white, 
+                  letterSpacing: .5, 
+                  fontSize: 30.0, 
+                  fontWeight: FontWeight.bold
+                )
               )
-          )
             ),
           ),
           backgroundColor: Colors.white,

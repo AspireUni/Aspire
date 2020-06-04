@@ -11,7 +11,7 @@ class ProfileHeader extends StatelessWidget {
       width: MediaQuery.of(context).size.width, 
       height: 200.0,
       decoration: BoxDecoration(
-        color: Color(0xFF0F1236), 
+        color: Theme.of(context).primaryColor, 
         borderRadius: BorderRadius.only(
           bottomLeft: Radius.elliptical(40.0, 40.0)
         ),
@@ -23,7 +23,7 @@ class ProfileHeader extends StatelessWidget {
             width: 60.0, 
             height: 60.0, 
             decoration: BoxDecoration(
-              color: Color(0xFF45CAB9), 
+              color: Theme.of(context).accentColor, 
               shape: BoxShape.circle
             )
           ),

@@ -17,22 +17,26 @@ class _MyAppState extends State<AppController> {
         setState(() {pageIndex = tappedIndex;});
     }
     @override Widget build(BuildContext context) {
-        return MaterialApp(
-            home: Scaffold(
-                body: _widgets[pageIndex],
-                bottomNavigationBar: CurvedNavigationBar(
-                backgroundColor: Color(0xFF0e1134), 
-                index: 1,
-                onTap: tapped,
-                items: <Widget>[
-                  Icon(Icons.person, size: navBarIconSize),
-                  Icon(Icons.home, size: navBarIconSize),
-                  Icon(Icons.chat_bubble, size: navBarIconSize),
-                 ],
-                 animationDuration: Duration(milliseconds: 200),
-                 animationCurve: Curves.bounceInOut
-             ), 
-         ),
-     );
+      return MaterialApp(
+        home: Scaffold(
+          body: _widgets[pageIndex],
+          bottomNavigationBar: CurvedNavigationBar(
+            backgroundColor: Color(0xFF0e1134), 
+            index: 1,
+            onTap: tapped,
+            items: <Widget>[
+              Icon(Icons.person, size: navBarIconSize),
+              Icon(Icons.home, size: navBarIconSize),
+              Icon(Icons.chat_bubble, size: navBarIconSize),
+            ],
+            animationDuration: Duration(milliseconds: 200),
+            animationCurve: Curves.bounceInOut
+          ), 
+        ),
+        theme: ThemeData(
+          primaryColor: Color(0xFF0F1236),
+          accentColor: Color(0xFF45cab9),
+        )
+      );
    }
 }

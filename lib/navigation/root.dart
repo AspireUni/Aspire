@@ -12,7 +12,7 @@ class Root extends StatelessWidget {
           '/': (context) => FirstRoute(),
           '/second': (context) => SecondRoute(),
           '/UserProfile': (context) => AppController(),
-        },
+        }
       );
     }
   }
