@@ -1,0 +1,125 @@
+import 'package:google_fonts/google_fonts.dart';
+import 'package:flutter/material.dart';
+import 'package:mentorApp/constants/profile_constants.dart';
+import './header.dart';
+
+ 
+class ProfileEducation extends StatelessWidget {  
+  final List<Map<String, Object>> schools;
+  ProfileEducation({Key key, @required this.schools}) : super(key: key);
+  
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      width: MediaQuery.of(context).size.width,
+      padding: EdgeInsets.fromLTRB(30.0, 10.0, 30.0, 20.0),
+      decoration: BoxDecoration(
+        border: Border(
+          bottom: BorderSide(
+            width: 5.0,
+            color: Colors.black12
+          )
+        )
+      ),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: <Widget>[
+          SectionHeader(title: SECTION_TITLE_EDUCATION),
+          buildSchoolList(context)
+        ],
+      )
+    );
+  }
+
+  buildSchoolRow(BuildContext context, String school, String program, String startYear, String endYear) {
+    final String dateRange = startYear + " - " + endYear;
+
+    return Container(
+      width: MediaQuery.of(context).size.width,
+      padding: EdgeInsets.fromLTRB(0.0, 10.0, 0.0, 10.0),
+      decoration: BoxDecoration(
+        border: Border(
+          bottom: BorderSide(
+            color: Colors.black12
+          )
+        )
+      ),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: <Widget>[
+          buildSchool(school),
+          buildProgram(program),
+          buildDateRange(dateRange)
+        ]
+      )
+    );
+  }
+
+  buildSchoolList(BuildContext context) {
+    List<Widget> schoolList = new List<Widget>();
+    for (int i = 0; i < schools.length; i++) {
+      schoolList.add(
+        buildSchoolRow(
+          context, 
+          schools[i]["school"], 
+          schools[i]["program"], 
+          schools[i]["startYear"],
+          schools[i]["endYear"]
+        )
+      );
+    }
+
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: schoolList
+    );
+  }
+
+  buildSchool(String school) {
+    return Text(
+      school,
+      textAlign: TextAlign.left,
+      style: GoogleFonts.muli(
+        textStyle: TextStyle(
+          color: Colors.black,
+          letterSpacing: .5,
+          height: 1.2,
+          fontSize: 13.0,
+          fontWeight: FontWeight.w700
+        ),
+      )
+    );
+  }
+
+  buildProgram(String program) {
+    return Text(
+      program,
+      textAlign: TextAlign.left,
+      style: GoogleFonts.muli(
+        textStyle: TextStyle(
+          color: Colors.black,
+          letterSpacing: .5,
+          height: 1.2,
+          fontSize: 13.0,
+          fontWeight: FontWeight.w500
+        ),
+      )
+    );
+  }
+
+  buildDateRange(String dateRange) {
+    return Text(
+      dateRange,
+      textAlign: TextAlign.left,
+      style: GoogleFonts.muli(
+        textStyle: TextStyle(
+          color: Colors.black54,
+          letterSpacing: .5,
+          height: 1.2,
+          fontSize: 13.0,
+          fontWeight: FontWeight.w500
+        ),
+      )
+    );
+  }
+}

@@ -1,55 +1,52 @@
 import 'package:flutter/material.dart';
-import '../section_icons.dart';
+import 'package:mentorApp/constants/navigation_constants.dart';
+import 'package:mentorApp/constants/profile_constants.dart';
+import './summary.dart';
+import './education.dart';
+import './experience.dart';
 import './skills.dart';
-import './bio.dart';
-import './info.dart';
+import './contact.dart';
 
  
-class ProfileSections extends StatefulWidget {  
+class ProfileSections extends StatelessWidget {  
 
   final Map data;
-  ProfileSections({Key key, @required this.data}) : super(key: key);
+  final Map<String, GlobalKey> keys;
+  ProfileSections({Key key, @required this.data, @required this.keys}) : super(key: key);
   
-  @override
-  ProfileSectionsState createState() => ProfileSectionsState();
- 
-}
-  
-class ProfileSectionsState extends State<ProfileSections> {
-
-  String activeSection = "Skills";
-
-  buildSection() {
-    switch (activeSection) {
-      case "Skills":
-        return ProfileSkills(skills: widget.data["skills"]);
-      case "Bio":
-        return ProfileBio(bio: widget.data["bio"]);
-      case "Info":
-        return ProfileInfo(info: widget.data["info"]);
-    }
-  }
-
-  void _handlePress(String section) {
-    setState(() {
-      activeSection = section;
-    });
-  }
-
   @override
   Widget build(BuildContext context) {
-    return Column(
-      children: <Widget> [
-        Container(
-          padding: EdgeInsets.fromLTRB(60.0, 20.0, 60.0, 20.0),
-          height: MediaQuery.of(context).size.height * 0.45,
-          child: buildSection()
-        ),
-        ProfileSectionIcons(
-          activeSection: activeSection, 
-          handlePress: _handlePress
+
+    return 
+    Container(
+      height: MediaQuery.of(context).size.height - kProfileHeaderHeight - kAppNavBarHeight,
+      child: SingleChildScrollView(
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: <Widget> [
+            ProfileSummary(
+              key: keys["bioKey"],
+              summary: data["summary"]
+            ),
+            ProfileEducation(
+              key: keys["educationKey"], 
+              schools: data["schools"]
+            ),
+            ProfileExperience(
+              key: keys["experienceKey"], 
+              jobs: data["jobs"]
+            ),
+            ProfileSkills(
+              key: keys["skillsKey"], 
+              skills: data["skills"]
+            ),
+            ProfileContact(
+              key: keys["contactKey"], 
+              contact: data["contact"]
+            )
+          ]
         )
-      ]
+      )
     );
   }
 }
