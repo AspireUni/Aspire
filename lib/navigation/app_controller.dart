@@ -1,6 +1,5 @@
 import 'package:curved_navigation_bar/curved_navigation_bar.dart';
 import 'package:flutter/material.dart';
-import 'package:mentorApp/constants/color_constants.dart';
 import 'package:mentorApp/constants/navigation_constants.dart';
 import "../profile/user_profile.dart";
 import '../dashboard/dashboard.dart';

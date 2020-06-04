@@ -2,6 +2,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:flutter/material.dart';
 import './new_matches.dart';
 import './user_message_rows.dart';
+import '../constants/chat_constants.dart';
 
 class Chat extends StatelessWidget {
   const Chat({Key key}) : super(key: key);
@@ -33,7 +34,7 @@ buildHeader() {
     child: Column(
       children: <Text>[
         Text(
-          "Chat", 
+          CHAT_HEADER_TITLE, 
           style: GoogleFonts.muli(
             textStyle: TextStyle(
               color: Colors.black, 
@@ -44,7 +45,7 @@ buildHeader() {
           )
         ), 
         Text(
-          "Connect with your matches", 
+          CHAT_HEADER_SUBTITLE, 
           style: GoogleFonts.muli(
             textStyle: TextStyle(
               color: Colors.grey, 

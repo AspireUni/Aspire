@@ -1,6 +1,7 @@
 import 'package:google_fonts/google_fonts.dart';
 import 'package:flutter/material.dart';
 import './chat_messenger.dart';
+import '../constants/chat_constants.dart';
 
 const dummyData = [
   {
@@ -47,7 +48,7 @@ class NewMatches extends StatelessWidget {
         Padding(
           padding: const EdgeInsets.only(top: 20, bottom: 10),
           child: Text(
-            "New Matches", 
+            CHAT_NEW_MATCHES_TITLE, 
             textAlign: TextAlign.left,
             style: GoogleFonts.muli(
               textStyle: TextStyle(
