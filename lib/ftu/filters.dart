@@ -12,13 +12,21 @@ class FiltersPage extends StatefulWidget {
 }
 
 class FiltersState extends State<FiltersPage> {
-  //Item selectedItem;
-  //List<Item> users = <Item>[const Item('Tech', 'hi'), const Item('Arts','Bar')];
   List industryList = List();
   List specialtyList = List();
   List tempList = List();
   String _state;
   String _province;
+
+  void setIndustry(newVal) {
+    setState(() {
+      _province = null;
+      _state = newVal;
+      tempList = specialtyList
+          .where((x) => x.stateId.toString() == (_state.toString()))
+          .toList();
+    });
+  }
 
   Future<String> loadStatesProvincesFromFile() async {
     return await rootBundle.loadString('json/filter.json');
@@ -43,93 +51,101 @@ class FiltersState extends State<FiltersPage> {
   }
 
   Widget build(BuildContext context) {
-      return Scaffold(
-        body: Container(
-          child: new Form(
-            child: Padding(
-              padding: const EdgeInsets.only(top: 16.0, left: 28.0),
-              child: new Container(
-                width: 350,
-                decoration: new BoxDecoration(
-                image: new DecorationImage(image: new AssetImage("images/DefaultBg.png"), fit: BoxFit.cover,),
-                ),
-                child: Column(
-                  children: <Widget>[
-                    new DropdownButton(
-                      isExpanded: true,
-                      items: industryList.map((item) {
-                        return new DropdownMenuItem(
-                          child: new Text(item.name),
-                          value: item.id.toString(),
-                        );
-                      }).toList(),
-                      onChanged: (newVal) {
-                        setState(() {
-                          _province = null;
-                          _state = newVal;
-                          tempList = specialtyList
-                              .where((x) =>
-                                  x.stateId.toString() == (_state.toString()))
-                              .toList();
-                        });
-                        // print(testingList.toString());
-                      },
-                      value: _state,
-                      hint: Text('Select an industry'),
-                    ),
-                    new DropdownButton(
-                      isExpanded: true,
-                      items: tempList.map((item) {
-                        return new DropdownMenuItem(
-                          child: new Text(item.name),
-                          value: item.id.toString(),
-                        );
-                      }).toList(),
-                      onChanged: (newVal) {
-                        setState(() {
-                          _province = newVal;
-                        });
-                      },
-                      
-                      value: _province,
-                      hint: Text('Select a field'),
-                    ),
-                    Align(
-                      child: FloatingActionButton(
-                        child: Text("Next"),
-                        onPressed: () {
-                        Navigator.pushNamed(context, '/second');
-                      },),
-                      alignment: Alignment.bottomRight,
-                    ),
-                  ],
-                ),
-              ),
-            ),
+    return Stack(children: <Widget>[
+      Image.asset(
+        "images/DefaultBg.png",
+        height: MediaQuery.of(context).size.height,
+        width: MediaQuery.of(context).size.width,
+        fit: BoxFit.fill,
+      ),
+      Scaffold(
+          backgroundColor: Colors.transparent,
+          appBar: AppBar(
+            backgroundColor: Colors.transparent,
+            elevation: 0.0,
           ),
-        ),
-      );
+          body: Center(
+              child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: <Widget>[buildIndustry(), buildSpecialty()],
+          )),
+          floatingActionButton: FloatingActionButton(
+            backgroundColor: Colors.teal,
+            child: Text("Next"),
+            onPressed: () {
+              Navigator.pushNamed(context, '/second');
+            },
+          ))
+    ]);
   }
-}
 
-// buildButton(){
-//   return DropdownButtonHideUnderline(
-//     child: new DropdownButton<Item>(
-//                 isExpanded: true,
-//                 hint: Text("Select an industry"),
-//                 value: selectedItem,
-//                 onChanged: (Item newValue) {
-//                     selectedItem = newValue;
-//                 },
-//                 items: users.map((Item user) {
-//                   return new DropdownMenuItem<Item>(
-//                     value: user,
-//                     child: new Text(
-//                       user.industry,
-//                       style: new TextStyle(color: Colors.black),
-//                     ),
-//                   );
-//                 }).toList(),
-//               ),
-//   );
-// }
+  // Widget build(BuildContext context) {
+  //   return Scaffold(
+  //     body: Container(
+  //       child: new Form(
+  //         child: Padding(
+  //           padding: const EdgeInsets.only(top: 16.0, left: 28.0),
+  //           child: new Container(
+  //             width: 350,
+  //             decoration: new BoxDecoration(
+  //               image: new DecorationImage(
+  //                 image: new AssetImage("images/DefaultBg.png"),
+  //                 fit: BoxFit.cover,
+  //               ),
+  //             ),
+  //             child: Column(
+  //               children: <Widget>[
+  //                 buildIndustry(),
+  //                 buildSpecialty(),
+  //                 new FloatingActionButton(
+  //                   child: Text("Next"),
+  //                   backgroundColor: Colors.teal,
+  //                   onPressed: () {
+  //                     Navigator.pushNamed(context, '/second');
+  //                   },
+  //                 ),
+  //               ],
+  //             ),
+  //           ),
+  //         ),
+  //       ),
+  //     ),
+  //   );
+  // }
+
+  buildIndustry() {
+    return DropdownButton(
+      isExpanded: true,
+      items: industryList.map((item) {
+        return new DropdownMenuItem(
+          child: new Text(item.name),
+          value: item.id.toString(),
+        );
+      }).toList(),
+      onChanged: (newVal) {
+        setIndustry(newVal);
+      },
+      value: _state,
+      hint: Text('Select an industry'),
+    );
+  }
+
+  buildSpecialty() {
+    return DropdownButton(
+      isExpanded: true,
+      items: tempList.map((item) {
+        return new DropdownMenuItem(
+          child: new Text(item.name),
+          value: item.id.toString(),
+        );
+      }).toList(),
+      onChanged: (newVal) {
+        setState(() {
+          _province = newVal;
+        });
+      },
+      value: _province,
+      hint: Text('Select a field'),
+    );
+  }
+} // End of class
