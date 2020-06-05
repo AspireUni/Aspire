@@ -1,3 +1,3 @@
 // Widget dimensions
 
-const double kAppNavBarHeight = 60.0;
+const double appNavBarHeight = 60.0;

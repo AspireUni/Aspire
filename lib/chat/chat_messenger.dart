@@ -1,7 +1,7 @@
-import 'package:flutter/services.dart';
+import 'package:intl/intl.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:flutter/material.dart';
-import 'package:intl/intl.dart';
+import 'package:flutter/services.dart';
 import './message.dart';
 
 const dummyData = [
@@ -184,7 +184,7 @@ class ChatMessengerState extends State<ChatMessenger> {
           backgroundColor: Colors.white,
           body: Container(
             height: MediaQuery.of(context).size.height,
-            margin: const EdgeInsets.all(0),
+            margin: EdgeInsets.all(0),
             child: Center(
               child: Column(
                 children: buildMessenger()

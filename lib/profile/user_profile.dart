@@ -82,7 +82,7 @@ class UserProfile extends StatelessWidget {
         Scaffold(
           backgroundColor: Colors.transparent,
           body: Container(
-            margin: const EdgeInsets.all(0),
+            margin: EdgeInsets.all(0),
             child: Center(
               child: Column(
                 children: buildUserProfileView(keys)
