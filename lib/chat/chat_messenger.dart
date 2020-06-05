@@ -1,42 +1,65 @@
+import 'dart:async';
+import 'dart:io';
+
 import 'package:flutter/services.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:flutter/material.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:intl/intl.dart';
 import './message.dart';
 
 const dummyData = [
   {
-    "text": "Hello",
+    "type": 1,
+    "message": "images/hellobig.jpg",
+    "isSent": false,
+    "timestamp": '2020-06-04 09:33'
+  },
+  {
+    "type": 1,
+    "message": "images/hello.png",
+    "isSent": true,
+    "timestamp": '2020-06-04 09:33'
+  },
+  {
+    "type": 0,
+    "message": "Hello",
     "isSent": true,
     "timestamp": '2020-06-04 09:36'
   },
   {
-    "text": "it's me",
+    "type": 0,
+    "message": "it's me",
     "isSent": false,
     "timestamp": '2020-06-04 09:36'
   },
   {
-    "text": "I was wondering if after all these years you'd like to meet",
+    "type": 0,
+    "message": "I was wondering if after all these years you'd like to meet",
     "isSent": true,
     "timestamp": '2020-06-04 09:37'
   },
   {
-    "text": "to go over?",
+    "type": 0,
+    "message": "to go over?",
     "isSent": false,
     "timestamp": '2020-06-04 09:38'
   },
   {
-    "text": "everything.",
+    "type": 0,
+    "message": "everything.",
     "isSent": true,
     "timestamp": '2020-06-04 09:39'
   },
   {
-    "text": "they say that time's supposed to heal ya",
+    "type": 0,
+    "message": "they say that time's supposed to heal ya",
     "isSent": true,
     "timestamp": '2020-06-04 09:41'
   },
   {
-    "text": "but I ain't done much healing 😠",
+    "type": 0,
+    "message": "but I ain't done much healing 😠",
     "isSent": true,
     "timestamp": '2020-06-04 09:42'
   },
@@ -45,16 +68,22 @@ const dummyData = [
 class ChatMessengerState extends State<ChatMessenger> {
   String recipient;
   List<Object> messages = [...dummyData];
+  // bool isLoading = false;
 
-  void addMessage (message, timestamp, isSent) {
-    setState(() {messages = [...messages, {"text": message, "isSent": isSent, "timestamp": timestamp}];});
+  PickedFile imageFile;
+
+  final TextEditingController textInputController = new TextEditingController();
+  final ImagePicker imagePicker = new ImagePicker();
+
+  void addMessage (type, message, timestamp, isSent) {
+    setState(() {messages = [...messages, {"type": type, "message": message, "isSent": isSent, "timestamp": timestamp}];});
   }
 
-  void submitMessage (String value) {
-    textInputController.text = "";
-    if (value != "") {
+  void submitMessage (int type, String value) {
+    if (value.trim() != '') {
+      textInputController.clear();
       String timestamp = DateFormat('yyyy-MM-dd kk:mm').format(DateTime.now());
-      addMessage(value, timestamp, true);
+      addMessage(type, value, timestamp, true);
       SystemSound.play(SystemSoundType.click);
     }
   }
@@ -78,6 +107,14 @@ class ChatMessengerState extends State<ChatMessenger> {
     );
   }
 
+  Future pickImage(ImageSource imageSource) async {
+    imageFile = await imagePicker.getImage(source: imageSource);
+
+    if (imageFile != null) {
+      // TODO: upload to Firebase and store url to image as the "message"
+    }
+  }
+
   Widget buildMessengerKeyboard() {
     return Container(
       constraints: BoxConstraints(minHeight: 70.0, maxHeight: 200.0),
@@ -91,7 +128,13 @@ class ChatMessengerState extends State<ChatMessenger> {
             icon: Icon(Icons.photo),
             iconSize: 25.0,
             color: Theme.of(context).primaryColor,
-            onPressed: () {},
+            onPressed: () => pickImage(ImageSource.gallery),
+          ),
+          IconButton(
+            icon: Icon(Icons.camera),
+            iconSize: 25.0,
+            color: Theme.of(context).primaryColor,
+            onPressed: () => pickImage(ImageSource.camera),
           ),
           Expanded(
             child: TextField(
@@ -109,21 +152,19 @@ class ChatMessengerState extends State<ChatMessenger> {
               maxLines: null, // this allows for multi-line input
               textInputAction: TextInputAction.send,
               controller: textInputController,
-              onSubmitted: submitMessage,
+              onSubmitted: (value) => submitMessage(0, value),
             )
           ),
           IconButton(
             icon: Icon(Icons.send),
             iconSize: 25.0,
             color: Theme.of(context).primaryColor,
-            onPressed: () => submitMessage(textInputController.value.text),
+            onPressed: () => submitMessage(0, textInputController.value.text),
           ),
         ]
       )
     );
   }
-
-  final TextEditingController textInputController = new TextEditingController();
 
   List<Widget> buildMessenger() {
     List<Widget> messagesList = new List<Widget>();
@@ -134,7 +175,7 @@ class ChatMessengerState extends State<ChatMessenger> {
         );
       }
       messagesList.add(
-        Message(message: (messages[i] as Map)["text"], isSent: (messages[i] as Map)["isSent"])
+        Message(type: (messages[i] as Map)["type"], message: (messages[i] as Map)["message"], isSent: (messages[i] as Map)["isSent"])
       );
     }
 

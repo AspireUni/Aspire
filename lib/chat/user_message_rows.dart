@@ -150,7 +150,7 @@ buildMessageRows(context) {
     );
   }
 
-  return Flexible(    
+  return Flexible(
     child: ListView(
       padding: EdgeInsets.all(0.0),
       scrollDirection: Axis.vertical,
