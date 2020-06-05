@@ -1,4 +1,3 @@
-import 'package:percent_indicator/percent_indicator.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:flutter/material.dart';
 import 'package:mentorApp/constants/profile_constants.dart';
@@ -16,7 +15,7 @@ class ProfileSkills extends StatelessWidget {
     );
   }
 
-  buildSkillRow(BuildContext context, String skill, double rating) {
+  buildSkillRow(BuildContext context, String skill, String level) {
     return Container(
       width: MediaQuery.of(context).size.width,
       padding: EdgeInsets.only(bottom: 10.0),
@@ -31,8 +30,8 @@ class ProfileSkills extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: <Widget>[
-          buildSkill(skill),
-          buildRatingBar(context, rating)
+          buildSkillText(skill, true),
+          buildSkillText(level, false)
         ]
       )
     );
@@ -45,7 +44,7 @@ class ProfileSkills extends StatelessWidget {
         buildSkillRow(
           context, 
           skills[i]["skill"],
-          skills[i]["rating"]
+          skills[i]["level"]
         )
       );
     }
@@ -59,34 +58,23 @@ class ProfileSkills extends StatelessWidget {
     );
   }
 
-  buildSkill(String label) {
+  buildSkillText(String text, bool isSkill) {
     return Container(
-      padding: EdgeInsets.only(bottom: 5.0),
         child: Text(
-        label,
+        text,
         textAlign: TextAlign.left,
         style: GoogleFonts.muli(
           textStyle: TextStyle(
-            color: Colors.black,
+            color: isSkill ? Colors.black : Colors.black54,
             letterSpacing: .5,
             height: 1.2,
             fontSize: 13.0,
-            fontWeight: FontWeight.w700
+            fontWeight: isSkill ? FontWeight.w700 : FontWeight.w500
           ),
         )
       )
     );
   }
 
-  buildRatingBar(BuildContext context, double rating) {
-    return  LinearPercentIndicator(
-      width: MediaQuery.of(context).size.width - 60.0,
-      lineHeight: 9.0,
-      percent: rating / 10,
-      backgroundColor: Colors.black12,
-      progressColor: Theme.of(context).accentColor,
-      animation: true,
-      animationDuration: 500,
-    );
-  }
+ 
 }

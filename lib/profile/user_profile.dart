@@ -35,23 +35,23 @@ Map dummyData = {
   "skills": [
     {
       "skill": "Front-end development",
-      "rating": 9.0
+      "level": "Expert"
     },
     {
       "skill": "Back-end development",
-      "rating": 6.0
+      "level": "Intermediate"
     },
     {
       "skill": "React",
-      "rating": 8.0
-    },
-    {
-      "skill": "Java",
-      "rating": 7.0
+      "level": "Expert"
     },
     {
       "skill": "C#",
-      "rating": 5.0
+      "level": "Beginner"
+    },
+    {
+      "skill": "Java",
+      "level": "Intermediate"
     }
   ]
 };
