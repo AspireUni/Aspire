@@ -1,5 +1,5 @@
-import 'package:google_fonts/google_fonts.dart';
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:mentorApp/constants/profile_constants.dart';
 import './header.dart';
 
@@ -24,7 +24,7 @@ class ProfileEducation extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: <Widget>[
-          SectionHeader(title: SECTION_TITLE_EDUCATION),
+          SectionHeader(title: sectionTitleEducation),
           buildSchoolList(context)
         ],
       )

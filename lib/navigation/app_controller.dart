@@ -1,9 +1,9 @@
 import 'package:curved_navigation_bar/curved_navigation_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:mentorApp/constants/navigation_constants.dart';
-import "../profile/user_profile.dart";
-import '../dashboard/dashboard.dart';
 import "../chat/chat.dart";
+import '../dashboard/dashboard.dart';
+import "../profile/user_profile.dart";
 
 class AppController extends StatefulWidget {
   @override _MyAppState createState() => _MyAppState();
@@ -23,7 +23,7 @@ class _MyAppState extends State<AppController> {
         body: _widgets[pageIndex],
         bottomNavigationBar: CurvedNavigationBar(
           backgroundColor: Theme.of(context).primaryColor,
-          height: kAppNavBarHeight,  
+          height: appNavBarHeight,  
           index: 1,
           onTap: tapped,
           items: <Widget>[

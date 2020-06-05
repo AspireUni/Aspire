@@ -1,8 +1,8 @@
 import 'package:google_fonts/google_fonts.dart';
 import 'package:flutter/material.dart';
+import '../constants/chat_constants.dart';
 import './new_matches.dart';
 import './user_message_rows.dart';
-import '../constants/chat_constants.dart';
 
 class Chat extends StatelessWidget {
   const Chat({Key key}) : super(key: key);
@@ -15,7 +15,7 @@ class Chat extends StatelessWidget {
           backgroundColor: Colors.transparent,
           body: Container(
             height: MediaQuery.of(context).size.height,
-            margin: const EdgeInsets.all(0),
+            margin: EdgeInsets.all(0),
             child: Center(
               child: Column(
                 children: buildChatView()
@@ -30,11 +30,11 @@ class Chat extends StatelessWidget {
 
 buildHeader() {
   return Container (
-    margin: const EdgeInsets.all(30.0),
+    margin: EdgeInsets.all(30.0),
     child: Column(
       children: <Text>[
         Text(
-          CHAT_HEADER_TITLE, 
+          chatHeaderTitle, 
           style: GoogleFonts.muli(
             textStyle: TextStyle(
               color: Colors.black, 
@@ -45,7 +45,7 @@ buildHeader() {
           )
         ), 
         Text(
-          CHAT_HEADER_SUBTITLE, 
+          chatHeaderSubtitle, 
           style: GoogleFonts.muli(
             textStyle: TextStyle(
               color: Colors.grey, 

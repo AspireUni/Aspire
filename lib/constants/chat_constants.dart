@@ -1,5 +1,5 @@
-const String CHAT_HEADER_TITLE = "Chat";
-const String CHAT_HEADER_SUBTITLE = "Connect with your matches";
+const String chatHeaderTitle = "Chat";
+const String chatHeaderSubtitle = "Connect with your matches";
 
-const String CHAT_MESSAGE_ROW_TITLE = "Messages";
-const String CHAT_NEW_MATCHES_TITLE = "New Matches";
+const String chatMessageRowTitle = "Messages";
+const String chatNewMatchesTitle = "New Matches";

@@ -1,9 +1,10 @@
 import 'dart:async';
 import 'dart:io';
 
+import 'package:firebase_storage/firebase_storage.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:intl/intl.dart';
 import './message.dart';
@@ -70,7 +71,7 @@ class ChatMessengerState extends State<ChatMessenger> {
   List<Object> messages = [...dummyData];
   // bool isLoading = false;
 
-  PickedFile imageFile;
+  File imageFile;
 
   final TextEditingController textInputController = new TextEditingController();
   final ImagePicker imagePicker = new ImagePicker();
@@ -107,11 +108,32 @@ class ChatMessengerState extends State<ChatMessenger> {
     );
   }
 
+  // Future uploadImage() async {
+  //   String fileName = DateTime.now().millisecondsSinceEpoch.toString();
+  //   StorageReference reference = FirebaseStorage.instance.ref().child(fileName);
+  //   StorageUploadTask uploadTask = reference.putFile(imageFile);
+  //   StorageTaskSnapshot storageTaskSnapshot = await uploadTask.onComplete;
+  //   storageTaskSnapshot.ref.getDownloadURL().then((downloadUrl) {
+  //     String imageUrl = downloadUrl;
+  //     setState(() {
+  //       // isLoading = false;
+  //       onSendMessage(imageUrl, 1);
+  //     });
+  //   }, onError: (err) {
+  //     // setState(() {
+  //     //   isLoading = false;
+  //     // });
+  //     // Fluttertoast.showToast(msg: 'This file is not an image');
+  //     print("error");
+  //   });
+  // }
+
   Future pickImage(ImageSource imageSource) async {
-    imageFile = await imagePicker.getImage(source: imageSource);
+    imageFile = (await imagePicker.getImage(source: imageSource)) as File;
 
     if (imageFile != null) {
       // TODO: upload to Firebase and store url to image as the "message"
+      // uploadImage();
     }
   }
 
@@ -225,7 +247,7 @@ class ChatMessengerState extends State<ChatMessenger> {
           backgroundColor: Colors.white,
           body: Container(
             height: MediaQuery.of(context).size.height,
-            margin: const EdgeInsets.all(0),
+            margin: EdgeInsets.all(0),
             child: Center(
               child: Column(
                 children: buildMessenger()
