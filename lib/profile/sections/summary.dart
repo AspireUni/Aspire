@@ -25,7 +25,7 @@ class ProfileSummary extends StatelessWidget {
           textStyle: TextStyle(
             color: Colors.black54,
             letterSpacing: .5,
-            height: 1.75,
+            height: 1.5,
             fontSize: 13.0,
             fontWeight: FontWeight.w600
           ),

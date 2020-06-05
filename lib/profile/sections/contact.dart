@@ -50,7 +50,7 @@ class ProfileContact extends StatelessWidget {
 
   buildInfoList(BuildContext context) {
     return Container(
-      padding: EdgeInsets.only(bottom: 20.0),
+      padding: EdgeInsets.only(bottom: 10.0),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: <Widget>[
@@ -98,7 +98,8 @@ class ProfileContact extends StatelessWidget {
       onTap: handleTap,
       child: Container(
         width: MediaQuery.of(context).size.width,
-        padding: EdgeInsets.fromLTRB(0.0, 10.0, 0.0, 10.0),
+        padding: EdgeInsets.only(bottom: 10.0),
+        margin: EdgeInsets.only(bottom: 10.0),
         decoration: BoxDecoration(
           border: Border(
             bottom: BorderSide(
