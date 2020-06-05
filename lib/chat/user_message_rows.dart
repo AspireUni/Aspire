@@ -56,9 +56,9 @@ class UserMessageRows extends StatelessWidget {
     return Column(
       children: <Widget>[
         Padding (
-          padding: const EdgeInsets.only(top: 20, bottom: 10),
+          padding: EdgeInsets.only(top: 20, bottom: 10),
           child:Text(
-            CHAT_MESSAGE_ROW_TITLE, 
+            chatMessageRowTitle, 
             textAlign: TextAlign.left,
             style: GoogleFonts.muli(
               textStyle: TextStyle(

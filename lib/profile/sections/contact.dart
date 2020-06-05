@@ -1,10 +1,10 @@
-import 'package:google_fonts/google_fonts.dart';
 import 'package:flutter/cupertino.dart';
-import 'package:url_launcher/url_launcher.dart';
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:mentorApp/constants/profile_constants.dart';
-import './section.dart';
+import 'package:url_launcher/url_launcher.dart';
 import '../../chat/chat_messenger.dart';
+import './section.dart';
 
  
 class ProfileContact extends StatelessWidget {  
@@ -12,25 +12,25 @@ class ProfileContact extends StatelessWidget {
   final String fullName;
   ProfileContact({Key key, @required this.contact, @required this.fullName}) : super(key: key);
 
-  final IconData chat = const IconData(
+  final IconData chat = IconData(
     62459,
     fontFamily: CupertinoIcons.iconFont,
     fontPackage: CupertinoIcons.iconFontPackage
   );
   
-  final IconData email = const IconData(
+  final IconData email = IconData(
     0xf422,
     fontFamily: CupertinoIcons.iconFont,
     fontPackage: CupertinoIcons.iconFontPackage
   );
 
-  final IconData phone = const IconData(
+  final IconData phone = IconData(
     0xf4b8,
     fontFamily: CupertinoIcons.iconFont,
     fontPackage: CupertinoIcons.iconFontPackage
   );
 
-  final IconData web = const IconData(
+  final IconData web = IconData(
     0xf4d2,
     fontFamily: CupertinoIcons.iconFont,
     fontPackage: CupertinoIcons.iconFontPackage
@@ -43,7 +43,7 @@ class ProfileContact extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Section(
-      title: SECTION_TITLE_CONTACT,
+      title: sectionTitleContact,
       child: buildInfoList(context)
     );
   }
@@ -54,28 +54,28 @@ class ProfileContact extends StatelessWidget {
         buildInfoRow(
           context, 
           chat, 
-          CONTACT_CHAT, 
-          CONTACT_CHAT_SUBTITLE,
+          contactChat, 
+          contactChatSubtitle,
           () => handleChatTap(context)
         ),
         buildInfoRow(
           context, 
           email, 
-          CONTACT_EMAIL_ADDRESS, 
+          contactEmailAddress, 
           contact["emailAddress"],
           handleEmailTap
         ),
         buildInfoRow(
           context,
           phone,
-          CONTACT_PHONE_NUMBER,
+          contactPhoneNumber,
           contact["phoneNumber"],
           handlePhoneTap
         ),
         buildInfoRow(
           context,
           web,
-          CONTACT_WEBSITE,
+          contactWebsite,
           contact["website"],
           handleWebsiteTap
         )

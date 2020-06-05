@@ -1,5 +1,5 @@
-import 'package:google_fonts/google_fonts.dart';
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:mentorApp/constants/profile_constants.dart';
 import './section.dart';
  
@@ -10,7 +10,7 @@ class ProfileSkills extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Section(
-      title: SECTION_TITLE_SKILLS,
+      title: sectionTitleSkills,
       child: buildSkillList(context)
     );
   }
@@ -30,28 +30,28 @@ class ProfileSkills extends StatelessWidget {
     List<Widget> beginnerList = new List<Widget>();
 
     for (int i = 0; i < skills.length; i++) {
-      if (skills[i]["level"] == SKILL_EXPERT){
+      if (skills[i]["level"] == skillExpert){
         expertList.add(
           buildSkillRow(
             context, 
             skills[i]["skill"],
-            SKILL_EXPERT
+            skillExpert
           )
         );
-      } else if (skills[i]["level"] == SKILL_INTERMEDIATE){
+      } else if (skills[i]["level"] == skillIntermediate){
         intermediateList.add(
           buildSkillRow(
             context, 
             skills[i]["skill"],
-            SKILL_INTERMEDIATE
+            skillIntermediate
           )
         );
-      } else if (skills[i]["level"] == SKILL_BEGINNER){
+      } else if (skills[i]["level"] == skillBeginner){
         beginnerList.add(
           buildSkillRow(
             context, 
             skills[i]["skill"],
-            SKILL_BEGINNER
+            skillBeginner
           )
         );
       }

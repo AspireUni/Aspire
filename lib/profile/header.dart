@@ -1,6 +1,6 @@
-import 'package:google_fonts/google_fonts.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:mentorApp/constants/profile_constants.dart';
  
 class ProfileHeader extends StatelessWidget {  
@@ -11,7 +11,7 @@ class ProfileHeader extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       width: MediaQuery.of(context).size.width, 
-      height: kProfileHeaderHeight,
+      height: profileHeaderHeight,
       decoration: BoxDecoration(
         color: Theme.of(context).primaryColor, 
         borderRadius: BorderRadius.only(
@@ -44,7 +44,7 @@ class ProfileHeader extends StatelessWidget {
 
   buildFullName() {
     return Container(
-      margin: const EdgeInsets.only(top: 10.0),
+      margin: EdgeInsets.only(top: 10.0),
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: <Text> [

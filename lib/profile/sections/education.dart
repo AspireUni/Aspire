@@ -1,5 +1,5 @@
-import 'package:google_fonts/google_fonts.dart';
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:mentorApp/constants/profile_constants.dart';
 import './section.dart';
 
@@ -11,7 +11,7 @@ class ProfileEducation extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Section(
-      title: SECTION_TITLE_EDUCATION,
+      title: sectionTitleEducation,
       child: buildSchoolList(context)
     );
   }

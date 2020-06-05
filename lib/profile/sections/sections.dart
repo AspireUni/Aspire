@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:mentorApp/constants/navigation_constants.dart';
 import 'package:mentorApp/constants/profile_constants.dart';
-import './summary.dart';
+import './contact.dart';
 import './education.dart';
 import './experience.dart';
 import './skills.dart';
-import './contact.dart';
+import './summary.dart';
 
  
 class ProfileSections extends StatelessWidget {  
@@ -18,7 +18,7 @@ class ProfileSections extends StatelessWidget {
 
     return 
     Container(
-      height: MediaQuery.of(context).size.height - kProfileHeaderHeight - kAppNavBarHeight,
+      height: MediaQuery.of(context).size.height - profileHeaderHeight - appNavBarHeight,
       child: SingleChildScrollView(
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
