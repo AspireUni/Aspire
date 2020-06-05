@@ -11,7 +11,8 @@ const String SECTION_TITLE_SKILLS = "Skills";
 const String SECTION_TITLE_CONTACT = "Contact";
 
 // Contact info
-
+const String CONTACT_CHAT = "Chat";
+const String CONTACT_CHAT_SUBTITLE = "Start a conversation";
 const String CONTACT_EMAIL_ADDRESS = "Email address";
 const String CONTACT_PHONE_NUMBER = "Phone number";
 const String CONTACT_WEBSITE = "Website";
