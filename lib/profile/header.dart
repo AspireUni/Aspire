@@ -1,7 +1,6 @@
 import 'package:google_fonts/google_fonts.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
-import 'package:mentorApp/constants/color_constants.dart';
 import 'package:mentorApp/constants/profile_constants.dart';
  
 class ProfileHeader extends StatelessWidget {  
@@ -15,7 +14,7 @@ class ProfileHeader extends StatelessWidget {
       width: MediaQuery.of(context).size.width, 
       height: kProfileHeaderHeight,
       decoration: BoxDecoration(
-        color: kPrimaryColor, 
+        color: Theme.of(context).primaryColor, 
         borderRadius: BorderRadius.only(
           bottomLeft: Radius.circular(40.0)
         ),
@@ -25,7 +24,7 @@ class ProfileHeader extends StatelessWidget {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget> [
-            buildProfilePhoto(),
+            buildProfilePhoto(context),
             buildFullName(),
             buildPopUpMenuButton(context)
           ]
@@ -34,12 +33,12 @@ class ProfileHeader extends StatelessWidget {
     );
   }
 
-  buildProfilePhoto() {
+  buildProfilePhoto(BuildContext context) {
     return Container(
       width: 60.0, 
       height: 60.0, 
       decoration: BoxDecoration(
-        color: kSecondaryColor, 
+        color: Theme.of(context).accentColor, 
         shape: BoxShape.circle
       )
     );
@@ -86,7 +85,7 @@ class ProfileHeader extends StatelessWidget {
             key.currentContext, 
             duration: Duration(milliseconds: 500)
         ),
-        color: kPrimaryColor,
+        color: Theme.of(context).primaryColor,
         itemBuilder: (BuildContext menuContext) => <PopupMenuEntry<GlobalKey>>[
           buildPopUpItem(
             context, 

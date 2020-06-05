@@ -1,6 +1,5 @@
 import 'package:curved_navigation_bar/curved_navigation_bar.dart';
 import 'package:flutter/material.dart';
-import 'package:mentorApp/constants/color_constants.dart';
 import 'package:mentorApp/constants/navigation_constants.dart';
 import "../profile/user_profile.dart";
 import '../dashboard/dashboard.dart';
@@ -23,7 +22,7 @@ class _MyAppState extends State<AppController> {
       home: Scaffold(
         body: _widgets[pageIndex],
         bottomNavigationBar: CurvedNavigationBar(
-          backgroundColor: kPrimaryColor,
+          backgroundColor: Theme.of(context).primaryColor,
           height: kAppNavBarHeight,  
           index: 1,
           onTap: tapped,
@@ -34,8 +33,12 @@ class _MyAppState extends State<AppController> {
             ],
           animationDuration: Duration(milliseconds: 200),
           animationCurve: Curves.bounceInOut
-        ), 
+        ),
       ),
+      theme: ThemeData(
+        primaryColor: Color(0xFF0F1236),
+        accentColor: Color(0xFF45cab9),
+      )
     );
   }
 }

@@ -1,7 +1,6 @@
 import 'package:percent_indicator/percent_indicator.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:flutter/material.dart';
-import 'package:mentorApp/constants/color_constants.dart';
 import 'package:mentorApp/constants/profile_constants.dart';
 import './header.dart';
  
@@ -96,7 +95,7 @@ class ProfileSkills extends StatelessWidget {
       lineHeight: 9.0,
       percent: rating / 10,
       backgroundColor: Colors.black12,
-      progressColor: kSecondaryColor,
+      progressColor: Theme.of(context).accentColor,
       animation: true,
       animationDuration: 500,
     );

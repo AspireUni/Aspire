@@ -24,7 +24,7 @@ class Dashboard extends StatelessWidget {
               body: Container(
                 child: Center(
                   child: Column(
-                    children: buildDashboardView()
+                    children: buildDashboardView(context)
                   )
                 )
               )
@@ -35,11 +35,11 @@ class Dashboard extends StatelessWidget {
 }
 
 // TODO: Generalize into reusable widgets (e.g. Title, subheader, etc)
-buildDashboardView() {
+buildDashboardView(BuildContext context) {
   return (
     <Widget>[
       ...buildHeader(), 
-      ...buildPotentialMatch(),
+      ...buildPotentialMatch(context),
     ]
   );
 }
@@ -71,14 +71,14 @@ buildHeader() {
   ];
 }
 
-buildPotentialMatch() {
+buildPotentialMatch(BuildContext context) {
   return <Container> [
     Container(
       child: Stack(
         alignment: FractionalOffset.bottomCenter,
         children: <Container>[
           buildDescriptionTextBox(), 
-          buildNameTextBox()
+          buildNameTextBox(context)
         ]
       )
     )
@@ -116,7 +116,7 @@ buildDescriptionTextBox() {
   );
 }
 
-buildNameTextBox() {
+buildNameTextBox(BuildContext context) {
   return Container(
     width: 295.0, 
     height: 90.0, 
@@ -127,7 +127,7 @@ buildNameTextBox() {
           width: 50.0, 
           height: 50.00, 
           decoration: BoxDecoration(
-            color: Color(0xFF45cab9), 
+            color: Theme.of(context).accentColor, 
             shape: BoxShape.circle
           )
         ),
@@ -149,7 +149,7 @@ buildNameTextBox() {
               "Mentor", 
                 style: GoogleFonts.muli(
                 textStyle: TextStyle(
-                  color: Color(0xFF45cab9),  
+                  color: Theme.of(context).accentColor,  
                   letterSpacing: .5, 
                   height: 1.5, 
                   fontSize: 15.0, 

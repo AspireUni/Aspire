@@ -1,6 +1,7 @@
 import 'package:google_fonts/google_fonts.dart';
 import 'package:flutter/material.dart';
 import './chat_messenger.dart';
+import '../constants/chat_constants.dart';
 
 const dummyData = [
   {
@@ -47,8 +48,8 @@ const dummyData = [
   },
 ];
 
-class Messages extends StatelessWidget {
-  Messages({Key key}) : super(key: key);
+class UserMessageRows extends StatelessWidget {
+  UserMessageRows({Key key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -57,7 +58,7 @@ class Messages extends StatelessWidget {
         Padding (
           padding: const EdgeInsets.only(top: 20, bottom: 10),
           child:Text(
-            "Messages", 
+            CHAT_MESSAGE_ROW_TITLE, 
             textAlign: TextAlign.left,
             style: GoogleFonts.muli(
               textStyle: TextStyle(
@@ -69,17 +70,18 @@ class Messages extends StatelessWidget {
             )
           )
         ),
-        buildMessages(context)
+        buildMessageRows(context)
       ]
     );
   }
 }
 
-buildMessages(context) {
+buildMessageRows(context) {
   List<Widget> messagesList = new List<Widget>();
   for (int i = 0; i < dummyData.length; i++) {
     messagesList.add(
       GestureDetector(
+        behavior: HitTestBehavior.translucent,
         onTap: () {
           Navigator.push(context, MaterialPageRoute(builder: (context) => ChatMessenger(recipient: dummyData[i]["name"])));
         },
@@ -128,7 +130,10 @@ buildMessages(context) {
                       ),
                       children: [
                         if(dummyData[i]["isSent"]) WidgetSpan(
-                          child: Icon(Icons.send, size: 12, color: Colors.grey),
+                          child: Container(
+                            margin: EdgeInsets.only(right: 6.0),
+                            child: Icon(Icons.send, size: 12, color: Colors.grey)
+                          ),
                         ),
                         TextSpan(
                           text: dummyData[i]["lastMessage"]
