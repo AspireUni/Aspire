@@ -49,41 +49,37 @@ class ProfileContact extends StatelessWidget {
   }
 
   buildInfoList(BuildContext context) {
-    return Container(
-      padding: EdgeInsets.only(bottom: 10.0),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: <Widget>[
-          buildInfoRow(
-            context, 
-            chat, 
-            CONTACT_CHAT, 
-            CONTACT_CHAT_SUBTITLE,
-            () => handleChatTap(context)
-          ),
-          buildInfoRow(
-            context, 
-            email, 
-            CONTACT_EMAIL_ADDRESS, 
-            contact["emailAddress"],
-            handleEmailTap
-          ),
-          buildInfoRow(
-            context,
-            phone,
-            CONTACT_PHONE_NUMBER,
-            contact["phoneNumber"],
-            handlePhoneTap
-          ),
-          buildInfoRow(
-            context,
-            web,
-            CONTACT_WEBSITE,
-            contact["website"],
-            handleWebsiteTap
-          )
-        ]
-      )
+    return SectionList(
+      children: <Widget>[
+        buildInfoRow(
+          context, 
+          chat, 
+          CONTACT_CHAT, 
+          CONTACT_CHAT_SUBTITLE,
+          () => handleChatTap(context)
+        ),
+        buildInfoRow(
+          context, 
+          email, 
+          CONTACT_EMAIL_ADDRESS, 
+          contact["emailAddress"],
+          handleEmailTap
+        ),
+        buildInfoRow(
+          context,
+          phone,
+          CONTACT_PHONE_NUMBER,
+          contact["phoneNumber"],
+          handlePhoneTap
+        ),
+        buildInfoRow(
+          context,
+          web,
+          CONTACT_WEBSITE,
+          contact["website"],
+          handleWebsiteTap
+        )
+      ]
     );
   }
 
@@ -96,36 +92,28 @@ class ProfileContact extends StatelessWidget {
   ) {
     return InkWell(
       onTap: handleTap,
-      child: Container(
-        width: MediaQuery.of(context).size.width,
-        padding: EdgeInsets.only(bottom: 10.0),
-        margin: EdgeInsets.only(bottom: 10.0),
-        decoration: BoxDecoration(
-          border: Border(
-            bottom: BorderSide(
-              color: Colors.black12
-            )
-          )
-        ),
-        child: Row(
-          children: <Widget> [
-            Container(
-              padding: EdgeInsets.fromLTRB(10.0, 0.0, 10.0, 0.0),
-              child: Icon(
-                iconName,
-                color: Colors.black45,
-                size: 25.0,
+      child: SectionRow(
+        children: <Widget>[
+          Row(
+            children: <Widget> [
+              Container(
+                padding: EdgeInsets.fromLTRB(10.0, 0.0, 10.0, 0.0),
+                child: Icon(
+                  iconName,
+                  color: Colors.black45,
+                  size: 25.0,
+                )
+              ),
+              Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: <Widget>[
+                  buildContactText(label, true),
+                  buildContactText(info, false)
+                ]
               )
-            ),
-            Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: <Widget>[
-                buildContactText(label, true),
-                buildContactText(info, false)
-              ]
-            )
-          ]
-        )
+            ]
+          )
+        ]
       )
     );
   }

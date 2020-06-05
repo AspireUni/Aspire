@@ -60,3 +60,45 @@ class Section extends StatelessWidget {
     );
   }
 }
+
+class SectionRow extends StatelessWidget {  
+  final List<Widget> children;
+  SectionRow({Key key, @required this.children}) : super(key: key);
+  
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      width: MediaQuery.of(context).size.width,
+      padding: EdgeInsets.only(bottom: 10.0),
+      margin: EdgeInsets.only(bottom: 10.0),
+      decoration: BoxDecoration(
+        border: Border(
+          bottom: BorderSide(
+            color: Colors.black12
+          )
+        )
+      ),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: children
+      )
+    );
+  }
+}
+
+
+class SectionList extends StatelessWidget {  
+  final List<Widget> children;
+  SectionList({Key key, @required this.children}) : super(key: key);
+  
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      padding: EdgeInsets.only(bottom: 10.0),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: children
+      )
+    );
+  }
+}

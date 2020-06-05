@@ -16,46 +16,54 @@ class ProfileSkills extends StatelessWidget {
   }
 
   buildSkillRow(BuildContext context, String skill, String level) {
-    return Container(
-      width: MediaQuery.of(context).size.width,
-      padding: EdgeInsets.only(bottom: 10.0),
-      margin: EdgeInsets.only(bottom: 10.0),
-      decoration: BoxDecoration(
-        border: Border(
-          bottom: BorderSide(
-            color: Colors.black12
-          )
-        )
-      ),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: <Widget>[
-          buildSkillText(skill, true),
-          buildSkillText(level, false)
-        ]
-      )
+    return SectionRow(
+      children: <Widget>[
+        buildSkillText(skill, true),
+        buildSkillText(level, false)
+      ]
     );
   }
 
   buildSkillList(BuildContext context) {
-    List<Widget> skillList = new List<Widget>();
+    List<Widget> expertList = new List<Widget>();
+    List<Widget> intermediateList = new List<Widget>();
+    List<Widget> beginnerList = new List<Widget>();
+
     for (int i = 0; i < skills.length; i++) {
-      skillList.add(
-        buildSkillRow(
-          context, 
-          skills[i]["skill"],
-          skills[i]["level"]
-        )
-      );
+      if (skills[i]["level"] == SKILL_EXPERT){
+        expertList.add(
+          buildSkillRow(
+            context, 
+            skills[i]["skill"],
+            SKILL_EXPERT
+          )
+        );
+      } else if (skills[i]["level"] == SKILL_INTERMEDIATE){
+        intermediateList.add(
+          buildSkillRow(
+            context, 
+            skills[i]["skill"],
+            SKILL_INTERMEDIATE
+          )
+        );
+      } else if (skills[i]["level"] == SKILL_BEGINNER){
+        beginnerList.add(
+          buildSkillRow(
+            context, 
+            skills[i]["skill"],
+            SKILL_BEGINNER
+          )
+        );
+      }
     }
 
-    return Container(
-      padding: EdgeInsets.only(bottom: 10.0),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: skillList
-      )
-    );
+  List<Widget> skillList = [
+    ...expertList, 
+    ...intermediateList, 
+    ...beginnerList
+  ];
+
+    return SectionList(children: skillList);
   }
 
   buildSkillText(String text, bool isSkill) {

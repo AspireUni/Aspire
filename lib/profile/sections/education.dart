@@ -19,25 +19,12 @@ class ProfileEducation extends StatelessWidget {
   buildSchoolRow(BuildContext context, String school, String program, String startYear, String endYear) {
     final String dateRange = startYear + " - " + endYear;
 
-    return Container(
-      width: MediaQuery.of(context).size.width,
-      padding: EdgeInsets.only(bottom: 10.0),
-      margin: EdgeInsets.only(bottom: 10.0),
-      decoration: BoxDecoration(
-        border: Border(
-          bottom: BorderSide(
-            color: Colors.black12
-          )
-        )
-      ),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: <Widget>[
-          buildEducationText(school, true, false),
-          buildEducationText(program, false, false),
-          buildEducationText(dateRange, false, true)
-        ]
-      )
+    return SectionRow(
+      children: <Widget>[
+        buildEducationText(school, true, false),
+        buildEducationText(program, false, false),
+        buildEducationText(dateRange, false, true)
+      ]
     );
   }
 
@@ -55,13 +42,7 @@ class ProfileEducation extends StatelessWidget {
       );
     }
 
-    return Container(
-      padding: EdgeInsets.only(bottom: 10.0),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: schoolList
-      )
-    );
+    return SectionList(children: schoolList);
   }
 
   buildEducationText(String text, bool isSchool, bool isDateRange) {

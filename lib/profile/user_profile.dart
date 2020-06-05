@@ -38,7 +38,7 @@ Map dummyData = {
       "level": "Expert"
     },
     {
-      "skill": "Back-end development",
+      "skill": "Java",
       "level": "Intermediate"
     },
     {
@@ -46,12 +46,12 @@ Map dummyData = {
       "level": "Expert"
     },
     {
-      "skill": "C#",
-      "level": "Beginner"
+      "skill": "Back-end development",
+      "level": "Intermediate"
     },
     {
-      "skill": "Java",
-      "level": "Intermediate"
+      "skill": "C#",
+      "level": "Beginner"
     }
   ]
 };

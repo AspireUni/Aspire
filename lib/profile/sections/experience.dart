@@ -18,25 +18,12 @@ class ProfileExperience extends StatelessWidget {
   buildJobRow(BuildContext context, String jobTitle, String company, String startDate, String endDate) {
     final String dateRange = startDate + " - " + endDate;
 
-    return Container(
-      width: MediaQuery.of(context).size.width,
-      padding: EdgeInsets.only(bottom: 10.0),
-      margin: EdgeInsets.only(bottom: 10.0),
-      decoration: BoxDecoration(
-        border: Border(
-          bottom: BorderSide(
-            color: Colors.black12
-          )
-        )
-      ),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: <Widget>[
-          buildExperienceText(jobTitle, true, false),
-          buildExperienceText(company, false, false),
-          buildExperienceText(dateRange, false, true)
-        ]
-      )
+    return SectionRow(
+      children: <Widget>[
+        buildExperienceText(jobTitle, true, false),
+        buildExperienceText(company, false, false),
+        buildExperienceText(dateRange, false, true)
+      ]
     );
   }
 
@@ -54,13 +41,7 @@ class ProfileExperience extends StatelessWidget {
       );
     }
 
-    return Container(
-      padding: EdgeInsets.only(bottom: 10.0),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: jobList
-      )
-    );
+    return SectionList(children: jobList);
   }
 
   buildExperienceText(String text, bool isJobTitle, bool isDateRange) {
