@@ -12,21 +12,29 @@ class ProfileContact extends StatelessWidget {
   final String fullName;
   ProfileContact({Key key, @required this.contact, @required this.fullName}) : super(key: key);
 
-  final IconData chat = const IconData(62459,
-          fontFamily: CupertinoIcons.iconFont,
-          fontPackage: CupertinoIcons.iconFontPackage);
+  final IconData chat = const IconData(
+    62459,
+    fontFamily: CupertinoIcons.iconFont,
+    fontPackage: CupertinoIcons.iconFontPackage
+  );
   
-  final IconData email = const IconData(0xf422,
-          fontFamily: CupertinoIcons.iconFont,
-          fontPackage: CupertinoIcons.iconFontPackage);
+  final IconData email = const IconData(
+    0xf422,
+    fontFamily: CupertinoIcons.iconFont,
+    fontPackage: CupertinoIcons.iconFontPackage
+  );
 
-  final IconData phone = const IconData(0xf4b8,
-          fontFamily: CupertinoIcons.iconFont,
-          fontPackage: CupertinoIcons.iconFontPackage);
+  final IconData phone = const IconData(
+    0xf4b8,
+    fontFamily: CupertinoIcons.iconFont,
+    fontPackage: CupertinoIcons.iconFontPackage
+  );
 
-  final IconData web = const IconData(0xf4d2,
-          fontFamily: CupertinoIcons.iconFont,
-          fontPackage: CupertinoIcons.iconFontPackage);
+  final IconData web = const IconData(
+    0xf4d2,
+    fontFamily: CupertinoIcons.iconFont,
+    fontPackage: CupertinoIcons.iconFontPackage
+  );
 
   void handleChatTap(BuildContext context) {
     Navigator.push(context, MaterialPageRoute(builder: (context) => ChatMessenger(recipient: fullName)));
