@@ -61,15 +61,6 @@ class UserProfile extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-  
-  final Map<String, GlobalKey> keys = {
-    "bioKey": GlobalKey(),
-    "educationKey": GlobalKey(),
-    "experienceKey": GlobalKey(),
-    "skillsKey": GlobalKey(),
-    "contactKey": GlobalKey()
-  };
-
     return Stack(
       children: <Widget>[
         //TODO: Add background
@@ -85,7 +76,7 @@ class UserProfile extends StatelessWidget {
             margin: const EdgeInsets.all(0),
             child: Center(
               child: Column(
-                children: buildUserProfileView(keys)
+                children: buildUserProfileView()
               )
             )
           )
@@ -94,16 +85,14 @@ class UserProfile extends StatelessWidget {
     );
   }
 
-  buildUserProfileView(Map<String, GlobalKey> keys) {
+  buildUserProfileView() {
     return (
       <Widget>[
         ProfileHeader(
-          fullName: dummyData["fullName"], 
-          keys: keys
+          fullName: dummyData["fullName"]
         ),
         ProfileSections(
-          data: dummyData, 
-          keys: keys
+          data: dummyData
         )
       ]
     );

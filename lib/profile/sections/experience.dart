@@ -1,7 +1,7 @@
 import 'package:google_fonts/google_fonts.dart';
 import 'package:flutter/material.dart';
 import 'package:mentorApp/constants/profile_constants.dart';
-import './header.dart';
+import './section.dart';
  
 class ProfileExperience extends StatelessWidget {  
   final List<Map<String, Object>> jobs;
@@ -9,27 +9,11 @@ class ProfileExperience extends StatelessWidget {
   
   @override
   Widget build(BuildContext context) {
-    return Container(
-      width: MediaQuery.of(context).size.width,
-      padding: EdgeInsets.fromLTRB(30.0, 10.0, 30.0, 20.0),
-      decoration: BoxDecoration(
-        border: Border(
-          bottom: BorderSide(
-            width: 5.0,
-            color: Colors.black12
-          )
-        )
-      ),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: <Widget>[
-          SectionHeader(title: SECTION_TITLE_EXPERIENCE),
-          buildJobList(context)
-        ],
-      )
+    return Section(
+      title: SECTION_TITLE_EXPERIENCE,
+      child: buildJobList(context)
     );
   }
-
 
   buildJobRow(BuildContext context, String jobTitle, String company, String startDate, String endDate) {
     final String dateRange = startDate + " - " + endDate;
@@ -69,9 +53,12 @@ class ProfileExperience extends StatelessWidget {
       );
     }
 
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: jobList
+    return Container(
+      padding: EdgeInsets.only(bottom: 20.0),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: jobList
+      )
     );
   }
 

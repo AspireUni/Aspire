@@ -5,8 +5,7 @@ import 'package:mentorApp/constants/profile_constants.dart';
  
 class ProfileHeader extends StatelessWidget {  
   final String fullName;
-  final Map<String, GlobalKey> keys;
-  ProfileHeader({Key key, @required this.fullName, @required this.keys}) : super(key: key);
+  ProfileHeader({Key key, @required this.fullName}) : super(key: key);
   
   @override
   Widget build(BuildContext context) {
@@ -25,8 +24,7 @@ class ProfileHeader extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget> [
             buildProfilePhoto(context),
-            buildFullName(),
-            buildPopUpMenuButton(context)
+            buildFullName()
           ]
         )
       ),
@@ -63,79 +61,6 @@ class ProfileHeader extends StatelessWidget {
           )
         ]
       )
-    );
-  }
-
-  buildPopUpMenuButton(BuildContext context){
-    final IconData arrowDown = const IconData(0xf3d0,
-          fontFamily: CupertinoIcons.iconFont,
-          fontPackage: CupertinoIcons.iconFontPackage);
-
-    return ConstrainedBox(
-      constraints: BoxConstraints(maxWidth: 30.0, maxHeight: 30.0),
-      child: PopupMenuButton(
-        padding: EdgeInsets.all(0.0),
-        offset: Offset(MediaQuery.of(context).size.width * 0.375, 30),
-        icon: Icon(
-          arrowDown,
-          color: Colors.white,
-          size: 20.0,
-        ),
-        onSelected: (key) => Scrollable.ensureVisible(
-            key.currentContext, 
-            duration: Duration(milliseconds: 500)
-        ),
-        color: Theme.of(context).primaryColor,
-        itemBuilder: (BuildContext menuContext) => <PopupMenuEntry<GlobalKey>>[
-          buildPopUpItem(
-            context, 
-            keys["bioKey"], 
-            SECTION_TITLE_SUMMARY
-          ),
-          buildPopUpItem(
-            context, 
-            keys["educationKey"], 
-            SECTION_TITLE_EDUCATION
-          ),
-          buildPopUpItem(
-            context, 
-            keys["experienceKey"],
-            SECTION_TITLE_EXPERIENCE
-          ),
-          buildPopUpItem(
-            context,
-            keys["skillsKey"],
-            SECTION_TITLE_SKILLS
-          ),
-          buildPopUpItem(
-            context,
-            keys["contactKey"],
-            SECTION_TITLE_CONTACT
-          ),
-        ],
-      )
-    );
-  }
-
-  buildPopUpItem(BuildContext context, GlobalKey key, String label) {
-    return PopupMenuItem<GlobalKey>(
-      value: key,
-      child: Container(
-        width: MediaQuery.of(context).size.width,
-        child: Text(
-          label,
-          textAlign: TextAlign.center,
-          style: GoogleFonts.muli(
-            textStyle: TextStyle(
-              color: Colors.white,
-              letterSpacing: .5,
-              height: 1.2,
-              fontSize: 15.0,
-              fontWeight: FontWeight.w700
-            ),
-          )
-        )
-      ),
     );
   }
 }

@@ -3,7 +3,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:flutter/material.dart';
 import 'package:mentorApp/constants/profile_constants.dart';
-import './header.dart';
+import './section.dart';
 import '../../chat/chat_messenger.dart';
 
  
@@ -42,21 +42,18 @@ class ProfileContact extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    return Section(
+      title: SECTION_TITLE_CONTACT,
+      child: buildInfoList(context)
+    );
+  }
+
+  buildInfoList(BuildContext context) {
     return Container(
-      width: MediaQuery.of(context).size.width,
-      padding: EdgeInsets.fromLTRB(30.0, 10.0, 30.0, 20.0),
-      decoration: BoxDecoration(
-        border: Border(
-          bottom: BorderSide(
-            width: 5.0,
-            color: Colors.black12
-          )
-        )
-      ),
+      padding: EdgeInsets.only(bottom: 20.0),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: <Widget>[
-          SectionHeader(title: SECTION_TITLE_CONTACT),
           buildInfoRow(
             context, 
             chat, 
@@ -85,7 +82,7 @@ class ProfileContact extends StatelessWidget {
             contact["website"],
             handleWebsiteTap
           )
-        ],
+        ]
       )
     );
   }

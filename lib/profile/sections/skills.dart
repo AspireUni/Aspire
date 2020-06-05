@@ -2,7 +2,7 @@ import 'package:percent_indicator/percent_indicator.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:flutter/material.dart';
 import 'package:mentorApp/constants/profile_constants.dart';
-import './header.dart';
+import './section.dart';
  
 class ProfileSkills extends StatelessWidget {  
   final List<Map<String, Object>> skills;
@@ -10,24 +10,9 @@ class ProfileSkills extends StatelessWidget {
   
   @override
   Widget build(BuildContext context) {
-    return Container(
-      width: MediaQuery.of(context).size.width,
-      padding: EdgeInsets.fromLTRB(30.0, 10.0, 30.0, 20.0),
-      decoration: BoxDecoration(
-        border: Border(
-          bottom: BorderSide(
-            width: 5.0,
-            color: Colors.black12
-          )
-        )
-      ),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: <Widget>[
-          SectionHeader(title: SECTION_TITLE_SKILLS),
-          buildSkillList(context)
-        ],
-      )
+    return Section(
+      title: SECTION_TITLE_SKILLS,
+      child: buildSkillList(context)
     );
   }
 
@@ -64,9 +49,12 @@ class ProfileSkills extends StatelessWidget {
       );
     }
 
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: skillList
+    return Container(
+      padding: EdgeInsets.only(bottom: 20.0),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: skillList
+      )
     );
   }
 
