@@ -46,9 +46,9 @@ class NewMatches extends StatelessWidget {
     return Column(
       children: <Widget>[
         Padding(
-          padding: const EdgeInsets.only(top: 20, bottom: 10),
+          padding: EdgeInsets.only(top: 20, bottom: 10),
           child: Text(
-            CHAT_NEW_MATCHES_TITLE, 
+            chatNewMatchesTitle, 
             textAlign: TextAlign.left,
             style: GoogleFonts.muli(
               textStyle: TextStyle(

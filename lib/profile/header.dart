@@ -1,6 +1,6 @@
-import 'package:google_fonts/google_fonts.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:mentorApp/constants/profile_constants.dart';
  
 class ProfileHeader extends StatelessWidget {  
@@ -12,7 +12,7 @@ class ProfileHeader extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       width: MediaQuery.of(context).size.width, 
-      height: kProfileHeaderHeight,
+      height: profileHeaderHeight,
       decoration: BoxDecoration(
         color: Theme.of(context).primaryColor, 
         borderRadius: BorderRadius.only(
@@ -46,7 +46,7 @@ class ProfileHeader extends StatelessWidget {
 
   buildFullName() {
     return Container(
-      margin: const EdgeInsets.only(top: 10.0),
+      margin: EdgeInsets.only(top: 10.0),
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: <Text> [
@@ -67,9 +67,11 @@ class ProfileHeader extends StatelessWidget {
   }
 
   buildPopUpMenuButton(BuildContext context){
-    final IconData arrowDown = const IconData(0xf3d0,
-          fontFamily: CupertinoIcons.iconFont,
-          fontPackage: CupertinoIcons.iconFontPackage);
+    final IconData arrowDown = IconData(
+      0xf3d0,
+      fontFamily: CupertinoIcons.iconFont,
+      fontPackage: CupertinoIcons.iconFontPackage
+    );
 
     return ConstrainedBox(
       constraints: BoxConstraints(maxWidth: 30.0, maxHeight: 30.0),
@@ -90,27 +92,27 @@ class ProfileHeader extends StatelessWidget {
           buildPopUpItem(
             context, 
             keys["bioKey"], 
-            SECTION_TITLE_SUMMARY
+            sectionTitleSummary
           ),
           buildPopUpItem(
             context, 
             keys["educationKey"], 
-            SECTION_TITLE_EDUCATION
+            sectionTitleEducation
           ),
           buildPopUpItem(
             context, 
             keys["experienceKey"],
-            SECTION_TITLE_EXPERIENCE
+            sectionTitleExperience
           ),
           buildPopUpItem(
             context,
             keys["skillsKey"],
-            SECTION_TITLE_SKILLS
+            sectionTitleSkills
           ),
           buildPopUpItem(
             context,
             keys["contactKey"],
-            SECTION_TITLE_CONTACT
+            sectionTitleContact
           ),
         ],
       )
