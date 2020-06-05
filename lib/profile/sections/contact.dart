@@ -4,10 +4,17 @@ import 'package:url_launcher/url_launcher.dart';
 import 'package:flutter/material.dart';
 import 'package:mentorApp/constants/profile_constants.dart';
 import './header.dart';
+import '../../chat/chat_messenger.dart';
+
  
 class ProfileContact extends StatelessWidget {  
   final Map contact;
-  ProfileContact({Key key, @required this.contact}) : super(key: key);
+  final String fullName;
+  ProfileContact({Key key, @required this.contact, @required this.fullName}) : super(key: key);
+
+  final IconData chat = const IconData(62459,
+          fontFamily: CupertinoIcons.iconFont,
+          fontPackage: CupertinoIcons.iconFontPackage);
   
   final IconData email = const IconData(0xf422,
           fontFamily: CupertinoIcons.iconFont,
@@ -20,6 +27,10 @@ class ProfileContact extends StatelessWidget {
   final IconData web = const IconData(0xf4d2,
           fontFamily: CupertinoIcons.iconFont,
           fontPackage: CupertinoIcons.iconFontPackage);
+
+  void handleChatTap(BuildContext context) {
+    Navigator.push(context, MaterialPageRoute(builder: (context) => ChatMessenger(recipient: fullName)));
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -38,6 +49,13 @@ class ProfileContact extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: <Widget>[
           SectionHeader(title: SECTION_TITLE_CONTACT),
+          buildInfoRow(
+            context, 
+            chat, 
+            CONTACT_CHAT, 
+            CONTACT_CHAT_SUBTITLE,
+            () => handleChatTap(context)
+          ),
           buildInfoRow(
             context, 
             email, 

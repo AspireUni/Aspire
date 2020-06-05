@@ -42,7 +42,8 @@ class ProfileSections extends StatelessWidget {
             ),
             ProfileContact(
               key: keys["contactKey"], 
-              contact: data["contact"]
+              contact: data["contact"],
+              fullName: data["fullName"]
             )
           ]
         )
