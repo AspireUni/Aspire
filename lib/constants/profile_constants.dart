@@ -1,9 +1,7 @@
 // Widget dimensions
-
 const double profileHeaderHeight = 160.0;
 
 // Section titles
-
 const String sectionTitleSummary = "Summary";
 const String sectionTitleEducation = "Education";
 const String sectionTitleExperience = "Experience";
