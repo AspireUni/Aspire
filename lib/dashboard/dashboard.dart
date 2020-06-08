@@ -24,7 +24,7 @@ class Dashboard extends StatelessWidget {
               body: Container(
                 child: Center(
                   child: Column(
-                    children: buildDashboardView()
+                    children: buildDashboardView(context)
                   )
                 )
               )
@@ -35,11 +35,11 @@ class Dashboard extends StatelessWidget {
 }
 
 // TODO: Generalize into reusable widgets (e.g. Title, subheader, etc)
-buildDashboardView() {
+buildDashboardView(BuildContext context) {
   return (
     <Widget>[
       ...buildHeader(), 
-      ...buildPotentialMatch(),
+      ...buildPotentialMatch(context),
     ]
   );
 }
@@ -71,14 +71,14 @@ buildHeader() {
   ];
 }
 
-buildPotentialMatch() {
+buildPotentialMatch(BuildContext context) {
   return <Container> [
     Container(
       child: Stack(
         alignment: FractionalOffset.bottomCenter,
         children: <Container>[
           buildDescriptionTextBox(), 
-          buildNameTextBox()
+          buildNameTextBox(context)
         ]
       )
     )
@@ -87,8 +87,8 @@ buildPotentialMatch() {
 
 buildDescriptionTextBox() {
   return Container(
-    margin: const EdgeInsets.fromLTRB(60.0, 25.0, 60.0, 25.0),
-    padding: const EdgeInsets.fromLTRB(25.0, 25.0, 25.0, 90.0),
+    margin: EdgeInsets.fromLTRB(60.0, 25.0, 60.0, 25.0),
+    padding: EdgeInsets.fromLTRB(25.0, 25.0, 25.0, 90.0),
     child: Text(
       """Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud.""",
       textAlign: TextAlign.left, 
@@ -116,7 +116,7 @@ buildDescriptionTextBox() {
   );
 }
 
-buildNameTextBox() {
+buildNameTextBox(BuildContext context) {
   return Container(
     width: 295.0, 
     height: 90.0, 
@@ -127,7 +127,7 @@ buildNameTextBox() {
           width: 50.0, 
           height: 50.00, 
           decoration: BoxDecoration(
-            color: Color(0xFF45cab9), 
+            color: Theme.of(context).accentColor, 
             shape: BoxShape.circle
           )
         ),
@@ -149,7 +149,7 @@ buildNameTextBox() {
               "Mentor", 
                 style: GoogleFonts.muli(
                 textStyle: TextStyle(
-                  color: Color(0xFF45cab9),  
+                  color: Theme.of(context).accentColor,  
                   letterSpacing: .5, 
                   height: 1.5, 
                   fontSize: 15.0, 
