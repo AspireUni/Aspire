@@ -9,8 +9,8 @@ class Root extends StatelessWidget {
         title: 'MentorApp',
         initialRoute: '/',
         routes: {
-          '/': (context) => FirstRoute(),
-          '/second': (context) => SecondRoute(),
+          '/': (context) => LoginSignupPage(),
+          //'/second': (context) => SecondRoute(),
           '/UserProfile': (context) => AppController(),
         },
         theme: ThemeData(
