@@ -11,8 +11,7 @@ import './summary.dart';
 class ProfileSections extends StatelessWidget {  
 
   final Map data;
-  final Map<String, GlobalKey> keys;
-  ProfileSections({Key key, @required this.data, @required this.keys}) : super(key: key);
+  ProfileSections({Key key, @required this.data}) : super(key: key);
   
   @override
   Widget build(BuildContext context) {
@@ -25,23 +24,18 @@ class ProfileSections extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: <Widget> [
             ProfileSummary(
-              key: keys["bioKey"],
               summary: data["summary"]
             ),
             ProfileEducation(
-              key: keys["educationKey"], 
               schools: data["schools"]
             ),
             ProfileExperience(
-              key: keys["experienceKey"], 
               jobs: data["jobs"]
             ),
             ProfileSkills(
-              key: keys["skillsKey"], 
               skills: data["skills"]
             ),
             ProfileContact(
-              key: keys["contactKey"], 
               contact: data["contact"],
               fullName: data["fullName"]
             )
