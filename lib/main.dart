@@ -4,11 +4,12 @@ import "./navigation/root.dart";
 
 void main() => {
   runApp(
-  DevicePreview(
-    enabled: true,
-    areSettingsEnabled: true,  
-    builder: (context) => App()
-  ))
+    DevicePreview(
+      enabled: true,
+      areSettingsEnabled: true,  
+      builder: (context) => App()
+    )
+  )
 }; 
 
 class App extends StatelessWidget {
