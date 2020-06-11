@@ -78,13 +78,6 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "0.3.2"
-  custom_navigator:
-    dependency: transitive
-    description:
-      name: custom_navigator
-      url: "https://pub.dartlang.org"
-    source: hosted
-    version: "0.3.0"
   device_preview:
     dependency: "direct main"
     description:
@@ -92,13 +85,6 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "0.4.5"
-  device_simulator:
-    dependency: "direct main"
-    description:
-      name: device_simulator
-      url: "https://pub.dartlang.org"
-    source: hosted
-    version: "0.9.6"
   fake_async:
     dependency: transitive
     description:
