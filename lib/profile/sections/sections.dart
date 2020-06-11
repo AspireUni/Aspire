@@ -18,7 +18,6 @@ class ProfileSections extends StatelessWidget {
     Container(
       child: Flexible(
         child: ListView(
-          padding: EdgeInsets.all(0.0),
           scrollDirection: Axis.vertical,
           shrinkWrap: true,
           children: <Widget> [
