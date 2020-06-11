@@ -1,6 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:mentorApp/constants/navigation_constants.dart';
-import 'package:mentorApp/constants/profile_constants.dart';
 import './contact.dart';
 import './education.dart';
 import './experience.dart';
@@ -18,10 +16,10 @@ class ProfileSections extends StatelessWidget {
 
     return 
     Container(
-      height: MediaQuery.of(context).size.height - profileHeaderHeight - appNavBarHeight,
-      child: SingleChildScrollView(
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
+      child: Flexible(
+        child: ListView(
+          scrollDirection: Axis.vertical,
+          shrinkWrap: true,
           children: <Widget> [
             ProfileSummary(
               summary: data["summary"]
