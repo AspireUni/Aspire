@@ -6,7 +6,7 @@ class Root extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-        title: 'aspire',
+        title: 'Aspire',
         initialRoute: '/',
         routes: {
           '/': (context) => FirstRoute(),
