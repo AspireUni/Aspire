@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:mentorApp/constants/profile_constants.dart';
+import 'package:aspire/constants/profile_constants.dart';
  
 class ProfileHeader extends StatelessWidget {  
   final String fullName;

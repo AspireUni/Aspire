@@ -1,7 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:mentorApp/constants/profile_constants.dart';
+import 'package:aspire/constants/profile_constants.dart';
 import 'package:url_launcher/url_launcher.dart';
 import '../../chat/chat_messenger.dart';
 import './section.dart';

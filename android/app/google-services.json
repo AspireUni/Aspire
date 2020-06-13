@@ -1,16 +1,16 @@
 {
   "project_info": {
     "project_number": "314127594273",
-    "firebase_url": "https://mentorapp-19fcf.firebaseio.com",
-    "project_id": "mentorapp-19fcf",
-    "storage_bucket": "mentorapp-19fcf.appspot.com"
+    "firebase_url": "https://aspire-19fcf.firebaseio.com",
+    "project_id": "aspire-19fcf",
+    "storage_bucket": "aspire-19fcf.appspot.com"
   },
   "client": [
     {
       "client_info": {
         "mobilesdk_app_id": "1:314127594273:android:b889533edbf37a07dec460",
         "android_client_info": {
-          "package_name": "com.example.mentorApp"
+          "package_name": "com.example.aspire"
         }
       },
       "oauth_client": [
@@ -35,7 +35,7 @@
               "client_id": "314127594273-h0uinb2r9ah106nl7mk9bfu4qjvduvjc.apps.googleusercontent.com",
               "client_type": 2,
               "ios_info": {
-                "bundle_id": "com.example.mentorApp"
+                "bundle_id": "com.example.aspire"
               }
             }
           ]

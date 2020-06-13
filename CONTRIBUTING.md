@@ -1,4 +1,4 @@
-## Contributing to MentorApp
+## Contributing to aspire
 
 Hello and thank you for considering to contribute to IndustryBear! Our team is happy to welcome you in. 
 
