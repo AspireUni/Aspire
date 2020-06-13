@@ -1,4 +1,4 @@
-# aspire
+# Aspire
 
 #### TravisCI
 [![Build Status](https://travis-ci.org/IndustryBear/aspire.svg?branch=master)](https://travis-ci.org/IndustryBear/aspire)
