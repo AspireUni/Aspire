@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:mentorApp/constants/profile_constants.dart';
-import './header.dart';
+import './section.dart';
 
  
 class ProfileEducation extends StatelessWidget {  
@@ -10,48 +10,21 @@ class ProfileEducation extends StatelessWidget {
   
   @override
   Widget build(BuildContext context) {
-    return Container(
-      width: MediaQuery.of(context).size.width,
-      padding: EdgeInsets.fromLTRB(30.0, 10.0, 30.0, 20.0),
-      decoration: BoxDecoration(
-        border: Border(
-          bottom: BorderSide(
-            width: 5.0,
-            color: Colors.black12
-          )
-        )
-      ),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: <Widget>[
-          SectionHeader(title: sectionTitleEducation),
-          buildSchoolList(context)
-        ],
-      )
+    return Section(
+      title: sectionTitleEducation,
+      child: buildSchoolList(context)
     );
   }
 
   buildSchoolRow(BuildContext context, String school, String program, String startYear, String endYear) {
     final String dateRange = startYear + " - " + endYear;
 
-    return Container(
-      width: MediaQuery.of(context).size.width,
-      padding: EdgeInsets.fromLTRB(0.0, 10.0, 0.0, 10.0),
-      decoration: BoxDecoration(
-        border: Border(
-          bottom: BorderSide(
-            color: Colors.black12
-          )
-        )
-      ),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: <Widget>[
-          buildEducationText(school, true, false),
-          buildEducationText(program, false, false),
-          buildEducationText(dateRange, false, true)
-        ]
-      )
+    return SectionRow(
+      children: <Widget>[
+        buildEducationText(school, true, false),
+        buildEducationText(program, false, false),
+        buildEducationText(dateRange, false, true)
+      ]
     );
   }
 
@@ -69,10 +42,7 @@ class ProfileEducation extends StatelessWidget {
       );
     }
 
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: schoolList
-    );
+    return SectionList(children: schoolList);
   }
 
   buildEducationText(String text, bool isSchool, bool isDateRange) {

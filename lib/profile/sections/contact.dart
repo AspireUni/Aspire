@@ -4,7 +4,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:mentorApp/constants/profile_constants.dart';
 import 'package:url_launcher/url_launcher.dart';
 import '../../chat/chat_messenger.dart';
-import './header.dart';
+import './section.dart';
 
  
 class ProfileContact extends StatelessWidget {  
@@ -42,51 +42,44 @@ class ProfileContact extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      width: MediaQuery.of(context).size.width,
-      padding: EdgeInsets.fromLTRB(30.0, 10.0, 30.0, 20.0),
-      decoration: BoxDecoration(
-        border: Border(
-          bottom: BorderSide(
-            width: 5.0,
-            color: Colors.black12
-          )
+    return Section(
+      title: sectionTitleContact,
+      child: buildInfoList(context)
+    );
+  }
+
+  buildInfoList(BuildContext context) {
+    return SectionList(
+      children: <Widget>[
+        buildInfoRow(
+          context, 
+          chat, 
+          contactChat, 
+          contactChatSubtitle,
+          () => handleChatTap(context)
+        ),
+        buildInfoRow(
+          context, 
+          email, 
+          contactEmailAddress, 
+          contact["emailAddress"],
+          handleEmailTap
+        ),
+        buildInfoRow(
+          context,
+          phone,
+          contactPhoneNumber,
+          contact["phoneNumber"],
+          handlePhoneTap
+        ),
+        buildInfoRow(
+          context,
+          web,
+          contactWebsite,
+          contact["website"],
+          handleWebsiteTap
         )
-      ),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: <Widget>[
-          SectionHeader(title: sectionTitleContact),
-          buildInfoRow(
-            context, 
-            chat, 
-            contactChat, 
-            contactChatSubtitle,
-            () => handleChatTap(context)
-          ),
-          buildInfoRow(
-            context, 
-            email, 
-            contactEmailAddress, 
-            contact["emailAddress"],
-            handleEmailTap
-          ),
-          buildInfoRow(
-            context,
-            phone,
-            contactPhoneNumber,
-            contact["phoneNumber"],
-            handlePhoneTap
-          ),
-          buildInfoRow(
-            context,
-            web,
-            contactWebsite,
-            contact["website"],
-            handleWebsiteTap
-          )
-        ],
-      )
+      ]
     );
   }
 
@@ -99,35 +92,28 @@ class ProfileContact extends StatelessWidget {
   ) {
     return InkWell(
       onTap: handleTap,
-      child: Container(
-        width: MediaQuery.of(context).size.width,
-        padding: EdgeInsets.fromLTRB(0.0, 10.0, 0.0, 10.0),
-        decoration: BoxDecoration(
-          border: Border(
-            bottom: BorderSide(
-              color: Colors.black12
-            )
-          )
-        ),
-        child: Row(
-          children: <Widget> [
-            Container(
-              padding: EdgeInsets.fromLTRB(10.0, 0.0, 10.0, 0.0),
-              child: Icon(
-                iconName,
-                color: Colors.black45,
-                size: 25.0,
+      child: SectionRow(
+        children: <Widget>[
+          Row(
+            children: <Widget> [
+              Container(
+                padding: EdgeInsets.fromLTRB(10.0, 0.0, 10.0, 0.0),
+                child: Icon(
+                  iconName,
+                  color: Colors.black45,
+                  size: 25.0,
+                )
+              ),
+              Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: <Widget>[
+                  buildContactText(label, true),
+                  buildContactText(info, false)
+                ]
               )
-            ),
-            Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: <Widget>[
-                buildContactText(label, true),
-                buildContactText(info, false)
-              ]
-            )
-          ]
-        )
+            ]
+          )
+        ]
       )
     );
   }

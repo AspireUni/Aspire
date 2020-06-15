@@ -14,3 +14,8 @@ const String contactChatSubtitle = "Start a conversation";
 const String contactEmailAddress = "Email address";
 const String contactPhoneNumber = "Phone number";
 const String contactWebsite = "Website";
+
+// Skill levels
+const String skillExpert = "Expert";
+const String skillIntermediate = "Intermediate";
+const String skillBeginner = "Beginner";
