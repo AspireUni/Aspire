@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:mentorApp/constants/profile_constants.dart';
-import './header.dart';
+import './section.dart';
  
 class ProfileExperience extends StatelessWidget {  
   final List<Map<String, Object>> jobs;
@@ -9,49 +9,21 @@ class ProfileExperience extends StatelessWidget {
   
   @override
   Widget build(BuildContext context) {
-    return Container(
-      width: MediaQuery.of(context).size.width,
-      padding: EdgeInsets.fromLTRB(30.0, 10.0, 30.0, 20.0),
-      decoration: BoxDecoration(
-        border: Border(
-          bottom: BorderSide(
-            width: 5.0,
-            color: Colors.black12
-          )
-        )
-      ),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: <Widget>[
-          SectionHeader(title: sectionTitleExperience),
-          buildJobList(context)
-        ],
-      )
+    return Section(
+      title: sectionTitleExperience,
+      child: buildJobList(context)
     );
   }
-
 
   buildJobRow(BuildContext context, String jobTitle, String company, String startDate, String endDate) {
     final String dateRange = startDate + " - " + endDate;
 
-    return Container(
-      width: MediaQuery.of(context).size.width,
-      padding: EdgeInsets.fromLTRB(0.0, 10.0, 0.0, 10.0),
-      decoration: BoxDecoration(
-        border: Border(
-          bottom: BorderSide(
-            color: Colors.black12
-          )
-        )
-      ),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: <Widget>[
-          buildExperienceText(jobTitle, true, false),
-          buildExperienceText(company, false, false),
-          buildExperienceText(dateRange, false, true)
-        ]
-      )
+    return SectionRow(
+      children: <Widget>[
+        buildExperienceText(jobTitle, true, false),
+        buildExperienceText(company, false, false),
+        buildExperienceText(dateRange, false, true)
+      ]
     );
   }
 
@@ -69,10 +41,7 @@ class ProfileExperience extends StatelessWidget {
       );
     }
 
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: jobList
-    );
+    return SectionList(children: jobList);
   }
 
   buildExperienceText(String text, bool isJobTitle, bool isDateRange) {

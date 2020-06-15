@@ -1,7 +1,6 @@
 import 'dart:async';
 import 'dart:io';
 
-import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -139,9 +138,12 @@ class ChatMessengerState extends State<ChatMessenger> {
 
   Widget buildMessengerKeyboard() {
     return Container(
+      decoration: BoxDecoration(
+        color: Colors.white,
+        border: Border(top: BorderSide(width: 1.0, color: Colors.grey[100]))
+      ),
       constraints: BoxConstraints(minHeight: 70.0, maxHeight: 200.0),
       padding: EdgeInsets.only(bottom: 15.0),
-      color: Colors.white,
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
         crossAxisAlignment: CrossAxisAlignment.end,
