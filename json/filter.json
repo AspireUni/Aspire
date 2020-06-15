@@ -1,5 +1,5 @@
 {
-    "states": [
+    "industry": [
     {
       "id": 1,
       "name": "Computer Science"
@@ -14,36 +14,36 @@
     }
    ],
 
-   "provinces":
+   "specialty":
    [
     {
       "id": 1,
-      "state_id": 1,
+      "industry_id": 1,
       "name": "Backend"
     },
     {
       "id": 2,
-      "state_id": 1,
+      "industry_id": 1,
       "name": "Frontend"
     },
     {
       "id": 3,
-      "state_id": 1,
+      "industry_id": 1,
       "name": "Full Stack"
     },
     {
       "id": 4,
-      "state_id": 2,
+      "industry_id": 2,
       "name": "Chemical Engg"
     },
     {
       "id": 5,
-      "state_id": 2,
+      "industry_id": 2,
       "name": "Physics Engg"
     },
     {
       "id": 6,
-      "state_id": 3,
+      "industry_id": 3,
       "name": "Finance"
     }
    ]

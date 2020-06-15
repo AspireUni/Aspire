@@ -24,7 +24,7 @@ class FiltersState extends State<FiltersPage> {
       _specialty = null;
       _industry = newVal;
       tempList = specialtyList
-          .where((x) => x.stateId.toString() == (_industry.toString()))
+          .where((x) => x.industryId.toString() == (_industry.toString()))
           .toList();
     });
   }
@@ -40,8 +40,8 @@ class FiltersState extends State<FiltersPage> {
     Localization places = new Localization.fromJson(jsonResponse);
 
     setState(() {
-      industryList = places.states;
-      specialtyList = places.provinces;
+      industryList = places.industry;
+      specialtyList = places.specialty;
     });
   }
 

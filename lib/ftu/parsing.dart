@@ -1,31 +1,31 @@
 class Localization {
-  final List <Provinces> provinces;
-  final List <States> states;
+  final List <Specialty> specialty;
+  final List <Industry > industry;
 
-  Localization({this.provinces, this.states});
+  Localization({this.specialty, this.industry});
 
   factory Localization.fromJson(Map<String, dynamic> json) {
     return Localization(
  
        
-      states: parseStates(json),
-      provinces: parseProvinces(json),
+      industry: parseIndustry(json),
+      specialty: parseSpecialty(json),
       
     );
   }
 
   
-  static List<States> parseStates(statesJson) {
-    var slist = statesJson['states'] as List;
-    List<States> statesList =
-       slist.map((data) => States.fromJson(data)).toList();
+  static List<Industry > parseIndustry(statesJson) {
+    var slist = statesJson['industry'] as List;
+    List<Industry > statesList =
+       slist.map((data) => Industry .fromJson(data)).toList();
     return statesList;
   }
 
-  static List<Provinces> parseProvinces(provincesJson) {
-    var plist = provincesJson['provinces'] as List;
-    List<Provinces> provincesList =
-        plist.map((data) => Provinces.fromJson(data)).toList();
+  static List<Specialty> parseSpecialty(provincesJson) {
+    var plist = provincesJson['specialty'] as List;
+    List<Specialty> provincesList =
+        plist.map((data) => Specialty.fromJson(data)).toList();
     return provincesList;
   }
 
@@ -33,27 +33,27 @@ class Localization {
 
 }
 
-class States {
+class Industry  {
   final int id;
   final String name;
 
-  States({this.id, this.name});
+  Industry ({this.id, this.name});
 
-  factory States.fromJson(Map<String, dynamic> parsedJson){
-    return States(id: parsedJson['id'], name: parsedJson['name']);
+  factory Industry .fromJson(Map<String, dynamic> parsedJson){
+    return Industry (id: parsedJson['id'], name: parsedJson['name']);
   }
 
 }
 
-class Provinces {
+class Specialty {
   final int id;
   final String name;
-  final int stateId;
+  final int industryId;
 
-  Provinces({this.id, this.name, this.stateId});
+  Specialty({this.id, this.name, this.industryId});
 
-  factory Provinces.fromJson(Map<String, dynamic> parsedJson) {
-    return Provinces(id: parsedJson['id'], name: parsedJson['name'],  stateId: parsedJson['state_id']);
+  factory Specialty.fromJson(Map<String, dynamic> parsedJson) {
+    return Specialty(id: parsedJson['id'], name: parsedJson['name'],  industryId: parsedJson['industry_id']);
   }
 
 }
