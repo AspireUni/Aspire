@@ -1,4 +1,4 @@
-package com.example.mentorApp
+package com.example.aspire
 
 import androidx.annotation.NonNull;
 import io.flutter.embedding.android.FlutterActivity
