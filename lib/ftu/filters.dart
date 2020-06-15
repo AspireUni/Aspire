@@ -3,6 +3,7 @@ import 'package:flutter/services.dart';
 import 'dart:async';
 import 'dart:convert';
 import 'package:mentorApp/ftu/parsing.dart';
+import 'package:google_fonts/google_fonts.dart';
 
 class FiltersPage extends StatefulWidget {
   FiltersPage({Key key}) : super(key: key);
@@ -15,15 +16,15 @@ class FiltersState extends State<FiltersPage> {
   List industryList = List();
   List specialtyList = List();
   List tempList = List();
-  String _state;
-  String _province;
+  String _industry;
+  String _specialty;
 
   void setIndustry(newVal) {
     setState(() {
-      _province = null;
-      _state = newVal;
+      _specialty = null;
+      _industry = newVal;
       tempList = specialtyList
-          .where((x) => x.stateId.toString() == (_state.toString()))
+          .where((x) => x.stateId.toString() == (_industry.toString()))
           .toList();
     });
   }
@@ -66,8 +67,12 @@ class FiltersState extends State<FiltersPage> {
           ),
           body: Center(
               child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: <Widget>[buildIndustry(), buildSpecialty()],
+            mainAxisAlignment: MainAxisAlignment.start,
+            children: <Widget>[
+              buildTitle(),
+              buildIndustry(),
+              buildSpecialty()
+            ],
           )),
           floatingActionButton: FloatingActionButton(
             backgroundColor: Colors.teal,
@@ -79,73 +84,61 @@ class FiltersState extends State<FiltersPage> {
     ]);
   }
 
-  // Widget build(BuildContext context) {
-  //   return Scaffold(
-  //     body: Container(
-  //       child: new Form(
-  //         child: Padding(
-  //           padding: const EdgeInsets.only(top: 16.0, left: 28.0),
-  //           child: new Container(
-  //             width: 350,
-  //             decoration: new BoxDecoration(
-  //               image: new DecorationImage(
-  //                 image: new AssetImage("images/DefaultBg.png"),
-  //                 fit: BoxFit.cover,
-  //               ),
-  //             ),
-  //             child: Column(
-  //               children: <Widget>[
-  //                 buildIndustry(),
-  //                 buildSpecialty(),
-  //                 new FloatingActionButton(
-  //                   child: Text("Next"),
-  //                   backgroundColor: Colors.teal,
-  //                   onPressed: () {
-  //                     Navigator.pushNamed(context, '/second');
-  //                   },
-  //                 ),
-  //               ],
-  //             ),
-  //           ),
-  //         ),
-  //       ),
-  //     ),
-  //   );
-  // }
-
   buildIndustry() {
-    return DropdownButton(
-      isExpanded: true,
-      items: industryList.map((item) {
-        return new DropdownMenuItem(
-          child: new Text(item.name),
-          value: item.id.toString(),
-        );
-      }).toList(),
-      onChanged: (newVal) {
-        setIndustry(newVal);
-      },
-      value: _state,
-      hint: Text('Select an industry'),
+    return Container(
+      padding: const EdgeInsets.fromLTRB(10.0, 10.0, 10.0, 0),
+      child: new DropdownButton(
+        isExpanded: true,
+        items: industryList.map((item) {
+          return new DropdownMenuItem(
+            child: new Text(item.name),
+            value: item.id.toString(),
+          );
+        }).toList(),
+        onChanged: (newVal) {
+          setIndustry(newVal);
+        },
+        value: _industry,
+        hint: Text('Select an industry',
+          style: GoogleFonts.muli()),
+      ),
     );
   }
 
   buildSpecialty() {
-    return DropdownButton(
-      isExpanded: true,
-      items: tempList.map((item) {
-        return new DropdownMenuItem(
-          child: new Text(item.name),
-          value: item.id.toString(),
-        );
-      }).toList(),
-      onChanged: (newVal) {
-        setState(() {
-          _province = newVal;
-        });
-      },
-      value: _province,
-      hint: Text('Select a field'),
+    return Container(
+      padding: const EdgeInsets.fromLTRB(10.0, 20.0, 10.0, 0),
+      child: new DropdownButton(
+        isExpanded: true,
+        items: tempList.map((item) {
+          return new DropdownMenuItem(
+            child: new Text(item.name),
+            value: item.id.toString(),
+          );
+        }).toList(),
+        onChanged: (newVal) {
+          setState(() {
+            _specialty = newVal;
+          });
+        },
+        value: _specialty,
+        hint: Text('Select a field', 
+          style: GoogleFonts.muli()),
+      ),
     );
   }
+
+  buildTitle() {
+    return Container(
+      padding: const EdgeInsets.fromLTRB(10.0, 10.0, 10.0, 20.0),
+      child: new Text("Intialize Your Profile",
+          style: GoogleFonts.muli(
+              textStyle: TextStyle(
+                  color: Colors.black,
+                  letterSpacing: .5,
+                  fontSize: 30.0,
+                  fontWeight: FontWeight.bold))),
+    );
+  }
+
 } // End of class
