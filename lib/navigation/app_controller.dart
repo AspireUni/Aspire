@@ -1,9 +1,10 @@
 import 'package:curved_navigation_bar/curved_navigation_bar.dart';
 import 'package:flutter/material.dart';
-import 'package:aspire/constants/navigation_constants.dart';
-import "../chat/chat.dart";
+
+import '../chat/chat.dart';
+import '../constants/navigation_constants.dart';
 import '../pairings/pairings.dart';
-import "../profile/user_profile.dart";
+import '../profile/user_profile.dart';
 
 class AppController extends StatefulWidget {
   @override _MyAppState createState() => _MyAppState();
