@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
-import '../constants/dashboard_constants.dart';
-import './dashboard_card.dart';
+import '../constants/pairings_constants.dart';
+import './pairings_card.dart';
 
-class Dashboard extends StatelessWidget {
-  const Dashboard({Key key}) : super(key: key);
+class Pairings extends StatelessWidget {
+  const Pairings({Key key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -16,7 +16,7 @@ class Dashboard extends StatelessWidget {
         child: Container(
           child: Center(
             child: Column(
-              children: buildDashboardView(context)
+              children: buildPairingsView(context)
             )
           )
         )
@@ -25,11 +25,11 @@ class Dashboard extends StatelessWidget {
   }
 }
 
-buildDashboardView(BuildContext context) {
+buildPairingsView(BuildContext context) {
   return (
     <Widget>[
       ...buildHeader(), 
-      DashboardCard()
+      PairingsCard()
     ]
   );
 }

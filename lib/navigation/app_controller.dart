@@ -2,7 +2,7 @@ import 'package:curved_navigation_bar/curved_navigation_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:aspire/constants/navigation_constants.dart';
 import "../chat/chat.dart";
-import '../dashboard/dashboard.dart';
+import '../pairings/pairings.dart';
 import "../profile/user_profile.dart";
 
 class AppController extends StatefulWidget {
@@ -12,7 +12,7 @@ class AppController extends StatefulWidget {
 class _MyAppState extends State<AppController> {
   int pageIndex = 1; 
   double navBarIconSize = 30; 
-  List<Widget> _widgets = [UserProfile(), Dashboard(), Chat()];
+  List<Widget> _widgets = [UserProfile(), Pairings(), Chat()];
 
   tapped(int tappedIndex) {
     setState(() {pageIndex = tappedIndex;});

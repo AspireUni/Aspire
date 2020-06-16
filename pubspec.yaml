@@ -45,7 +45,7 @@ flutter:
   uses-material-design: true        # material icon font
 
   assets:
-    - images/DashboardBg.png
+    - images/PairingsBg.png
     - images/DefaultBg.png
 
   # An image asset can refer to one or more resolution-specific "variants", see

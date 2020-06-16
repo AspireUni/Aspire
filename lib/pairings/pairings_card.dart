@@ -1,14 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_tindercard/flutter_tindercard.dart';
 
-import "../constants/dashboard_constants.dart";
+import "../constants/pairings_constants.dart";
 
-class DashboardCard extends StatefulWidget {
+class PairingsCard extends StatefulWidget {
   @override
-  _DashboardCardState createState() => _DashboardCardState();
+  _PairingsCardState createState() => _PairingsCardState();
 }
 
-class _DashboardCardState extends State<DashboardCard> 
+class _PairingsCardState extends State<PairingsCard> 
   with TickerProviderStateMixin {
   
   @override
