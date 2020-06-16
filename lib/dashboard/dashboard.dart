@@ -1,5 +1,7 @@
-import 'package:google_fonts/google_fonts.dart';
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
+
+import '../constants/dashboard_constants.dart';
 import './dashboard_card.dart';
 
 class Dashboard extends StatelessWidget {
@@ -9,14 +11,13 @@ class Dashboard extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.transparent,
-      appBar: AppBar(
-        backgroundColor: Colors.transparent,
-        elevation: 0.0,
-      ),
-      body: Container(
-        child: Center(
-          child: Column(
-            children: buildDashboardView(context)
+      body: Padding(
+        padding: EdgeInsets.only(top: 50.0),
+        child: Container(
+          child: Center(
+            child: Column(
+              children: buildDashboardView(context)
+            )
           )
         )
       )
@@ -36,7 +37,7 @@ buildDashboardView(BuildContext context) {
 buildHeader() {
   return <Widget> [
     Text(
-      "Pairings", 
+      pairingsHeaderTitle, 
       style: GoogleFonts.muli(
         textStyle: TextStyle(
           color: Colors.black, 
@@ -47,7 +48,7 @@ buildHeader() {
       )
     ),
     Text(
-      "Browse your matches", 
+      pairingsSubtitle, 
       style: GoogleFonts.muli(
         textStyle: TextStyle(
           color: Colors.grey, 
