@@ -1,4 +1,4 @@
-name: mentorApp
+name: aspire
 description: A new Flutter project.
 
 # The following defines the version and build number for your application.
@@ -40,6 +40,7 @@ dependencies:
   device_preview: ^0.4.5
   intl: ^0.16.1
   url_launcher: ^5.4.10
+  effective_dart: ^1.0.0
 
 dev_dependencies:
   flutter_test:

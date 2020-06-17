@@ -6,7 +6,7 @@ class Root extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-        title: 'MentorApp',
+        title: 'Aspire',
         initialRoute: '/',
         routes: {
           '/': (context) => LoginSignupPage(),
