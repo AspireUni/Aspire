@@ -1,12 +1,64 @@
+import 'dart:async';
 import 'package:flutter/material.dart';
-//import 'package:MentorApp/lib/Services/authentication.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:aspire/lib/Services/authentication.dart';
 
+abstract class BaseAuth {
+  Future<String> signIn(String email, String password);
+
+  Future<String> signUp(String email, String password);
+
+  Future<FirebaseUser> getCurrentUser();
+
+  Future<void> sendEmailVerification();
+
+  Future<void> signOut();
+
+  Future<bool> isEmailVerified();
+}
+
+class Auth implements BaseAuth {
+  final FirebaseAuth _firebaseAuth = FirebaseAuth.instance;
+
+  Future<String> signIn(String email, String password) async {
+    AuthResult result = await _firebaseAuth.signInWithEmailAndPassword(
+        email: email, password: password);
+    FirebaseUser user = result.user;
+    return user.uid;
+  }
+
+  Future<String> signUp(String email, String password) async {
+    AuthResult result = await _firebaseAuth.createUserWithEmailAndPassword(
+        email: email, password: password);
+    FirebaseUser user = result.user;
+    return user.uid;
+  }
+
+  Future<FirebaseUser> getCurrentUser() async {
+    FirebaseUser user = await _firebaseAuth.currentUser();
+    return user;
+  }
+
+  Future<void> signOut() async {
+    return _firebaseAuth.signOut();
+  }
+
+  Future<void> sendEmailVerification() async {
+    FirebaseUser user = await _firebaseAuth.currentUser();
+    user.sendEmailVerification();
+  }
+
+  Future<bool> isEmailVerified() async {
+    FirebaseUser user = await _firebaseAuth.currentUser();
+    return user.isEmailVerified;
+  }
+}
 // Changing from stateless to stateful
 class LoginSignupPage extends StatefulWidget {
-  //LoginSignupPage({this.auth, this.loginCallback});
+  LoginSignupPage({this.auth, this.loginCallback});
 
-  //final BaseAuth auth;
-  //final VoidCallback loginCallback;
+  final BaseAuth auth;
+  final VoidCallback loginCallback;
 
   @override
   State<StatefulWidget> createState() => new _LoginSignupPageState();
@@ -23,6 +75,7 @@ class _LoginSignupPageState extends State<LoginSignupPage> {
   bool _isLoading;
 
   // Check if form is valid before perform login or signup
+
   bool validateAndSave() {
     final form = _formKey.currentState;
     if (form.validate()) {
@@ -32,41 +85,41 @@ class _LoginSignupPageState extends State<LoginSignupPage> {
     return false;
   }
 
-  // Perform login or signup
-  // void validateAndSubmit() async {
-  //   setState(() {
-  //     _errorMessage = "";
-  //     _isLoading = true;
-  //   });
-  //   if (validateAndSave()) {
-  //     String userId = "";
-  //     try {
-  //       if (_isLoginForm) {
-  //         userId = await widget.auth.signIn(_email, _password);
-  //         print('Signed in: $userId');
-  //       } else {
-  //         userId = await widget.auth.signUp(_email, _password);
-  //         //widget.auth.sendEmailVerification();
-  //         //_showVerifyEmailSentDialog();
-  //         print('Signed up user: $userId');
-  //       }
-  //       setState(() {
-  //         _isLoading = false;
-  //       });
+  //Perform login or signup
+  void validateAndSubmit() async {
+    setState(() {
+      _errorMessage = "";
+      _isLoading = true;
+    });
+    if (validateAndSave()) {
+      String userId = "";
+      try {
+        if (_isLoginForm) {
+          userId = await widget.auth.signIn(_email, _password);
+          print('Signed in: $userId');
+        } else {
+          userId = await widget.auth.signUp(_email, _password);
+          //widget.auth.sendEmailVerification();
+          //_showVerifyEmailSentDialog();
+          print('Signed up user: $userId');
+        }
+        setState(() {
+          _isLoading = false;
+        });
 
-  //       if (userId.length > 0 && userId != null && _isLoginForm) {
-  //         widget.loginCallback();
-  //       }
-  //     } catch (e) {
-  //       print('Error: $e');
-  //       setState(() {
-  //         _isLoading = false;
-  //         _errorMessage = e.message;
-  //         _formKey.currentState.reset();
-  //       });
-  //     }
-  //   }
-  // }
+        if (userId.length > 0 && userId != null && _isLoginForm) {
+          widget.loginCallback();
+        }
+      } catch (e) {
+        print('Error: $e');
+        setState(() {
+          _isLoading = false;
+          _errorMessage = e.message;
+          _formKey.currentState.reset();
+        });
+      }
+    }
+  }
 
   @override
   void initState() {
@@ -112,28 +165,28 @@ class _LoginSignupPageState extends State<LoginSignupPage> {
     );
   }
 
-//  void _showVerifyEmailSentDialog() {
-//    showDialog(
-//      context: context,
-//      builder: (BuildContext context) {
-//        // return object of type Dialog
-//        return AlertDialog(
-//          title: new Text("Verify your account"),
-//          content:
-//              new Text("Link to verify account has been sent to your email"),
-//          actions: <Widget>[
-//            new FlatButton(
-//              child: new Text("Dismiss"),
-//              onPressed: () {
-//                toggleFormMode();
-//                Navigator.of(context).pop();
-//              },
-//            ),
-//          ],
-//        );
-//      },
-//    );
-//  }
+ void _showVerifyEmailSentDialog() {
+   showDialog(
+     context: context,
+     builder: (BuildContext context) {
+       // return object of type Dialog
+       return AlertDialog(
+         title: new Text("Verify your account"),
+         content:
+             new Text("Link to verify account has been sent to your email"),
+         actions: <Widget>[
+           new FlatButton(
+             child: new Text("Dismiss"),
+             onPressed: () {
+               toggleFormMode();
+               Navigator.of(context).pop();
+             },
+           ),
+         ],
+       );
+     },
+   );
+ }
 
   Widget _showForm() {
     return new Container(
