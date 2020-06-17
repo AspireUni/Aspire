@@ -1,7 +1,6 @@
 import 'package:device_preview/device_preview.dart';
 import 'package:flutter/material.dart';
 import "./navigation/root.dart";
-
 void main() => {
   runApp(
     DevicePreview(
@@ -21,3 +20,4 @@ class App extends StatelessWidget {
     );
   }
 }
+
