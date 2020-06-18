@@ -1,6 +1,60 @@
 import 'package:flutter/material.dart';
 import './authentication.dart';
 
+// import 'dart:async';
+// import 'package:firebase_auth/firebase_auth.dart';
+
+// abstract class BaseAuth {
+//   Future<String> signIn(String email, String password);
+
+//   Future<String> signUp(String email, String password);
+
+//   Future<FirebaseUser> getCurrentUser();
+
+//   Future<void> sendEmailVerification();
+
+//   Future<void> signOut();
+
+//   Future<bool> isEmailVerified();
+// }
+
+// class Auth implements BaseAuth {
+//   final FirebaseAuth _firebaseAuth = FirebaseAuth.instance;
+
+//   Future<String> signIn(String email, String password) async {
+//     AuthResult result = await _firebaseAuth.signInWithEmailAndPassword(
+//         email: email, password: password);
+//     FirebaseUser user = result.user;
+//     return user.uid;
+//   }
+
+//   Future<String> signUp(String email, String password) async {
+//     AuthResult result = await _firebaseAuth.createUserWithEmailAndPassword(
+//         email: email, password: password);
+//     FirebaseUser user = result.user;
+//     return user.uid;
+//   }
+
+//   Future<FirebaseUser> getCurrentUser() async {
+//     FirebaseUser user = await _firebaseAuth.currentUser();
+//     return user;
+//   }
+
+//   Future<void> signOut() async {
+//     return _firebaseAuth.signOut();
+//   }
+
+//   Future<void> sendEmailVerification() async {
+//     FirebaseUser user = await _firebaseAuth.currentUser();
+//     user.sendEmailVerification();
+//   }
+
+//   Future<bool> isEmailVerified() async {
+//     FirebaseUser user = await _firebaseAuth.currentUser();
+//     return user.isEmailVerified;
+//   }
+// }
+
 // Changing from stateless to stateful
 class LoginSignupPage extends StatefulWidget {
   LoginSignupPage({this.auth, this.loginCallback});
@@ -47,8 +101,8 @@ class _LoginSignupPageState extends State<LoginSignupPage> {
           print('Signed in: $userId');
         } else {
           userId = await widget.auth.signUp(_email, _password);
-          //widget.auth.sendEmailVerification();
-          //_showVerifyEmailSentDialog();
+          widget.auth.sendEmailVerification();
+          _showVerifyEmailSentDialog();
           print('Signed up user: $userId');
         }
         setState(() {
@@ -58,11 +112,12 @@ class _LoginSignupPageState extends State<LoginSignupPage> {
         if (userId.length > 0 && userId != null && _isLoginForm) {
           widget.loginCallback();
         }
-      } catch (e) {
+        //Avoid catches without on clauses.
+      } catch (e) { 
         print('Error: $e');
         setState(() {
           _isLoading = false;
-          _errorMessage = e.message;
+          _errorMessage = e.message as String;// A value of type 'dynamic' can't be assigned to a variable of type 'String'. Try changing the type of the variable, or casting the right-hand type to 'String'.
           _formKey.currentState.reset();
         });
       }
@@ -244,7 +299,7 @@ class _LoginSignupPageState extends State<LoginSignupPage> {
             color: Colors.blue,
             child: new Text(_isLoginForm ? 'Login' : 'Create account',
                 style: new TextStyle(fontSize: 20.0, color: Colors.white)),
-            //onPressed: validateAndSubmit,
+            onPressed: validateAndSubmit,
           ),
         ));
   }
