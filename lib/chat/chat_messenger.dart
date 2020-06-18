@@ -59,7 +59,7 @@ class ChatMessengerState extends State<ChatMessenger> {
     }
   }
 
-  Widget buildTimestamp(String timestamp, bool isSent) {
+  Widget buildTimestamp(String timestamp, {bool isSent}) {
     return Align(
       alignment: isSent ? Alignment.centerRight : Alignment.centerLeft,
       child:  Container(
@@ -130,7 +130,7 @@ class ChatMessengerState extends State<ChatMessenger> {
     for (int i = messages.length - 1; i >= 0; i--) {
       if (i == messages.length - 1) {
         messagesList.add(
-          buildTimestamp((messages[i] as Map)["timestamp"], (messages[i] as Map)["isSent"])
+          buildTimestamp((messages[i] as Map)["timestamp"], isSent: (messages[i] as Map)["isSent"])
         );
       }
       messagesList.add(
