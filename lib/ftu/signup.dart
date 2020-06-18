@@ -117,7 +117,9 @@ class _LoginSignupPageState extends State<LoginSignupPage> {
         print('Error: $e');
         setState(() {
           _isLoading = false;
-          _errorMessage = e.message as String;// A value of type 'dynamic' can't be assigned to a variable of type 'String'. Try changing the type of the variable, or casting the right-hand type to 'String'.
+          _errorMessage = e.message as String;
+          // A value of type 'dynamic' can't be assigned to a variable of type 'String'. 
+          //Try changing the type of the variable, or casting the right-hand type to 'String'.
           _formKey.currentState.reset();
         });
       }
