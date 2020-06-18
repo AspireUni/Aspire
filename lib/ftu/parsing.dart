@@ -15,17 +15,17 @@ class Localization {
   }
 
   
-  static List<Industry > parseIndustry(statesJson) {
-    var slist = statesJson['industry'] as List;
+  static List<Industry > parseIndustry(industryJson) {
+    var industryList = industryJson['industry'] as List;
     List<Industry > statesList =
-       slist.map((data) => Industry .fromJson(data)).toList();
+       industryList.map((data) => Industry .fromJson(data)).toList();
     return statesList;
   }
 
-  static List<Specialty> parseSpecialty(provincesJson) {
-    var plist = provincesJson['specialty'] as List;
+  static List<Specialty> parseSpecialty(specialtyJson) {
+    var specialtyList = specialtyJson['specialty'] as List;
     List<Specialty> provincesList =
-        plist.map((data) => Specialty.fromJson(data)).toList();
+        specialtyList.map((data) => Specialty.fromJson(data)).toList();
     return provincesList;
   }
 
