@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
-import './authentication.dart';
 import 'package:firebase_database/firebase_database.dart';
-//import './todo.dart';
-import 'dart:async';
+import './authentication.dart';
 
 class HomePage extends StatefulWidget {
   HomePage({Key key, this.auth, this.userId, this.logoutCallback})
