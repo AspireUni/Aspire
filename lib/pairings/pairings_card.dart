@@ -3,6 +3,8 @@ import 'package:flutter_tindercard/flutter_tindercard.dart';
 
 import "../constants/pairings_constants.dart";
 
+CardController controller;
+
 class PairingsCard extends StatefulWidget {
   @override
   _PairingsCardState createState() => _PairingsCardState();
@@ -23,8 +25,7 @@ class _PairingsCardState extends State<PairingsCard>
   }
 }
 
-renderCards(context) {
-  CardController controller; 
+renderCards(context) { 
   final totalCardNum = dummyImages.length;
   final maxSize = MediaQuery.of(context).size.width * 0.9;
   final minSize = MediaQuery.of(context).size.width * 0.8;
