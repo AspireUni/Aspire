@@ -21,9 +21,9 @@ class ProfileEducation extends StatelessWidget {
 
     return SectionRow(
       children: <Widget>[
-        buildEducationText(school, true, false),
-        buildEducationText(program, false, false),
-        buildEducationText(dateRange, false, true)
+        buildEducationText(school, isSchool: true, isDateRange: false),
+        buildEducationText(program, isSchool: false, isDateRange: false),
+        buildEducationText(dateRange, isSchool: false, isDateRange: true)
       ]
     );
   }
@@ -45,7 +45,7 @@ class ProfileEducation extends StatelessWidget {
     return SectionList(children: schoolList);
   }
 
-  buildEducationText(String text, bool isSchool, bool isDateRange) {
+  buildEducationText(String text, {bool isSchool, bool isDateRange}) {
     return Text(
       text,
       textAlign: TextAlign.left,

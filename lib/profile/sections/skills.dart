@@ -18,8 +18,8 @@ class ProfileSkills extends StatelessWidget {
   buildSkillRow(BuildContext context, String skill, String level) {
     return SectionRow(
       children: <Widget>[
-        buildSkillText(skill, true),
-        buildSkillText(level, false)
+        buildSkillText(skill, isSkill: true),
+        buildSkillText(level, isSkill: false)
       ]
     );
   }
@@ -66,7 +66,7 @@ class ProfileSkills extends StatelessWidget {
     return SectionList(children: skillList);
   }
 
-  buildSkillText(String text, bool isSkill) {
+  buildSkillText(String text, {bool isSkill}) {
     return Container(
         child: Text(
         text,
