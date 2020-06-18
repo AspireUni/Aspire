@@ -42,7 +42,7 @@ renderCards(context) {
     ),
     cardController: controller = CardController(),
     swipeUpdateCallback:
-      (DragUpdateDetails details, Alignment align) {
+      (details, align) {
         if (align.x < 0) {
           // Left swipe
         } else if (align.x > 0) {
@@ -50,7 +50,7 @@ renderCards(context) {
         }
     },
     swipeCompleteCallback:
-      (CardSwipeOrientation orientation, int index) {
+      (orientation, index) {
       // Orientation & index of swiped card
     }
   );
