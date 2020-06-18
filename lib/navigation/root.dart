@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-import 'app_controller.dart';
-//import '../ftu/rootpage.dart';
-//import '../ftu/homepage.dart';
+
 import '../ftu/signup.dart';
+import 'app_controller.dart';
+
 class Root extends StatelessWidget {
   @override
   Widget build(BuildContext context) {

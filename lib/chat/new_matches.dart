@@ -1,7 +1,8 @@
 import 'package:google_fonts/google_fonts.dart';
 import 'package:flutter/material.dart';
-import './chat_messenger.dart';
+
 import '../constants/chat_constants.dart';
+import './chat_messenger.dart';
 
 const dummyData = [
   {

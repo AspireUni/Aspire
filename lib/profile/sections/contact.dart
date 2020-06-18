@@ -107,8 +107,8 @@ class ProfileContact extends StatelessWidget {
               Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: <Widget>[
-                  buildContactText(label, true),
-                  buildContactText(info, false)
+                  buildContactText(label, isLabel: true),
+                  buildContactText(info, isLabel: false)
                 ]
               )
             ]
@@ -118,7 +118,7 @@ class ProfileContact extends StatelessWidget {
     );
   }
 
-  buildContactText(String text, bool isLabel) {
+  buildContactText(String text, {bool isLabel}) {
     return Text(
       text,
       textAlign: TextAlign.left,

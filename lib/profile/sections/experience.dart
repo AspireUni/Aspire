@@ -20,9 +20,9 @@ class ProfileExperience extends StatelessWidget {
 
     return SectionRow(
       children: <Widget>[
-        buildExperienceText(jobTitle, true, false),
-        buildExperienceText(company, false, false),
-        buildExperienceText(dateRange, false, true)
+        buildExperienceText(jobTitle, isJobTitle: true, isDateRange: false),
+        buildExperienceText(company, isJobTitle: false, isDateRange: false),
+        buildExperienceText(dateRange, isJobTitle: false, isDateRange: true)
       ]
     );
   }
@@ -44,7 +44,7 @@ class ProfileExperience extends StatelessWidget {
     return SectionList(children: jobList);
   }
 
-  buildExperienceText(String text, bool isJobTitle, bool isDateRange) {
+  buildExperienceText(String text, {bool isJobTitle, bool isDateRange}) {
     return Text(
       text,
       textAlign: TextAlign.left,
