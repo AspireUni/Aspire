@@ -9,8 +9,6 @@ analyzer:
     non_bool_condition: ignore
     omit_local_variable_types: ignore
     prefer_collection_literals: ignore
-    prefer_final_fields: ignore
-    prefer_interpolation_to_compose_strings: ignore
     public_member_api_docs: ignore
     todo: ignore
     type_annotate_public_apis: ignore
