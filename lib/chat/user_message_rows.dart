@@ -130,7 +130,7 @@ buildMessageRows(context) {
                         )
                       ),
                       children: [
-                        if(dummyData[i]["isSent"] != null) WidgetSpan(
+                        if(dummyData[i]["isSent"] != false) WidgetSpan(
                           child: Container(
                             margin: EdgeInsets.only(right: 6.0),
                             child: Icon(Icons.send, size: 12, color: Colors.grey)
