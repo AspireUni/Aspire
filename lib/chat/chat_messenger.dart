@@ -123,10 +123,10 @@ class ChatMessengerState extends State<ChatMessenger> {
     );
   }
 
-  final TextEditingController textInputController = new TextEditingController();
+  final TextEditingController textInputController = TextEditingController();
 
   List<Widget> buildMessenger() {
-    List<Widget> messagesList = new List<Widget>();
+    List<Widget> messagesList = List<Widget>();
     for (int i = messages.length - 1; i >= 0; i--) {
       if (i == messages.length - 1) {
         messagesList.add(

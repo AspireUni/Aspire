@@ -28,7 +28,7 @@ class ProfileExperience extends StatelessWidget {
   }
 
   buildJobList(BuildContext context) {
-    List<Widget> jobList = new List<Widget>();
+    List<Widget> jobList = List<Widget>();
     for (int i = 0; i < jobs.length; i++) {
       jobList.add(
         buildJobRow(

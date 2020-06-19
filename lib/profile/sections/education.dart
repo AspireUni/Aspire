@@ -29,7 +29,7 @@ class ProfileEducation extends StatelessWidget {
   }
 
   buildSchoolList(BuildContext context) {
-    List<Widget> schoolList = new List<Widget>();
+    List<Widget> schoolList = List<Widget>();
     for (int i = 0; i < schools.length; i++) {
       schoolList.add(
         buildSchoolRow(

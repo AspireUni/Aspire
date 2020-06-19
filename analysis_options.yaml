@@ -15,7 +15,6 @@ analyzer:
     public_member_api_docs: ignore
     todo: ignore
     type_annotate_public_apis: ignore
-    unnecessary_new: ignore
   strong-mode:
     implicit-casts: false
 
