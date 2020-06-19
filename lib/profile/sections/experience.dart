@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:aspire/constants/profile_constants.dart';
+
+import '../../constants/profile_constants.dart';
 import './section.dart';
  
 class ProfileExperience extends StatelessWidget {  
@@ -28,7 +29,7 @@ class ProfileExperience extends StatelessWidget {
   }
 
   buildJobList(BuildContext context) {
-    List<Widget> jobList = new List<Widget>();
+    List<Widget> jobList = List<Widget>();
     for (int i = 0; i < jobs.length; i++) {
       jobList.add(
         buildJobRow(

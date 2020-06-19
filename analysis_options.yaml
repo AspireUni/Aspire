@@ -9,11 +9,9 @@ analyzer:
     non_bool_condition: ignore
     omit_local_variable_types: ignore
     prefer_collection_literals: ignore
-    prefer_relative_imports: ignore
     public_member_api_docs: ignore
     todo: ignore
     type_annotate_public_apis: ignore
-    unnecessary_new: ignore
   strong-mode:
     implicit-casts: false
 

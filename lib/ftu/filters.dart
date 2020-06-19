@@ -8,8 +8,8 @@ class Filters extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.black,
-      appBar: new AppBar(
-        title: new Text("Select up to 3 options", style: TextStyle(color: Colors.white, fontSize: 20.0))
+      appBar: AppBar(
+        title: Text("Select up to 3 options", style: TextStyle(color: Colors.white, fontSize: 20.0))
       ),
       body: InkWell(
         onTap: (){

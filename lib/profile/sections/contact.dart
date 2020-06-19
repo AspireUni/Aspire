@@ -1,9 +1,10 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
-import 'package:aspire/constants/profile_constants.dart';
 import 'package:url_launcher/url_launcher.dart';
+import 'package:google_fonts/google_fonts.dart';
+
 import '../../chat/chat_messenger.dart';
+import '../../constants/profile_constants.dart';
 import './section.dart';
 
  

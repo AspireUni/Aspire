@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:aspire/constants/profile_constants.dart';
+
+import '../../constants/profile_constants.dart';
 import './section.dart';
 
  
@@ -29,7 +30,7 @@ class ProfileEducation extends StatelessWidget {
   }
 
   buildSchoolList(BuildContext context) {
-    List<Widget> schoolList = new List<Widget>();
+    List<Widget> schoolList = List<Widget>();
     for (int i = 0; i < schools.length; i++) {
       schoolList.add(
         buildSchoolRow(
