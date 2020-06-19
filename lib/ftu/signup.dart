@@ -1,5 +1,4 @@
 //REF: https://dart.dev/guides/language/effective-dart/style#do-place-dart-imports-before-other-imports
-
 import 'package:flutter/material.dart';
 import './authentication.dart';
 
@@ -161,7 +160,6 @@ class _LoginSignupPageState extends State<LoginSignupPage> {
 
   Widget showErrorMessage() {
     if (_errorMessage != null && _errorMessage.length > 0) {
-    //if (_errorMessage.length > 0 && _errorMessage != null) {
       return new Text(
         _errorMessage,
         style: TextStyle(
@@ -181,7 +179,6 @@ class _LoginSignupPageState extends State<LoginSignupPage> {
     return new Hero(
       tag: 'hero',
       child: Padding(
-        //padding: EdgeInsets.fromLTRB(0.0, 70.0, 0.0, 0.0),
         padding: EdgeInsets.only(top: 70.0),
         child: CircleAvatar(
           backgroundColor: Colors.transparent,
