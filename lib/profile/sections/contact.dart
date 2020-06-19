@@ -135,11 +135,11 @@ class ProfileContact extends StatelessWidget {
   }
 
   handleEmailTap() {
-    _launchUrl("mailto:" + contact["emailAddress"]);
+    _launchUrl("mailto:${contact["emailAddress"]}");
   }
 
   handlePhoneTap() {
-    _launchUrl("tel:" + contact["phoneNumber"]);
+    _launchUrl("tel:${contact["phoneNumber"]}");
   }
 
   handleWebsiteTap() {
