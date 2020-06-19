@@ -132,7 +132,7 @@ class FiltersState extends State<FiltersPage> {
   buildTitle() {
     return Container(
       padding: const EdgeInsets.fromLTRB(10.0, 10.0, 10.0, 20.0),
-      child: new Text("Intialize Your Profile",
+      child: new Text("Initialize Your Profile",
           style: GoogleFonts.muli(
               textStyle: TextStyle(
                   color: Colors.black,
