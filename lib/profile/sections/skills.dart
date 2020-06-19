@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:aspire/constants/profile_constants.dart';
+
+import '../../constants/profile_constants.dart';
 import './section.dart';
  
 class ProfileSkills extends StatelessWidget {  
@@ -25,9 +26,9 @@ class ProfileSkills extends StatelessWidget {
   }
 
   buildSkillList(BuildContext context) {
-    List<Widget> expertList = new List<Widget>();
-    List<Widget> intermediateList = new List<Widget>();
-    List<Widget> beginnerList = new List<Widget>();
+    List<Widget> expertList = List<Widget>();
+    List<Widget> intermediateList = List<Widget>();
+    List<Widget> beginnerList = List<Widget>();
 
     for (int i = 0; i < skills.length; i++) {
       if (skills[i]["level"] == skillExpert){

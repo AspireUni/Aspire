@@ -78,7 +78,7 @@ class UserMessageRows extends StatelessWidget {
 }
 
 buildMessageRows(context) {
-  List<Widget> messagesList = new List<Widget>();
+  List<Widget> messagesList = List<Widget>();
   for (int i = 0; i < dummyData.length; i++) {
     messagesList.add(
       GestureDetector(
