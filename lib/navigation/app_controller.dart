@@ -1,16 +1,32 @@
 import 'package:curved_navigation_bar/curved_navigation_bar.dart';
+import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
-
+import '../FTU/authentication.dart';
 import '../chat/chat.dart';
 import '../constants/navigation_constants.dart';
 import '../pairings/pairings.dart';
 import '../profile/user_profile.dart';
 
+
 class AppController extends StatefulWidget {
-  @override _MyAppState createState() => _MyAppState();
+  AppController({Key key, this.auth, this.userId, this.logoutCallback})
+      : super(key: key);
+
+  final BaseAuth auth;
+  final VoidCallback logoutCallback;
+  final String userId;
+
+  @override
+  State<StatefulWidget> createState() => new _AppControllerState();
+
+  //@override _MyAppState createState() => _MyAppState();
 }
 
-class _MyAppState extends State<AppController> {
+class _AppControllerState extends State<AppController> {
+
+  final FirebaseDatabase _database = FirebaseDatabase.instance;
+  final GlobalKey<FormState> formKey = GlobalKey<FormState>();
+
   int pageIndex = 1; 
   double navBarIconSize = 30; 
   final List<Widget> _widgets = [UserProfile(), Pairings(), Chat()];
@@ -41,5 +57,14 @@ class _MyAppState extends State<AppController> {
         accentColor: Color(0xFF45cab9),
       )
     );
+    
+    signOut() async {
+    try {
+      await widget.auth.signOut();
+      widget.logoutCallback();
+    } catch (e) {
+      print(e);
+    }
+  }
   }
 }

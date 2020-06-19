@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
+import '../Navigation/app_controller.dart';
 import './authentication.dart';
 import './signup.dart';
-
 
 enum AuthStatus {
   NOT_DETERMINED,
@@ -77,12 +77,12 @@ class _RootPageState extends State<RootPage> {
         break;
       case AuthStatus.LOGGED_IN:
         if (_userId != null && _userId.length > 0) {
-          Navigator.pushNamed(context, '/AppController');
-          // return new HomePage(
-          //   userId: _userId,
-          //   auth: widget.auth,
-          //   logoutCallback: logoutCallback,
-          // );
+          //Navigator.pushNamed(context, '/AppController');
+          return new AppController(
+            userId: _userId,
+            auth: widget.auth,
+            logoutCallback: logoutCallback,
+          );
 
         } else
           return buildWaitingScreen();

@@ -96,7 +96,7 @@ class _LoginSignupPageState extends State<LoginSignupPage> {
   Widget build(BuildContext context) {
     return new Scaffold(
         appBar: new AppBar(
-          title: new Text('SignUp/LogIn Page'),
+          title: new Text('Welcome to Aspire'),
         ),
         body: Stack(
           children: <Widget>[
