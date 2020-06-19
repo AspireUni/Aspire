@@ -22,9 +22,9 @@
 // }
 
 import 'package:flutter/material.dart';
-import './FTU/authentication.dart';
-import './FTU/rootpage.dart';
-
+//import './FTU/authentication.dart';
+//import './FTU/rootpage.dart';
+import "./navigation/root.dart";
 void main() {
   runApp(new App());
 }
@@ -38,6 +38,7 @@ class App extends StatelessWidget {
         theme: new ThemeData(
           primarySwatch: Colors.blue,
         ),
-        home: new RootPage(auth: new Auth()));
+        home: Root());
+        //home: new RootPage(auth: new Auth()));
   }
 }
