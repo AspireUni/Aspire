@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import "../api/import_dummy_users.dart";
+import "../api/dummy_data_functions.dart";
 
 class FirstRoute extends StatelessWidget {
   @override
@@ -36,7 +36,7 @@ class SecondRoute extends StatelessWidget {
   }
 }
 
-void navigateToProfile(context) async {
-  await importDummyData(); // temporary to test the firestore
+void navigateToProfile(context) {
+  importDummyData(); // temporary to test the firestore
   Navigator.pushNamed(context, '/UserProfile');
 }
