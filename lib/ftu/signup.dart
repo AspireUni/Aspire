@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
-import "../helpers/add_users.dart";
 import "../helpers/dummy_data.dart";    // temporary to test the firestore
+import "../helpers/users.dart";
 
 class FirstRoute extends StatelessWidget {
   @override
