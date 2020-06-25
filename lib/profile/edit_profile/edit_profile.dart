@@ -4,11 +4,11 @@ import 'package:flutter_form_builder/flutter_form_builder.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 import '../view_profile/sections/section.dart';
-import './sections/edit_contact.dart';
-import './sections/edit_experience.dart';
-import './sections/edit_skills.dart';
+import './sections/contact/edit_contact.dart';
 import './sections/edit_summary.dart';
 import './sections/education/edit_education.dart';
+import './sections/experience/edit_experience.dart';
+import './sections/skills/edit_skills.dart';
 
 class EditProfile extends StatefulWidget {
   final Map data;

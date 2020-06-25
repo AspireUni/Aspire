@@ -77,21 +77,21 @@ class _SaveEducationState extends State<SaveEducation> {
 
 
   void onStartYearConfirm(Picker picker) {
-    String newStartDate = picker.getSelectedValues()[0].toString();
+    String newStartYear = picker.getSelectedValues()[0].toString();
     setState(() { 
-      education['startYear'] = newStartDate;
+      education['startYear'] = newStartYear;
       education['endYear'] = null;
     });
-    _saveEducationKey.currentState.fields['startYear'].currentState.didChange(newStartDate);
+    _saveEducationKey.currentState.fields['startYear'].currentState.didChange(newStartYear);
     _saveEducationKey.currentState.fields['endYear'].currentState.didChange(null);
     
     _saveEducationKey.currentState.fields['startYear'].currentState.validate();
   }
 
   void onEndYearConfirm(Picker picker) {
-    String newEndDate = picker.getSelectedValues()[0].toString();
-    setState(() => { education['endYear'] = newEndDate });
-    _saveEducationKey.currentState.fields['endYear'].currentState.didChange(newEndDate);
+    String newEndYear = picker.getSelectedValues()[0].toString();
+    setState(() => { education['endYear'] = newEndYear });
+    _saveEducationKey.currentState.fields['endYear'].currentState.didChange(newEndYear);
     _saveEducationKey.currentState.fields['endYear'].currentState.validate();
   }
 

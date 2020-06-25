@@ -29,7 +29,7 @@ Map dummyData = {
       "jobTitle": "Research Assistant",
       "company": "University of Alberta",
       "startDate": "May 2019",
-      "endDate": "December 2020"
+      "endDate": "December 2019"
     }
   ],
   "skills": [

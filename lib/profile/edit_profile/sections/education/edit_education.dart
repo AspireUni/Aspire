@@ -137,6 +137,7 @@ class _EditEducationState extends State<EditEducation> {
       )
     );
   }
+  
   handleAddTap(BuildContext context) {
     Navigator.push(
       context, 
