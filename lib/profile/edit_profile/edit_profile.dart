@@ -5,10 +5,10 @@ import 'package:google_fonts/google_fonts.dart';
 
 import '../view_profile/sections/section.dart';
 import './sections/edit_contact.dart';
-import './sections/edit_education.dart';
 import './sections/edit_experience.dart';
 import './sections/edit_skills.dart';
 import './sections/edit_summary.dart';
+import './sections/education/edit_education.dart';
 
 class EditProfile extends StatefulWidget {
   final Map data;
