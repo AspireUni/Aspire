@@ -89,7 +89,7 @@ class UserProfile extends StatelessWidget {
     return (
       <Widget>[
         ProfileHeader(
-          fullName: dummyData["fullName"]
+          data: dummyData
         ),
         ProfileSections(
           data: dummyData

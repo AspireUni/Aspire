@@ -6,7 +6,15 @@ import 'app_controller.dart';
 class Root extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
+    return GestureDetector(
+      onTap: () {
+        FocusScopeNode currentFocus = FocusScope.of(context);
+
+        if (!currentFocus.hasPrimaryFocus) {
+          currentFocus.unfocus();
+        }
+      },
+      child: MaterialApp(
         title: 'Aspire',
         initialRoute: '/',
         routes: {
@@ -18,6 +26,7 @@ class Root extends StatelessWidget {
           primaryColor: Color(0xFF0F1236),
           accentColor: Color(0xFF45cab9),
         )
-      );
-    }
+      )
+    );
   }
+}

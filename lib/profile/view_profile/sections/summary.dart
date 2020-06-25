@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
-import '../../constants/profile_constants.dart';
+import '../../../constants/profile_constants.dart';
 import './section.dart';
  
 class ProfileSummary extends StatelessWidget {  
