@@ -39,5 +39,5 @@ class SecondRoute extends StatelessWidget {
 
 void navigateToProfile(context) {
   postUsers(dummyUsers);
-  Navigator.pushNamed(context, '/UserProfile');
+  Navigator.pushNamed(context, '/Pairings');
 }
