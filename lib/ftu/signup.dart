@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
+import "../helpers/add_users.dart";
 import "../helpers/dummy_data.dart";    // temporary to test the firestore
-import "../helpers/post_users.dart";
 
 class FirstRoute extends StatelessWidget {
   @override
@@ -38,6 +38,6 @@ class SecondRoute extends StatelessWidget {
 }
 
 void navigateToProfile(context) {
-  postUsers(dummyUsers);
+  addUsers(dummyUsers);
   Navigator.pushNamed(context, '/Pairings');
 }
