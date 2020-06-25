@@ -17,14 +17,14 @@ final dummyUsers = [
   },
   {
     "id": "Kaylene Wittig", 
-    "type": "mentee"
+    "type": "mentor"
   },
   {
     "id": "Perla Ballinger", 
-    "type": "mentee"
+    "type": "mentor"
   },
   {
     "id": "Enola Bade", 
-    "type": "mentee"
+    "type": "mentor"
   }
 ];
