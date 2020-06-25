@@ -7,7 +7,9 @@ import 'package:google_fonts/google_fonts.dart';
 import 'input_field.dart';
 
 class AddEducation extends StatefulWidget {
-  AddEducation({Key key}) : super(key: key);
+  final bool editMode;
+  final Map<String, Object> schoolInfo;
+  AddEducation({Key key, @required this.editMode, this.schoolInfo}) : super(key: key);
 
   @override
   _AddEducationState createState() => _AddEducationState();
@@ -17,21 +19,24 @@ class _AddEducationState extends State<AddEducation> {
   final GlobalKey<FormBuilderState> _someKey = GlobalKey<FormBuilderState>();
   final FocusNode schoolFocus = FocusNode();
   final FocusNode degreeFocus = FocusNode();
+  Map<String, Object> education;
 
-  Map education = {
-    'school': null,
-    'degree': null,
-    'startDate': null,
-    'endDate': null
-  };
 
-  bool isStartDateFocused, isEndDateFocused;
+
+  bool isStartYearFocused, isEndYearFocused;
 
   @override
   void initState() {
     super.initState();
-    isStartDateFocused = false;
-    isEndDateFocused = false;
+    isStartYearFocused = false;
+    isEndYearFocused = false;
+
+    education = {
+      'school': widget.editMode ? widget.schoolInfo['school'] : null,
+      'degree': widget.editMode ? widget.schoolInfo['program'] : null,
+      'startYear': widget.editMode ? widget.schoolInfo['startYear'] : null,
+      'endYear': widget.editMode ? widget.schoolInfo['endYear'] : null
+    };
 
     textFieldFocusListener(schoolFocus, 'school');
     textFieldFocusListener(degreeFocus, 'degree');
@@ -56,8 +61,8 @@ class _AddEducationState extends State<AddEducation> {
 
   void unfocusDateRangeFields() {
     setState(() {
-      isStartDateFocused = false;
-      isEndDateFocused = false;
+      isStartYearFocused = false;
+      isEndYearFocused = false;
     });
   }
 
@@ -117,7 +122,7 @@ class _AddEducationState extends State<AddEducation> {
               backgroundColor: Theme.of(context).primaryColor,
               centerTitle: true,
               title: Text(
-                "Add education",
+                "${widget.editMode ? 'Edit' : 'Add'} education",
                 style: GoogleFonts.muli(
                   textStyle: TextStyle(
                     color: Colors.white, 
@@ -145,7 +150,6 @@ class _AddEducationState extends State<AddEducation> {
     return <Widget>[
       FormBuilder(
         key: _someKey,
-        initialValue: {},
         readOnly: false,
         child: Column(
           children: <Widget>[
@@ -161,12 +165,40 @@ class _AddEducationState extends State<AddEducation> {
           ]
         )
       ),
+      buildDeleteButton()
     ];
+  }
+
+  Widget buildDeleteButton() {
+    return widget.editMode 
+      ? Container(
+        padding: EdgeInsets.only(top: 20.0),
+        child: MaterialButton(
+          onPressed: () => print("Education deleted"),
+          color: Colors.redAccent,
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.all(Radius.circular(10.0))
+          ),
+          child: Text(
+            "Delete education",
+            style: GoogleFonts.muli(
+              textStyle: TextStyle(
+                color: Colors.white, 
+                letterSpacing: .5, 
+                fontSize: 13.0,
+                fontWeight: FontWeight.w700 
+              )
+            )
+          )
+        )
+      )
+      : Container();
   }
 
   Widget buildSchoolNameField() {
     return FormBuilderTextField(
       attribute: "school",
+      initialValue: education['school'],
       decoration: InputDecoration(
         isDense: true,
         contentPadding: EdgeInsets.only(top: 5.0, bottom: 5.0)
@@ -191,6 +223,7 @@ class _AddEducationState extends State<AddEducation> {
   Widget buildDegreeField() {
     return FormBuilderTextField(
       attribute: "degree",
+      initialValue: education['degree'],
       decoration: InputDecoration(
         isDense: true,
         contentPadding: EdgeInsets.only(top: 5.0, bottom: 5.0)
@@ -220,7 +253,7 @@ class _AddEducationState extends State<AddEducation> {
           child: Container(
             padding: EdgeInsets.only(right: 10.0),
             child: InputField(
-              labelText: "Start date",
+              labelText: "Start year",
               formField: buildStartDateField(),
             )
           )
@@ -229,8 +262,8 @@ class _AddEducationState extends State<AddEducation> {
           child: Container(
             padding: EdgeInsets.only(left: 10.0),
             child: InputField(
-              enabled: education['startDate'] != null,
-              labelText: "End date",
+              enabled: education['startYear'] != null,
+              labelText: "End year",
               formField: buildEndDateField(),
             )
           )
@@ -241,14 +274,15 @@ class _AddEducationState extends State<AddEducation> {
 
   Widget buildStartDateField() {
     return FormBuilderCustomField(
-      attribute: 'startDate',
+      attribute: 'startYear',
+      initialValue: education['startYear'],
       validators: [
         FormBuilderValidators.required(),
       ],
       formField: FormField(
         builder: (field) {
           return InputDecorator(
-            isFocused: isStartDateFocused,
+            isFocused: isStartYearFocused,
             decoration: InputDecoration(
               isDense: true,
               contentPadding: EdgeInsets.only(top: 5.0, bottom: 5.0),
@@ -265,7 +299,7 @@ class _AddEducationState extends State<AddEducation> {
               height: 20.0,
               child: InkWell(
                 child: Text(
-                  education['startDate'] ?? '',
+                  education['startYear'] ?? '',
                   style: GoogleFonts.muli(
                     textStyle: TextStyle(
                       color: Colors.black, 
@@ -277,10 +311,10 @@ class _AddEducationState extends State<AddEducation> {
                 onTap: () {
                   unfocusTextFields();
                   setState(() {
-                    isStartDateFocused = true;
-                    isEndDateFocused = false;
+                    isStartYearFocused = true;
+                    isEndYearFocused = false;
                   });
-                  showStartDatePicker(context, field); 
+                  showStartYearPicker(context, field); 
                 }
               )
             ),
@@ -292,14 +326,15 @@ class _AddEducationState extends State<AddEducation> {
 
   Widget buildEndDateField() {
     return FormBuilderCustomField(
-      attribute: 'endDate',
+      attribute: 'endYear',
+      initialValue: education['endYear'],
       validators: [
         FormBuilderValidators.required(),
       ],
       formField: FormField(
         builder: (field) {
           return InputDecorator(
-            isFocused: isEndDateFocused,
+            isFocused: isEndYearFocused,
             decoration: InputDecoration(
               isDense: true,
               contentPadding: EdgeInsets.only(top: 5.0, bottom: 5.0),
@@ -316,7 +351,7 @@ class _AddEducationState extends State<AddEducation> {
               height: 20.0,
               child: InkWell(
                 child: Text(
-                  education['endDate'] ?? '',
+                  education['endYear'] ?? '',
                   style: GoogleFonts.muli(
                     textStyle: TextStyle(
                       color: Colors.black, 
@@ -325,14 +360,14 @@ class _AddEducationState extends State<AddEducation> {
                     )
                   ),
                 ),
-                onTap: education['startDate'] != null
+                onTap: education['startYear'] != null
                   ? () {
                     unfocusTextFields();
                     setState(() {
-                      isStartDateFocused = false;
-                      isEndDateFocused = true;
+                      isStartYearFocused = false;
+                      isEndYearFocused = true;
                     });
-                    showEndDatePicker(context, field);
+                    showEndYearPicker(context, field);
                   }
                   : null,
               )
@@ -343,14 +378,14 @@ class _AddEducationState extends State<AddEducation> {
     );
   }
 
-  void showStartDatePicker(BuildContext context, field) {
+  void showStartYearPicker(BuildContext context, field) {
     Picker(
       adapter: NumberPickerAdapter(
         data: [
           NumberPickerColumn(
             begin: 1950,
             end: 2020,
-            initValue: education['startDate'] != null ? int.parse(education['startDate']) : 2010
+            initValue: education['startYear'] != null ? int.parse(education['startYear']) : 2010
           ),
         ]
       ),
@@ -389,24 +424,24 @@ class _AddEducationState extends State<AddEducation> {
       onConfirm: (picker, value) {
         String newStartDate = picker.getSelectedValues()[0].toString();
         setState(() => { 
-          education['startDate'] = newStartDate,
-          education['endDate'] = null
+          education['startYear'] = newStartDate,
+          education['endYear'] = null
         });
         field.didChange(newStartDate);
         field.validate();
-        _someKey.currentState.fields['endDate'].currentState.reset();
+        _someKey.currentState.fields['endYear'].currentState.reset();
       },
     ).showModal(context);
   }
   
-  void showEndDatePicker(BuildContext context, field) {
+  void showEndYearPicker(BuildContext context, field) {
     Picker(
       adapter: NumberPickerAdapter(
         data: [
           NumberPickerColumn(
-            begin: int.parse(education['startDate']),
+            begin: int.parse(education['startYear']),
             end: 2030,
-            initValue: education['endDate'] != null ? int.parse(education['endDate']) : int.parse(education['startDate'])
+            initValue: education['endYear'] != null ? int.parse(education['endYear']) : int.parse(education['startYear'])
           ),
         ]
       ),
@@ -444,7 +479,7 @@ class _AddEducationState extends State<AddEducation> {
       ),
       onConfirm: (picker, value) {
         String newEndDate = picker.getSelectedValues()[0].toString();
-        setState(() => { education['endDate'] = newEndDate });
+        setState(() => { education['endYear'] = newEndDate });
         field.didChange(newEndDate);
         field.validate();
 

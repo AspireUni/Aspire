@@ -30,8 +30,8 @@ class _EditEducationState extends State<EditEducation> {
     );
   }
 
-  buildSchoolRow(BuildContext context, String school, String program, String startYear, String endYear) {
-    final String dateRange = "$startYear - $endYear";
+  buildSchoolRow(BuildContext context, Map<String, Object> schoolInfo) {
+    final String dateRange = "${schoolInfo['startYear']} - ${schoolInfo['endYear']}";
     final IconData edit = IconData(
       0xf2bf,
       fontFamily: CupertinoIcons.iconFont,
@@ -39,6 +39,7 @@ class _EditEducationState extends State<EditEducation> {
     );
 
     return InkWell(
+      onTap: () => handleEditTap(context, schoolInfo),
       child: SectionRow(
         children: <Widget>[
           Row(
@@ -47,8 +48,8 @@ class _EditEducationState extends State<EditEducation> {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: <Widget>[
-                    buildEducationText(school, isSchool: true, isDateRange: false),
-                    buildEducationText(program, isSchool: false, isDateRange: false),
+                    buildEducationText(schoolInfo['school'], isSchool: true, isDateRange: false),
+                    buildEducationText(schoolInfo['program'], isSchool: false, isDateRange: false),
                     buildEducationText(dateRange, isSchool: false, isDateRange: true)
                   ]
                 )
@@ -74,10 +75,7 @@ class _EditEducationState extends State<EditEducation> {
       schoolList.add(
         buildSchoolRow(
           context, 
-          widget.schools[i]["school"], 
-          widget.schools[i]["program"], 
-          widget.schools[i]["startYear"],
-          widget.schools[i]["endYear"],
+          widget.schools[i]
         )
       );
     }
@@ -141,6 +139,25 @@ class _EditEducationState extends State<EditEducation> {
     );
   }
   handleAddTap(BuildContext context) {
-    Navigator.push(context, MaterialPageRoute(builder: (context) => AddEducation()));
+    Navigator.push(
+      context, 
+      MaterialPageRoute(
+        builder: (context) => AddEducation(
+          editMode: false
+        )
+      )
+    );
+  }
+
+  handleEditTap(BuildContext context, Map<String, Object> schoolInfo) {
+    Navigator.push(
+      context,
+      MaterialPageRoute(
+        builder: (context) => AddEducation(
+          editMode: true,
+          schoolInfo: schoolInfo
+        )
+      )
+    );
   }
 }
