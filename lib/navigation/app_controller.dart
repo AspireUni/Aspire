@@ -17,9 +17,7 @@ class AppController extends StatefulWidget {
   final String userId;
 
   @override
-  State<StatefulWidget> createState() => new _AppControllerState();
-
-  //@override _MyAppState createState() => _MyAppState();
+  State<StatefulWidget> createState() => _AppControllerState();
 }
 
 class _AppControllerState extends State<AppController> {
@@ -56,15 +54,14 @@ class _AppControllerState extends State<AppController> {
         primaryColor: Color(0xFF0F1236),
         accentColor: Color(0xFF45cab9),
       )
-    );
-    
-    signOut() async {
+    ); 
+  }
+  signOut() async {
     try {
       await widget.auth.signOut();
       widget.logoutCallback();
-    } catch (e) {
+    } on Exception catch (e) {
       print(e);
     }
-  }
   }
 }

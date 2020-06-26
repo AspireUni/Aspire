@@ -15,7 +15,7 @@ class RootPage extends StatefulWidget {
   final BaseAuth auth;
 
   @override
-  State<StatefulWidget> createState() => new _RootPageState();
+  State<StatefulWidget> createState() => _RootPageState();
 }
 
 class _RootPageState extends State<RootPage> {
@@ -28,7 +28,7 @@ class _RootPageState extends State<RootPage> {
     widget.auth.getCurrentUser().then((user) {
       setState(() {
         if (user != null) {
-          _userId = user?.uid;
+          _userId = user.uid;
         }
         authStatus =
             user?.uid == null ? AuthStatus.NOT_LOGGED_IN : AuthStatus.LOGGED_IN;
@@ -70,22 +70,22 @@ class _RootPageState extends State<RootPage> {
         return buildWaitingScreen();
         break;
       case AuthStatus.NOT_LOGGED_IN:
-        return new LoginSignupPage(
+        return LoginSignupPage(
           auth: widget.auth,
           loginCallback: loginCallback,
         );
         break;
       case AuthStatus.LOGGED_IN:
         if (_userId != null && _userId.length > 0) {
-          //Navigator.pushNamed(context, '/AppController');
-          return new AppController(
+          return AppController(
             userId: _userId,
             auth: widget.auth,
             logoutCallback: logoutCallback,
           );
 
-        } else
+        } else {
           return buildWaitingScreen();
+        }
         break;
       default:
         return buildWaitingScreen();

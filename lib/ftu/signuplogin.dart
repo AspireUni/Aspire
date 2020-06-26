@@ -19,11 +19,8 @@ class _LoginSignupPageState extends State<LoginSignupPage> {
 
   final _formKey = GlobalKey<FormState>();
 
-  String _email;
-  String _password;
-  String _errorMessage;
-  bool _isLoginForm;
-  bool _isLoading;
+  String _email, _password, _errorMessage;
+  bool _isLoginForm, _isLoading;
 
   // Check if form is valid before perform login or signup
   bool validateAndSave() {
@@ -98,7 +95,7 @@ class _LoginSignupPageState extends State<LoginSignupPage> {
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBar(
-          title: Text(welcomeMessage),//change to constants, look at the signuplogin_constants
+          title: Text(welcomeMessage),
         ),
         body: Stack(
           children: <Widget>[
@@ -125,8 +122,7 @@ class _LoginSignupPageState extends State<LoginSignupPage> {
        // Return object of type Dialog
        return AlertDialog(
          title: Text(vertifyaccountTitle),
-         content:
-             Text(vertifyaccountMessage),
+         content: Text(vertifyaccountMessage),
          actions: <Widget>[
            FlatButton(
              child: Text(dissmissMessage),
@@ -193,7 +189,7 @@ class _LoginSignupPageState extends State<LoginSignupPage> {
 
   Widget showEmailInput() {
     return Padding(
-      padding: const EdgeInsets.fromLTRB(0.0, 100.0, 0.0, 0.0),
+      padding: EdgeInsets.only(top: 100.0),
       child: TextFormField(
         maxLines: 1,
         keyboardType: TextInputType.emailAddress,
@@ -212,7 +208,7 @@ class _LoginSignupPageState extends State<LoginSignupPage> {
 
   Widget showPasswordInput() {
     return Padding(
-      padding: const EdgeInsets.fromLTRB(0.0, 15.0, 0.0, 0.0),
+      padding: EdgeInsets.only(top: 15.0),
       child: TextFormField(
         maxLines: 1,
         obscureText: true,
@@ -239,7 +235,7 @@ class _LoginSignupPageState extends State<LoginSignupPage> {
 
   Widget showPrimaryButton() {
     return Padding(
-        padding: EdgeInsets.fromLTRB(0.0, 45.0, 0.0, 0.0),
+        padding: EdgeInsets.only(top: 45.0),
         child: SizedBox(
           height: 40.0,
           child: RaisedButton(
