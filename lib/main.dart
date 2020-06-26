@@ -5,7 +5,7 @@ import "./navigation/root.dart";
 void main() => {
   runApp(
     DevicePreview(
-      enabled: true,
+      enabled: false,
       areSettingsEnabled: true,  
       builder: (context) => App()
     )

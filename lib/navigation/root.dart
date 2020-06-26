@@ -12,7 +12,7 @@ class Root extends StatelessWidget {
         routes: {
           '/': (context) => FirstRoute(),
           '/second': (context) => SecondRoute(),
-          '/UserProfile': (context) => AppController(),
+          '/Pairings': (context) => AppController(),
         },
         theme: ThemeData(
           primaryColor: Color(0xFF0F1236),
