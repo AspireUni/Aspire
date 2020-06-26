@@ -1,7 +1,8 @@
 //REF: https://dart.dev/guides/language/effective-dart/style#do-place-dart-imports-before-other-imports
 import 'package:flutter/material.dart';
-import './authentication.dart';
 import '../constants/signuplogin_constants.dart';
+import './authentication.dart';
+
 
 // Changing from stateless to stateful
 class LoginSignupPage extends StatefulWidget {
@@ -97,8 +98,7 @@ class _LoginSignupPageState extends State<LoginSignupPage> {
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBar(
-          title: Text('Welcome to Aspire'),
-          //title: welcomeMessage,//change to constants, look at the signuplogin_constants
+          title: Text(welcomeMessage),//change to constants, look at the signuplogin_constants
         ),
         body: Stack(
           children: <Widget>[
@@ -118,41 +118,18 @@ class _LoginSignupPageState extends State<LoginSignupPage> {
     );
   }
 
-//  void _showVerifyEmailSentDialog() {
-//    showDialog(
-//      context: context,
-//      builder: (BuildContext context) {
-//        // Return object of type Dialog
-//        return AlertDialog(
-//          title: vertifyaccountTitle,
-//          content:
-//              vertifyaccountMessage,
-//          actions: <Widget>[
-//            FlatButton(
-//              child: dissmissMessage,
-//              onPressed: () {
-//                toggleFormMode();
-//                Navigator.of(context).pop();
-//              },
-//            ),
-//          ],
-//        );
-//      },
-//    );
-//  }
-
  void _showVerifyEmailSentDialog() {
    showDialog(
      context: context,
      builder: (BuildContext context) {
        // Return object of type Dialog
        return AlertDialog(
-         title: Text("Verify your account"),
+         title: Text(vertifyaccountTitle),
          content:
-            Text("Link to verify account has been sent to your email"),
+             Text(vertifyaccountMessage),
          actions: <Widget>[
-            FlatButton(
-             child: Text("Dismiss"),
+           FlatButton(
+             child: Text(dissmissMessage),
              onPressed: () {
                toggleFormMode();
                Navigator.of(context).pop();
@@ -278,35 +255,3 @@ class _LoginSignupPageState extends State<LoginSignupPage> {
   }
 }
 
-// class FirstRoute extends StatelessWidget {
-//   @override
-//   Widget build(BuildContext context) {
-//     return Scaffold(
-//       backgroundColor: Colors.white,
-//       body: Center(
-//         child: RaisedButton(
-//           child: Text('Sign-Up', style: TextStyle(color: Colors.black) ),
-//           onPressed: () {
-//             Navigator.pushNamed(context, '/second');
-//           },
-//         ),
-//       ),
-//     );
-//   }
-// }
-
-// class SecondRoute extends StatelessWidget {
-//   @override
-//   Widget build(BuildContext context) {
-//     return Scaffold(
-//       body: Center(
-//         child: RaisedButton(
-//           onPressed: () {
-//             Navigator.pushNamed(context, '/UserProfile');
-//           },
-//           child: Text('Done. To the profile!'),
-//         ),
-//       ),
-//     );
-//   }
-// }
