@@ -68,7 +68,7 @@ class NewMatches extends StatelessWidget {
 }
 
 buildNewMatches(context) {
-  List<Widget> newMatchesList = List<Widget>();
+  List<Widget> newMatchesList = <Widget>[];
   for (int i = 0; i < dummyData.length; i++) {
     newMatchesList.add(
       GestureDetector(
