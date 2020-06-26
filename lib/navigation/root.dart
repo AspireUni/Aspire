@@ -1,6 +1,7 @@
+import 'package:aspire/FTU/rootpage.dart';
 import 'package:flutter/material.dart';
-
-import '../ftu/signup.dart';
+import '../FTU/authentication.dart';
+import '../FTU/rootpage.dart';
 import 'app_controller.dart';
 
 class Root extends StatelessWidget {
@@ -10,9 +11,8 @@ class Root extends StatelessWidget {
         title: 'Aspire',
         initialRoute: '/',
         routes: {
-          '/': (context) => FirstRoute(),
-          '/second': (context) => SecondRoute(),
-          '/UserProfile': (context) => AppController(),
+          '/': (context) => new RootPage(auth: new Auth()),
+          '/AppController': (context) => AppController(),
         },
         theme: ThemeData(
           primaryColor: Color(0xFF0F1236),

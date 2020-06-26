@@ -78,7 +78,7 @@ class UserMessageRows extends StatelessWidget {
 }
 
 buildMessageRows(context) {
-  List<Widget> messagesList = List<Widget>();
+  List<Widget> messagesList = <Widget>[];
   for (int i = 0; i < dummyData.length; i++) {
     messagesList.add(
       GestureDetector(
@@ -130,7 +130,7 @@ buildMessageRows(context) {
                         )
                       ),
                       children: [
-                        if(dummyData[i]["isSent"]) WidgetSpan(
+                        if(dummyData[i]["isSent"] != false) WidgetSpan(
                           child: Container(
                             margin: EdgeInsets.only(right: 6.0),
                             child: Icon(Icons.send, size: 12, color: Colors.grey)

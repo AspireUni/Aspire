@@ -25,6 +25,7 @@ dependencies:
   device_preview: ^0.4.5
   firebase_analytics: ^5.0.2      # firebase google analytics
   firebase_auth: ^0.14.0+5        # firebase authentication
+  firebase_database: ^3.0.7
   firebase_core: ^0.4.0+9         # firebase core flutter SDK
   flutter_tindercard: ^0.1.8
   google_fonts: ^1.0.0
@@ -48,6 +49,10 @@ flutter:
   assets:
     - images/PairingsBg.png
     - images/DefaultBg.png
+    - images/Logo.png
+    
+  #  - images/a_dot_burr.jpeg
+  #  - images/a_dot_ham.jpeg
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware.
