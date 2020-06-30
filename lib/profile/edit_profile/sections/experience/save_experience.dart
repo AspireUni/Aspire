@@ -2,10 +2,15 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
 import 'package:flutter_picker/flutter_picker.dart';
-import 'package:google_fonts/google_fonts.dart';
 import 'package:intl/intl.dart';
 
-import '../input_field.dart';
+import '../../../../constants/profile_constants.dart';
+import '../../../common/app_bar.dart';
+import '../../../common/date_picker.dart';
+import '../../../common/delete_button.dart';
+import '../../../common/input_field.dart';
+import '../../../common/picker_field.dart';
+import '../../../common/styles.dart';
 
 class SaveExperience extends StatefulWidget {
   final bool editMode;
@@ -32,8 +37,9 @@ class _SaveExperienceState extends State<SaveExperience> {
    
     isStartDateFocused = false;
     isEndDateFocused = false;
-    isEndDateEnabled = widget.editMode;
+    isEndDateEnabled = widget.editMode && widget.jobInfo['endDate'] != endDatePresent;
 
+    // Temporary workaround until we use global state management
     experience = {
       'jobTitle': widget.editMode ? widget.jobInfo['jobTitle'] : null,
       'company': widget.editMode ? widget.jobInfo['company'] : null,
@@ -79,31 +85,11 @@ class _SaveExperienceState extends State<SaveExperience> {
     });
   }
 
-
-  void onStartDateConfirm(Picker picker) {
-    String newStartDate = picker.getSelectedValues()[0].toString();
-    setState(() { 
-      experience['startDate'] = newStartDate;
-      experience['endDate'] = null;
-    });
-    _saveExperienceKey.currentState.fields['startDate'].currentState.didChange(newStartDate);
-    _saveExperienceKey.currentState.fields['endDate'].currentState.didChange(null);
-    
-    _saveExperienceKey.currentState.fields['startDate'].currentState.validate();
-  }
-
-  void onEndDateConfirm(Picker picker) {
-    String newEndDate = picker.getSelectedValues()[0].toString();
-    setState(() => { experience['endDate'] = newEndDate });
-    _saveExperienceKey.currentState.fields['endDate'].currentState.didChange(newEndDate);
-    _saveExperienceKey.currentState.fields['endDate'].currentState.validate();
-  }
-
   DateTime convertStringToDateTime(String date) {
-    if (date == 'Present') {
+    if (date == endDatePresent) {
       return DateTime.now();
     }
-    return DateFormat("MMMM yyyy").parse(date);
+    return DateFormat('MMMM yyyy').parse(date);
   }
 
   String convertDateTimeToString(DateTime date) {
@@ -112,187 +98,74 @@ class _SaveExperienceState extends State<SaveExperience> {
     return '$month $year';
   }
 
-  showStartDatePicker(BuildContext context) {
-    Picker(
-      adapter: DateTimePickerAdapter(
-        value: experience['startDate'] != null ? convertStringToDateTime(experience['startDate']) : DateTime.now(),
-        customColumnType: [1, 0],
-        isNumberMonth: false,
-        maxValue: DateTime.now(),
-        yearBegin: 1950,
-        yearEnd: 2030
-      ),
-      textAlign: TextAlign.right,
-      onConfirm: (picker, value) {
-        DateTime newStartDateTime = DateFormat("yyyy-MM-dd hh:mm:ss").parse(picker.adapter.text);
-        String newStartDate = convertDateTimeToString(newStartDateTime);
-        setState(() { 
-          experience['startDate'] = newStartDate;
-          experience['endDate'] = null;
-        });
-        _saveExperienceKey.currentState.fields['startDate'].currentState.didChange(newStartDate);
-        _saveExperienceKey.currentState.fields['endDate'].currentState.didChange(null);
-        
-        _saveExperienceKey.currentState.fields['startDate'].currentState.validate();
-      },
-      hideHeader: false,
-      height: MediaQuery.of(context).size.height * 0.30,
-      itemExtent: 30.0,
-      magnification: 1.5,
-      squeeze: 0.80,
-      diameterRatio: 4.0,
-      textStyle: GoogleFonts.muli(
-        textStyle: TextStyle(
-          color: Colors.black, 
-          letterSpacing: .5, 
-          fontSize: 15.0, 
-        )
-      ),
-      selectedTextStyle: TextStyle(
-        color: Theme.of(context).primaryColor,
-      ),
-      cancelTextStyle: GoogleFonts.muli(
-        textStyle: TextStyle(
-          color: Colors.red, 
-          letterSpacing: .5, 
-          fontSize: 15.0,
-          fontWeight: FontWeight.w600 
-        )
-      ),
-      confirmTextStyle: GoogleFonts.muli(
-        textStyle: TextStyle(
-          color: Colors.black, 
-          letterSpacing: .5, 
-          fontSize: 15.0,
-          fontWeight: FontWeight.w600 
-        )
-      ),
-
-    ).showModal(context);
+  void showStartDatePicker(BuildContext context) {
+    DatePicker(
+      yearOnly: false,
+      initialValue: experience['startDate'] != null 
+        ? convertStringToDateTime(experience['startDate'])
+        : DateTime.now(),
+      maxValue: DateTime.now(),
+      onConfirm: (picker, value) => onStartDateConfirm(picker),
+    ).build(context).showModal(context);
   }
 
-  showEndDatePicker(BuildContext context) {
-    Picker(
-      adapter: DateTimePickerAdapter(
-        value: experience['endDate'] != null 
-          ? convertStringToDateTime(experience['endDate'])
-          : convertStringToDateTime(experience['startDate']
-        ),
-        customColumnType: [1, 0],
-        isNumberMonth: false,
-        minValue: convertStringToDateTime(experience['startDate']),
-        maxValue: DateTime.now(),
-        yearEnd: 2030
-      ),
-      textAlign: TextAlign.right,
-      onConfirm: (picker, value) {
-        DateTime newEndDateTime = DateFormat("yyyy-MM-dd hh:mm:ss").parse(picker.adapter.text);
-        String newEndDate = convertDateTimeToString(newEndDateTime);
-        setState(() { 
-          experience['endDate'] = newEndDate;
-        });
-        _saveExperienceKey.currentState.fields['endDate'].currentState.didChange(newEndDate);
-        _saveExperienceKey.currentState.fields['endDate'].currentState.validate();
-      },
-      hideHeader: false,
-      height: MediaQuery.of(context).size.height * 0.30,
-      itemExtent: 30.0,
-      magnification: 1.5,
-      squeeze: 0.80,
-      diameterRatio: 4.0,
-      textStyle: GoogleFonts.muli(
-        textStyle: TextStyle(
-          color: Colors.black, 
-          letterSpacing: .5, 
-          fontSize: 15.0, 
-        )
-      ),
-      selectedTextStyle: TextStyle(
-        color: Theme.of(context).primaryColor,
-      ),
-      cancelTextStyle: GoogleFonts.muli(
-        textStyle: TextStyle(
-          color: Colors.red, 
-          letterSpacing: .5, 
-          fontSize: 15.0,
-          fontWeight: FontWeight.w600 
-        )
-      ),
-      confirmTextStyle: GoogleFonts.muli(
-        textStyle: TextStyle(
-          color: Colors.black, 
-          letterSpacing: .5, 
-          fontSize: 15.0,
-          fontWeight: FontWeight.w600 
-        )
-      ),
-
-    ).showModal(context);
+  void showEndDatePicker(BuildContext context) {
+    DatePicker(
+      yearOnly: false,
+      initialValue: experience['endDate'] != null 
+        ? convertStringToDateTime(experience['endDate'])
+        : convertStringToDateTime(experience['startDate']),
+      minValue: convertStringToDateTime(experience['startDate']),
+      maxValue: DateTime.now(),
+      onConfirm: (picker, value) => onEndDateConfirm(picker),
+    ).build(context).showModal(context);
   }
 
-  List<Widget> buildSaveEducationView(context) {
-    return <Widget>[
-      FormBuilder(
-        key: _saveExperienceKey,
-        child: Column(
-          children: <Widget>[
-            InputField(
-              labelText: 'Job title',
-              formField: buildSchoolNameField()
-            ),
-            InputField(
-              labelText: 'Company',
-              formField: buildDegreeField()
-            ),
-            buildDateRangeFields(),
-            buildCurrentJobSwitch()
-          ]
-        )
-      ),
-    ];
+  void onStartDateConfirm(Picker picker) {
+    DateTime newStartDateTime = DateFormat('yyyy-MM-dd hh:mm:ss').parse(picker.adapter.text);
+    String newStartDate = convertDateTimeToString(newStartDateTime);
+    setState(() { 
+      experience['startDate'] = newStartDate;
+      experience['endDate'] = null;
+      isEndDateEnabled = true;
+    });
+    _saveExperienceKey.currentState.fields['startDate'].currentState.didChange(newStartDate);
+    _saveExperienceKey.currentState.fields['endDate'].currentState.didChange(null);
+    _saveExperienceKey.currentState.fields['startDate'].currentState.validate();
   }
 
-  Widget buildDeleteButton() {
-    return widget.editMode 
-      ? Container(
-        padding: EdgeInsets.only(top: 20.0),
-        child: MaterialButton(
-          onPressed: () => print('Education deleted'),
-          color: Colors.redAccent,
-          shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.all(Radius.circular(10.0))
-          ),
-          child: Text(
-            'Delete experience',
-            style: GoogleFonts.muli(
-              textStyle: TextStyle(
-                color: Colors.white, 
-                letterSpacing: .5, 
-                fontSize: 13.0,
-                fontWeight: FontWeight.w700 
-              )
-            )
-          )
-        )
-      )
-      : Container();
+  void onEndDateConfirm(Picker picker) {
+    DateTime newEndDateTime = DateFormat('yyyy-MM-dd hh:mm:ss').parse(picker.adapter.text);
+    String newEndDate = convertDateTimeToString(newEndDateTime);
+    setState(() { experience['endDate'] = newEndDate; });
+    _saveExperienceKey.currentState.fields['endDate'].currentState.didChange(newEndDate);
+    _saveExperienceKey.currentState.fields['endDate'].currentState.validate();
   }
 
-  Widget buildSchoolNameField() {
+  void onCurrentJobSwitch(dynamic value){
+    unfocusDateRangeFields();
+    if (value as bool) {
+      setState(() { 
+        experience['endDate'] = endDatePresent;
+        isEndDateEnabled = false;
+      });
+      _saveExperienceKey.currentState.fields['endDate'].currentState.didChange(endDatePresent);
+    } else {
+      setState(() { 
+        experience['endDate'] = null;
+        isEndDateEnabled = true;
+      });
+      _saveExperienceKey.currentState.fields['endDate'].currentState.didChange(null);
+    }
+    _saveExperienceKey.currentState.fields['endDate'].currentState.validate();
+  }
+
+  Widget buildJobTitleField() {
     return FormBuilderTextField(
       attribute: 'jobTitle',
       initialValue: experience['jobTitle'],
-      decoration: InputDecoration(
-        isDense: true,
-        contentPadding: EdgeInsets.only(top: 5.0, bottom: 5.0)
-      ),
-      style: GoogleFonts.muli(
-        textStyle: TextStyle(
-          color: Colors.black, 
-          letterSpacing: .5, 
-          fontSize: 13.0, 
-        )
-      ),
+      decoration: fieldDecoration(),
+      style: fieldTextStyle,
       onChanged: (value) => setState(() { experience['jobTitle'] = value as String; }),
       focusNode: jobTitleFocus,
       validators: [
@@ -303,21 +176,12 @@ class _SaveExperienceState extends State<SaveExperience> {
     );
   }
 
-  Widget buildDegreeField() {
+  Widget buildCompanyField() {
     return FormBuilderTextField(
       attribute: 'company',
       initialValue: experience['company'],
-      decoration: InputDecoration(
-        isDense: true,
-        contentPadding: EdgeInsets.only(top: 5.0, bottom: 5.0)
-      ),
-      style: GoogleFonts.muli(
-        textStyle: TextStyle(
-          color: Colors.black, 
-          letterSpacing: .5, 
-          fontSize: 13.0, 
-        )
-      ),
+      decoration: fieldDecoration(),
+      style: fieldTextStyle,
       onChanged: (value) => setState(() { experience['company'] = value as String; }),
       focusNode: companyFocus,
       validators: [
@@ -328,7 +192,7 @@ class _SaveExperienceState extends State<SaveExperience> {
     );
   }
 
-  Widget buildDateRangeFields() {
+  Widget buildDateRangeRow() {
     return Row(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: <Widget>[
@@ -336,8 +200,8 @@ class _SaveExperienceState extends State<SaveExperience> {
           child: Container(
             padding: EdgeInsets.only(right: 10.0),
             child: InputField(
-              labelText: 'Start date',
-              formField: buildStartDateField(),
+              labelText: saveExperienceStartDate,
+              formField: buildStartPickerField(),
             )
           )
         ),
@@ -346,8 +210,8 @@ class _SaveExperienceState extends State<SaveExperience> {
             padding: EdgeInsets.only(left: 10.0),
             child: InputField(
               enabled: isEndDateEnabled,
-              labelText: 'End date',
-              formField: buildEndDateField(),
+              labelText: saveExperienceEndDate,
+              formField: buildEndPickerField(),
             )
           )
         )
@@ -355,8 +219,8 @@ class _SaveExperienceState extends State<SaveExperience> {
     );
   }
 
-    Widget buildStartDateField() {
-    return buildDateField(
+  Widget buildStartPickerField() {
+    return PickerField(
       attribute: 'startDate',
       initialValue: experience['startDate'],
       isFocused: isStartDateFocused,
@@ -368,97 +232,37 @@ class _SaveExperienceState extends State<SaveExperience> {
           isStartDateFocused = true;
           isEndDateFocused = false;
         });
-       showStartDatePicker(context); 
+        showStartDatePicker(context);
       }
     );
   }
 
-  Widget buildEndDateField() {
-    return buildDateField(
+  Widget buildEndPickerField() {
+    return PickerField(
       attribute: 'endDate',
       initialValue: experience['endDate'],
       isFocused: isEndDateFocused,
       isEnabled: isEndDateEnabled,
       value: experience['endDate'] ?? '',
-      onTap: isEndDateEnabled
-        ? () {
-          unfocusTextFields();
-          setState(() {
-            isStartDateFocused = false;
-            isEndDateFocused = true;
-          });
-          showEndDatePicker(context);
-        }
-        : null
+      onTap: () {
+        unfocusTextFields();
+        setState(() {
+          isStartDateFocused = false;
+          isEndDateFocused = true;
+        });
+        showEndDatePicker(context);
+      }
     );
   }
 
-  Widget buildDateField({
-    String attribute,
-    String initialValue,
-    bool isFocused,
-    bool isEnabled,
-    String value,
-    void Function() onTap
-  }) {
-    return FormBuilderCustomField(
-      attribute: attribute,
-      initialValue: initialValue,
-      validators: [
-        FormBuilderValidators.required(),
-      ],
-      formField: FormField(
-        builder: (field) {
-          return InputDecorator(
-            isFocused: isFocused,
-            decoration: InputDecoration(
-              isDense: true,
-              contentPadding: EdgeInsets.only(top: 5.0, bottom: 5.0),
-              errorText: field.errorText
-            ),
-            baseStyle: GoogleFonts.muli(
-              textStyle: TextStyle(
-                color: Colors.black, 
-                letterSpacing: .5, 
-                fontSize: 13.0, 
-              )
-            ),
-            child: Container(
-              height: 20.0,
-              child: InkWell(
-                child: Text(
-                  value,
-                  style: GoogleFonts.muli(
-                    textStyle: TextStyle(
-                      color: isEnabled ? Colors.black : Colors.black38, 
-                      letterSpacing: .5, 
-                      fontSize: 13.0, 
-                    )
-                  ),
-                ),
-                onTap: onTap
-              )
-            ),
-          );
-        }
-      )
-    );
-  }
-
-  buildCurrentJobSwitch() {
+  Widget buildCurrentJobSwitch() {
     return  FormBuilderSwitch(
       attribute: 'currentJobSwitch',
-      initialValue: experience['endDate'] == 'Present',
+      initialValue: experience['endDate'] == endDatePresent,
       readOnly: experience['startDate'] == null,
       label: Text(
-        'I currently work here.',
-        style: GoogleFonts.muli(
-          textStyle: TextStyle(
-            color: experience['startDate'] != null ? Colors.black : Colors.black38, 
-            letterSpacing: .5, 
-            fontSize: 13.0, 
-          )
-        ),
+        currentJobSwitchText,
+        style: labelTextStyle(isEnabled: experience['startDate'] != null),
       ),
       contentPadding: EdgeInsets.all(0.0),
       activeColor: Theme.of(context).primaryColor,
@@ -471,61 +275,30 @@ class _SaveExperienceState extends State<SaveExperience> {
         errorBorder: InputBorder.none,
         disabledBorder: InputBorder.none
       ),
-      onChanged: (value) {
-        unfocusDateRangeFields();
-        if (value) {
-          setState(() { 
-            experience['endDate'] = 'Present';
-            isEndDateEnabled = false;
-          });
-          _saveExperienceKey.currentState.fields['endDate'].currentState.didChange('Present');
-        } else {
-          setState(() { 
-            experience['endDate'] = null;
-            isEndDateEnabled = true;
-          });
-          _saveExperienceKey.currentState.fields['endDate'].currentState.didChange(null);
-        }
-        _saveExperienceKey.currentState.fields['endDate'].currentState.validate();
-      },
+      onChanged: onCurrentJobSwitch,
     );
   }
 
-  Widget saveAction() {
-    return Container(
-      padding: EdgeInsets.only(top: 17.0, right: 20.0),
-      child: InkWell(
-        onTap: () {
-          unfocusFields();
-          if (_saveExperienceKey.currentState.saveAndValidate()) {
-            print(experience);
-            print(_saveExperienceKey.currentState.value);
-          } else {
-            print('Validation failed.');
-          }
-        },
-        child: Text(
-          'Save',
-          style: GoogleFonts.muli(
-            textStyle: TextStyle(
-              color: Colors.white, 
-              letterSpacing: .5, 
-              fontSize: 15.0, 
-              fontWeight: FontWeight.bold
-            )
-          )
+  List<Widget> buildSaveExperienceForm(context) {
+    return <Widget>[
+      FormBuilder(
+        key: _saveExperienceKey,
+        child: Column(
+          children: <Widget>[
+            InputField(
+              labelText: saveExperienceJobTitle,
+              formField: buildJobTitleField()
+            ),
+            InputField(
+              labelText: saveExperienceCompany,
+              formField: buildCompanyField()
+            ),
+            buildDateRangeRow(),
+            buildCurrentJobSwitch()
+          ]
         )
-      )
-    );
-  }
-
-  Widget closeAction(BuildContext context) {
-    return IconButton(
-      onPressed: () {
-        Navigator.pop(context);
-      },
-      icon: Icon(Icons.close, color: Colors.white)
-    );
+      ),
+    ];
   }
 
   @override
@@ -535,32 +308,23 @@ class _SaveExperienceState extends State<SaveExperience> {
       child: Stack(
         children: <Widget>[
           Scaffold(
-            appBar: AppBar(
-              leading: closeAction(context),
-              actions: <Widget>[
-                saveAction()
-              ],
-              backgroundColor: Theme.of(context).primaryColor,
-              centerTitle: true,
-              title: Text(
-                widget.editMode ? 'Edit experience' : 'Add experience',
-                style: GoogleFonts.muli(
-                  textStyle: TextStyle(
-                    color: Colors.white, 
-                    letterSpacing: .5, 
-                    fontSize: 20.0, 
-                    fontWeight: FontWeight.bold
-                  )
-                )
-              ),
+            appBar: AppBarWithSave(
+              appBarTitle: widget.editMode ? editExperience : addExperience,
+              data: experience,
+              formKey: _saveExperienceKey
             ),
             backgroundColor: Colors.white,
             body: Container(
               padding: EdgeInsets.all(20.0),
                 child: ListView(
                 children: <Widget>[
-                  ...buildSaveEducationView(context),
-                  buildDeleteButton()
+                  ...buildSaveExperienceForm(context),
+                  widget.editMode
+                  ? DeleteButton(
+                    labelText: deleteExperience,
+                    onPressed: () => 'Experience deleted.'
+                  )
+                  : SizedBox()
                 ]
               )
             )

@@ -1,9 +1,10 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
-import 'package:google_fonts/google_fonts.dart';
 
-import '../input_field.dart';
+import '../../../../constants/profile_constants.dart';
+import '../../../common/input_field.dart';
+import '../../../common/styles.dart';
 
 class EditContact extends StatefulWidget {
   final Map contact;
@@ -15,7 +16,23 @@ class EditContact extends StatefulWidget {
 }
 
 class _EditContactState extends State<EditContact> {
-  ValueChanged _onChanged = (val) => print(val);
+
+  String fullName;
+  Map<String, Object> contact;
+
+  @override
+  void initState() {
+    super.initState();
+
+    // Temporary workaround until we use global state management
+    fullName = widget.fullName;
+    contact = {
+      'emailAddress': widget.contact['emailAddress'],
+      'phoneNumber': widget.contact['phoneNumber'],
+      'website': widget.contact['website'],
+    };
+    
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -24,19 +41,19 @@ class _EditContactState extends State<EditContact> {
       child: Column(
         children: <Widget>[
           InputField(
-            labelText: "Full name", 
+            labelText: editContactFullname, 
             formField: buildFullNameField()
           ),
           InputField(
-            labelText: "Email address", 
+            labelText: editContactEmailAddress, 
             formField: buildEmailAddressField()
           ),
           InputField(
-            labelText: "Phone number", 
+            labelText: editContactPhoneNumber, 
             formField: buildPhoneNumberField()
           ),
           InputField(
-            labelText: "Website", 
+            labelText: editContactWebsite, 
             formField: buildWebsiteField()
           ),
         ],
@@ -46,20 +63,11 @@ class _EditContactState extends State<EditContact> {
 
   buildFullNameField() {
     return FormBuilderTextField(
-      attribute: "fullName",
-      initialValue: widget.fullName,
-      decoration: InputDecoration(
-        isDense: true,
-        contentPadding: EdgeInsets.only(top: 5.0, bottom: 5.0)
-      ),
-      style: GoogleFonts.muli(
-        textStyle: TextStyle(
-          color: Colors.black, 
-          letterSpacing: .5, 
-          fontSize: 13.0, 
-        )
-      ),
-      onChanged: _onChanged,
+      attribute: 'fullName',
+      initialValue: fullName,
+      decoration: fieldDecoration(),
+      style: fieldTextStyle,
+      onChanged: (value) => setState(() { fullName = value as String; }),
       validators: [
         FormBuilderValidators.required(),
         FormBuilderValidators.maxLength(100),
@@ -70,20 +78,11 @@ class _EditContactState extends State<EditContact> {
 
   buildEmailAddressField() {
     return FormBuilderTextField(
-      attribute: "emailAddress",
-      initialValue: widget.contact["emailAddress"],
-      decoration: InputDecoration(
-        isDense: true,
-        contentPadding: EdgeInsets.only(top: 5.0, bottom: 5.0)
-      ),
-      style: GoogleFonts.muli(
-        textStyle: TextStyle(
-          color: Colors.black, 
-          letterSpacing: .5, 
-          fontSize: 13.0, 
-        )
-      ),
-      onChanged: _onChanged,
+      attribute: 'emailAddress',
+      initialValue: contact['emailAddress'],
+      decoration: fieldDecoration(),
+      style: fieldTextStyle,
+      onChanged: (value) => setState(() { contact['emailAddress'] = value as String; }),
       validators: [
         FormBuilderValidators.required(),
         FormBuilderValidators.email(),
@@ -96,61 +95,29 @@ class _EditContactState extends State<EditContact> {
   buildPhoneNumberField() {
     return FormBuilderPhoneField(
       attribute: 'phoneNumber',
-      initialValue: widget.contact["phoneNumber"],
-      decoration: InputDecoration(
-        isDense: true,
-        contentPadding: EdgeInsets.only(top: 5.0, bottom: 5.0)
-      ),
-      style: GoogleFonts.muli(
-        textStyle: TextStyle(
-          color: Colors.black, 
-          letterSpacing: .5, 
-          fontSize: 13.0, 
-        )
-      ),
+      initialValue: contact['phoneNumber'],
+      decoration: fieldDecoration(),
+      style: fieldTextStyle,
       dialogTitle: Text(
-        "Select your phone code:",
-        style: GoogleFonts.muli(
-          textStyle: TextStyle(
-            color: Colors.black, 
-            letterSpacing: .5, 
-            fontSize: 13.0, 
-          )
-        )
-      ),
-      dialogTextStyle: TextStyle(
-        color: Colors.red, 
-        letterSpacing: .5, 
-        fontSize: 13.0, 
+        phoneNumberDialogTitle,
+        style: fieldTextStyle
       ),
       titlePadding: EdgeInsets.all(0.0),
       isSearchable: false,
-      onChanged: _onChanged,
-      priorityListByIsoCode: ['CA', 'US'],
-      validators: [
-        FormBuilderValidators.numeric(
-            errorText: 'Enter a valid phone number.'),
-      ],
+      onChanged: (value) => setState(() { contact['phoneNumber'] = value as String; }),
+      priorityListByIsoCode: [isoCodeCA, isoCodeUS],
+      validators: [FormBuilderValidators.numeric(errorText: invalidPhoneNumberErrorMessage)],
       keyboardType: TextInputType.phone,
     );
   }
 
   buildWebsiteField() {
     return FormBuilderTextField(
-      attribute: "website",
-      initialValue: widget.contact["website"],
-      decoration: InputDecoration(
-        isDense: true,
-        contentPadding: EdgeInsets.only(top: 5.0, bottom: 5.0)
-      ),
-      style: GoogleFonts.muli(
-        textStyle: TextStyle(
-          color: Colors.black, 
-          letterSpacing: .5, 
-          fontSize: 13.0, 
-        )
-      ),
-      onChanged: _onChanged,
+      attribute: 'website',
+      initialValue: contact['website'],
+      decoration: fieldDecoration(),
+      style: fieldTextStyle,
+      onChanged: (value) => setState(() { contact['website'] = value as String; }),
       validators: [
         FormBuilderValidators.url(),
         FormBuilderValidators.maxLength(100),

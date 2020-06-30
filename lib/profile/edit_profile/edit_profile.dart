@@ -1,14 +1,15 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
-import 'package:google_fonts/google_fonts.dart';
 
+import '../../constants/profile_constants.dart';
+import '../common/app_bar.dart';
 import '../view_profile/sections/section.dart';
 import './sections/contact/edit_contact.dart';
-import './sections/edit_summary.dart';
 import './sections/education/edit_education.dart';
 import './sections/experience/edit_experience.dart';
 import './sections/skills/edit_skills.dart';
+import './sections/summary/edit_summary.dart';
 
 class EditProfile extends StatefulWidget {
   final Map data;
@@ -19,61 +20,16 @@ class EditProfile extends StatefulWidget {
 }
 
 class _EditProfileState extends State<EditProfile> {
-  final GlobalKey<FormBuilderState> _fbKey = GlobalKey<FormBuilderState>();
-
-  ValueChanged _onChanged = (val) => print(val);
+  final GlobalKey<FormBuilderState> _saveProfileKey = GlobalKey<FormBuilderState>();
 
   @override
   Widget build(BuildContext context) {
     return Stack(
       children: <Widget>[
         Scaffold(
-          appBar: AppBar(
-            leading: IconButton(
-              onPressed: () {
-                Navigator.pop(context);
-              },
-              icon: Icon(Icons.close, color: Colors.white)
-            ),
-            actions: <Widget>[
-              Container(
-                padding: EdgeInsets.only(top:17.0, right: 20.0),
-                child: InkWell(
-                  onTap: () {
-                    if (_fbKey.currentState.saveAndValidate()) {
-                      print(_fbKey.currentState.value);
-                    } else {
-                      print(_fbKey.currentState.value);
-                      print("validation failed");
-                    }
-                  },
-                  child: Text(
-                    "Save",
-                    style: GoogleFonts.muli(
-                      textStyle: TextStyle(
-                        color: Colors.white, 
-                        letterSpacing: .5, 
-                        fontSize: 15.0, 
-                        fontWeight: FontWeight.bold
-                      )
-                    )
-                  )
-                )
-              )
-            ],
-            backgroundColor: Theme.of(context).primaryColor,
-            centerTitle: true,
-            title: Text(
-              "Edit profile",
-              style: GoogleFonts.muli(
-                textStyle: TextStyle(
-                  color: Colors.white, 
-                  letterSpacing: .5, 
-                  fontSize: 20.0, 
-                  fontWeight: FontWeight.bold
-                )
-              )
-            ),
+          appBar: AppBarWithSave(
+            appBarTitle: editProfile,
+            formKey: _saveProfileKey
           ),
           backgroundColor: Colors.white,
           body: ListView(
@@ -84,45 +40,41 @@ class _EditProfileState extends State<EditProfile> {
     );
   }
 
-  buildEditProfileView(context) {
+  List<Widget> buildEditProfileView(BuildContext context) {
     return <Widget>[
       FormBuilder(
-        // context,
-        key: _fbKey,
-        // autovalidate: true,
-        initialValue: {},
-        readOnly: false,
+        key: _saveProfileKey,
         child: Column(
           children: <Widget>[
             Section(
-              title: "Edit contact info",
+              title: editContactInfo,
               child: EditContact(
-                contact: widget.data["contact"],
-                fullName: widget.data["fullName"]
+                contact: widget.data['contact'],
+                fullName: widget.data['fullName']
               )
             ),
             Section(
-              title: "Edit summary",
+              title: editSummary,
               child: EditSummary(
-                summary: widget.data["summary"]
+                summary: widget.data['summary']
               )
             ),
             Section(
-              title: "Edit education",
+              title: editEducation,
               child: EditEducation(
-                schools: widget.data["schools"]
+                schools: widget.data['schools']
               )
             ),
             Section(
-              title: "Edit experience",
+              title: editExperience,
               child: EditExperience(
-                jobs: widget.data["jobs"]
+                jobs: widget.data['jobs']
               )
             ),
             Section(
-              title: "Edit skills",
+              title: editSkills,
               child: EditSkills(
-                skills: widget.data["skills"]
+                skills: widget.data['skills']
               )
             )
           ]

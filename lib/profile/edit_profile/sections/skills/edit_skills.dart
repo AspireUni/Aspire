@@ -105,9 +105,9 @@ class _EditSkillsState extends State<EditSkills> {
   }
 
   buildSkillList(BuildContext context) {
-    List<Widget> expertList = List<Widget>();
-    List<Widget> intermediateList = List<Widget>();
-    List<Widget> beginnerList = List<Widget>();
+    List<Widget> expertList = [];
+    List<Widget> intermediateList = [];
+    List<Widget> beginnerList = [];
 
     for (int i = 0; i < widget.skills.length; i++) {
       if (widget.skills[i]["level"] == skillExpert){

@@ -69,7 +69,7 @@ class _EditEducationState extends State<EditEducation> {
   }
 
   buildSchoolList(BuildContext context) {
-    List<Widget> schoolList = List<Widget>();
+    List<Widget> schoolList = [];
     for (int i = 0; i < widget.schools.length; i++) {
       schoolList.add(
         buildSchoolRow(

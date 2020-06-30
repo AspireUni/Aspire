@@ -2,9 +2,15 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
 import 'package:flutter_picker/flutter_picker.dart';
-import 'package:google_fonts/google_fonts.dart';
+import 'package:intl/intl.dart';
 
-import '../input_field.dart';
+import '../../../../constants/profile_constants.dart';
+import '../../../common/app_bar.dart';
+import '../../../common/date_picker.dart';
+import '../../../common/delete_button.dart';
+import '../../../common/input_field.dart';
+import '../../../common/picker_field.dart';
+import '../../../common/styles.dart';
 
 class SaveEducation extends StatefulWidget {
   final bool editMode;
@@ -30,6 +36,7 @@ class _SaveEducationState extends State<SaveEducation> {
     isStartYearFocused = false;
     isEndYearFocused = false;
 
+    // Temporary workaround until we use global state management
     education = {
       'school': widget.editMode ? widget.schoolInfo['school'] : null,
       'degree': widget.editMode ? widget.schoolInfo['program'] : null,
@@ -75,116 +82,62 @@ class _SaveEducationState extends State<SaveEducation> {
     });
   }
 
+  DateTime convertStringToDateTime(String date) {
+    return DateFormat.y().parse(date);
+  }
+
+  String convertDateTimeToString(DateTime date) {
+    return DateFormat.y().format(date).toString();
+  }
+
+  void showStartYearPicker(BuildContext context) {
+    DatePicker(
+      yearOnly: true,
+      initialValue: education['startYear'] != null
+        ? convertStringToDateTime(education['startYear'])
+        : DateTime.now(),
+      maxValue: DateTime.now(),
+      onConfirm: (picker, value) => onStartYearConfirm(picker),
+    ).build(context).showModal(context);
+  }
+
+  void showEndYearPicker(BuildContext context) {
+    DatePicker(
+      yearOnly: true,
+      initialValue: education['endYear'] != null 
+        ? convertStringToDateTime(education['endYear']) 
+        : convertStringToDateTime(education['startYear']),
+      minValue: convertStringToDateTime(education['startYear']),
+      onConfirm: (picker, value) => onEndYearConfirm(picker),
+    ).build(context).showModal(context);
+  }
 
   void onStartYearConfirm(Picker picker) {
-    String newStartYear = picker.getSelectedValues()[0].toString();
+    DateTime newStartDateTime = DateFormat('yyyy-MM-dd hh:mm:ss').parse(picker.adapter.text);
+    String newStartYear = convertDateTimeToString(newStartDateTime);
     setState(() { 
       education['startYear'] = newStartYear;
       education['endYear'] = null;
     });
     _saveEducationKey.currentState.fields['startYear'].currentState.didChange(newStartYear);
     _saveEducationKey.currentState.fields['endYear'].currentState.didChange(null);
-    
     _saveEducationKey.currentState.fields['startYear'].currentState.validate();
   }
 
   void onEndYearConfirm(Picker picker) {
-    String newEndYear = picker.getSelectedValues()[0].toString();
+     DateTime newEndDateTime = DateFormat('yyyy-MM-dd hh:mm:ss').parse(picker.adapter.text);
+    String newEndYear = convertDateTimeToString(newEndDateTime);
     setState(() => { education['endYear'] = newEndYear });
     _saveEducationKey.currentState.fields['endYear'].currentState.didChange(newEndYear);
     _saveEducationKey.currentState.fields['endYear'].currentState.validate();
-  }
-
-  void showStartYearPicker(BuildContext context) {
-    buildYearPicker(
-      context,
-      NumberPickerColumn(
-        begin: 1950,
-        end: 2020,
-        initValue: education['startYear'] != null
-          ? int.parse(education['startYear'])
-          : 2010
-      ),
-      (picker, value) => onStartYearConfirm(picker)
-    ).showModal(context);
-  }
-  
-  void showEndYearPicker(BuildContext context) {
-   buildYearPicker(
-      context,
-      NumberPickerColumn(
-            begin: int.parse(education['startYear']),
-            end: 2030,
-            initValue: education['endYear'] != null 
-              ? int.parse(education['endYear']) 
-              : int.parse(education['startYear'])
-          ),
-      (picker, value) => onEndYearConfirm(picker)
-    ).showModal(context);
-  }
-
-  List<Widget> buildSaveEducationView(context) {
-    return <Widget>[
-      FormBuilder(
-        key: _saveEducationKey,
-        child: Column(
-          children: <Widget>[
-            InputField(
-              labelText: 'School',
-              formField: buildSchoolNameField()
-            ),
-            InputField(
-              labelText: 'Degree',
-              formField: buildDegreeField()
-            ),
-            buildDateRangeFields()
-          ]
-        )
-      ),
-    ];
-  }
-
-  Widget buildDeleteButton() {
-    return widget.editMode 
-      ? Container(
-        padding: EdgeInsets.only(top: 20.0),
-        child: MaterialButton(
-          onPressed: () => print('Education deleted'),
-          color: Colors.redAccent,
-          shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.all(Radius.circular(10.0))
-          ),
-          child: Text(
-            'Delete education',
-            style: GoogleFonts.muli(
-              textStyle: TextStyle(
-                color: Colors.white, 
-                letterSpacing: .5, 
-                fontSize: 13.0,
-                fontWeight: FontWeight.w700 
-              )
-            )
-          )
-        )
-      )
-      : Container();
   }
 
   Widget buildSchoolNameField() {
     return FormBuilderTextField(
       attribute: 'school',
       initialValue: education['school'],
-      decoration: InputDecoration(
-        isDense: true,
-        contentPadding: EdgeInsets.only(top: 5.0, bottom: 5.0)
-      ),
-      style: GoogleFonts.muli(
-        textStyle: TextStyle(
-          color: Colors.black, 
-          letterSpacing: .5, 
-          fontSize: 13.0, 
-        )
-      ),
+      decoration: fieldDecoration(),
+      style: fieldTextStyle,
       onChanged: (value) => setState(() { education['school'] = value as String; }),
       focusNode: schoolFocus,
       validators: [
@@ -199,17 +152,8 @@ class _SaveEducationState extends State<SaveEducation> {
     return FormBuilderTextField(
       attribute: 'degree',
       initialValue: education['degree'],
-      decoration: InputDecoration(
-        isDense: true,
-        contentPadding: EdgeInsets.only(top: 5.0, bottom: 5.0)
-      ),
-      style: GoogleFonts.muli(
-        textStyle: TextStyle(
-          color: Colors.black, 
-          letterSpacing: .5, 
-          fontSize: 13.0, 
-        )
-      ),
+      decoration: fieldDecoration(),
+      style: fieldTextStyle,
       onChanged: (value) => setState(() { education['degree'] = value as String; }),
       focusNode: degreeFocus,
       validators: [
@@ -220,7 +164,7 @@ class _SaveEducationState extends State<SaveEducation> {
     );
   }
 
-  Widget buildDateRangeFields() {
+  Widget buildDateRangeRow() {
     return Row(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: <Widget>[
@@ -228,7 +172,7 @@ class _SaveEducationState extends State<SaveEducation> {
           child: Container(
             padding: EdgeInsets.only(right: 10.0),
             child: InputField(
-              labelText: 'Start year',
+              labelText: saveEducationStartYear,
               formField: buildStartYearField(),
             )
           )
@@ -238,7 +182,7 @@ class _SaveEducationState extends State<SaveEducation> {
             padding: EdgeInsets.only(left: 10.0),
             child: InputField(
               enabled: education['startYear'] != null,
-              labelText: 'End year',
+              labelText: saveEducationEndYear,
               formField: buildEndYearField(),
             )
           )
@@ -247,10 +191,11 @@ class _SaveEducationState extends State<SaveEducation> {
     );
   }
 
-    Widget buildStartYearField() {
-    return buildYearField(
+  Widget buildStartYearField() {
+    return PickerField(
       attribute: 'startYear',
       initialValue: education['startYear'],
+      isEnabled: true,
       isFocused: isStartYearFocused,
       value: education['startYear'] ?? '',
       onTap: () {
@@ -259,157 +204,48 @@ class _SaveEducationState extends State<SaveEducation> {
           isStartYearFocused = true;
           isEndYearFocused = false;
         });
-        showStartYearPicker(context); 
+        showStartYearPicker(context);
       }
     );
   }
 
   Widget buildEndYearField() {
-    return buildYearField(
+    return PickerField(
       attribute: 'endYear',
       initialValue: education['endYear'],
+      isEnabled: education['startYear'] != null,
       isFocused: isEndYearFocused,
       value: education['endYear'] ?? '',
-      onTap: education['startYear'] != null
-        ? () {
-          unfocusTextFields();
-          setState(() {
-            isStartYearFocused = false;
-            isEndYearFocused = true;
-          });
-          showEndYearPicker(context);
-        }
-        : null
+      onTap: () {
+        unfocusTextFields();
+        setState(() {
+          isStartYearFocused = false;
+          isEndYearFocused = true;
+        });
+        showEndYearPicker(context);
+      }
     );
   }
 
-  Widget buildYearField({
-    String attribute,
-    String initialValue,
-    bool isFocused,
-    String value,
-    void Function() onTap
-  }) {
-    return FormBuilderCustomField(
-      attribute: attribute,
-      initialValue: initialValue,
-      validators: [
-        FormBuilderValidators.required(),
-      ],
-      formField: FormField(
-        builder: (field) {
-          return InputDecorator(
-            isFocused: isFocused,
-            decoration: InputDecoration(
-              isDense: true,
-              contentPadding: EdgeInsets.only(top: 5.0, bottom: 5.0),
-              errorText: field.errorText
+  List<Widget> buildSaveEducationForm(context) {
+    return <Widget>[
+      FormBuilder(
+        key: _saveEducationKey,
+        child: Column(
+          children: <Widget>[
+            InputField(
+              labelText: saveEducationSchool,
+              formField: buildSchoolNameField()
             ),
-            baseStyle: GoogleFonts.muli(
-              textStyle: TextStyle(
-                color: Colors.black, 
-                letterSpacing: .5, 
-                fontSize: 13.0, 
-              )
+            InputField(
+              labelText: saveEducationDegree,
+              formField: buildDegreeField()
             ),
-            child: Container(
-              height: 20.0,
-              child: InkWell(
-                child: Text(
-                  value,
-                  style: GoogleFonts.muli(
-                    textStyle: TextStyle(
-                      color: Colors.black, 
-                      letterSpacing: .5, 
-                      fontSize: 13.0, 
-                    )
-                  ),
-                ),
-                onTap: onTap
-              )
-            ),
-          );
-        }
-      )
-    );
-  }
-
-  Picker buildYearPicker(BuildContext context, NumberPickerColumn pickerColumn, void Function(Picker, List<int>) onConfirm) {
-    return Picker(
-      adapter: NumberPickerAdapter(
-        data: [pickerColumn]
-      ),
-      hideHeader: false,
-      height: MediaQuery.of(context).size.height * 0.30,
-      itemExtent: 30.0,
-      magnification: 1.5,
-      squeeze: 0.80,
-      diameterRatio: 4.0,
-      textStyle: GoogleFonts.muli(
-        textStyle: TextStyle(
-          color: Colors.black, 
-          letterSpacing: .5, 
-          fontSize: 15.0, 
+            buildDateRangeRow()
+          ]
         )
       ),
-      selectedTextStyle: TextStyle(
-        color: Theme.of(context).primaryColor,
-      ),
-      cancelTextStyle: GoogleFonts.muli(
-        textStyle: TextStyle(
-          color: Colors.red, 
-          letterSpacing: .5, 
-          fontSize: 15.0,
-          fontWeight: FontWeight.w600 
-        )
-      ),
-      confirmTextStyle: GoogleFonts.muli(
-        textStyle: TextStyle(
-          color: Colors.black, 
-          letterSpacing: .5, 
-          fontSize: 15.0,
-          fontWeight: FontWeight.w600 
-        )
-      ),
-      onConfirm: onConfirm,
-    );
-  }
-
-  Widget saveAction() {
-    return Container(
-      padding: EdgeInsets.only(top: 17.0, right: 20.0),
-      child: InkWell(
-        onTap: () {
-          unfocusFields();
-          if (_saveEducationKey.currentState.saveAndValidate()) {
-            print(education);
-            print(_saveEducationKey.currentState.value);
-          } else {
-            print('Validation failed.');
-          }
-        },
-        child: Text(
-          'Save',
-          style: GoogleFonts.muli(
-            textStyle: TextStyle(
-              color: Colors.white, 
-              letterSpacing: .5, 
-              fontSize: 15.0, 
-              fontWeight: FontWeight.bold
-            )
-          )
-        )
-      )
-    );
-  }
-
-  Widget closeAction(BuildContext context) {
-    return IconButton(
-      onPressed: () {
-        Navigator.pop(context);
-      },
-      icon: Icon(Icons.close, color: Colors.white)
-    );
+    ];
   }
 
   @override
@@ -419,32 +255,23 @@ class _SaveEducationState extends State<SaveEducation> {
       child: Stack(
         children: <Widget>[
           Scaffold(
-            appBar: AppBar(
-              leading: closeAction(context),
-              actions: <Widget>[
-                saveAction()
-              ],
-              backgroundColor: Theme.of(context).primaryColor,
-              centerTitle: true,
-              title: Text(
-                widget.editMode ? 'Edit education' : 'Add education',
-                style: GoogleFonts.muli(
-                  textStyle: TextStyle(
-                    color: Colors.white, 
-                    letterSpacing: .5, 
-                    fontSize: 20.0, 
-                    fontWeight: FontWeight.bold
-                  )
-                )
-              ),
+            appBar: AppBarWithSave(
+              appBarTitle: widget.editMode ? editEducation : addEducation,
+              data: education,
+              formKey: _saveEducationKey
             ),
             backgroundColor: Colors.white,
             body: Container(
               padding: EdgeInsets.all(20.0),
                 child: ListView(
                 children: <Widget>[
-                  ...buildSaveEducationView(context),
-                  buildDeleteButton()
+                  ...buildSaveEducationForm(context),
+                  widget.editMode
+                  ? DeleteButton(
+                    labelText: deleteEducation,
+                    onPressed: () => 'Education deleted.'
+                  )
+                  : SizedBox()
                 ]
               )
             )

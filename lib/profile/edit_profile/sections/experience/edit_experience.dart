@@ -108,7 +108,7 @@ class _EditExperienceState extends State<EditExperience> {
   }
 
   buildJobList(BuildContext context) {
-    List<Widget> jobList = List<Widget>();
+    List<Widget> jobList = [];
     for (int i = 0; i < widget.jobs.length; i++) {
       jobList.add(
         buildJobRow(

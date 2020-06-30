@@ -1,7 +1,9 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
-import 'package:google_fonts/google_fonts.dart';
+
+import '../../../../constants/profile_constants.dart';
+import '../../../common/styles.dart';
 
 class EditSummary extends StatefulWidget {
   final String summary;
@@ -12,7 +14,17 @@ class EditSummary extends StatefulWidget {
 }
 
 class _EditSummaryState extends State<EditSummary> {
-  ValueChanged _onChanged = (val) => print(val);
+
+  String summary;
+
+  @override
+  void initState() {
+    super.initState();
+
+    // Temporary workaround until we use global state management
+    summary = widget.summary;
+    
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -21,28 +33,19 @@ class _EditSummaryState extends State<EditSummary> {
       child: Column(
         children: <Widget>[
           FormBuilderTextField(
-            attribute: "summary",
-            initialValue: widget.summary,
+            attribute: 'summary',
+            initialValue: summary,
             decoration: InputDecoration(
-              hintText: "Tell us about yourself...",
+              hintText: summaryHintMessage,
               border: InputBorder.none,
               focusedBorder: InputBorder.none,
               enabledBorder: InputBorder.none,
               errorBorder: InputBorder.none,
               disabledBorder: InputBorder.none
             ),
-            style: GoogleFonts.muli(
-              textStyle: TextStyle(
-                color: Colors.black, 
-                letterSpacing: .5, 
-                fontSize: 13.0, 
-              )
-            ),
-            onChanged: _onChanged,
-            validators: [
-              FormBuilderValidators.required(),
-              FormBuilderValidators.maxLength(500),
-            ],
+            style: fieldTextStyle,
+            onChanged: (value) => setState(() { summary = value as String; }),
+            validators: [FormBuilderValidators.maxLength(500)],
             keyboardType: TextInputType.text,
             minLines: 5,
             maxLines: 10
