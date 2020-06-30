@@ -2,8 +2,8 @@
 const String welcomeMessage = "Welcome to Aspire";
 
 //Account Verify
-const String vertifyaccountTitle = "Verify your account";
-const String vertifyaccountMessage =
+const String vertifyAccountTitle = "Verify your account";
+const String vertifyAccountMessage =
     "Link to verify account has been sent to your email";
 const String dissmissMessage = "Dismiss";
 
@@ -21,5 +21,5 @@ const String createAccountButtonSecondary =
 const String haveAccountButton = "Have an account? Sign in";
 
 //Error Message
-const String emailemptyMessage = "Email can't be empty";
-const String passwordemptyMessage = "Password can't be empty";
+const String emailEmptyMessage = "Email can't be empty";
+const String passwordEmptyMessage = "Password can't be empty";

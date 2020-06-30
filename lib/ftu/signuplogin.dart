@@ -113,8 +113,8 @@ class _LoginSignupPageState extends State<LoginSignupPage> {
       context: context,
       builder: (BuildContext context) {
         return AlertDialog(
-          title: Text(vertifyaccountTitle),
-          content: Text(vertifyaccountMessage),
+          title: Text(vertifyAccountTitle),
+          content: Text(vertifyAccountMessage),
           actions: <Widget>[
             FlatButton(
               child: Text(dissmissMessage),
@@ -192,7 +192,7 @@ class _LoginSignupPageState extends State<LoginSignupPage> {
               Icons.mail,
               color: Colors.grey,
             )),
-        validator: (value) => value.isEmpty ? emailemptyMessage : null,
+        validator: (value) => value.isEmpty ? emailEmptyMessage : null,
         onSaved: (value) => _email = value.trim(),
       ),
     );
@@ -211,7 +211,7 @@ class _LoginSignupPageState extends State<LoginSignupPage> {
               Icons.lock,
               color: Colors.grey,
             )),
-        validator: (value) => value.isEmpty ? passwordemptyMessage : null,
+        validator: (value) => value.isEmpty ? passwordEmptyMessage : null,
         onSaved: (value) => _password = value.trim(),
       ),
     );
