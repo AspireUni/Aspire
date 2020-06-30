@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
 
+import "../helpers/dummy_data.dart";    // temporary to test the firestore
+import "../helpers/users.dart";
+
 class FirstRoute extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
@@ -25,11 +28,16 @@ class SecondRoute extends StatelessWidget {
       body: Center(
         child: RaisedButton(
           onPressed: () {
-            Navigator.pushNamed(context, '/UserProfile');
+            navigateToProfile(context);
           },
           child: Text('Done. To the profile!'),
         ),
       ),
     );
   }
+}
+
+void navigateToProfile(context) {
+  addUsers(dummyUsers);
+  Navigator.pushNamed(context, '/Pairings');
 }
