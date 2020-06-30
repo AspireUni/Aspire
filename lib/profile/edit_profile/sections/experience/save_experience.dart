@@ -311,7 +311,8 @@ class _SaveExperienceState extends State<SaveExperience> {
             appBar: AppBarWithSave(
               appBarTitle: widget.editMode ? editExperience : addExperience,
               data: experience,
-              formKey: _saveExperienceKey
+              formKey: _saveExperienceKey,
+              onActionTap: unfocusFields,
             ),
             backgroundColor: Colors.white,
             body: Container(

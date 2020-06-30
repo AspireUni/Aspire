@@ -8,8 +8,19 @@ import '../../constants/profile_constants.dart';
 class AppBarWithSave extends StatelessWidget implements PreferredSizeWidget {
   final GlobalKey<FormBuilderState> formKey;
   final String appBarTitle;
+  final void Function() onActionTap;
   final Map<String, Object> data;
-  AppBarWithSave({Key key, @required this.appBarTitle, @required this.formKey, this.data}) : super(key: key);
+
+  final FocusNode saveFocus = FocusNode();
+  final FocusNode closeFocus = FocusNode();
+
+  AppBarWithSave({
+    Key key,
+    @required this.appBarTitle,
+    @required this.formKey,
+    this.onActionTap,
+    this.data
+  }) : super(key: key);
 
   @override
   Size get preferredSize => Size.fromHeight(kToolbarHeight);
@@ -21,7 +32,7 @@ class AppBarWithSave extends StatelessWidget implements PreferredSizeWidget {
       actions: <Widget>[saveAction(formKey)],
       backgroundColor: Theme.of(context).primaryColor,
       centerTitle: true,
-      title: buildAppBarTitle(editProfile)
+      title: buildAppBarTitle()
     );
   }
 
@@ -32,13 +43,17 @@ class AppBarWithSave extends StatelessWidget implements PreferredSizeWidget {
         right: 20.0
       ),
       child: InkWell(
+        focusNode: saveFocus,
         onTap: () {
+          getFocus(saveFocus);
+          onActionTap();
           if (key.currentState.saveAndValidate()) {
             print(data);
             print(key.currentState.value);
           } else {
             print("Validation failed.");
           }
+          saveFocus.unfocus();
         },
         child: Text(
           save,
@@ -57,8 +72,11 @@ class AppBarWithSave extends StatelessWidget implements PreferredSizeWidget {
 
   Widget closeAction(BuildContext context) {
     return IconButton(
+      focusNode: closeFocus,
       onPressed: () {
+        getFocus(closeFocus);
         Navigator.pop(context);
+        closeFocus.unfocus();
       },
       icon: Icon(
         Icons.close,
@@ -67,9 +85,9 @@ class AppBarWithSave extends StatelessWidget implements PreferredSizeWidget {
     );
   }
 
-  Widget buildAppBarTitle(String titleText) {
+  Widget buildAppBarTitle() {
     return Text(
-      titleText,
+      appBarTitle,
       style: GoogleFonts.muli(
         textStyle: TextStyle(
           color: Colors.white, 
@@ -80,4 +98,11 @@ class AppBarWithSave extends StatelessWidget implements PreferredSizeWidget {
       )
     );
   }
+
+  void getFocus(FocusNode focus){
+    if (!focus.hasFocus) {
+      focus.requestFocus();
+    }
+  }
+
 }

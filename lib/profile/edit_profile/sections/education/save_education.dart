@@ -258,7 +258,8 @@ class _SaveEducationState extends State<SaveEducation> {
             appBar: AppBarWithSave(
               appBarTitle: widget.editMode ? editEducation : addEducation,
               data: education,
-              formKey: _saveEducationKey
+              formKey: _saveEducationKey,
+              onActionTap: unfocusFields,
             ),
             backgroundColor: Colors.white,
             body: Container(

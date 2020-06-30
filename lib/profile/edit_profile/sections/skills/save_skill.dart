@@ -151,6 +151,7 @@ class _SaveSkillState extends State<SaveSkill> {
               appBarTitle: widget.editMode ? editSkill : addSkill,
               data: skill,
               formKey: _saveSkillKey,
+              onActionTap: unfocusFields,
             ),
             backgroundColor: Colors.white,
             body: Container(

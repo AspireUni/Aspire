@@ -33,7 +33,7 @@ class ListPicker {
       adapter: PickerDataAdapter(data: getData()),
       selecteds: selecteds,
       hideHeader: false,
-      height: MediaQuery.of(context).size.height * 0.20,
+      height: MediaQuery.of(context).size.height * 0.15,
       itemExtent: 30.0,
       magnification: 1.5,
       squeeze: 0.80,
