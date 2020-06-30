@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
-import '../ftu/signup.dart';
+import '../FTU/authentication.dart';
+import '../FTU/rootpage.dart';
 import 'app_controller.dart';
 
 class Root extends StatelessWidget {
@@ -10,14 +11,12 @@ class Root extends StatelessWidget {
         title: 'Aspire',
         initialRoute: '/',
         routes: {
-          '/': (context) => FirstRoute(),
-          '/second': (context) => SecondRoute(),
-          '/Pairings': (context) => AppController(),
+          '/': (context) => RootPage(auth: Auth()),
+          '/AppController': (context) => AppController(),
         },
         theme: ThemeData(
           primaryColor: Color(0xFF0F1236),
           accentColor: Color(0xFF45cab9),
-        )
-      );
-    }
+        ));
   }
+}
