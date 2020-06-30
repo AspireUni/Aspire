@@ -71,7 +71,7 @@ class _SaveSkillState extends State<SaveSkill> {
     });
   }
 
-  void onLevelConfirm(Picker picker) {
+  void handleLevelConfirm(Picker picker) {
     String newLevel = picker.getSelectedValues()[0].toString();
     setState(() { 
       skill['level'] = newLevel;
@@ -84,7 +84,7 @@ class _SaveSkillState extends State<SaveSkill> {
     ListPicker(
       data: skills,
       selecteds: [ skill['level'] != null ? skills.indexOf(skill['level']) : 0 ],
-      onConfirm: (picker, value) => onLevelConfirm(picker)
+      onConfirm: (picker, value) => handleLevelConfirm(picker)
     ).build(context).showModal(context);
   }
 

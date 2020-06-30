@@ -97,7 +97,7 @@ class _SaveEducationState extends State<SaveEducation> {
         ? convertStringToDateTime(education['startYear'])
         : DateTime.now(),
       maxValue: DateTime.now(),
-      onConfirm: (picker, value) => onStartYearConfirm(picker),
+      onConfirm: (picker, value) => handleStartYearConfirm(picker),
     ).build(context).showModal(context);
   }
 
@@ -108,11 +108,11 @@ class _SaveEducationState extends State<SaveEducation> {
         ? convertStringToDateTime(education['endYear']) 
         : convertStringToDateTime(education['startYear']),
       minValue: convertStringToDateTime(education['startYear']),
-      onConfirm: (picker, value) => onEndYearConfirm(picker),
+      onConfirm: (picker, value) => handleEndYearConfirm(picker),
     ).build(context).showModal(context);
   }
 
-  void onStartYearConfirm(Picker picker) {
+  void handleStartYearConfirm(Picker picker) {
     DateTime newStartDateTime = DateFormat('yyyy-MM-dd hh:mm:ss').parse(picker.adapter.text);
     String newStartYear = convertDateTimeToString(newStartDateTime);
     setState(() { 
@@ -124,7 +124,7 @@ class _SaveEducationState extends State<SaveEducation> {
     _saveEducationKey.currentState.fields['startYear'].currentState.validate();
   }
 
-  void onEndYearConfirm(Picker picker) {
+  void handleEndYearConfirm(Picker picker) {
      DateTime newEndDateTime = DateFormat('yyyy-MM-dd hh:mm:ss').parse(picker.adapter.text);
     String newEndYear = convertDateTimeToString(newEndDateTime);
     setState(() => { education['endYear'] = newEndYear });

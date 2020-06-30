@@ -105,7 +105,7 @@ class _SaveExperienceState extends State<SaveExperience> {
         ? convertStringToDateTime(experience['startDate'])
         : DateTime.now(),
       maxValue: DateTime.now(),
-      onConfirm: (picker, value) => onStartDateConfirm(picker),
+      onConfirm: (picker, value) => handleStartDateConfirm(picker),
     ).build(context).showModal(context);
   }
 
@@ -117,11 +117,11 @@ class _SaveExperienceState extends State<SaveExperience> {
         : convertStringToDateTime(experience['startDate']),
       minValue: convertStringToDateTime(experience['startDate']),
       maxValue: DateTime.now(),
-      onConfirm: (picker, value) => onEndDateConfirm(picker),
+      onConfirm: (picker, value) => handleEndDateConfirm(picker),
     ).build(context).showModal(context);
   }
 
-  void onStartDateConfirm(Picker picker) {
+  void handleStartDateConfirm(Picker picker) {
     DateTime newStartDateTime = DateFormat('yyyy-MM-dd hh:mm:ss').parse(picker.adapter.text);
     String newStartDate = convertDateTimeToString(newStartDateTime);
     setState(() { 
@@ -134,7 +134,7 @@ class _SaveExperienceState extends State<SaveExperience> {
     _saveExperienceKey.currentState.fields['startDate'].currentState.validate();
   }
 
-  void onEndDateConfirm(Picker picker) {
+  void handleEndDateConfirm(Picker picker) {
     DateTime newEndDateTime = DateFormat('yyyy-MM-dd hh:mm:ss').parse(picker.adapter.text);
     String newEndDate = convertDateTimeToString(newEndDateTime);
     setState(() { experience['endDate'] = newEndDate; });
@@ -142,7 +142,7 @@ class _SaveExperienceState extends State<SaveExperience> {
     _saveExperienceKey.currentState.fields['endDate'].currentState.validate();
   }
 
-  void onCurrentJobSwitch(dynamic value){
+  void handleCurrentJobSwitch(dynamic value){
     unfocusDateRangeFields();
     if (value as bool) {
       setState(() { 
@@ -275,7 +275,7 @@ class _SaveExperienceState extends State<SaveExperience> {
         errorBorder: InputBorder.none,
         disabledBorder: InputBorder.none
       ),
-      onChanged: onCurrentJobSwitch,
+      onChanged: handleCurrentJobSwitch,
     );
   }
 
