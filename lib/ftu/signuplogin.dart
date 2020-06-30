@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import '../constants/signuplogin_constants.dart';
 import './authentication.dart';
 
-// Changing from stateless to stateful
+
 class LoginSignupPage extends StatefulWidget {
   LoginSignupPage({this.auth, this.loginCallback});
 
@@ -20,7 +20,6 @@ class _LoginSignupPageState extends State<LoginSignupPage> {
   String _email, _password, _errorMessage;
   bool _isLoginForm, _isLoading;
 
-  // Check if form is valid before perform login or signup
   bool validateAndSave() {
     final form = _formKey.currentState;
     if (form.validate()) {
@@ -30,7 +29,6 @@ class _LoginSignupPageState extends State<LoginSignupPage> {
     return false;
   }
 
-  // Perform login or signup
   void validateAndSubmit() async {
     setState(() {
       _errorMessage = "";
@@ -55,7 +53,6 @@ class _LoginSignupPageState extends State<LoginSignupPage> {
         if (userId.length > 0 && userId != null && _isLoginForm) {
           widget.loginCallback();
         }
-        // Avoid catches without on clauses.
       } catch (e) {
         print('Error: $e');
         setState(() {
@@ -115,7 +112,6 @@ class _LoginSignupPageState extends State<LoginSignupPage> {
     showDialog(
       context: context,
       builder: (BuildContext context) {
-        // Return object of type Dialog
         return AlertDialog(
           title: Text(vertifyaccountTitle),
           content: Text(vertifyaccountMessage),

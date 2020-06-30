@@ -6,7 +6,7 @@ import './signuplogin.dart';
 
 enum AuthStatus {
   notDetermined,
-  notLoggedIN,
+  notLoggedIn,
   loggedIn,
 }
 
@@ -32,7 +32,7 @@ class _RootPageState extends State<RootPage> {
           _userId = user.uid;
         }
         authStatus =
-            user?.uid == null ? AuthStatus.notLoggedIN : AuthStatus.loggedIn;
+            user?.uid == null ? AuthStatus.notLoggedIn : AuthStatus.loggedIn;
       });
     });
   }
@@ -50,7 +50,7 @@ class _RootPageState extends State<RootPage> {
 
   void logoutCallback() {
     setState(() {
-      authStatus = AuthStatus.notLoggedIN;
+      authStatus = AuthStatus.notLoggedIn;
       _userId = "";
     });
   }
@@ -70,7 +70,7 @@ class _RootPageState extends State<RootPage> {
       case AuthStatus.notDetermined:
         return buildWaitingScreen();
         break;
-      case AuthStatus.notLoggedIN:
+      case AuthStatus.notLoggedIn:
         return LoginSignupPage(
           auth: widget.auth,
           loginCallback: loginCallback,
