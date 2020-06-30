@@ -9,8 +9,6 @@ class DatePicker {
   final DateTime initialValue;
   final DateTime minValue;
   final DateTime maxValue;
-  final int yearBegin;
-  final int yearEnd;
   final void Function(Picker, List<int>) onConfirm;
 
   DatePicker({
@@ -18,8 +16,6 @@ class DatePicker {
     this.initialValue,
     this.minValue,
     this.maxValue,
-    this.yearBegin,
-    this.yearEnd,
     this.onConfirm
   });
 
