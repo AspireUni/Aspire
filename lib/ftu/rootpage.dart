@@ -1,12 +1,13 @@
 import 'package:flutter/material.dart';
+
 import '../Navigation/app_controller.dart';
 import './authentication.dart';
 import './signuplogin.dart';
 
 enum AuthStatus {
-  NOT_DETERMINED,
-  NOT_LOGGED_IN,
-  LOGGED_IN,
+  notDetermined,
+  notLoggedIN,
+  loggedIn,
 }
 
 class RootPage extends StatefulWidget {
@@ -19,7 +20,7 @@ class RootPage extends StatefulWidget {
 }
 
 class _RootPageState extends State<RootPage> {
-  AuthStatus authStatus = AuthStatus.NOT_DETERMINED;
+  AuthStatus authStatus = AuthStatus.notDetermined;
   String _userId = "";
 
   @override
@@ -31,7 +32,7 @@ class _RootPageState extends State<RootPage> {
           _userId = user.uid;
         }
         authStatus =
-            user?.uid == null ? AuthStatus.NOT_LOGGED_IN : AuthStatus.LOGGED_IN;
+            user?.uid == null ? AuthStatus.notLoggedIN : AuthStatus.loggedIn;
       });
     });
   }
@@ -43,13 +44,13 @@ class _RootPageState extends State<RootPage> {
       });
     });
     setState(() {
-      authStatus = AuthStatus.LOGGED_IN;
+      authStatus = AuthStatus.loggedIn;
     });
   }
 
   void logoutCallback() {
     setState(() {
-      authStatus = AuthStatus.NOT_LOGGED_IN;
+      authStatus = AuthStatus.notLoggedIN;
       _userId = "";
     });
   }
@@ -66,23 +67,22 @@ class _RootPageState extends State<RootPage> {
   @override
   Widget build(BuildContext context) {
     switch (authStatus) {
-      case AuthStatus.NOT_DETERMINED:
+      case AuthStatus.notDetermined:
         return buildWaitingScreen();
         break;
-      case AuthStatus.NOT_LOGGED_IN:
+      case AuthStatus.notLoggedIN:
         return LoginSignupPage(
           auth: widget.auth,
           loginCallback: loginCallback,
         );
         break;
-      case AuthStatus.LOGGED_IN:
+      case AuthStatus.loggedIn:
         if (_userId != null && _userId.length > 0) {
           return AppController(
             userId: _userId,
             auth: widget.auth,
             logoutCallback: logoutCallback,
           );
-
         } else {
           return buildWaitingScreen();
         }

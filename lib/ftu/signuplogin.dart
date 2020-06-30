@@ -1,8 +1,7 @@
-//REF: https://dart.dev/guides/language/effective-dart/style#do-place-dart-imports-before-other-imports
 import 'package:flutter/material.dart';
+
 import '../constants/signuplogin_constants.dart';
 import './authentication.dart';
-
 
 // Changing from stateless to stateful
 class LoginSignupPage extends StatefulWidget {
@@ -16,7 +15,6 @@ class LoginSignupPage extends StatefulWidget {
 }
 
 class _LoginSignupPageState extends State<LoginSignupPage> {
-
   final _formKey = GlobalKey<FormState>();
 
   String _email, _password, _errorMessage;
@@ -58,13 +56,11 @@ class _LoginSignupPageState extends State<LoginSignupPage> {
           widget.loginCallback();
         }
         // Avoid catches without on clauses.
-      } catch (e) { 
+      } catch (e) {
         print('Error: $e');
         setState(() {
           _isLoading = false;
           _errorMessage = e.message as String;
-          // A value of type 'dynamic' can't be assigned to a variable of type 'String'. 
-          // Try changing the type of the variable, or casting the right-hand type to 'String'.
           _formKey.currentState.reset();
         });
       }
@@ -115,27 +111,27 @@ class _LoginSignupPageState extends State<LoginSignupPage> {
     );
   }
 
- void _showVerifyEmailSentDialog() {
-   showDialog(
-     context: context,
-     builder: (BuildContext context) {
-       // Return object of type Dialog
-       return AlertDialog(
-         title: Text(vertifyaccountTitle),
-         content: Text(vertifyaccountMessage),
-         actions: <Widget>[
-           FlatButton(
-             child: Text(dissmissMessage),
-             onPressed: () {
-               toggleFormMode();
-               Navigator.of(context).pop();
-             },
-           ),
-         ],
-       );
-     },
-   );
- }
+  void _showVerifyEmailSentDialog() {
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        // Return object of type Dialog
+        return AlertDialog(
+          title: Text(vertifyaccountTitle),
+          content: Text(vertifyaccountMessage),
+          actions: <Widget>[
+            FlatButton(
+              child: Text(dissmissMessage),
+              onPressed: () {
+                toggleFormMode();
+                Navigator.of(context).pop();
+              },
+            ),
+          ],
+        );
+      },
+    );
+  }
 
   Widget _showForm() {
     return Container(
@@ -195,12 +191,12 @@ class _LoginSignupPageState extends State<LoginSignupPage> {
         keyboardType: TextInputType.emailAddress,
         autofocus: false,
         decoration: InputDecoration(
-            hintText: 'Email',
+            hintText: emailHint,
             icon: Icon(
               Icons.mail,
               color: Colors.grey,
             )),
-        validator: (value) => value.isEmpty ? 'Email can\'t be empty' : null,
+        validator: (value) => value.isEmpty ? emailemptyMessage : null,
         onSaved: (value) => _email = value.trim(),
       ),
     );
@@ -214,12 +210,12 @@ class _LoginSignupPageState extends State<LoginSignupPage> {
         obscureText: true,
         autofocus: false,
         decoration: InputDecoration(
-            hintText: 'Password',
+            hintText: passwordHint,
             icon: Icon(
               Icons.lock,
               color: Colors.grey,
             )),
-        validator: (value) => value.isEmpty ? 'Password can\'t be empty' : null,
+        validator: (value) => value.isEmpty ? passwordemptyMessage : null,
         onSaved: (value) => _password = value.trim(),
       ),
     );
@@ -228,7 +224,7 @@ class _LoginSignupPageState extends State<LoginSignupPage> {
   Widget showSecondaryButton() {
     return FlatButton(
         child: Text(
-            _isLoginForm ? 'Create an account' : 'Have an account? Sign in',
+            _isLoginForm ? createAccountButtonSecondary : haveAccountButton,
             style: TextStyle(fontSize: 18.0, fontWeight: FontWeight.w300)),
         onPressed: toggleFormMode);
   }
@@ -243,11 +239,10 @@ class _LoginSignupPageState extends State<LoginSignupPage> {
             shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.circular(30.0)),
             color: Colors.blue,
-            child: Text(_isLoginForm ? 'Login' : 'Create account',
+            child: Text(_isLoginForm ? loginButton : createAccountButtonPrimary,
                 style: TextStyle(fontSize: 20.0, color: Colors.white)),
             onPressed: validateAndSubmit,
           ),
         ));
   }
 }
-
