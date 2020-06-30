@@ -24,19 +24,27 @@ class _EditProfileState extends State<EditProfile> {
 
   @override
   Widget build(BuildContext context) {
-    return Stack(
-      children: <Widget>[
-        Scaffold(
-          appBar: AppBarWithSave(
-            appBarTitle: editProfile,
-            formKey: _saveProfileKey
+    return GestureDetector(
+      onTap: () {
+        FocusScopeNode currentFocus = FocusScope.of(context);
+        if (!currentFocus.hasPrimaryFocus) {
+          currentFocus.unfocus();
+        }
+      },
+      child: Stack(
+        children: <Widget>[
+          Scaffold(
+            appBar: AppBarWithSave(
+              appBarTitle: editProfile,
+              formKey: _saveProfileKey
+            ),
+            backgroundColor: Colors.white,
+            body: ListView(
+              children: buildEditProfileView(context)
+            )
           ),
-          backgroundColor: Colors.white,
-          body: ListView(
-            children: buildEditProfileView(context)
-          )
-        ),
-      ]
+        ]
+      )
     );
   }
 
