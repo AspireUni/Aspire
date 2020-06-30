@@ -5,10 +5,12 @@ import 'package:google_fonts/google_fonts.dart';
 
 class JobRow extends StatelessWidget {
   final  Map<String, Object> jobInfo;
+ 
   JobRow({Key key, @required this.jobInfo}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
+    
     final String dateRange = "${jobInfo['startDate']} - ${jobInfo['endDate']}";
 
     return Expanded(

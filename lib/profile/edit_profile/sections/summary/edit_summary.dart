@@ -7,6 +7,7 @@ import '../../../common/styles.dart';
 
 class EditSummary extends StatefulWidget {
   final String summary;
+  
   EditSummary({Key key, @required this.summary}) : super(key: key);
 
   @override

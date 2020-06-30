@@ -9,6 +9,7 @@ import '../../../common/styles.dart';
 class EditContact extends StatefulWidget {
   final Map contact;
   final String fullName;
+  
   EditContact({Key key, @required this.contact, @required this.fullName}) : super(key: key);
 
   @override

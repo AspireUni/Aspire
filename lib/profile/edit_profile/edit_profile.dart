@@ -13,6 +13,7 @@ import './sections/summary/edit_summary.dart';
 
 class EditProfile extends StatefulWidget {
   final Map data;
+  
   EditProfile({Key key, @required this.data}) : super(key: key);
 
   @override

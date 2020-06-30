@@ -6,7 +6,13 @@ class InputField extends StatelessWidget {
   final bool enabled;
   final String labelText;
   final Widget formField;
-  InputField({Key key, this.enabled, @required this.labelText, @required this.formField}) : super(key: key);
+
+  InputField({
+    Key key,
+    this.enabled,
+    @required this.labelText,
+    @required this.formField
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -22,7 +28,7 @@ class InputField extends StatelessWidget {
     );
   }
 
-  buildFieldLabel(){
+  Widget buildFieldLabel() {
     return Container(
       padding: EdgeInsets.all(0.0),
       child: Text(

@@ -14,6 +14,7 @@ import '../../../common/styles.dart';
 class SaveSkill extends StatefulWidget {
   final bool editMode;
   final Map<String, Object> skillInfo;
+  
   SaveSkill({Key key, @required this.editMode, this.skillInfo}) : super(key: key);
 
   @override

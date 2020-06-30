@@ -5,10 +5,12 @@ import 'package:google_fonts/google_fonts.dart';
 
 class SchoolRow extends StatelessWidget {
   final  Map<String, Object> schoolInfo;
+
   SchoolRow({Key key, @required this.schoolInfo}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
+    
     final String dateRange = "${schoolInfo['startYear']} - ${schoolInfo['endYear']}";
 
     return Expanded(
@@ -35,7 +37,7 @@ class SchoolRow extends StatelessWidget {
     );
   }
 
-  buildSchoolText(String text, {bool isSchool, bool isDateRange}) {
+  Widget buildSchoolText(String text, {bool isSchool, bool isDateRange}) {
     return Text(
       text,
       textAlign: TextAlign.left,

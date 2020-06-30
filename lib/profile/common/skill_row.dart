@@ -5,6 +5,7 @@ import 'package:google_fonts/google_fonts.dart';
 
 class SkillRow extends StatelessWidget {
   final  Map<String, Object> skillInfo;
+  
   SkillRow({Key key, @required this.skillInfo}) : super(key: key);
 
   @override

@@ -10,6 +10,7 @@ import './save_skill.dart';
 
 class EditSkills extends StatefulWidget {
   final List<Map<String, Object>> skills;
+  
   EditSkills({Key key, @required this.skills}) : super(key: key);
 
   @override
