@@ -42,7 +42,7 @@ class _EditExperienceState extends State<EditExperience> {
       child: SectionRow(
         children: <Widget> [
           JobRow(jobInfo: jobInfo),
-          editButtonInRow,
+          editButtonInRow
         ]
       )
     );

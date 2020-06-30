@@ -41,7 +41,7 @@ class _EditEducationState extends State<EditEducation> {
       child: SectionRow(
         children: <Widget> [
           SchoolRow(schoolInfo: schoolInfo),
-          editButtonInRow,
+          editButtonInRow
         ]
       )
     );

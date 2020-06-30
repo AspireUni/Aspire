@@ -41,7 +41,7 @@ class _EditSkillsState extends State<EditSkills> {
       child: SectionRow(
         children: <Widget>[
           SkillRow(skillInfo: skillInfo),
-          editButtonInRow,
+          editButtonInRow
         ]
       )
     );
