@@ -80,7 +80,9 @@ class SectionRow extends StatelessWidget {
       ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
-        children: children
+        children: <Widget> [
+          Row(children: children)
+        ]
       )
     );
   }

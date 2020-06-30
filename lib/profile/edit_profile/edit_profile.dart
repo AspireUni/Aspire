@@ -4,7 +4,7 @@ import 'package:flutter_form_builder/flutter_form_builder.dart';
 
 import '../../constants/profile_constants.dart';
 import '../common/app_bar.dart';
-import '../view_profile/sections/section.dart';
+import '../common/section.dart';
 import './sections/contact/edit_contact.dart';
 import './sections/education/edit_education.dart';
 import './sections/experience/edit_experience.dart';

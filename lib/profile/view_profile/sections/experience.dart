@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
 
 import '../../../constants/profile_constants.dart';
-import './section.dart';
+import '../../common/job_row.dart';
+import '../../common/section.dart';
  
 class ProfileExperience extends StatelessWidget {  
   final List<Map<String, Object>> jobs;
@@ -16,48 +16,13 @@ class ProfileExperience extends StatelessWidget {
     );
   }
 
-  buildJobRow(BuildContext context, String jobTitle, String company, String startDate, String endDate) {
-    final String dateRange = "$startDate - $endDate";
-
-    return SectionRow(
-      children: <Widget>[
-        buildExperienceText(jobTitle, isJobTitle: true, isDateRange: false),
-        buildExperienceText(company, isJobTitle: false, isDateRange: false),
-        buildExperienceText(dateRange, isJobTitle: false, isDateRange: true)
-      ]
-    );
-  }
-
-  buildJobList(BuildContext context) {
+  Widget buildJobList(BuildContext context) {
     List<Widget> jobList = <Widget>[];
     for (int i = 0; i < jobs.length; i++) {
       jobList.add(
-        buildJobRow(
-            context, 
-            jobs[i]["jobTitle"], 
-            jobs[i]["company"], 
-            jobs[i]["startDate"],
-            jobs[i]["endDate"]
-        ),
+        SectionRow(children: <Widget>[JobRow(jobInfo: jobs[i])])
       );
     }
-
     return SectionList(children: jobList);
-  }
-
-  buildExperienceText(String text, {bool isJobTitle, bool isDateRange}) {
-    return Text(
-      text,
-      textAlign: TextAlign.left,
-      style: GoogleFonts.muli(
-        textStyle: TextStyle(
-          color: isDateRange ? Colors.black54 : Colors.black,
-          letterSpacing: .5,
-          height: 1.2,
-          fontSize: 13.0,
-          fontWeight: isJobTitle ? FontWeight.w700 : FontWeight.w500
-        ),
-      )
-    );
   }
 }

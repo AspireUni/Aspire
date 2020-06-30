@@ -27,6 +27,9 @@ const String editSummary = 'Edit summary';
 const String editEducation = 'Edit education';
 const String editExperience = 'Edit experience';
 const String editSkills = 'Edit skills';
+const String addEducationRowText = 'Add education...';
+const String addExperienceRowText = 'Add experience...';
+const String addSkillRowText = 'Add skill...';
 const String save = 'Save';
 
 // Edit contact

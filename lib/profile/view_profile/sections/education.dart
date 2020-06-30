@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
 
 import '../../../constants/profile_constants.dart';
-import './section.dart';
+import '../../common/school_row.dart';
+import '../../common/section.dart';
 
  
 class ProfileEducation extends StatelessWidget {  
@@ -17,48 +17,13 @@ class ProfileEducation extends StatelessWidget {
     );
   }
 
-  buildSchoolRow(BuildContext context, String school, String program, String startYear, String endYear) {
-    final String dateRange = "$startYear - $endYear";
-
-    return SectionRow(
-      children: <Widget>[
-        buildEducationText(school, isSchool: true, isDateRange: false),
-        buildEducationText(program, isSchool: false, isDateRange: false),
-        buildEducationText(dateRange, isSchool: false, isDateRange: true)
-      ]
-    );
-  }
-
-  buildSchoolList(BuildContext context) {
+  Widget buildSchoolList(BuildContext context) {
     List<Widget> schoolList = <Widget>[];
     for (int i = 0; i < schools.length; i++) {
       schoolList.add(
-        buildSchoolRow(
-          context, 
-          schools[i]["school"], 
-          schools[i]["program"], 
-          schools[i]["startYear"],
-          schools[i]["endYear"]
-        )
+        SectionRow(children: <Widget>[SchoolRow(schoolInfo: schools[i])])
       );
     }
-
     return SectionList(children: schoolList);
-  }
-
-  buildEducationText(String text, {bool isSchool, bool isDateRange}) {
-    return Text(
-      text,
-      textAlign: TextAlign.left,
-      style: GoogleFonts.muli(
-        textStyle: TextStyle(
-          color: isDateRange ? Colors.black54 : Colors.black,
-          letterSpacing: .5,
-          height: 1.2,
-          fontSize: 13.0,
-          fontWeight: isSchool ? FontWeight.w700 : FontWeight.w500
-        ),
-      )
-    );
   }
 }
