@@ -15,14 +15,16 @@ class SaveSkill extends StatefulWidget {
   final bool editMode;
   final Map<String, Object> skillInfo;
   
-  SaveSkill({Key key, @required this.editMode, this.skillInfo}) : super(key: key);
+  SaveSkill({Key key, @required this.editMode, this.skillInfo}) 
+    : super(key: key);
 
   @override
   _SaveSkillState createState() => _SaveSkillState();
 }
 
 class _SaveSkillState extends State<SaveSkill> {
-  final GlobalKey<FormBuilderState> _saveSkillKey = GlobalKey<FormBuilderState>();
+  final GlobalKey<FormBuilderState> _saveSkillKey = 
+    GlobalKey<FormBuilderState>();
   final FocusNode skillFocus = FocusNode();
   final List<String> skills = [skillBeginner, skillIntermediate, skillExpert];
   
@@ -76,14 +78,19 @@ class _SaveSkillState extends State<SaveSkill> {
     setState(() { 
       skill['level'] = newLevel;
     });
-    _saveSkillKey.currentState.fields['level'].currentState.didChange(newLevel);    
-    _saveSkillKey.currentState.fields['level'].currentState.validate();
+    _saveSkillKey.currentState.fields['level'].currentState
+      .didChange(newLevel);    
+    _saveSkillKey.currentState.fields['level'].currentState
+      .validate();
   }
 
   void showLevelPicker(BuildContext context) {
     ListPicker(
       data: skills,
-      selecteds: [ skill['level'] != null ? skills.indexOf(skill['level']) : 0 ],
+      selecteds: [ skill['level'] != null 
+        ? skills.indexOf(skill['level']) 
+        : 0 
+      ],
       onConfirm: (picker, value) => handleLevelConfirm(picker)
     ).build(context).showModal(context);
   }

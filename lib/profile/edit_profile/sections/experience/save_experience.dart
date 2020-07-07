@@ -15,14 +15,16 @@ import '../../../common/styles.dart';
 class SaveExperience extends StatefulWidget {
   final bool editMode;
   final Map<String, Object> jobInfo;
-  SaveExperience({Key key, @required this.editMode, this.jobInfo}) : super(key: key);
+  SaveExperience({Key key, @required this.editMode, this.jobInfo}) 
+    : super(key: key);
 
   @override
   _SaveExperienceState createState() => _SaveExperienceState();
 }
 
 class _SaveExperienceState extends State<SaveExperience> {
-  final GlobalKey<FormBuilderState> _saveExperienceKey = GlobalKey<FormBuilderState>();
+  final GlobalKey<FormBuilderState> _saveExperienceKey = 
+    GlobalKey<FormBuilderState>();
   final FocusNode jobTitleFocus = FocusNode();
   final FocusNode companyFocus = FocusNode();
   
@@ -37,7 +39,8 @@ class _SaveExperienceState extends State<SaveExperience> {
    
     isStartDateFocused = false;
     isEndDateFocused = false;
-    isEndDateEnabled = widget.editMode && widget.jobInfo['endDate'] != endDatePresent;
+    isEndDateEnabled = widget.editMode && widget.jobInfo['endDate'] 
+      != endDatePresent;
 
     // Temporary workaround until we use global state management
     experience = {
@@ -80,7 +83,8 @@ class _SaveExperienceState extends State<SaveExperience> {
       if (focus.hasFocus) {
         unfocusDateRangeFields();
       } else {
-        _saveExperienceKey.currentState.fields[attribute].currentState.validate();
+        _saveExperienceKey.currentState.fields[attribute].currentState
+          .validate();
       }
     });
   }
@@ -122,24 +126,31 @@ class _SaveExperienceState extends State<SaveExperience> {
   }
 
   void handleStartDateConfirm(Picker picker) {
-    DateTime newStartDateTime = DateFormat('yyyy-MM-dd hh:mm:ss').parse(picker.adapter.text);
+    DateTime newStartDateTime = DateFormat('yyyy-MM-dd hh:mm:ss')
+      .parse(picker.adapter.text);
     String newStartDate = convertDateTimeToString(newStartDateTime);
     setState(() { 
       experience['startDate'] = newStartDate;
       experience['endDate'] = null;
       isEndDateEnabled = true;
     });
-    _saveExperienceKey.currentState.fields['startDate'].currentState.didChange(newStartDate);
-    _saveExperienceKey.currentState.fields['endDate'].currentState.didChange(null);
-    _saveExperienceKey.currentState.fields['startDate'].currentState.validate();
+    _saveExperienceKey.currentState.fields['startDate'].currentState
+      .didChange(newStartDate);
+    _saveExperienceKey.currentState.fields['endDate'].currentState
+      .didChange(null);
+    _saveExperienceKey.currentState.fields['startDate'].currentState
+      .validate();
   }
 
   void handleEndDateConfirm(Picker picker) {
-    DateTime newEndDateTime = DateFormat('yyyy-MM-dd hh:mm:ss').parse(picker.adapter.text);
+    DateTime newEndDateTime = DateFormat('yyyy-MM-dd hh:mm:ss')
+      .parse(picker.adapter.text);
     String newEndDate = convertDateTimeToString(newEndDateTime);
     setState(() { experience['endDate'] = newEndDate; });
-    _saveExperienceKey.currentState.fields['endDate'].currentState.didChange(newEndDate);
-    _saveExperienceKey.currentState.fields['endDate'].currentState.validate();
+    _saveExperienceKey.currentState.fields['endDate'].currentState
+      .didChange(newEndDate);
+    _saveExperienceKey.currentState.fields['endDate'].currentState
+      .validate();
   }
 
   void handleCurrentJobSwitch(dynamic value){
@@ -149,15 +160,18 @@ class _SaveExperienceState extends State<SaveExperience> {
         experience['endDate'] = endDatePresent;
         isEndDateEnabled = false;
       });
-      _saveExperienceKey.currentState.fields['endDate'].currentState.didChange(endDatePresent);
+      _saveExperienceKey.currentState.fields['endDate'].currentState
+        .didChange(endDatePresent);
     } else {
       setState(() { 
         experience['endDate'] = null;
         isEndDateEnabled = true;
       });
-      _saveExperienceKey.currentState.fields['endDate'].currentState.didChange(null);
+      _saveExperienceKey.currentState.fields['endDate'].currentState
+        .didChange(null);
     }
-    _saveExperienceKey.currentState.fields['endDate'].currentState.validate();
+    _saveExperienceKey.currentState.fields['endDate'].currentState
+      .validate();
   }
 
   Widget buildJobTitleField() {
@@ -166,7 +180,9 @@ class _SaveExperienceState extends State<SaveExperience> {
       initialValue: experience['jobTitle'],
       decoration: fieldDecoration(),
       style: fieldTextStyle,
-      onChanged: (value) => setState(() { experience['jobTitle'] = value as String; }),
+      onChanged: (value) => setState(() { 
+        experience['jobTitle'] = value as String; 
+      }),
       focusNode: jobTitleFocus,
       validators: [
         FormBuilderValidators.required(),
@@ -182,7 +198,9 @@ class _SaveExperienceState extends State<SaveExperience> {
       initialValue: experience['company'],
       decoration: fieldDecoration(),
       style: fieldTextStyle,
-      onChanged: (value) => setState(() { experience['company'] = value as String; }),
+      onChanged: (value) => setState(() { 
+        experience['company'] = value as String;
+      }),
       focusNode: companyFocus,
       validators: [
         FormBuilderValidators.required(),

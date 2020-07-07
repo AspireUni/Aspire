@@ -97,6 +97,9 @@ class ProfileHeader extends StatelessWidget {
   }
 
   handleEditTap(BuildContext context) {
-    Navigator.push(context, MaterialPageRoute(builder: (context) => EditProfile(data: data)));
+    Navigator.push(
+      context, 
+      MaterialPageRoute(builder: (context) => EditProfile(data: data))
+    );
   }
 }
