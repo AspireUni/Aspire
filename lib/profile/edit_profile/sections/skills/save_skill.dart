@@ -23,8 +23,8 @@ class SaveSkill extends StatefulWidget {
 }
 
 class _SaveSkillState extends State<SaveSkill> {
-  final GlobalKey<FormBuilderState> _saveSkillKey = 
-    GlobalKey<FormBuilderState>();
+  final GlobalKey<FormBuilderState> _saveSkillKey 
+    = GlobalKey<FormBuilderState>();
   final FocusNode skillFocus = FocusNode();
   final List<String> skills = [skillBeginner, skillIntermediate, skillExpert];
   

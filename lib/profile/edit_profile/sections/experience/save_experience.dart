@@ -23,8 +23,8 @@ class SaveExperience extends StatefulWidget {
 }
 
 class _SaveExperienceState extends State<SaveExperience> {
-  final GlobalKey<FormBuilderState> _saveExperienceKey = 
-    GlobalKey<FormBuilderState>();
+  final GlobalKey<FormBuilderState> _saveExperienceKey 
+    = GlobalKey<FormBuilderState>();
   final FocusNode jobTitleFocus = FocusNode();
   final FocusNode companyFocus = FocusNode();
   

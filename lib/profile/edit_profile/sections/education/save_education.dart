@@ -23,8 +23,8 @@ class SaveEducation extends StatefulWidget {
 }
 
 class _SaveEducationState extends State<SaveEducation> {
-  final GlobalKey<FormBuilderState> _saveEducationKey = 
-    GlobalKey<FormBuilderState>();
+  final GlobalKey<FormBuilderState> _saveEducationKey 
+    = GlobalKey<FormBuilderState>();
   final FocusNode schoolFocus = FocusNode();
   final FocusNode degreeFocus = FocusNode();
   
