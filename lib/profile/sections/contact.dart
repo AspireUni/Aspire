@@ -1,9 +1,10 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
-import 'package:mentorApp/constants/profile_constants.dart';
 import 'package:url_launcher/url_launcher.dart';
+import 'package:google_fonts/google_fonts.dart';
+
 import '../../chat/chat_messenger.dart';
+import '../../constants/profile_constants.dart';
 import './section.dart';
 
  
@@ -107,8 +108,8 @@ class ProfileContact extends StatelessWidget {
               Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: <Widget>[
-                  buildContactText(label, true),
-                  buildContactText(info, false)
+                  buildContactText(label, isLabel: true),
+                  buildContactText(info, isLabel: false)
                 ]
               )
             ]
@@ -118,7 +119,7 @@ class ProfileContact extends StatelessWidget {
     );
   }
 
-  buildContactText(String text, bool isLabel) {
+  buildContactText(String text, {bool isLabel}) {
     return Text(
       text,
       textAlign: TextAlign.left,
@@ -135,11 +136,11 @@ class ProfileContact extends StatelessWidget {
   }
 
   handleEmailTap() {
-    _launchUrl("mailto:" + contact["emailAddress"]);
+    _launchUrl("mailto:${contact["emailAddress"]}");
   }
 
   handlePhoneTap() {
-    _launchUrl("tel:" + contact["phoneNumber"]);
+    _launchUrl("tel:${contact["phoneNumber"]}");
   }
 
   handleWebsiteTap() {

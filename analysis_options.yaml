@@ -1,0 +1,26 @@
+include: package:effective_dart/analysis_options.yaml
+
+analyzer:
+  exclude: [build/**]
+  errors:
+    argument_type_not_assignable: ignore
+    lines_longer_than_80_chars: ignore
+    list_element_type_not_assignable: ignore
+    omit_local_variable_types: ignore
+    public_member_api_docs: ignore
+    todo: ignore
+    type_annotate_public_apis: ignore
+  strong-mode:
+    implicit-casts: false
+
+linter:
+  rules:
+    - annotate_overrides
+    - await_only_futures
+    - camel_case_types
+    - cancel_subscriptions
+    - close_sinks
+    - comment_references
+    - constant_identifier_names
+    - control_flow_in_finally
+    - empty_statements

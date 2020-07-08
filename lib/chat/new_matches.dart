@@ -1,7 +1,8 @@
 import 'package:google_fonts/google_fonts.dart';
 import 'package:flutter/material.dart';
-import './chat_messenger.dart';
+
 import '../constants/chat_constants.dart';
+import './chat_messenger.dart';
 
 const dummyData = [
   {
@@ -67,7 +68,7 @@ class NewMatches extends StatelessWidget {
 }
 
 buildNewMatches(context) {
-  List<Widget> newMatchesList = new List<Widget>();
+  List<Widget> newMatchesList = <Widget>[];
   for (int i = 0; i < dummyData.length; i++) {
     newMatchesList.add(
       GestureDetector(

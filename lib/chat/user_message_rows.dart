@@ -1,7 +1,8 @@
 import 'package:google_fonts/google_fonts.dart';
 import 'package:flutter/material.dart';
-import './chat_messenger.dart';
+
 import '../constants/chat_constants.dart';
+import './chat_messenger.dart';
 
 const dummyData = [
   {
@@ -77,7 +78,7 @@ class UserMessageRows extends StatelessWidget {
 }
 
 buildMessageRows(context) {
-  List<Widget> messagesList = new List<Widget>();
+  List<Widget> messagesList = <Widget>[];
   for (int i = 0; i < dummyData.length; i++) {
     messagesList.add(
       GestureDetector(
@@ -129,7 +130,7 @@ buildMessageRows(context) {
                         )
                       ),
                       children: [
-                        if(dummyData[i]["isSent"]) WidgetSpan(
+                        if(dummyData[i]["isSent"] != false) WidgetSpan(
                           child: Container(
                             margin: EdgeInsets.only(right: 6.0),
                             child: Icon(Icons.send, size: 12, color: Colors.grey)

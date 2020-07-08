@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:mentorApp/constants/profile_constants.dart';
+
+import '../../constants/profile_constants.dart';
 import './section.dart';
  
 class ProfileSkills extends StatelessWidget {  
@@ -18,16 +19,16 @@ class ProfileSkills extends StatelessWidget {
   buildSkillRow(BuildContext context, String skill, String level) {
     return SectionRow(
       children: <Widget>[
-        buildSkillText(skill, true),
-        buildSkillText(level, false)
+        buildSkillText(skill, isSkill: true),
+        buildSkillText(level, isSkill: false)
       ]
     );
   }
 
   buildSkillList(BuildContext context) {
-    List<Widget> expertList = new List<Widget>();
-    List<Widget> intermediateList = new List<Widget>();
-    List<Widget> beginnerList = new List<Widget>();
+    List<Widget> expertList = <Widget>[];
+    List<Widget> intermediateList = <Widget>[];
+    List<Widget> beginnerList = <Widget>[];
 
     for (int i = 0; i < skills.length; i++) {
       if (skills[i]["level"] == skillExpert){
@@ -66,7 +67,7 @@ class ProfileSkills extends StatelessWidget {
     return SectionList(children: skillList);
   }
 
-  buildSkillText(String text, bool isSkill) {
+  buildSkillText(String text, {bool isSkill}) {
     return Container(
         child: Text(
         text,

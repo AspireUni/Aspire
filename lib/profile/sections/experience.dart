@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:mentorApp/constants/profile_constants.dart';
+
+import '../../constants/profile_constants.dart';
 import './section.dart';
  
 class ProfileExperience extends StatelessWidget {  
@@ -16,19 +17,19 @@ class ProfileExperience extends StatelessWidget {
   }
 
   buildJobRow(BuildContext context, String jobTitle, String company, String startDate, String endDate) {
-    final String dateRange = startDate + " - " + endDate;
+    final String dateRange = "$startDate - $endDate";
 
     return SectionRow(
       children: <Widget>[
-        buildExperienceText(jobTitle, true, false),
-        buildExperienceText(company, false, false),
-        buildExperienceText(dateRange, false, true)
+        buildExperienceText(jobTitle, isJobTitle: true, isDateRange: false),
+        buildExperienceText(company, isJobTitle: false, isDateRange: false),
+        buildExperienceText(dateRange, isJobTitle: false, isDateRange: true)
       ]
     );
   }
 
   buildJobList(BuildContext context) {
-    List<Widget> jobList = new List<Widget>();
+    List<Widget> jobList = <Widget>[];
     for (int i = 0; i < jobs.length; i++) {
       jobList.add(
         buildJobRow(
@@ -44,7 +45,7 @@ class ProfileExperience extends StatelessWidget {
     return SectionList(children: jobList);
   }
 
-  buildExperienceText(String text, bool isJobTitle, bool isDateRange) {
+  buildExperienceText(String text, {bool isJobTitle, bool isDateRange}) {
     return Text(
       text,
       textAlign: TextAlign.left,

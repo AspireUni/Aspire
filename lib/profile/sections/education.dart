@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:mentorApp/constants/profile_constants.dart';
+
+import '../../constants/profile_constants.dart';
 import './section.dart';
 
  
@@ -17,19 +18,19 @@ class ProfileEducation extends StatelessWidget {
   }
 
   buildSchoolRow(BuildContext context, String school, String program, String startYear, String endYear) {
-    final String dateRange = startYear + " - " + endYear;
+    final String dateRange = "$startYear - $endYear";
 
     return SectionRow(
       children: <Widget>[
-        buildEducationText(school, true, false),
-        buildEducationText(program, false, false),
-        buildEducationText(dateRange, false, true)
+        buildEducationText(school, isSchool: true, isDateRange: false),
+        buildEducationText(program, isSchool: false, isDateRange: false),
+        buildEducationText(dateRange, isSchool: false, isDateRange: true)
       ]
     );
   }
 
   buildSchoolList(BuildContext context) {
-    List<Widget> schoolList = new List<Widget>();
+    List<Widget> schoolList = <Widget>[];
     for (int i = 0; i < schools.length; i++) {
       schoolList.add(
         buildSchoolRow(
@@ -45,7 +46,7 @@ class ProfileEducation extends StatelessWidget {
     return SectionList(children: schoolList);
   }
 
-  buildEducationText(String text, bool isSchool, bool isDateRange) {
+  buildEducationText(String text, {bool isSchool, bool isDateRange}) {
     return Text(
       text,
       textAlign: TextAlign.left,

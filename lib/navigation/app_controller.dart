@@ -1,18 +1,34 @@
 import 'package:curved_navigation_bar/curved_navigation_bar.dart';
+import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
-import 'package:mentorApp/constants/navigation_constants.dart';
-import "../chat/chat.dart";
-import '../dashboard/dashboard.dart';
-import "../profile/user_profile.dart";
+
+import '../FTU/authentication.dart';
+import '../chat/chat.dart';
+import '../constants/navigation_constants.dart';
+import '../pairings/pairings.dart';
+import '../profile/user_profile.dart';
+
 
 class AppController extends StatefulWidget {
-  @override _MyAppState createState() => _MyAppState();
+  AppController({Key key, this.auth, this.userId, this.logoutCallback})
+      : super(key: key);
+
+  final BaseAuth auth;
+  final VoidCallback logoutCallback;
+  final String userId;
+
+  @override
+  State<StatefulWidget> createState() => _AppControllerState();
 }
 
-class _MyAppState extends State<AppController> {
+class _AppControllerState extends State<AppController> {
+
+  final FirebaseDatabase _database = FirebaseDatabase.instance;
+  final GlobalKey<FormState> formKey = GlobalKey<FormState>();
+
   int pageIndex = 1; 
   double navBarIconSize = 30; 
-  List<Widget> _widgets = [UserProfile(), Dashboard(), Chat()];
+  final List<Widget> _widgets = [UserProfile(), Pairings(), Chat()];
 
   tapped(int tappedIndex) {
     setState(() {pageIndex = tappedIndex;});
@@ -39,6 +55,14 @@ class _MyAppState extends State<AppController> {
         primaryColor: Color(0xFF0F1236),
         accentColor: Color(0xFF45cab9),
       )
-    );
+    ); 
+  }
+  signOut() async {
+    try {
+      await widget.auth.signOut();
+      widget.logoutCallback();
+    } on Exception catch (e) {
+      print(e);
+    }
   }
 }

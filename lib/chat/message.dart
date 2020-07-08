@@ -1,3 +1,4 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:flutter/material.dart';
 
@@ -36,9 +37,19 @@ class Message extends StatelessWidget {
         margin: isSent ? EdgeInsets.fromLTRB(50.0, 10.0, 10.0, 10.0) : EdgeInsets.fromLTRB(10.0, 10.0, 50.0, 10.0),
         child: ClipRRect(
           borderRadius: BorderRadius.all(Radius.circular(8.0)),
-          child: Image(
-            image: AssetImage(message),
+          child: CachedNetworkImage(
+            imageUrl: message,
+            // image: AssetImage(message),
             fit: BoxFit.fill,
+            placeholder: (context, url) => Container(
+              width: 200.0,
+              height: 200.0,
+              padding: EdgeInsets.all(70.0),
+              child: CircularProgressIndicator(
+                valueColor: AlwaysStoppedAnimation<Color>(Colors.white)
+              )
+            ),
+            errorWidget: (context, url, error) => Text("error"),
           )
         )
       )
