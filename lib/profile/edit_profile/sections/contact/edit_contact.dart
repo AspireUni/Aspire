@@ -10,7 +10,8 @@ class EditContact extends StatefulWidget {
   final Map contact;
   final String fullName;
   
-  EditContact({Key key, @required this.contact, @required this.fullName}) : super(key: key);
+  EditContact({Key key, @required this.contact, @required this.fullName}) 
+    : super(key: key);
 
   @override
   _EditContactState createState() => _EditContactState();
@@ -82,7 +83,9 @@ class _EditContactState extends State<EditContact> {
       initialValue: contact['emailAddress'],
       decoration: fieldDecoration(),
       style: fieldTextStyle,
-      onChanged: (value) => setState(() { contact['emailAddress'] = value as String; }),
+      onChanged: (value) => setState(() { 
+        contact['emailAddress'] = value as String; 
+      }),
       validators: [
         FormBuilderValidators.required(),
         FormBuilderValidators.email(),
@@ -104,9 +107,13 @@ class _EditContactState extends State<EditContact> {
       ),
       titlePadding: EdgeInsets.all(0.0),
       isSearchable: false,
-      onChanged: (value) => setState(() { contact['phoneNumber'] = value as String; }),
+      onChanged: (value) => setState(() { 
+        contact['phoneNumber'] = value as String;
+      }),
       priorityListByIsoCode: [isoCodeCA, isoCodeUS],
-      validators: [FormBuilderValidators.numeric(errorText: invalidPhoneNumberErrorMessage)],
+      validators: [FormBuilderValidators.numeric(
+        errorText: invalidPhoneNumberErrorMessage)
+      ],
       keyboardType: TextInputType.phone,
     );
   }
@@ -117,7 +124,9 @@ class _EditContactState extends State<EditContact> {
       initialValue: contact['website'],
       decoration: fieldDecoration(),
       style: fieldTextStyle,
-      onChanged: (value) => setState(() { contact['website'] = value as String; }),
+      onChanged: (value) => setState(() { 
+        contact['website'] = value as String;
+      }),
       validators: [
         FormBuilderValidators.url(),
         FormBuilderValidators.maxLength(100),

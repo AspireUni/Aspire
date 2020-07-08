@@ -21,7 +21,8 @@ class EditProfile extends StatefulWidget {
 }
 
 class _EditProfileState extends State<EditProfile> {
-  final GlobalKey<FormBuilderState> _saveProfileKey = GlobalKey<FormBuilderState>();
+  final GlobalKey<FormBuilderState> _saveProfileKey 
+    = GlobalKey<FormBuilderState>();
 
   @override
   Widget build(BuildContext context) {

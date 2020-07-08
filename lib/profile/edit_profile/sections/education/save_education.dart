@@ -15,14 +15,16 @@ import '../../../common/styles.dart';
 class SaveEducation extends StatefulWidget {
   final bool editMode;
   final Map<String, Object> schoolInfo;
-  SaveEducation({Key key, @required this.editMode, this.schoolInfo}) : super(key: key);
+  SaveEducation({Key key, @required this.editMode, this.schoolInfo}) 
+    : super(key: key);
 
   @override
   _SaveEducationState createState() => _SaveEducationState();
 }
 
 class _SaveEducationState extends State<SaveEducation> {
-  final GlobalKey<FormBuilderState> _saveEducationKey = GlobalKey<FormBuilderState>();
+  final GlobalKey<FormBuilderState> _saveEducationKey 
+    = GlobalKey<FormBuilderState>();
   final FocusNode schoolFocus = FocusNode();
   final FocusNode degreeFocus = FocusNode();
   
@@ -77,7 +79,8 @@ class _SaveEducationState extends State<SaveEducation> {
       if (focus.hasFocus) {
         unfocusDateRangeFields();
       } else {
-        _saveEducationKey.currentState.fields[attribute].currentState.validate();
+        _saveEducationKey.currentState.fields[attribute].currentState
+          .validate();
       }
     });
   }
@@ -113,22 +116,27 @@ class _SaveEducationState extends State<SaveEducation> {
   }
 
   void handleStartYearConfirm(Picker picker) {
-    DateTime newStartDateTime = DateFormat('yyyy-MM-dd hh:mm:ss').parse(picker.adapter.text);
+    DateTime newStartDateTime = DateFormat('yyyy-MM-dd hh:mm:ss')
+      .parse(picker.adapter.text);
     String newStartYear = convertDateTimeToString(newStartDateTime);
     setState(() { 
       education['startYear'] = newStartYear;
       education['endYear'] = null;
     });
-    _saveEducationKey.currentState.fields['startYear'].currentState.didChange(newStartYear);
-    _saveEducationKey.currentState.fields['endYear'].currentState.didChange(null);
+    _saveEducationKey.currentState.fields['startYear'].currentState
+      .didChange(newStartYear);
+    _saveEducationKey.currentState.fields['endYear'].currentState
+      .didChange(null);
     _saveEducationKey.currentState.fields['startYear'].currentState.validate();
   }
 
   void handleEndYearConfirm(Picker picker) {
-     DateTime newEndDateTime = DateFormat('yyyy-MM-dd hh:mm:ss').parse(picker.adapter.text);
+     DateTime newEndDateTime = DateFormat('yyyy-MM-dd hh:mm:ss')
+      .parse(picker.adapter.text);
     String newEndYear = convertDateTimeToString(newEndDateTime);
     setState(() => { education['endYear'] = newEndYear });
-    _saveEducationKey.currentState.fields['endYear'].currentState.didChange(newEndYear);
+    _saveEducationKey.currentState.fields['endYear'].currentState.
+      didChange(newEndYear);
     _saveEducationKey.currentState.fields['endYear'].currentState.validate();
   }
 
@@ -138,7 +146,9 @@ class _SaveEducationState extends State<SaveEducation> {
       initialValue: education['school'],
       decoration: fieldDecoration(),
       style: fieldTextStyle,
-      onChanged: (value) => setState(() { education['school'] = value as String; }),
+      onChanged: (value) => setState(() { 
+        education['school'] = value as String;
+      }),
       focusNode: schoolFocus,
       validators: [
         FormBuilderValidators.required(),
@@ -154,7 +164,9 @@ class _SaveEducationState extends State<SaveEducation> {
       initialValue: education['degree'],
       decoration: fieldDecoration(),
       style: fieldTextStyle,
-      onChanged: (value) => setState(() { education['degree'] = value as String; }),
+      onChanged: (value) => setState(() { 
+        education['degree'] = value as String; 
+      }),
       focusNode: degreeFocus,
       validators: [
         FormBuilderValidators.required(),
