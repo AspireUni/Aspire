@@ -73,7 +73,12 @@ buildNewMatches(context) {
     newMatchesList.add(
       GestureDetector(
         onTap: () {
-          Navigator.push(context, MaterialPageRoute(builder: (context) => ChatMessenger(recipient: dummyData[i]["name"])));
+          Navigator.push(
+            context,
+            MaterialPageRoute(builder: (context) => 
+              ChatMessenger(recipient: dummyData[i]["name"])
+            )
+          );
         },
         child: Container(
           width: 80.0,

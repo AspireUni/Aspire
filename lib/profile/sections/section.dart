@@ -4,7 +4,8 @@ import 'package:google_fonts/google_fonts.dart';
 class Section extends StatelessWidget {  
   final String title;
   final Widget child;
-  Section({Key key, @required this.title, @required this.child}) : super(key: key);
+  Section({Key key, @required this.title, @required this.child}) 
+    : super(key: key);
   
   @override
   Widget build(BuildContext context) {

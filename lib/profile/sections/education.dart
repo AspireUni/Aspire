@@ -17,7 +17,13 @@ class ProfileEducation extends StatelessWidget {
     );
   }
 
-  buildSchoolRow(BuildContext context, String school, String program, String startYear, String endYear) {
+  buildSchoolRow(
+    BuildContext context, 
+    String school, 
+    String program, 
+    String startYear, 
+    String endYear
+  ) {
     final String dateRange = "$startYear - $endYear";
 
     return SectionRow(
