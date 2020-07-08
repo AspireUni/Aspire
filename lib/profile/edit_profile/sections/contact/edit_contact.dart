@@ -30,9 +30,8 @@ class _EditContactState extends State<EditContact> {
     contact = {
       'emailAddress': widget.contact['emailAddress'],
       'phoneNumber': widget.contact['phoneNumber'],
-      'website': widget.contact['website'],
+      'website': widget.contact['website']
     };
-    
   }
 
   @override

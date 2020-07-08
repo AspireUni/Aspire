@@ -29,13 +29,15 @@ class InputField extends StatelessWidget {
   }
 
   Widget buildFieldLabel() {
+    bool isEnabled = enabled ?? true;
+
     return Container(
       padding: EdgeInsets.all(0.0),
       child: Text(
         labelText,
         style: GoogleFonts.muli(
           textStyle: TextStyle(
-            color: (enabled == null || enabled) ? Colors.black : Colors.black38, 
+            color: isEnabled ? Colors.black : Colors.black38, 
             letterSpacing: .5, 
             fontSize: 12.0, 
             fontWeight: FontWeight.w600

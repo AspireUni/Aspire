@@ -10,7 +10,7 @@ TextStyle fieldTextStyle = GoogleFonts.muli(
   )
 );
 
-TextStyle buttonTextStyle = GoogleFonts.muli(
+TextStyle deleteButtonTextStyle = GoogleFonts.muli(
   textStyle: TextStyle(
     color: Colors.white, 
     letterSpacing: .5, 

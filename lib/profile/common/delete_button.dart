@@ -21,7 +21,7 @@ class DeleteButton extends StatelessWidget {
         ),
         child: Text(
           labelText,
-          style: buttonTextStyle
+          style: deleteButtonTextStyle
         )
       )
     );
