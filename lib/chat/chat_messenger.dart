@@ -58,7 +58,7 @@ class ChatMessengerState extends State<ChatMessenger> {
   void submitMessage (String value) {
     textInputController.text = "";
     if (value != "") {
-      String timestamp = DateFormat('yyyy-MM-dd kk:mm').format(DateTime.now());
+      var timestamp = DateFormat('yyyy-MM-dd kk:mm').format(DateTime.now());
       addMessage(value, timestamp, true);
       SystemSound.play(SystemSoundType.click);
     }
@@ -135,8 +135,8 @@ class ChatMessengerState extends State<ChatMessenger> {
   final TextEditingController textInputController = TextEditingController();
 
   List<Widget> buildMessenger() {
-    List<Widget> messagesList = <Widget>[];
-    for (int i = messages.length - 1; i >= 0; i--) {
+    var messagesList = <Widget>[];
+    for (var i = messages.length - 1; i >= 0; i--) {
       if (i == messages.length - 1) {
         messagesList.add(
           buildTimestamp(

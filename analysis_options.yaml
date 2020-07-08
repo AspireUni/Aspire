@@ -5,7 +5,6 @@ analyzer:
   errors:
     argument_type_not_assignable: ignore
     list_element_type_not_assignable: ignore
-    omit_local_variable_types: ignore
     public_member_api_docs: ignore
     todo: ignore
     type_annotate_public_apis: ignore

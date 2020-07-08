@@ -35,7 +35,7 @@ class _LoginSignupPageState extends State<LoginSignupPage> {
       _isLoading = true;
     });
     if (validateAndSave()) {
-      String userId = "";
+      var userId = "";
       try {
         if (_isLoginForm) {
           userId = await widget.auth.signIn(_email, _password);
