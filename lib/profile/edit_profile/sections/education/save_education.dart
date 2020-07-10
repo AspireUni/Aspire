@@ -264,32 +264,28 @@ class _SaveEducationState extends State<SaveEducation> {
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: unfocusFields,
-      child: Stack(
-        children: <Widget>[
-          Scaffold(
-            appBar: AppBarWithSave(
-              appBarTitle: widget.editMode ? editEducation : addEducation,
-              data: education,
-              formKey: _saveEducationKey,
-              onActionTap: unfocusFields,
-            ),
-            backgroundColor: Colors.white,
-            body: Container(
-              padding: EdgeInsets.all(20.0),
-                child: ListView(
-                children: <Widget>[
-                  ...buildSaveEducationForm(context),
-                  widget.editMode
-                  ? DeleteButton(
-                    labelText: deleteEducation,
-                    onPressed: () => 'Education deleted.'
-                  )
-                  : SizedBox()
-                ]
+      child: Scaffold(
+        appBar: AppBarWithSave(
+          appBarTitle: widget.editMode ? editEducation : addEducation,
+          data: education,
+          formKey: _saveEducationKey,
+          onActionTap: unfocusFields,
+        ),
+        backgroundColor: Colors.white,
+        body: Container(
+          padding: EdgeInsets.all(20.0),
+            child: ListView(
+            children: <Widget>[
+              ...buildSaveEducationForm(context),
+              widget.editMode
+              ? DeleteButton(
+                labelText: deleteEducation,
+                onPressed: () => 'Education deleted.'
               )
-            )
-          ),
-        ]
+              : SizedBox()
+            ]
+          )
+        )
       )
     );
   }

@@ -48,9 +48,9 @@ class _EditSkillsState extends State<EditSkills> {
   }
 
   Widget buildSkillList(BuildContext context) {
-    var expertList = [];
-    var intermediateList = [];
-    var beginnerList = [];
+    var expertList = <Widget>[];
+    var intermediateList = <Widget>[];
+    var beginnerList = <Widget>[];
 
     // Temporary workaround for sorting skills
     for (var i = 0; i < widget.skills.length; i++) {

@@ -2,6 +2,8 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
+import '../../constants/profile_constants.dart';
+
 TextStyle fieldTextStyle = GoogleFonts.muli(
   textStyle: TextStyle(
     color: Colors.black, 
@@ -48,7 +50,7 @@ InputDecoration fieldDecoration({String errorText}) => InputDecoration(
 
 Icon addIcon = Icon(
   IconData(
-    0xf2c7,
+    plusIconCodePoint,
     fontFamily: CupertinoIcons.iconFont,
     fontPackage: CupertinoIcons.iconFontPackage
   ),
@@ -57,7 +59,7 @@ Icon addIcon = Icon(
 );
 
 IconData editIconInRow = IconData(
-  0xf2bf,
+  rowEditIconCodePoint,
   fontFamily: CupertinoIcons.iconFont,
   fontPackage: CupertinoIcons.iconFontPackage
 );

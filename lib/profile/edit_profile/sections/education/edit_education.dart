@@ -48,7 +48,7 @@ class _EditEducationState extends State<EditEducation> {
   }
 
   Widget buildSchoolList(BuildContext context) {
-    var schoolList = [];
+    var schoolList = <Widget>[];
     for (var i = 0; i < widget.schools.length; i++) {
       schoolList.add(
         buildSchoolRow(

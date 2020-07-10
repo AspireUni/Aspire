@@ -323,32 +323,28 @@ class _SaveExperienceState extends State<SaveExperience> {
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: unfocusFields,
-      child: Stack(
-        children: <Widget>[
-          Scaffold(
-            appBar: AppBarWithSave(
-              appBarTitle: widget.editMode ? editExperience : addExperience,
-              data: experience,
-              formKey: _saveExperienceKey,
-              onActionTap: unfocusFields,
-            ),
-            backgroundColor: Colors.white,
-            body: Container(
-              padding: EdgeInsets.all(20.0),
-                child: ListView(
-                children: <Widget>[
-                  ...buildSaveExperienceForm(context),
-                  widget.editMode
-                  ? DeleteButton(
-                    labelText: deleteExperience,
-                    onPressed: () => 'Experience deleted.'
-                  )
-                  : SizedBox()
-                ]
+      child: Scaffold(
+        appBar: AppBarWithSave(
+          appBarTitle: widget.editMode ? editExperience : addExperience,
+          data: experience,
+          formKey: _saveExperienceKey,
+          onActionTap: unfocusFields,
+        ),
+        backgroundColor: Colors.white,
+        body: Container(
+          padding: EdgeInsets.all(20.0),
+            child: ListView(
+            children: <Widget>[
+              ...buildSaveExperienceForm(context),
+              widget.editMode
+              ? DeleteButton(
+                labelText: deleteExperience,
+                onPressed: () => 'Experience deleted.'
               )
-            )
-          ),
-        ]
+              : SizedBox()
+            ]
+          )
+        )
       )
     );
   }

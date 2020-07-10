@@ -61,27 +61,16 @@ class UserProfile extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Stack(
-      children: <Widget>[
-        //TODO: Add background
-        /* Image.asset(
-          "images/DefaultBg.png",
-          height: MediaQuery.of(context).size.height,
-          width: MediaQuery.of(context).size.width,
-          fit: BoxFit.fill,
-        ), */
-        Scaffold(
-          backgroundColor: Colors.transparent,
-          body: Container(
-            margin: EdgeInsets.all(0),
-            child: Center(
-              child: Column(
-                children: buildUserProfileView()
-              )
-            )
+    return Scaffold(
+      backgroundColor: Colors.transparent,
+      body: Container(
+        margin: EdgeInsets.all(0),
+        child: Center(
+          child: Column(
+            children: buildUserProfileView()
           )
         )
-      ]
+      )
     );
   }
 

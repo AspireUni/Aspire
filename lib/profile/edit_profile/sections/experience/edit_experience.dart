@@ -49,7 +49,7 @@ class _EditExperienceState extends State<EditExperience> {
   }
 
   Widget buildJobList(BuildContext context) {
-    var jobList = [];
+    var jobList = <Widget>[];
     for (var i = 0; i < widget.jobs.length; i++) {
       jobList.add(
         buildJobRow(

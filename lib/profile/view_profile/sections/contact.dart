@@ -15,25 +15,25 @@ class ProfileContact extends StatelessWidget {
     : super(key: key);
 
   final IconData chat = IconData(
-    62459,
+    chatIconCodePoint,
     fontFamily: CupertinoIcons.iconFont,
     fontPackage: CupertinoIcons.iconFontPackage
   );
   
   final IconData email = IconData(
-    0xf422,
+    emailIconCodePoint,
     fontFamily: CupertinoIcons.iconFont,
     fontPackage: CupertinoIcons.iconFontPackage
   );
 
   final IconData phone = IconData(
-    0xf4b8,
+    phoneIconCodePoint,
     fontFamily: CupertinoIcons.iconFont,
     fontPackage: CupertinoIcons.iconFontPackage
   );
 
   final IconData web = IconData(
-    0xf4d2,
+    webIconCodePoint,
     fontFamily: CupertinoIcons.iconFont,
     fontPackage: CupertinoIcons.iconFontPackage
   );

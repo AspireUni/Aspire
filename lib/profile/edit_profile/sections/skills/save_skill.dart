@@ -152,32 +152,28 @@ class _SaveSkillState extends State<SaveSkill> {
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: unfocusFields,
-      child: Stack(
-        children: <Widget>[
-          Scaffold(
-            appBar: AppBarWithSave(
-              appBarTitle: widget.editMode ? editSkill : addSkill,
-              data: skill,
-              formKey: _saveSkillKey,
-              onActionTap: unfocusFields,
-            ),
-            backgroundColor: Colors.white,
-            body: Container(
-              padding: EdgeInsets.all(20.0),
-                child: ListView(
-                children: <Widget>[
-                  ...buildSaveSkillForm(context),
-                  widget.editMode
-                  ? DeleteButton(
-                    labelText: deleteSkill,
-                    onPressed: () => print('Skill deleted.')
-                  )
-                  : SizedBox()
-                ]
+      child: Scaffold(
+        appBar: AppBarWithSave(
+          appBarTitle: widget.editMode ? editSkill : addSkill,
+          data: skill,
+          formKey: _saveSkillKey,
+          onActionTap: unfocusFields,
+        ),
+        backgroundColor: Colors.white,
+        body: Container(
+          padding: EdgeInsets.all(20.0),
+            child: ListView(
+            children: <Widget>[
+              ...buildSaveSkillForm(context),
+              widget.editMode
+              ? DeleteButton(
+                labelText: deleteSkill,
+                onPressed: () => print('Skill deleted.')
               )
-            )
-          ),
-        ]
+              : SizedBox()
+            ]
+          )
+        )
       )
     );
   }

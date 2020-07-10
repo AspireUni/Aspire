@@ -33,19 +33,15 @@ class _EditProfileState extends State<EditProfile> {
           currentFocus.unfocus();
         }
       },
-      child: Stack(
-        children: <Widget>[
-          Scaffold(
-            appBar: AppBarWithSave(
-              appBarTitle: editProfile,
-              formKey: _saveProfileKey
-            ),
-            backgroundColor: Colors.white,
-            body: ListView(
-              children: buildEditProfileView(context)
-            )
-          ),
-        ]
+      child: Scaffold(
+        appBar: AppBarWithSave(
+          appBarTitle: editProfile,
+          formKey: _saveProfileKey
+        ),
+        backgroundColor: Colors.white,
+        body: ListView(
+          children: buildEditProfileView(context)
+        )
       )
     );
   }
