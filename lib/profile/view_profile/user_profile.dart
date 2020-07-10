@@ -29,7 +29,7 @@ Map dummyData = {
       "jobTitle": "Research Assistant",
       "company": "University of Alberta",
       "startDate": "May 2019",
-      "endDate": "December 2020"
+      "endDate": "December 2019"
     }
   ],
   "skills": [
@@ -61,27 +61,16 @@ class UserProfile extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Stack(
-      children: <Widget>[
-        //TODO: Add background
-        /* Image.asset(
-          "images/DefaultBg.png",
-          height: MediaQuery.of(context).size.height,
-          width: MediaQuery.of(context).size.width,
-          fit: BoxFit.fill,
-        ), */
-        Scaffold(
-          backgroundColor: Colors.transparent,
-          body: Container(
-            margin: EdgeInsets.all(0),
-            child: Center(
-              child: Column(
-                children: buildUserProfileView()
-              )
-            )
+    return Scaffold(
+      backgroundColor: Colors.transparent,
+      body: Container(
+        margin: EdgeInsets.all(0),
+        child: Center(
+          child: Column(
+            children: buildUserProfileView()
           )
         )
-      ]
+      )
     );
   }
 
@@ -89,7 +78,7 @@ class UserProfile extends StatelessWidget {
     return (
       <Widget>[
         ProfileHeader(
-          fullName: dummyData["fullName"]
+          data: dummyData
         ),
         ProfileSections(
           data: dummyData

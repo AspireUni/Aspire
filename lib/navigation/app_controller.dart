@@ -5,7 +5,7 @@ import '../FTU/authentication.dart';
 import '../chat/chat.dart';
 import '../constants/navigation_constants.dart';
 import '../pairings/pairings.dart';
-import '../profile/user_profile.dart';
+import '../profile/view_profile/user_profile.dart';
 
 
 class AppController extends StatefulWidget {

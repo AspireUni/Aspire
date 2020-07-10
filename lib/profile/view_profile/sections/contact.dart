@@ -3,9 +3,9 @@ import 'package:flutter/material.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:google_fonts/google_fonts.dart';
 
-import '../../chat/chat_messenger.dart';
-import '../../constants/profile_constants.dart';
-import './section.dart';
+import '../../../chat/chat_messenger.dart';
+import '../../../constants/profile_constants.dart';
+import '../../common/section.dart';
 
  
 class ProfileContact extends StatelessWidget {  
@@ -15,25 +15,25 @@ class ProfileContact extends StatelessWidget {
     : super(key: key);
 
   final IconData chat = IconData(
-    62459,
+    chatIconCodePoint,
     fontFamily: CupertinoIcons.iconFont,
     fontPackage: CupertinoIcons.iconFontPackage
   );
   
   final IconData email = IconData(
-    0xf422,
+    emailIconCodePoint,
     fontFamily: CupertinoIcons.iconFont,
     fontPackage: CupertinoIcons.iconFontPackage
   );
 
   final IconData phone = IconData(
-    0xf4b8,
+    phoneIconCodePoint,
     fontFamily: CupertinoIcons.iconFont,
     fontPackage: CupertinoIcons.iconFontPackage
   );
 
   final IconData web = IconData(
-    0xf4d2,
+    webIconCodePoint,
     fontFamily: CupertinoIcons.iconFont,
     fontPackage: CupertinoIcons.iconFontPackage
   );
@@ -55,7 +55,7 @@ class ProfileContact extends StatelessWidget {
     );
   }
 
-  buildInfoList(BuildContext context) {
+  Widget buildInfoList(BuildContext context) {
     return SectionList(
       children: <Widget>[
         buildInfoRow(
@@ -90,7 +90,7 @@ class ProfileContact extends StatelessWidget {
     );
   }
 
-  buildInfoRow(
+  Widget buildInfoRow(
     BuildContext context, 
     IconData iconName, 
     String label, 
@@ -100,24 +100,20 @@ class ProfileContact extends StatelessWidget {
     return InkWell(
       onTap: handleTap,
       child: SectionRow(
-        children: <Widget>[
-          Row(
-            children: <Widget> [
-              Container(
-                padding: EdgeInsets.fromLTRB(10.0, 0.0, 10.0, 0.0),
-                child: Icon(
-                  iconName,
-                  color: Colors.black45,
-                  size: 25.0,
-                )
-              ),
-              Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: <Widget>[
-                  buildContactText(label, isLabel: true),
-                  buildContactText(info, isLabel: false)
-                ]
-              )
+        children: <Widget> [
+          Container(
+            padding: EdgeInsets.fromLTRB(10.0, 0.0, 10.0, 0.0),
+            child: Icon(
+              iconName,
+              color: Colors.black45,
+              size: 25.0,
+            )
+          ),
+          Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: <Widget>[
+              buildContactText(label, isLabel: true),
+              buildContactText(info, isLabel: false)
             ]
           )
         ]
@@ -125,7 +121,7 @@ class ProfileContact extends StatelessWidget {
     );
   }
 
-  buildContactText(String text, {bool isLabel}) {
+  Widget buildContactText(String text, {bool isLabel}) {
     return Text(
       text,
       textAlign: TextAlign.left,
@@ -141,19 +137,19 @@ class ProfileContact extends StatelessWidget {
     );
   }
 
-  handleEmailTap() {
+  void handleEmailTap() {
     _launchUrl("mailto:${contact["emailAddress"]}");
   }
 
-  handlePhoneTap() {
+  void handlePhoneTap() {
     _launchUrl("tel:${contact["phoneNumber"]}");
   }
 
-  handleWebsiteTap() {
+  void handleWebsiteTap() {
     _launchUrl(contact["website"]);
   }
 
-  _launchUrl(String url) async {
+  void _launchUrl(String url) async {
     if (await canLaunch(url)) {
       await launch(url);
     } else {
