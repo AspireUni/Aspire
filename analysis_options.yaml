@@ -4,7 +4,6 @@ analyzer:
   exclude: [build/**]
   errors:
     argument_type_not_assignable: ignore
-    lines_longer_than_80_chars: ignore
     list_element_type_not_assignable: ignore
     omit_local_variable_types: ignore
     public_member_api_docs: ignore

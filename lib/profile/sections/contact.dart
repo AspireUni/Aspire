@@ -11,7 +11,8 @@ import './section.dart';
 class ProfileContact extends StatelessWidget {  
   final Map contact;
   final String fullName;
-  ProfileContact({Key key, @required this.contact, @required this.fullName}) : super(key: key);
+  ProfileContact({Key key, @required this.contact, @required this.fullName}) 
+    : super(key: key);
 
   final IconData chat = IconData(
     62459,
@@ -38,7 +39,12 @@ class ProfileContact extends StatelessWidget {
   );
 
   void handleChatTap(BuildContext context) {
-    Navigator.push(context, MaterialPageRoute(builder: (context) => ChatMessenger(recipient: fullName)));
+    Navigator.push(
+      context, 
+      MaterialPageRoute(builder: (context) => 
+      ChatMessenger(recipient: fullName)
+      )
+    );
   }
 
   @override

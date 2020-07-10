@@ -16,7 +16,13 @@ class ProfileExperience extends StatelessWidget {
     );
   }
 
-  buildJobRow(BuildContext context, String jobTitle, String company, String startDate, String endDate) {
+  buildJobRow(
+    BuildContext context, 
+    String jobTitle, 
+    String company, 
+    String startDate, 
+    String endDate
+  ) {
     final String dateRange = "$startDate - $endDate";
 
     return SectionRow(

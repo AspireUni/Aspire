@@ -1,5 +1,4 @@
 import 'package:curved_navigation_bar/curved_navigation_bar.dart';
-import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
 
 import '../FTU/authentication.dart';
@@ -23,9 +22,7 @@ class AppController extends StatefulWidget {
 
 class _AppControllerState extends State<AppController> {
 
-  final FirebaseDatabase _database = FirebaseDatabase.instance;
   final GlobalKey<FormState> formKey = GlobalKey<FormState>();
-
   int pageIndex = 1; 
   double navBarIconSize = 30; 
   final List<Widget> _widgets = [UserProfile(), Pairings(), Chat()];
