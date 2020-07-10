@@ -11,7 +11,7 @@ class JobRow extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     
-    final String dateRange = "${jobInfo['startDate']} - ${jobInfo['endDate']}";
+    var dateRange = "${jobInfo['startDate']} - ${jobInfo['endDate']}";
 
     return Expanded(
       child: Column(

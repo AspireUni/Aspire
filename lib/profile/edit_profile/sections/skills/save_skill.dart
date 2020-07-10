@@ -74,7 +74,7 @@ class _SaveSkillState extends State<SaveSkill> {
   }
 
   void handleLevelConfirm(Picker picker) {
-    String newLevel = picker.getSelectedValues()[0].toString();
+    var newLevel = picker.getSelectedValues()[0].toString();
     setState(() { 
       skill['level'] = newLevel;
     });

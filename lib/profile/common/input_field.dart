@@ -29,7 +29,7 @@ class InputField extends StatelessWidget {
   }
 
   Widget buildFieldLabel() {
-    bool isEnabled = enabled ?? true;
+    var isEnabled = enabled ?? true;
 
     return Container(
       padding: EdgeInsets.all(0.0),

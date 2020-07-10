@@ -17,12 +17,12 @@ class ProfileSkills extends StatelessWidget {
   }
 
   Widget buildSkillList(BuildContext context) {
-    List<Widget> expertList = <Widget>[];
-    List<Widget> intermediateList = <Widget>[];
-    List<Widget> beginnerList = <Widget>[];
+    var expertList = <Widget>[];
+    var intermediateList = <Widget>[];
+    var beginnerList = <Widget>[];
 
     // Temporary workaround for sorting skills
-    for (int i = 0; i < skills.length; i++) {
+    for (var i = 0; i < skills.length; i++) {
       if (skills[i]["level"] == skillExpert){
         expertList.add(
           SectionRow(children: <Widget>[SkillRow(skillInfo: skills[i])]
@@ -39,7 +39,7 @@ class ProfileSkills extends StatelessWidget {
       }
     }
 
-    List<Widget> skillList = [
+    var skillList = [
       ...expertList, 
       ...intermediateList, 
       ...beginnerList

@@ -97,8 +97,8 @@ class _SaveExperienceState extends State<SaveExperience> {
   }
 
   String convertDateTimeToString(DateTime date) {
-    String month = DateFormat.MMMM().format(date).toString();
-    String year = DateFormat.y().format(date).toString();
+    var month = DateFormat.MMMM().format(date).toString();
+    var year = DateFormat.y().format(date).toString();
     return '$month $year';
   }
 
@@ -126,9 +126,9 @@ class _SaveExperienceState extends State<SaveExperience> {
   }
 
   void handleStartDateConfirm(Picker picker) {
-    DateTime newStartDateTime = DateFormat('yyyy-MM-dd hh:mm:ss')
+    var newStartDateTime = DateFormat('yyyy-MM-dd hh:mm:ss')
       .parse(picker.adapter.text);
-    String newStartDate = convertDateTimeToString(newStartDateTime);
+    var newStartDate = convertDateTimeToString(newStartDateTime);
     setState(() { 
       experience['startDate'] = newStartDate;
       experience['endDate'] = null;
@@ -143,9 +143,9 @@ class _SaveExperienceState extends State<SaveExperience> {
   }
 
   void handleEndDateConfirm(Picker picker) {
-    DateTime newEndDateTime = DateFormat('yyyy-MM-dd hh:mm:ss')
+    var newEndDateTime = DateFormat('yyyy-MM-dd hh:mm:ss')
       .parse(picker.adapter.text);
-    String newEndDate = convertDateTimeToString(newEndDateTime);
+    var newEndDate = convertDateTimeToString(newEndDateTime);
     setState(() { experience['endDate'] = newEndDate; });
     _saveExperienceKey.currentState.fields['endDate'].currentState
       .didChange(newEndDate);

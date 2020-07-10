@@ -17,8 +17,8 @@ class ProfileExperience extends StatelessWidget {
   }
 
   Widget buildJobList(BuildContext context) {
-    List<Widget> jobList = <Widget>[];
-    for (int i = 0; i < jobs.length; i++) {
+    var jobList = <Widget>[];
+    for (var i = 0; i < jobs.length; i++) {
       jobList.add(
         SectionRow(children: <Widget>[JobRow(jobInfo: jobs[i])])
       );

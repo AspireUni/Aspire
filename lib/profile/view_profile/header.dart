@@ -78,7 +78,7 @@ class ProfileHeader extends StatelessWidget {
   }
 
   buildEditButton(BuildContext context){
-    IconData edit = IconData(
+    var edit = IconData(
       0xf417,
       fontFamily: CupertinoIcons.iconFont,
       fontPackage: CupertinoIcons.iconFontPackage

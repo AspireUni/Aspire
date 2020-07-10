@@ -11,7 +11,7 @@ class SchoolRow extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     
-    final String dateRange = "${schoolInfo['startYear']} - ${schoolInfo['endYear']}";
+    var dateRange = "${schoolInfo['startYear']} - ${schoolInfo['endYear']}";
 
     return Expanded(
       child: Column(

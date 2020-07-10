@@ -7,7 +7,8 @@ class DeleteButton extends StatelessWidget {
   final String labelText;
   final void Function() onPressed;
 
-  DeleteButton({Key key, @required this.labelText, @required this.onPressed}) : super(key: key);
+  DeleteButton({Key key, @required this.labelText, @required this.onPressed})
+    : super(key: key);
 
   @override
   Widget build(BuildContext context) {

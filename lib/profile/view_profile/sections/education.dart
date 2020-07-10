@@ -18,8 +18,8 @@ class ProfileEducation extends StatelessWidget {
   }
 
   Widget buildSchoolList(BuildContext context) {
-    List<Widget> schoolList = <Widget>[];
-    for (int i = 0; i < schools.length; i++) {
+    var schoolList = <Widget>[];
+    for (var i = 0; i < schools.length; i++) {
       schoolList.add(
         SectionRow(children: <Widget>[SchoolRow(schoolInfo: schools[i])])
       );

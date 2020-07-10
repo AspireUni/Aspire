@@ -116,9 +116,9 @@ class _SaveEducationState extends State<SaveEducation> {
   }
 
   void handleStartYearConfirm(Picker picker) {
-    DateTime newStartDateTime = DateFormat('yyyy-MM-dd hh:mm:ss')
+    var newStartDateTime = DateFormat('yyyy-MM-dd hh:mm:ss')
       .parse(picker.adapter.text);
-    String newStartYear = convertDateTimeToString(newStartDateTime);
+    var newStartYear = convertDateTimeToString(newStartDateTime);
     setState(() { 
       education['startYear'] = newStartYear;
       education['endYear'] = null;
@@ -131,9 +131,9 @@ class _SaveEducationState extends State<SaveEducation> {
   }
 
   void handleEndYearConfirm(Picker picker) {
-     DateTime newEndDateTime = DateFormat('yyyy-MM-dd hh:mm:ss')
+    var newEndDateTime = DateFormat('yyyy-MM-dd hh:mm:ss') 
       .parse(picker.adapter.text);
-    String newEndYear = convertDateTimeToString(newEndDateTime);
+    var newEndYear = convertDateTimeToString(newEndDateTime);
     setState(() => { education['endYear'] = newEndYear });
     _saveEducationKey.currentState.fields['endYear'].currentState.
       didChange(newEndYear);

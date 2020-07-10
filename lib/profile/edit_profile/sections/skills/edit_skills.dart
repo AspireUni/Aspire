@@ -48,12 +48,12 @@ class _EditSkillsState extends State<EditSkills> {
   }
 
   Widget buildSkillList(BuildContext context) {
-    List<Widget> expertList = [];
-    List<Widget> intermediateList = [];
-    List<Widget> beginnerList = [];
+    var expertList = [];
+    var intermediateList = [];
+    var beginnerList = [];
 
     // Temporary workaround for sorting skills
-    for (int i = 0; i < widget.skills.length; i++) {
+    for (var i = 0; i < widget.skills.length; i++) {
       if (widget.skills[i]["level"] == skillExpert){
         expertList.add(
           buildSkillRow(
@@ -78,7 +78,7 @@ class _EditSkillsState extends State<EditSkills> {
       }
     }
     
-    List<Widget> skillList = [
+    var skillList = [
       ...expertList, 
       ...intermediateList, 
       ...beginnerList
