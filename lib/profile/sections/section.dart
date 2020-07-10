@@ -10,7 +10,7 @@ class Section extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
 
-    final ThemeData sectionTheme = Theme.of(context).copyWith(
+    final sectionTheme = Theme.of(context).copyWith(
       dividerColor: Colors.transparent,
       accentColor: Colors.black38,
       unselectedWidgetColor: Colors.black38

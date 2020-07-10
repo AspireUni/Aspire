@@ -24,7 +24,7 @@ class ProfileEducation extends StatelessWidget {
     String startYear, 
     String endYear
   ) {
-    final String dateRange = "$startYear - $endYear";
+    final dateRange = "$startYear - $endYear";
 
     return SectionRow(
       children: <Widget>[
@@ -36,8 +36,8 @@ class ProfileEducation extends StatelessWidget {
   }
 
   buildSchoolList(BuildContext context) {
-    List<Widget> schoolList = <Widget>[];
-    for (int i = 0; i < schools.length; i++) {
+    var schoolList = <Widget>[];
+    for (var i = 0; i < schools.length; i++) {
       schoolList.add(
         buildSchoolRow(
           context, 

@@ -26,11 +26,11 @@ class ProfileSkills extends StatelessWidget {
   }
 
   buildSkillList(BuildContext context) {
-    List<Widget> expertList = <Widget>[];
-    List<Widget> intermediateList = <Widget>[];
-    List<Widget> beginnerList = <Widget>[];
+    var expertList = <Widget>[];
+    var intermediateList = <Widget>[];
+    var beginnerList = <Widget>[];
 
-    for (int i = 0; i < skills.length; i++) {
+    for (var i = 0; i < skills.length; i++) {
       if (skills[i]["level"] == skillExpert){
         expertList.add(
           buildSkillRow(
@@ -58,7 +58,7 @@ class ProfileSkills extends StatelessWidget {
       }
     }
 
-  List<Widget> skillList = [
+  var skillList = <Widget>[
     ...expertList, 
     ...intermediateList, 
     ...beginnerList

@@ -23,7 +23,7 @@ class ProfileExperience extends StatelessWidget {
     String startDate, 
     String endDate
   ) {
-    final String dateRange = "$startDate - $endDate";
+    final dateRange = "$startDate - $endDate";
 
     return SectionRow(
       children: <Widget>[
@@ -35,8 +35,8 @@ class ProfileExperience extends StatelessWidget {
   }
 
   buildJobList(BuildContext context) {
-    List<Widget> jobList = <Widget>[];
-    for (int i = 0; i < jobs.length; i++) {
+    var jobList = <Widget>[];
+    for (var i = 0; i < jobs.length; i++) {
       jobList.add(
         buildJobRow(
             context, 
