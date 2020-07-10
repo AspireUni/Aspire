@@ -23,7 +23,6 @@ class AppController extends StatefulWidget {
 class _AppControllerState extends State<AppController> {
 
   final GlobalKey<FormState> formKey = GlobalKey<FormState>();
-
   int pageIndex = 1; 
   double navBarIconSize = 30; 
   final List<Widget> _widgets = [UserProfile(), Pairings(), Chat()];

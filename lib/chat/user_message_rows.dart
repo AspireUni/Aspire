@@ -78,13 +78,18 @@ class UserMessageRows extends StatelessWidget {
 }
 
 buildMessageRows(context) {
-  List<Widget> messagesList = <Widget>[];
-  for (int i = 0; i < dummyData.length; i++) {
+  var messagesList = <Widget>[];
+  for (var i = 0; i < dummyData.length; i++) {
     messagesList.add(
       GestureDetector(
         behavior: HitTestBehavior.translucent,
         onTap: () {
-          Navigator.push(context, MaterialPageRoute(builder: (context) => ChatMessenger(recipient: dummyData[i]["name"])));
+          Navigator.push(
+            context, 
+            MaterialPageRoute(builder: (context) => 
+            ChatMessenger(recipient: dummyData[i]["name"])
+            )
+          );
         },
         child: Row(
           crossAxisAlignment: CrossAxisAlignment.center,
@@ -133,7 +138,11 @@ buildMessageRows(context) {
                         if(dummyData[i]["isSent"] != false) WidgetSpan(
                           child: Container(
                             margin: EdgeInsets.only(right: 6.0),
-                            child: Icon(Icons.send, size: 12, color: Colors.grey)
+                            child: Icon(
+                              Icons.send, 
+                              size: 12, 
+                              color: Colors.grey
+                            )
                           ),
                         ),
                         TextSpan(

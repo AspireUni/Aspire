@@ -35,7 +35,7 @@ class _LoginSignupPageState extends State<LoginSignupPage> {
       _isLoading = true;
     });
     if (validateAndSave()) {
-      String userId = "";
+      var userId = "";
       try {
         if (_isLoginForm) {
           userId = await widget.auth.signIn(_email, _password);
@@ -53,11 +53,11 @@ class _LoginSignupPageState extends State<LoginSignupPage> {
         if (userId.length > 0 && userId != null && _isLoginForm) {
           widget.loginCallback();
         }
-      } catch (e) {
+      } on Exception catch (e) {
         print('Error: $e');
         setState(() {
           _isLoading = false;
-          _errorMessage = e.message as String;
+          _errorMessage = e as String;
           _formKey.currentState.reset();
         });
       }
@@ -111,7 +111,7 @@ class _LoginSignupPageState extends State<LoginSignupPage> {
   void _showVerifyEmailSentDialog() {
     showDialog(
       context: context,
-      builder: (BuildContext context) {
+      builder: (context) {
         return AlertDialog(
           title: Text(vertifyAccountTitle),
           content: Text(vertifyAccountMessage),

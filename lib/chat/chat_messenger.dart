@@ -47,13 +47,18 @@ class ChatMessengerState extends State<ChatMessenger> {
   List<Object> messages = [...dummyData];
 
   void addMessage (message, timestamp, isSent) {
-    setState(() {messages = [...messages, {"text": message, "isSent": isSent, "timestamp": timestamp}];});
+    setState(() {
+      messages = [
+        ...messages, 
+        {"text": message, "isSent": isSent, "timestamp": timestamp}
+      ];
+    });
   }
 
   void submitMessage (String value) {
     textInputController.text = "";
     if (value != "") {
-      String timestamp = DateFormat('yyyy-MM-dd kk:mm').format(DateTime.now());
+      var timestamp = DateFormat('yyyy-MM-dd kk:mm').format(DateTime.now());
       addMessage(value, timestamp, true);
       SystemSound.play(SystemSoundType.click);
     }
@@ -63,9 +68,13 @@ class ChatMessengerState extends State<ChatMessenger> {
     return Align(
       alignment: isSent ? Alignment.centerRight : Alignment.centerLeft,
       child:  Container(
-        margin: isSent ? EdgeInsets.fromLTRB(50.0, 0.0, 10.0, 10.0) : EdgeInsets.fromLTRB(10.0, 10.0, 50.0, 10.0),
+        margin: isSent 
+          ? EdgeInsets.fromLTRB(50.0, 0.0, 10.0, 10.0) 
+          : EdgeInsets.fromLTRB(10.0, 10.0, 50.0, 10.0),
         child: Text (
-          DateFormat('jm').format(DateFormat('yyyy-MM-dd kk:mm').parse(timestamp)),
+          DateFormat('jm')
+            .format(DateFormat('yyyy-MM-dd kk:mm')
+            .parse(timestamp)),
           style: GoogleFonts.muli(
             textStyle: TextStyle(
               color: Colors.grey, 
@@ -126,15 +135,21 @@ class ChatMessengerState extends State<ChatMessenger> {
   final TextEditingController textInputController = TextEditingController();
 
   List<Widget> buildMessenger() {
-    List<Widget> messagesList = <Widget>[];
-    for (int i = messages.length - 1; i >= 0; i--) {
+    var messagesList = <Widget>[];
+    for (var i = messages.length - 1; i >= 0; i--) {
       if (i == messages.length - 1) {
         messagesList.add(
-          buildTimestamp((messages[i] as Map)["timestamp"], isSent: (messages[i] as Map)["isSent"])
+          buildTimestamp(
+            (messages[i] as Map)["timestamp"], 
+            isSent: (messages[i] as Map)["isSent"]
+          )
         );
       }
       messagesList.add(
-        Message(message: (messages[i] as Map)["text"], isSent: (messages[i] as Map)["isSent"])
+        Message(
+          message: (messages[i] as Map)["text"], 
+          isSent: (messages[i] as Map)["isSent"]
+        )
       );
     }
 
@@ -201,7 +216,8 @@ class ChatMessengerState extends State<ChatMessenger> {
 class ChatMessenger extends StatefulWidget {
   final String recipient;
   final List<Object> messages;
-  ChatMessenger({Key key, @required this.recipient, this.messages = dummyData}) : super(key: key);
+  ChatMessenger({Key key, @required this.recipient, this.messages = dummyData}) 
+    : super(key: key);
 
   @override
   State<ChatMessenger> createState() => ChatMessengerState();
