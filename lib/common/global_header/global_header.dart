@@ -10,7 +10,7 @@ class GlobalHeader extends StatelessWidget implements PreferredSizeWidget {
     return Container(
       child: addAppBarTextWidget(), 
       height: preferredSize.height,
-      padding: EdgeInsets.only(left: 25.0),
+      padding: EdgeInsets.only(left: 25.0, right: 15.0),
       color: Colors.transparent
     );
   }
@@ -21,6 +21,7 @@ class GlobalHeader extends StatelessWidget implements PreferredSizeWidget {
 
 Row addAppBarTextWidget() {
   return Row(
+    mainAxisAlignment: MainAxisAlignment.spaceBetween,
     children: <Widget>[
       FormatText(
         text: appTitle, 
@@ -33,10 +34,12 @@ Row addAppBarTextWidget() {
 
 IconButton addAppBarActions() {
   return IconButton(
-    icon: Icon(Icons.filter_list), 
-    tooltip: 'Filter your matches', 
+    icon: Icon(
+      Icons.crop_free, 
+      color: Colors.grey
+    ), 
     onPressed: () {
-      print("Pressed");
+      print("Pairings: Pressed global header action");
     }
   );
 }
