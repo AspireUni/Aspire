@@ -1,9 +1,9 @@
-import 'package:curved_navigation_bar/curved_navigation_bar.dart';
+import 'package:custom_navigation_bar/custom_navigation_bar.dart';
 import 'package:flutter/material.dart';
 
 import '../FTU/authentication.dart';
 import '../chat/chat.dart';
-import '../constants/navigation_constants.dart';
+import '../constants/app_controller_constants.dart';
 import '../pairings/pairings.dart';
 import '../profile/view_profile/user_profile.dart';
 
@@ -23,38 +23,16 @@ class AppController extends StatefulWidget {
 class _AppControllerState extends State<AppController> {
 
   final GlobalKey<FormState> formKey = GlobalKey<FormState>();
+  final List<Widget> _screens = [UserProfile(), Pairings(), Chat()];
   int pageIndex = 1; 
-  double navBarIconSize = 30; 
-  final List<Widget> _widgets = [UserProfile(), Pairings(), Chat()];
+  double navBarIconSize = 25.0; 
+  Color navItemColour = Color(0xFF44CBB9);
 
-  tapped(int tappedIndex) {
-    setState(() {pageIndex = tappedIndex;});
+  void tapNavItem(int tappedIndex) {
+    setState(() { pageIndex = tappedIndex; });
   }
-  @override Widget build(BuildContext context) {
-    return MaterialApp(
-      home: Scaffold(
-        body: _widgets[pageIndex],
-        bottomNavigationBar: CurvedNavigationBar(
-          backgroundColor: Theme.of(context).primaryColor,
-          height: appNavBarHeight,  
-          index: 1,
-          onTap: tapped,
-          items: <Widget>[
-            Icon(Icons.person, size: navBarIconSize),
-            Icon(Icons.home, size: navBarIconSize),
-            Icon(Icons.chat_bubble, size: navBarIconSize),
-            ],
-          animationDuration: Duration(milliseconds: 200),
-          animationCurve: Curves.bounceInOut
-        ),
-      ),
-      theme: ThemeData(
-        primaryColor: Color(0xFF0F1236),
-        accentColor: Color(0xFF45cab9),
-      )
-    ); 
-  }
-  signOut() async {
+
+  void signOut() async {
     try {
       await widget.auth.signOut();
       widget.logoutCallback();
@@ -62,4 +40,36 @@ class _AppControllerState extends State<AppController> {
       print(e);
     }
   }
+
+  @override 
+  Widget build(BuildContext context) {
+    return MaterialApp(
+      home: Scaffold(
+        body: _screens[pageIndex],
+        bottomNavigationBar: CustomNavigationBar(
+          elevation: 0.0,
+          onTap: tapNavItem,
+          items: buildNavItems(),
+          currentIndex: pageIndex,
+          iconSize: navBarIconSize,
+          selectedColor: navItemColour,
+          strokeColor: navItemColour, 
+          unSelectedColor: Colors.grey,
+          backgroundColor: Colors.white,
+        )
+      )
+    ); 
+  }
+
+  buildNavItems() {
+    var navItems = <CustomNavigationBarItem>[];
+    for( var i = 0; i < 3; i++ ) { 
+      navItems.add(
+        CustomNavigationBarItem(
+          icon: navItemIcons[i]
+        )
+      );
+    }
+    return navItems;
+   } 
 }

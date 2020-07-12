@@ -13,11 +13,7 @@ class Root extends StatelessWidget {
       routes: {
         '/': (context) => RootPage(auth: Auth()),
         '/AppController': (context) => AppController(),
-      },
-      theme: ThemeData(
-        primaryColor: Color(0xFF0F1236),
-        accentColor: Color(0xFF45cab9),
-      )
+      }
     );
   }
 }

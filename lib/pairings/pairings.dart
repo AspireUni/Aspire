@@ -10,7 +10,7 @@ class Pairings extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.transparent,
+      backgroundColor: Colors.white,
       body: Padding(
         padding: EdgeInsets.only(top: 50.0),
         child: Container(
