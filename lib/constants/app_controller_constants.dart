@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-// Nav items icons
+// Nav item icons
 const navItemIcons = [
   Icons.account_circle, 
   Icons.home, 
