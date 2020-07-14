@@ -1,5 +1,6 @@
 import 'dart:async';
 import 'dart:io';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
@@ -7,6 +8,9 @@ import 'package:flutter/services.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:intl/intl.dart';
+import 'package:mentorApp/constants/chat_constants.dart';
+
+import '../constants/chat_constants.dart';
 import './message.dart';
 
 class ChatMessengerState extends State<ChatMessenger> {
@@ -58,9 +62,13 @@ class ChatMessengerState extends State<ChatMessenger> {
     return Align(
       alignment: isSent ? Alignment.centerRight : Alignment.centerLeft,
       child:  Container(
-        margin: isSent ? EdgeInsets.fromLTRB(50.0, 0.0, 10.0, 10.0) : EdgeInsets.fromLTRB(10.0, 10.0, 50.0, 10.0),
+        margin: isSent 
+          ? EdgeInsets.fromLTRB(50.0, 0.0, 10.0, 10.0) 
+          : EdgeInsets.fromLTRB(10.0, 10.0, 50.0, 10.0),
         child: Text (
-          DateFormat('jm').format(DateTime.fromMillisecondsSinceEpoch(timestamp)),
+          DateFormat('jm').format(
+            DateTime.fromMillisecondsSinceEpoch(timestamp)
+          ),
           style: GoogleFonts.muli(
             textStyle: TextStyle(
               color: Colors.grey, 
@@ -74,20 +82,20 @@ class ChatMessengerState extends State<ChatMessenger> {
   }
 
   Future uploadImage() async {
-    String fileName = DateTime.now().millisecondsSinceEpoch.toString();
-    StorageReference reference = FirebaseStorage.instance.ref().child(fileName);
-    StorageUploadTask uploadTask = reference.putFile(imageFile);
-    StorageTaskSnapshot storageTaskSnapshot = await uploadTask.onComplete;
+    var fileName = DateTime.now().millisecondsSinceEpoch.toString();
+    var reference = FirebaseStorage.instance.ref().child(fileName);
+    var uploadTask = reference.putFile(imageFile);
+    var storageTaskSnapshot = await uploadTask.onComplete;
     storageTaskSnapshot.ref.getDownloadURL().then((downloadUrl) {
       imageUrl = downloadUrl as String;
-      submitMessage(1, imageUrl);
+      submitMessage(imageMessage, imageUrl);
     }, onError: (err) {
       print("error");
     });
   }
 
   Future pickImage(ImageSource imageSource) async {
-    PickedFile pickedFile = await imagePicker.getImage(source: imageSource);
+    var pickedFile = await imagePicker.getImage(source: imageSource);
     imageFile = File(pickedFile.path);
 
     if (imageFile != null) {
@@ -135,14 +143,16 @@ class ChatMessengerState extends State<ChatMessenger> {
               maxLines: null, // this allows for multi-line input
               textInputAction: TextInputAction.send,
               controller: textInputController,
-              onSubmitted: (value) => submitMessage(0, value),
+              onSubmitted: (value) => submitMessage(textMessage, value),
             )
           ),
           IconButton(
             icon: Icon(Icons.send),
             iconSize: 25.0,
             color: Theme.of(context).primaryColor,
-            onPressed: () => submitMessage(0, textInputController.value.text),
+            onPressed: () => submitMessage(
+              textMessage, textInputController.value.text
+            ),
           ),
         ]
       )
@@ -150,11 +160,19 @@ class ChatMessengerState extends State<ChatMessenger> {
   }
 
   List<Widget> buildMessage(int index, int maxItem, DocumentSnapshot document) {
-    bool isSent = document['idFrom'] == id;
-    List<Widget> widgets = [];
-    widgets.add(Message(isSent: isSent, message: document['content'], type: document['type']));
+    var isSent = document['idFrom'] == id;
+    var widgets = <Widget>[];
+    widgets.add(
+      Message(
+        isSent: isSent,
+        message: document['content'],
+        type: document['type']
+      )
+    );
     if (index == 0) {
-      widgets.add(buildTimestamp(int.parse(document['timestamp']), isSent: isSent));
+      widgets.add(
+        buildTimestamp(int.parse(document['timestamp']), isSent: isSent)
+      );
     }
     return widgets;
   }
@@ -178,7 +196,13 @@ class ChatMessengerState extends State<ChatMessenger> {
                   return Text("wait");
                 } else {
                   return ListView.builder(
-                    itemBuilder: (context, index) => Column(children: buildMessage(index, snapshot.data.documents.length, snapshot.data.documents[index])),
+                    itemBuilder: (context, index) => Column(
+                      children: buildMessage(
+                        index,
+                        snapshot.data.documents.length,
+                        snapshot.data.documents[index]
+                      )
+                    ),
                     itemCount: snapshot.data.documents.length,
                     reverse: true,
                     scrollDirection: Axis.vertical,
@@ -239,7 +263,8 @@ class ChatMessengerState extends State<ChatMessenger> {
 class ChatMessenger extends StatefulWidget {
   final String peerId;
   final String recipient;
-  ChatMessenger({Key key, @required this.peerId, @required this.recipient}) : super(key: key);
+  ChatMessenger({Key key, @required this.peerId, @required this.recipient})
+    : super(key: key);
 
   @override
   State<ChatMessenger> createState() => ChatMessengerState();

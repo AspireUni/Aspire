@@ -8,15 +8,16 @@ class Root extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-        title: 'Aspire',
-        initialRoute: '/',
-        routes: {
-          '/': (context) => RootPage(auth: Auth()),
-          '/AppController': (context) => AppController(),
-        },
-        theme: ThemeData(
-          primaryColor: Color(0xFF0F1236),
-          accentColor: Color(0xFF45cab9),
-        ));
+      title: 'Aspire',
+      initialRoute: '/',
+      routes: {
+        '/': (context) => RootPage(auth: Auth()),
+        '/AppController': (context) => AppController(),
+      },
+      theme: ThemeData(
+        primaryColor: Color(0xFF0F1236),
+        accentColor: Color(0xFF45cab9),
+      )
+    );
   }
 }

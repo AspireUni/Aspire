@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
-import '../../constants/profile_constants.dart';
-import './section.dart';
+import '../../../constants/profile_constants.dart';
+import '../../common/section.dart';
  
 class ProfileSummary extends StatelessWidget {  
   final String summary;

@@ -68,12 +68,17 @@ class NewMatches extends StatelessWidget {
 }
 
 buildNewMatches(context) {
-  List<Widget> newMatchesList = <Widget>[];
-  for (int i = 0; i < dummyData.length; i++) {
+  var newMatchesList = <Widget>[];
+  for (var i = 0; i < dummyData.length; i++) {
     newMatchesList.add(
       GestureDetector(
         onTap: () {
-          Navigator.push(context, MaterialPageRoute(builder: (context) => ChatMessenger(recipient: dummyData[i]["name"])));
+          Navigator.push(
+            context,
+            MaterialPageRoute(builder: (context) => 
+              ChatMessenger(recipient: dummyData[i]["name"], peerId: mockPeerId)
+            )
+          );
         },
         child: Container(
           width: 80.0,

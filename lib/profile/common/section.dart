@@ -4,12 +4,13 @@ import 'package:google_fonts/google_fonts.dart';
 class Section extends StatelessWidget {  
   final String title;
   final Widget child;
-  Section({Key key, @required this.title, @required this.child}) : super(key: key);
+  Section({Key key, @required this.title, @required this.child}) 
+    : super(key: key);
   
   @override
   Widget build(BuildContext context) {
 
-    final ThemeData sectionTheme = Theme.of(context).copyWith(
+    final sectionTheme = Theme.of(context).copyWith(
       dividerColor: Colors.transparent,
       accentColor: Colors.black38,
       unselectedWidgetColor: Colors.black38
@@ -80,7 +81,9 @@ class SectionRow extends StatelessWidget {
       ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
-        children: children
+        children: <Widget> [
+          Row(children: children)
+        ]
       )
     );
   }
