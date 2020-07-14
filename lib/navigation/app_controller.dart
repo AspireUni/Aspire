@@ -15,7 +15,7 @@ class AppController extends StatefulWidget {
   final BaseAuth auth;
   final VoidCallback logoutCallback;
   final String userId;
-
+  
   @override
   State<StatefulWidget> createState() => _AppControllerState();
 }
@@ -33,6 +33,14 @@ class _AppControllerState extends State<AppController> {
   @override Widget build(BuildContext context) {
     return MaterialApp(
       home: Scaffold(
+        appBar: AppBar(
+          actions: <Widget>[
+            FlatButton(
+                child: Text('Logout',
+                    style: TextStyle(fontSize: 17.0, color: Colors.white)),
+                onPressed: signOut)
+          ],
+        ),
         body: _widgets[pageIndex],
         bottomNavigationBar: CurvedNavigationBar(
           backgroundColor: Theme.of(context).primaryColor,
@@ -54,6 +62,7 @@ class _AppControllerState extends State<AppController> {
       )
     ); 
   }
+
   signOut() async {
     try {
       await widget.auth.signOut();
