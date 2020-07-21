@@ -24,9 +24,7 @@ class Skill {
   Skill copyWith({
     String id,
     String name,
-    String level,
-    String startDate,
-    String endDate,
+    String level
   }) {
     return Skill(
       id: id ?? this.id,
