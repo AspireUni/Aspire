@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_redux/flutter_redux.dart';
 
+import '../actions/actions.dart';
 import '../constants/signuplogin_constants.dart';
+import '../models/models.dart';
 import './authentication.dart';
 
 
@@ -39,6 +42,16 @@ class _LoginSignupPageState extends State<LoginSignupPage> {
       try {
         if (_isLoginForm) {
           userId = await widget.auth.signIn(_email, _password);
+          StoreProvider.of<AppState>(context).dispatch(
+            UpdateUser(
+              User(
+                userID: userId,
+                contact: Contact(
+                  emailAddress: _email
+                )
+              )
+            )
+          );
           print('Signed in: $userId');
         } else {
           userId = await widget.auth.signUp(_email, _password);
@@ -227,18 +240,21 @@ class _LoginSignupPageState extends State<LoginSignupPage> {
 
   Widget showPrimaryButton() {
     return Padding(
-        padding: EdgeInsets.only(top: 45.0),
-        child: SizedBox(
-          height: 40.0,
-          child: RaisedButton(
-            elevation: 5.0,
-            shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(30.0)),
-            color: Colors.blue,
-            child: Text(_isLoginForm ? loginButton : createAccountButtonPrimary,
-                style: TextStyle(fontSize: 20.0, color: Colors.white)),
-            onPressed: validateAndSubmit,
+      padding: EdgeInsets.only(top: 45.0),
+      child: SizedBox(
+        height: 40.0,
+        child: RaisedButton(
+          elevation: 5.0,
+          shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(30.0)),
+          color: Colors.blue,
+          child: Text(
+            _isLoginForm ? loginButton : createAccountButtonPrimary,
+            style: TextStyle(fontSize: 20.0, color: Colors.white)
           ),
-        ));
+          onPressed: validateAndSubmit,
+        ),
+      )
+    );
   }
 }

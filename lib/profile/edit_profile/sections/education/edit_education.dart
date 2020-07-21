@@ -1,7 +1,10 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_redux/flutter_redux.dart';
 
 import '../../../../constants/profile_constants.dart';
+import '../../../../models/models.dart';
+import '../../../../selectors/selectors.dart';
 import '../../../common/add_row_button.dart';
 import '../../../common/school_row.dart';
 import '../../../common/section.dart';
@@ -10,8 +13,7 @@ import './save_education.dart';
 
 
 class EditEducation extends StatefulWidget {
-  final List<Map<String, Object>> schools;
-  EditEducation({Key key, @required this.schools}) : super(key: key);
+  EditEducation({Key key}) : super(key: key);
 
   @override
   _EditEducationState createState() => _EditEducationState();
@@ -27,40 +29,39 @@ class _EditEducationState extends State<EditEducation> {
         children: <Widget>[
           AddRowButton(
             text: addEducationRowText,
-            onTap: () => handleAddTap(context)
+            onTap: handleAddTap
           ),
-          buildSchoolList(context)
+          StoreConnector<AppState, List<School>>(
+            converter: schoolListSelector,
+            builder: (context, schools) => schools != null 
+            ? buildSchoolList(schools) : SizedBox()
+          )
         ]
       )
     );
   }
   
-  Widget buildSchoolRow(BuildContext context, Map<String, Object> schoolInfo) {
+  Widget buildSchoolRow(School school) {
     return InkWell(
-      onTap: () => handleEditTap(context, schoolInfo),
+      onTap: () => handleEditTap(school.id),
       child: SectionRow(
         children: <Widget> [
-          SchoolRow(schoolInfo: schoolInfo),
+          SchoolRow(school: school),
           editButtonInRow
         ]
       )
     );
   }
 
-  Widget buildSchoolList(BuildContext context) {
+  Widget buildSchoolList(List<School> schools) {
     var schoolList = <Widget>[];
-    for (var i = 0; i < widget.schools.length; i++) {
-      schoolList.add(
-        buildSchoolRow(
-          context, 
-          widget.schools[i]
-        )
-      );
+    for (var i = 0; i < schools.length; i++) {
+      schoolList.add(buildSchoolRow(schools[i]));
     }
     return SectionList(children: schoolList);
   }
   
-  void handleAddTap(BuildContext context) {
+  void handleAddTap() {
     Navigator.push(
       context, 
       MaterialPageRoute(
@@ -71,13 +72,13 @@ class _EditEducationState extends State<EditEducation> {
     );
   }
 
-  void handleEditTap(BuildContext context, Map<String, Object> schoolInfo) {
+  void handleEditTap(String schoolId) {
     Navigator.push(
       context,
       MaterialPageRoute(
         builder: (context) => SaveEducation(
           editMode: true,
-          schoolInfo: schoolInfo
+          schoolId: schoolId
         )
       )
     );

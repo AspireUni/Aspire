@@ -1,7 +1,10 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_redux/flutter_redux.dart';
 
 import '../../../../constants/profile_constants.dart';
+import '../../../../models/models.dart';
+import '../../../../selectors/selectors.dart';
 import '../../../common/add_row_button.dart';
 import '../../../common/job_row.dart';
 import '../../../common/section.dart';
@@ -9,10 +12,8 @@ import '../../../common/styles.dart';
 import './save_experience.dart';
 
 
-class EditExperience extends StatefulWidget {
-  final List<Map<String, Object>> jobs;
-  
-  EditExperience({Key key, @required this.jobs}) : super(key: key);
+class EditExperience extends StatefulWidget {  
+  EditExperience({Key key}) : super(key: key);
 
   @override
   _EditExperienceState createState() => _EditExperienceState();
@@ -28,40 +29,41 @@ class _EditExperienceState extends State<EditExperience> {
         children: <Widget>[
           AddRowButton(
             text: addExperienceRowText,
-            onTap: () => handleAddTap(context)
+            onTap: handleAddTap
           ),
-          buildJobList(context)
+          StoreConnector<AppState, List<Job>>(
+            converter: jobListSelector,
+            builder: (context, jobs) => jobs != null 
+            ? buildJobList(jobs) : SizedBox()
+          )
         ]
       )
     );
   }
 
-  Widget buildJobRow(BuildContext context, Map<String, Object> jobInfo) {
+  Widget buildJobRow(Job job) {
     return InkWell(
-      onTap: () => handleEditTap(context, jobInfo),
+      onTap: () => handleEditTap(job.id),
       child: SectionRow(
         children: <Widget> [
-          JobRow(jobInfo: jobInfo),
+          JobRow(job: job),
           editButtonInRow
         ]
       )
     );
   }
 
-  Widget buildJobList(BuildContext context) {
+  Widget buildJobList(List<Job> jobs) {
     var jobList = <Widget>[];
-    for (var i = 0; i < widget.jobs.length; i++) {
+    for (var i = 0; i < jobs.length; i++) {
       jobList.add(
-        buildJobRow(
-          context, 
-          widget.jobs[i]
-        ),
+        buildJobRow(jobs[i]),
       );
     }
     return SectionList(children: jobList);
   }
 
-  void handleAddTap(BuildContext context) {
+  void handleAddTap() {
     Navigator.push(
       context, 
       MaterialPageRoute(
@@ -72,13 +74,13 @@ class _EditExperienceState extends State<EditExperience> {
     );
   }
 
-  void handleEditTap(BuildContext context, Map<String, Object> jobInfo) {
+  void handleEditTap(String jobId) {
     Navigator.push(
       context,
       MaterialPageRoute(
         builder: (context) => SaveExperience(
           editMode: true,
-          jobInfo: jobInfo
+          jobId: jobId
         )
       )
     );

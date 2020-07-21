@@ -34,6 +34,12 @@ dependencies:
   effective_dart: ^1.0.0
   flutter_form_builder: ^3.10.1
   flutter_picker: ^1.1.5
+  redux: ^4.0.0
+  flutter_redux: ^0.6.0
+  redux_logging: ^0.4.0
+  redux_persist: ^0.8.4
+  redux_persist_flutter: ^0.8.2
+  random_string: ^2.1.0
 
 
 dev_dependencies:

@@ -2,8 +2,14 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
 import 'package:flutter_picker/flutter_picker.dart';
+import 'package:flutter_redux/flutter_redux.dart';
+import 'package:random_string/random_string.dart';
+import 'package:redux/redux.dart';
 
+import '../../../../actions/actions.dart';
 import '../../../../constants/profile_constants.dart';
+import '../../../../models/models.dart';
+import '../../../../selectors/selectors.dart';
 import '../../../common/app_bar.dart';
 import '../../../common/delete_button.dart';
 import '../../../common/input_field.dart';
@@ -13,9 +19,9 @@ import '../../../common/styles.dart';
 
 class SaveSkill extends StatefulWidget {
   final bool editMode;
-  final Map<String, Object> skillInfo;
+  final String skillId;
   
-  SaveSkill({Key key, @required this.editMode, this.skillInfo}) 
+  SaveSkill({Key key, @required this.editMode, this.skillId}) 
     : super(key: key);
 
   @override
@@ -29,7 +35,8 @@ class _SaveSkillState extends State<SaveSkill> {
   final List<String> skills = [skillBeginner, skillIntermediate, skillExpert];
   
   bool isLevelFocused;
-  Map<String, Object> skill;
+  Store<AppState> store; 
+  String generatedId;
 
   @override
   void initState() {
@@ -37,19 +44,53 @@ class _SaveSkillState extends State<SaveSkill> {
    
     isLevelFocused = false;
 
-    // Temporary workaround until we use global state management
-    skill = {
-      'skill': widget.editMode ? widget.skillInfo['skill'] : null,
-      'level': widget.editMode ? widget.skillInfo['level'] : null,
-    };
-
     textFieldFocusListener(skillFocus, 'skill');
+
+    if (!widget.editMode) {
+      generatedId = randomAlphaNumeric(10);
+    }
   }
 
   @override
   void dispose() {
     skillFocus.dispose();
     super.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    store = StoreProvider.of<AppState>(context);
+
+    return GestureDetector(
+      onTap: unfocusFields,
+      child: Scaffold(
+        appBar: AppBarWithSave(
+          appBarTitle: widget.editMode ? editSkill : addSkill,
+          formKey: _saveSkillKey,
+          onActionTap: unfocusFields,
+        ),
+        backgroundColor: Colors.white,
+        body: StoreConnector<AppState, Skill>(
+          converter: (store) => skillSelector(
+            store, widget.skillId ?? generatedId
+          ),
+          builder: (context, skill) => Container(
+            padding: EdgeInsets.all(20.0),
+              child: ListView(
+              children: <Widget>[
+                ...buildSaveSkillForm(skill),
+                widget.editMode
+                ? DeleteButton(
+                  labelText: deleteSkill,
+                  onPressed: () => print('Skill deleted.')
+                )
+                : SizedBox()
+              ]
+            )
+          )
+        )
+      )
+    );
   }
 
   void unfocusFields() {
@@ -73,35 +114,45 @@ class _SaveSkillState extends State<SaveSkill> {
     });
   }
 
-  void handleLevelConfirm(Picker picker) {
+  void handleLevelConfirm(Picker picker, Skill skill) {
     var newLevel = picker.getSelectedValues()[0].toString();
-    setState(() { 
-      skill['level'] = newLevel;
-    });
+    store.dispatch(
+      UpdateSkill(
+        skill.copyWith(
+          level: newLevel
+        )
+      )
+    );
     _saveSkillKey.currentState.fields['level'].currentState
       .didChange(newLevel);    
     _saveSkillKey.currentState.fields['level'].currentState
       .validate();
   }
 
-  void showLevelPicker(BuildContext context) {
+  void showLevelPicker(Skill skill) {
     ListPicker(
       data: skills,
-      selecteds: [ skill['level'] != null 
-        ? skills.indexOf(skill['level']) 
+      selecteds: [ skill.level != null 
+        ? skills.indexOf(skill.level) 
         : 0 
       ],
-      onConfirm: (picker, value) => handleLevelConfirm(picker)
+      onConfirm: (picker, value) => handleLevelConfirm(picker, skill)
     ).build(context).showModal(context);
   }
 
-  Widget buildSkillField() {
+  Widget buildSkillField(Skill skill) {
     return FormBuilderTextField(
       attribute: 'skill',
-      initialValue: skill['skill'],
+      initialValue: skill.name,
       decoration: fieldDecoration(),
       style: fieldTextStyle,
-      onChanged: (value) => setState(() { skill['skill'] = value as String; }),
+      onChanged: (value) => store.dispatch(
+        UpdateSkill(
+          skill.copyWith(
+            name: value
+          )
+        )
+      ),
       focusNode: skillFocus,
       validators: [
         FormBuilderValidators.required(),
@@ -111,24 +162,24 @@ class _SaveSkillState extends State<SaveSkill> {
     );
   }
 
-  Widget buildLevelField() {
+  Widget buildLevelField(Skill skill) {
     return PickerField(
       attribute: 'level',
-      initialValue: skill['level'],
+      initialValue: skill.level,
       isFocused: isLevelFocused,
       isEnabled: true,
-      value: skill['level'] ?? '',
+      value: skill.level ?? '',
       onTap: () {
         skillFocus.unfocus();
         setState(() {
           isLevelFocused = true;
         });
-        showLevelPicker(context); 
+        showLevelPicker(skill); 
       }
     );
   }
 
-  List<Widget> buildSaveSkillForm(context) {
+  List<Widget> buildSaveSkillForm(Skill skill) {
     return <Widget>[
       FormBuilder(
         key: _saveSkillKey,
@@ -136,45 +187,15 @@ class _SaveSkillState extends State<SaveSkill> {
           children: <Widget>[
             InputField(
               labelText: saveSkillSkill,
-              formField: buildSkillField()
+              formField: buildSkillField(skill)
             ),
             InputField(
               labelText: saveSkillLevel,
-              formField: buildLevelField()
+              formField: buildLevelField(skill)
             )
           ]
         )
       ),
     ];
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    return GestureDetector(
-      onTap: unfocusFields,
-      child: Scaffold(
-        appBar: AppBarWithSave(
-          appBarTitle: widget.editMode ? editSkill : addSkill,
-          data: skill,
-          formKey: _saveSkillKey,
-          onActionTap: unfocusFields,
-        ),
-        backgroundColor: Colors.white,
-        body: Container(
-          padding: EdgeInsets.all(20.0),
-            child: ListView(
-            children: <Widget>[
-              ...buildSaveSkillForm(context),
-              widget.editMode
-              ? DeleteButton(
-                labelText: deleteSkill,
-                onPressed: () => print('Skill deleted.')
-              )
-              : SizedBox()
-            ]
-          )
-        )
-      )
-    );
   }
 }

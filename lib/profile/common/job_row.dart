@@ -2,28 +2,28 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
+import '../../models/models.dart';
 
 class JobRow extends StatelessWidget {
-  final  Map<String, Object> jobInfo;
+  final  Job job;
  
-  JobRow({Key key, @required this.jobInfo}) : super(key: key);
+  JobRow({Key key, @required this.job}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    
-    var dateRange = "${jobInfo['startDate']} - ${jobInfo['endDate']}";
+    var dateRange = "${job.startDate} - ${job.endDate}";
 
     return Expanded(
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: <Widget>[
           buildJobText(
-            jobInfo['jobTitle'],
+            job.title,
             isJobTitle: true,
             isDateRange: false
           ),
           buildJobText(
-            jobInfo['company'],
+            job.company,
             isJobTitle: false,
             isDateRange: false
           ),

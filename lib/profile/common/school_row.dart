@@ -2,28 +2,28 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
+import '../../models/models.dart';
 
 class SchoolRow extends StatelessWidget {
-  final  Map<String, Object> schoolInfo;
+  final School school;
 
-  SchoolRow({Key key, @required this.schoolInfo}) : super(key: key);
+  SchoolRow({Key key, @required this.school}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    
-    var dateRange = "${schoolInfo['startYear']} - ${schoolInfo['endYear']}";
+    var dateRange = "${school.startYear} - ${school.endYear}";
 
     return Expanded(
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: <Widget>[
           buildSchoolText(
-            schoolInfo['school'],
+            school.name,
             isSchool: true,
             isDateRange: false
           ),
           buildSchoolText(
-            schoolInfo['program'],
+            school.program,
             isSchool: false,
             isDateRange: false
           ),

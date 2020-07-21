@@ -2,11 +2,12 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
+import '../../models/models.dart';
 
 class SkillRow extends StatelessWidget {
-  final  Map<String, Object> skillInfo;
+  final Skill skill;
   
-  SkillRow({Key key, @required this.skillInfo}) : super(key: key);
+  SkillRow({Key key, @required this.skill}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -15,11 +16,11 @@ class SkillRow extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: <Widget>[
           buildSkillText(
-            skillInfo['skill'],
+            skill.name,
             isSkill: true
           ),
           buildSkillText(
-            skillInfo['level'],
+            skill.level,
             isSkill: false
           )
         ]
