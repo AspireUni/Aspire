@@ -9,7 +9,7 @@ import 'package:redux_persist_flutter/redux_persist_flutter.dart';
 import './constants/signuplogin_constants.dart';
 import './models/models.dart';
 import './navigation/root.dart';
-import './reducers/app_reducer.dart';
+import './reducers/reducers.dart';
 
 bool enableDevicePreview = false;
 
