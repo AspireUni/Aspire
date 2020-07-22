@@ -5,6 +5,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 import '../../../chat/chat_messenger.dart';
+import '../../../constants/chat_constants.dart';
 import '../../../constants/profile_constants.dart';
 import '../../../models/models.dart';
 import '../../../selectors/selectors.dart';
@@ -141,7 +142,8 @@ class ProfileContact extends StatelessWidget {
         builder: (context) => StoreConnector<AppState, User>(
           converter: userSelector,
           builder: (context, user) => ChatMessenger(
-            recipient: user.fullName ?? ''
+            recipient: user.fullName ?? '',
+            peerId: mockPeerId
           )
         )
       )
