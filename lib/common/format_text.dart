@@ -6,13 +6,15 @@ class FormatText extends StatelessWidget {
   final Colors textColor;
   final double fontSize;
   final FontWeight fontWeight;
+  final double fontHeight;
 
   FormatText({
     Key key, 
     @required this.text, 
     this.textColor, 
     this.fontSize, 
-    this.fontWeight
+    this.fontWeight, 
+    this.fontHeight
   }) : super(key: key);
 
   @override
@@ -24,7 +26,8 @@ class FormatText extends StatelessWidget {
           color: textColor ?? Colors.black,
           letterSpacing: .5, 
           fontSize: fontSize ?? 40.0,  
-          fontWeight: fontWeight ?? FontWeight.bold
+          fontWeight: fontWeight ?? FontWeight.bold,
+          height: fontHeight ?? 1.2
         )
       )
     );
