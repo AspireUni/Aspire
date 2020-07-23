@@ -26,7 +26,6 @@ class _AppControllerState extends State<AppController> {
   final List<Widget> _screens = [UserProfile(), Pairings(), Chat()];
   int pageIndex = 1; 
   double navBarIconSize = 25.0; 
-  Color navItemColour = Color(0xFF44CBB9);
 
   void tapNavItem(int tappedIndex) {
     setState(() { pageIndex = tappedIndex; });
@@ -52,8 +51,8 @@ class _AppControllerState extends State<AppController> {
           items: buildNavItems(),
           currentIndex: pageIndex,
           iconSize: navBarIconSize,
-          selectedColor: navItemColour,
-          strokeColor: navItemColour, 
+          selectedColor: navItemColor,
+          strokeColor: navItemColor, 
           unSelectedColor: Colors.grey,
           backgroundColor: Colors.white,
         )
@@ -61,9 +60,9 @@ class _AppControllerState extends State<AppController> {
     ); 
   }
 
-  buildNavItems() {
+  List<CustomNavigationBarItem> buildNavItems() {
     var navItems = <CustomNavigationBarItem>[];
-    for( var i = 0; i < 3; i++ ) { 
+    for( var i = 0; i < navItemIcons.length; i++ ) { 
       navItems.add(
         CustomNavigationBarItem(
           icon: navItemIcons[i]

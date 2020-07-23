@@ -6,3 +6,5 @@ const navItemIcons = [
   Icons.home, 
   Icons.message
 ];
+
+const Color navItemColor = Color(0xFF44CBB9);
