@@ -7,37 +7,23 @@ import './summary.dart';
 
  
 class ProfileSections extends StatelessWidget {  
-
-  final Map data;
-  ProfileSections({Key key, @required this.data}) : super(key: key);
+  ProfileSections({Key key}) : super(key: key);
   
   @override
   Widget build(BuildContext context) {
 
-    return 
-    Container(
+    return Container(
       child: Flexible(
         child: ListView(
           padding: EdgeInsets.all(0.0),
           scrollDirection: Axis.vertical,
           shrinkWrap: true,
           children: <Widget> [
-            ProfileSummary(
-              summary: data["summary"]
-            ),
-            ProfileEducation(
-              schools: data["schools"]
-            ),
-            ProfileExperience(
-              jobs: data["jobs"]
-            ),
-            ProfileSkills(
-              skills: data["skills"]
-            ),
-            ProfileContact(
-              contact: data["contact"],
-              fullName: data["fullName"]
-            )
+            ProfileSummary(),
+            ProfileEducation(),
+            ProfileExperience(),
+            ProfileSkills(),
+            ProfileContact()
           ]
         )
       )

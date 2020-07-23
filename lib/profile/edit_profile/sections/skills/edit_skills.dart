@@ -1,7 +1,10 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_redux/flutter_redux.dart';
 
 import '../../../../constants/profile_constants.dart';
+import '../../../../models/models.dart';
+import '../../../../selectors/selectors.dart';
 import '../../../common/add_row_button.dart';
 import '../../../common/section.dart';
 import '../../../common/skill_row.dart';
@@ -9,9 +12,7 @@ import '../../../common/styles.dart';
 import './save_skill.dart';
 
 class EditSkills extends StatefulWidget {
-  final List<Map<String, Object>> skills;
-  
-  EditSkills({Key key, @required this.skills}) : super(key: key);
+  EditSkills({Key key}) : super(key: key);
 
   @override
   _EditSkillsState createState() => _EditSkillsState();
@@ -27,54 +28,43 @@ class _EditSkillsState extends State<EditSkills> {
         children: <Widget>[
           AddRowButton(
             text: addSkillRowText,
-            onTap: () => handleAddTap(context)
+            onTap: handleAddTap
           ),
-          buildSkillList(context)
+          StoreConnector<AppState, List<Skill>>(
+            converter: skillListSelector,
+            builder: (context, skills) => skills != null 
+            ? buildSkillList(skills) : SizedBox()
+          )
         ]
       )
     );
   }
 
-  Widget buildSkillRow(BuildContext context, Map<String, Object> skillInfo) {
+  Widget buildSkillRow(Skill skill) {
     return InkWell(
-      onTap: () => handleEditTap(context, skillInfo),
+      onTap: () => handleEditTap(skill.id),
       child: SectionRow(
         children: <Widget>[
-          SkillRow(skillInfo: skillInfo),
+          SkillRow(skill: skill),
           editButtonInRow
         ]
       )
     );
   }
 
-  Widget buildSkillList(BuildContext context) {
+  Widget buildSkillList(List<Skill> skills) {
     var expertList = <Widget>[];
     var intermediateList = <Widget>[];
     var beginnerList = <Widget>[];
 
     // Temporary workaround for sorting skills
-    for (var i = 0; i < widget.skills.length; i++) {
-      if (widget.skills[i]["level"] == skillExpert){
-        expertList.add(
-          buildSkillRow(
-            context, 
-            widget.skills[i]
-          )
-        );
-      } else if (widget.skills[i]["level"] == skillIntermediate){
-        intermediateList.add(
-          buildSkillRow(
-            context, 
-            widget.skills[i]
-          )
-        );
-      } else if (widget.skills[i]["level"] == skillBeginner){
-        beginnerList.add(
-          buildSkillRow(
-            context, 
-            widget.skills[i]
-          )
-        );
+    for (var i = 0; i < skills.length; i++) {
+      if (skills[i].level == skillExpert){
+        expertList.add(buildSkillRow(skills[i]));
+      } else if (skills[i].level == skillIntermediate){
+        intermediateList.add(buildSkillRow(skills[i]));
+      } else if (skills[i].level == skillBeginner){
+        beginnerList.add(buildSkillRow(skills[i]));
       }
     }
     
@@ -87,7 +77,7 @@ class _EditSkillsState extends State<EditSkills> {
     return SectionList(children: skillList);
   }
 
-  void handleAddTap(BuildContext context) {
+  void handleAddTap() {
     Navigator.push(
       context, 
       MaterialPageRoute(
@@ -98,13 +88,13 @@ class _EditSkillsState extends State<EditSkills> {
     );
   }
 
-  void handleEditTap(BuildContext context, Map<String, Object> skillInfo) {
+  void handleEditTap(String skillId) {
     Navigator.push(
       context,
       MaterialPageRoute(
         builder: (context) => SaveSkill(
           editMode: true,
-          skillInfo: skillInfo
+          skillId: skillId
         )
       )
     );

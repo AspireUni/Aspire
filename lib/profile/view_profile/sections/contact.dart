@@ -1,18 +1,19 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:url_launcher/url_launcher.dart';
+import 'package:flutter_redux/flutter_redux.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 import '../../../chat/chat_messenger.dart';
 import '../../../constants/chat_constants.dart';
 import '../../../constants/profile_constants.dart';
+import '../../../models/models.dart';
+import '../../../selectors/selectors.dart';
 import '../../common/section.dart';
 
  
 class ProfileContact extends StatelessWidget {  
-  final Map contact;
-  final String fullName;
-  ProfileContact({Key key, @required this.contact, @required this.fullName}) 
+  ProfileContact({Key key}) 
     : super(key: key);
 
   final IconData chat = IconData(
@@ -39,55 +40,51 @@ class ProfileContact extends StatelessWidget {
     fontPackage: CupertinoIcons.iconFontPackage
   );
 
-  void handleChatTap(BuildContext context) {
-    Navigator.push(
-      context, 
-      MaterialPageRoute(builder: (context) => 
-      ChatMessenger(recipient: fullName, peerId: mockPeerId)
-      )
-    );
-  }
-
   @override
   Widget build(BuildContext context) {
     return Section(
       title: sectionTitleContact,
-      child: buildInfoList(context)
+      child: buildInfoList()
     );
   }
 
-  Widget buildInfoList(BuildContext context) {
-    return SectionList(
-      children: <Widget>[
-        buildInfoRow(
-          context, 
-          chat, 
-          contactChat, 
-          contactChatSubtitle,
-          () => handleChatTap(context)
-        ),
-        buildInfoRow(
-          context, 
-          email, 
-          contactEmailAddress, 
-          contact["emailAddress"],
-          handleEmailTap
-        ),
-        buildInfoRow(
-          context,
-          phone,
-          contactPhoneNumber,
-          contact["phoneNumber"],
-          handlePhoneTap
-        ),
-        buildInfoRow(
-          context,
-          web,
-          contactWebsite,
-          contact["website"],
-          handleWebsiteTap
-        )
-      ]
+  Widget buildInfoList() {
+    return StoreConnector<AppState, Contact>(
+      converter: contactSelector,
+      builder: (context, contact) => SectionList(
+        children: <Widget>[
+          // TODO: This row should only be visible 
+          // when the user is viewing other uses' profiles
+          buildInfoRow(
+            context, 
+            chat, 
+            contactChat, 
+            contactChatSubtitle,
+            () => handleChatTap(context)
+          ),
+          buildInfoRow(
+            context, 
+            email, 
+            contactEmailAddress, 
+            contact.emailAddress,
+            () => handleEmailTap(contact.emailAddress)
+          ),
+          buildInfoRow(
+            context,
+            phone,
+            contactPhoneNumber,
+            contact.phoneNumber ?? '',
+            () => handlePhoneTap(contact.phoneNumber)
+          ),
+          buildInfoRow(
+            context,
+            web,
+            contactWebsite,
+            contact.website ?? '',
+            () => handleWebsiteTap(contact.website)
+          )
+        ]
+      )
     );
   }
 
@@ -98,7 +95,7 @@ class ProfileContact extends StatelessWidget {
     String info, 
     Function() handleTap
   ) {
-    return InkWell(
+    return info != '' ? InkWell(
       onTap: handleTap,
       child: SectionRow(
         children: <Widget> [
@@ -119,7 +116,7 @@ class ProfileContact extends StatelessWidget {
           )
         ]
       )
-    );
+    ) : SizedBox();
   }
 
   Widget buildContactText(String text, {bool isLabel}) {
@@ -138,16 +135,31 @@ class ProfileContact extends StatelessWidget {
     );
   }
 
-  void handleEmailTap() {
-    _launchUrl("mailto:${contact["emailAddress"]}");
+  void handleChatTap(BuildContext context) {
+    Navigator.push(
+      context, 
+      MaterialPageRoute(
+        builder: (context) => StoreConnector<AppState, User>(
+          converter: userSelector,
+          builder: (context, user) => ChatMessenger(
+            recipient: user.fullName ?? '',
+            peerId: mockPeerId
+          )
+        )
+      )
+    );
   }
 
-  void handlePhoneTap() {
-    _launchUrl("tel:${contact["phoneNumber"]}");
+  void handleEmailTap(String emailAddress) {
+    _launchUrl("mailto:$emailAddress");
   }
 
-  void handleWebsiteTap() {
-    _launchUrl(contact["website"]);
+  void handlePhoneTap(String phoneNumber) {
+    _launchUrl("tel:$phoneNumber");
+  }
+
+  void handleWebsiteTap(String website) {
+    _launchUrl(website);
   }
 
   void _launchUrl(String url) async {

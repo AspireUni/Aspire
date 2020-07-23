@@ -1,17 +1,19 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
+import 'package:flutter_redux/flutter_redux.dart';
+import 'package:redux/redux.dart';
 
+import '../../../../actions/actions.dart';
 import '../../../../constants/profile_constants.dart';
+import '../../../../models/models.dart';
+import '../../../../selectors/selectors.dart';
 import '../../../common/input_field.dart';
 import '../../../common/styles.dart';
 
+
 class EditContact extends StatefulWidget {
-  final Map contact;
-  final String fullName;
-  
-  EditContact({Key key, @required this.contact, @required this.fullName}) 
-    : super(key: key);
+  EditContact({Key key}) : super(key: key);
 
   @override
   _EditContactState createState() => _EditContactState();
@@ -19,73 +21,66 @@ class EditContact extends StatefulWidget {
 
 class _EditContactState extends State<EditContact> {
 
-  String fullName;
-  Map<String, Object> contact;
-
-  @override
-  void initState() {
-    super.initState();
-
-    // Temporary workaround until we use global state management
-    fullName = widget.fullName;
-    contact = {
-      'emailAddress': widget.contact['emailAddress'],
-      'phoneNumber': widget.contact['phoneNumber'],
-      'website': widget.contact['website']
-    };
-  }
+  Store<AppState> store; 
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      padding: EdgeInsets.only(bottom: 20.0),
-      child: Column(
-        children: <Widget>[
-          InputField(
-            labelText: editContactFullname, 
-            formField: buildFullNameField()
-          ),
-          InputField(
-            labelText: editContactEmailAddress, 
-            formField: buildEmailAddressField()
-          ),
-          InputField(
-            labelText: editContactPhoneNumber, 
-            formField: buildPhoneNumberField()
-          ),
-          InputField(
-            labelText: editContactWebsite, 
-            formField: buildWebsiteField()
-          ),
-        ],
+    store = StoreProvider.of<AppState>(context);
+
+    return StoreConnector<AppState, Contact>(
+      converter: contactSelector,
+      builder: (context, contact) => Container(
+        padding: EdgeInsets.only(bottom: 20.0),
+        child: Column(
+          children: <Widget>[
+            InputField(
+              labelText: editContactFullname, 
+              formField: buildFullNameField()
+            ),
+            InputField(
+              enabled: false,
+              labelText: editContactEmailAddress, 
+              formField: buildEmailAddressField(contact)
+            ),
+            InputField(
+              labelText: editContactPhoneNumber, 
+              formField: buildPhoneNumberField(contact)
+            ),
+            InputField(
+              labelText: editContactWebsite, 
+              formField: buildWebsiteField(contact)
+            ),
+          ],
+        )
       )
     );
   }
 
   buildFullNameField() {
-    return FormBuilderTextField(
-      attribute: 'fullName',
-      initialValue: fullName,
-      decoration: fieldDecoration(),
-      style: fieldTextStyle,
-      onChanged: (value) => setState(() { fullName = value as String; }),
-      validators: [
-        FormBuilderValidators.required(),
-        FormBuilderValidators.maxLength(100),
-      ],
-      keyboardType: TextInputType.text,
+    return StoreConnector<AppState, User>(
+      converter: userSelector,
+      builder: (context, user) => FormBuilderTextField(
+        attribute: 'fullName',
+        initialValue: user.fullName,
+        decoration: fieldDecoration(),
+        style: fieldTextStyle,
+        onChanged: (value) => store.dispatch(UpdateFullName(value)),
+        validators: [
+          FormBuilderValidators.required(),
+          FormBuilderValidators.maxLength(100),
+        ],
+        keyboardType: TextInputType.text,
+      )
     );
   }
 
-  buildEmailAddressField() {
+  buildEmailAddressField(Contact contact) {
     return FormBuilderTextField(
+      readOnly: true,
       attribute: 'emailAddress',
-      initialValue: contact['emailAddress'],
+      initialValue: contact.emailAddress,
       decoration: fieldDecoration(),
-      style: fieldTextStyle,
-      onChanged: (value) => setState(() { 
-        contact['emailAddress'] = value as String; 
-      }),
+      style: labelTextStyle(isEnabled: false),
       validators: [
         FormBuilderValidators.required(),
         FormBuilderValidators.email(),
@@ -95,10 +90,10 @@ class _EditContactState extends State<EditContact> {
     );
   }
 
-  buildPhoneNumberField() {
+  buildPhoneNumberField(Contact contact) {
     return FormBuilderPhoneField(
       attribute: 'phoneNumber',
-      initialValue: contact['phoneNumber'],
+      initialValue: contact.phoneNumber,
       decoration: fieldDecoration(),
       style: fieldTextStyle,
       dialogTitle: Text(
@@ -107,9 +102,13 @@ class _EditContactState extends State<EditContact> {
       ),
       titlePadding: EdgeInsets.all(0.0),
       isSearchable: false,
-      onChanged: (value) => setState(() { 
-        contact['phoneNumber'] = value as String;
-      }),
+      onChanged: (value) => store.dispatch(
+        UpdateContact(
+          contact.copyWith(
+            phoneNumber: value
+          )
+        )
+      ),
       priorityListByIsoCode: [isoCodeCA, isoCodeUS],
       validators: [FormBuilderValidators.numeric(
         errorText: invalidPhoneNumberErrorMessage)
@@ -118,15 +117,19 @@ class _EditContactState extends State<EditContact> {
     );
   }
 
-  buildWebsiteField() {
+  buildWebsiteField(Contact contact) {
     return FormBuilderTextField(
       attribute: 'website',
-      initialValue: contact['website'],
+      initialValue: contact.website,
       decoration: fieldDecoration(),
       style: fieldTextStyle,
-      onChanged: (value) => setState(() { 
-        contact['website'] = value as String;
-      }),
+      onChanged: (value) => store.dispatch(
+        UpdateContact(
+          contact.copyWith(
+            website: value
+          )
+        )
+      ),
       validators: [
         FormBuilderValidators.url(),
         FormBuilderValidators.maxLength(100),

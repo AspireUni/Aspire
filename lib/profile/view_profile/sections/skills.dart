@@ -1,40 +1,46 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_redux/flutter_redux.dart';
 
 import '../../../constants/profile_constants.dart';
+import '../../../models/models.dart';
+import '../../../selectors/selectors.dart';
 import '../../common/section.dart';
 import '../../common/skill_row.dart';
  
 class ProfileSkills extends StatelessWidget {  
-  final List<Map<String, Object>> skills;
-  ProfileSkills({Key key, @required this.skills}) : super(key: key);
+  ProfileSkills({Key key}) : super(key: key);
   
   @override
   Widget build(BuildContext context) {
-    return Section(
+    return StoreConnector<AppState, List<Skill>>(
+      converter: skillListSelector,
+      builder: (context, skills) => skills != null 
+      ? Section(
       title: sectionTitleSkills,
-      child: buildSkillList(context)
+      child: buildSkillList(skills)
+      ) : SizedBox()
     );
   }
 
-  Widget buildSkillList(BuildContext context) {
+  Widget buildSkillList(List<Skill> skills) {
     var expertList = <Widget>[];
     var intermediateList = <Widget>[];
     var beginnerList = <Widget>[];
 
     // Temporary workaround for sorting skills
     for (var i = 0; i < skills.length; i++) {
-      if (skills[i]["level"] == skillExpert){
+      if (skills[i].level == skillExpert){
         expertList.add(
-          SectionRow(children: <Widget>[SkillRow(skillInfo: skills[i])]
+          SectionRow(children: <Widget>[SkillRow(skill: skills[i])]
           )
         );
-      } else if (skills[i]["level"] == skillIntermediate){
+      } else if (skills[i].level == skillIntermediate){
         intermediateList.add(
-          SectionRow(children: <Widget>[SkillRow(skillInfo: skills[i])])
+          SectionRow(children: <Widget>[SkillRow(skill: skills[i])])
         );
-      } else if (skills[i]["level"] == skillBeginner){
+      } else if (skills[i].level == skillBeginner){
         beginnerList.add(
-          SectionRow(children: <Widget>[SkillRow(skillInfo: skills[i])])
+          SectionRow(children: <Widget>[SkillRow(skill: skills[i])])
         );
       }
     }

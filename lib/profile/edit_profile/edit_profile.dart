@@ -12,9 +12,7 @@ import './sections/skills/edit_skills.dart';
 import './sections/summary/edit_summary.dart';
 
 class EditProfile extends StatefulWidget {
-  final Map data;
-  
-  EditProfile({Key key, @required this.data}) : super(key: key);
+  EditProfile({Key key}) : super(key: key);
 
   @override
   _EditProfileState createState() => _EditProfileState();
@@ -40,13 +38,13 @@ class _EditProfileState extends State<EditProfile> {
         ),
         backgroundColor: Colors.white,
         body: ListView(
-          children: buildEditProfileView(context)
+          children: buildEditProfileView()
         )
       )
     );
   }
 
-  List<Widget> buildEditProfileView(BuildContext context) {
+  List<Widget> buildEditProfileView() {
     return <Widget>[
       FormBuilder(
         key: _saveProfileKey,
@@ -54,34 +52,23 @@ class _EditProfileState extends State<EditProfile> {
           children: <Widget>[
             Section(
               title: editContactInfo,
-              child: EditContact(
-                contact: widget.data['contact'],
-                fullName: widget.data['fullName']
-              )
+              child: EditContact()
             ),
             Section(
               title: editSummary,
-              child: EditSummary(
-                summary: widget.data['summary']
-              )
+              child: EditSummary()
             ),
             Section(
               title: editEducation,
-              child: EditEducation(
-                schools: widget.data['schools']
-              )
+              child: EditEducation()
             ),
             Section(
               title: editExperience,
-              child: EditExperience(
-                jobs: widget.data['jobs']
-              )
+              child: EditExperience()
             ),
             Section(
               title: editSkills,
-              child: EditSkills(
-                skills: widget.data['skills']
-              )
+              child: EditSkills()
             )
           ]
         )

@@ -1,13 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:flutter_redux/flutter_redux.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 import '../../constants/profile_constants.dart';
+import '../../models/models.dart';
+import '../../selectors/selectors.dart';
 import '../edit_profile/edit_profile.dart';
  
-class ProfileHeader extends StatelessWidget {  
-  final Map data;
-  ProfileHeader({Key key, @required this.data}) : super(key: key);
+class ProfileHeader extends StatelessWidget {
+  ProfileHeader({Key key}) : super(key: key);
   
   @override
   Widget build(BuildContext context) {
@@ -56,23 +58,26 @@ class ProfileHeader extends StatelessWidget {
   }
 
   buildFullName() {
-    return Container(
-      margin: EdgeInsets.only(top: 10.0),
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: <Text> [
-          Text(
-            data["fullName"],
-            style: GoogleFonts.muli(
-              textStyle: TextStyle(
-                color: Colors.white, 
-                letterSpacing: .5, 
-                fontSize: 20.0, 
-                fontWeight: FontWeight.bold
-              ), 
+    return StoreConnector<AppState, User>(
+      converter: userSelector,
+      builder: (context, user) => Container(
+        margin: EdgeInsets.only(top: 10.0),
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: <Text> [
+            Text(
+              user.fullName ?? '',
+              style: GoogleFonts.muli(
+                textStyle: TextStyle(
+                  color: Colors.white, 
+                  letterSpacing: .5, 
+                  fontSize: 20.0, 
+                  fontWeight: FontWeight.bold
+                ), 
+              )
             )
-          )
-        ]
+          ]
+        )
       )
     );
   }
@@ -99,7 +104,7 @@ class ProfileHeader extends StatelessWidget {
   handleEditTap(BuildContext context) {
     Navigator.push(
       context, 
-      MaterialPageRoute(builder: (context) => EditProfile(data: data))
+      MaterialPageRoute(builder: (context) => EditProfile())
     );
   }
 }

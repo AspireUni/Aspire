@@ -2,9 +2,15 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
 import 'package:flutter_picker/flutter_picker.dart';
+import 'package:flutter_redux/flutter_redux.dart';
 import 'package:intl/intl.dart';
+import 'package:random_string/random_string.dart';
+import 'package:redux/redux.dart';
 
+import '../../../../actions/actions.dart';
 import '../../../../constants/profile_constants.dart';
+import '../../../../models/models.dart';
+import '../../../../selectors/selectors.dart';
 import '../../../common/app_bar.dart';
 import '../../../common/date_picker.dart';
 import '../../../common/delete_button.dart';
@@ -14,8 +20,9 @@ import '../../../common/styles.dart';
 
 class SaveEducation extends StatefulWidget {
   final bool editMode;
-  final Map<String, Object> schoolInfo;
-  SaveEducation({Key key, @required this.editMode, this.schoolInfo}) 
+  final String schoolId;
+
+  SaveEducation({Key key, @required this.editMode, this.schoolId}) 
     : super(key: key);
 
   @override
@@ -29,7 +36,8 @@ class _SaveEducationState extends State<SaveEducation> {
   final FocusNode degreeFocus = FocusNode();
   
   bool isStartYearFocused, isEndYearFocused;
-  Map<String, Object> education;
+  Store<AppState> store; 
+  String generatedId;
 
   @override
   void initState() {
@@ -38,16 +46,12 @@ class _SaveEducationState extends State<SaveEducation> {
     isStartYearFocused = false;
     isEndYearFocused = false;
 
-    // Temporary workaround until we use global state management
-    education = {
-      'school': widget.editMode ? widget.schoolInfo['school'] : null,
-      'degree': widget.editMode ? widget.schoolInfo['program'] : null,
-      'startYear': widget.editMode ? widget.schoolInfo['startYear'] : null,
-      'endYear': widget.editMode ? widget.schoolInfo['endYear'] : null
-    };
-
     textFieldFocusListener(schoolFocus, 'school');
     textFieldFocusListener(degreeFocus, 'degree');
+
+    if (!widget.editMode) {
+      generatedId = randomAlphaNumeric(10);
+    }
   }
 
   @override
@@ -55,6 +59,42 @@ class _SaveEducationState extends State<SaveEducation> {
     schoolFocus.dispose();
     degreeFocus.dispose();
     super.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    store = StoreProvider.of<AppState>(context);
+
+    return GestureDetector(
+      onTap: unfocusFields,
+      child: Scaffold(
+        appBar: AppBarWithSave(
+          appBarTitle: widget.editMode ? editEducation : addEducation,
+          formKey: _saveEducationKey,
+          onActionTap: unfocusFields,
+        ),
+        backgroundColor: Colors.white,
+        body: StoreConnector<AppState, School>(
+          converter: (store) => schoolSelector(
+            store, widget.schoolId ?? generatedId
+          ),
+          builder: (context, school) => Container(
+            padding: EdgeInsets.all(20.0),
+              child: ListView(
+              children: <Widget>[
+                ...buildSaveEducationForm(school),
+                widget.editMode
+                ? DeleteButton(
+                  labelText: deleteEducation,
+                  onPressed: () => 'Education deleted.'
+                )
+                : SizedBox()
+              ]
+            )
+          )
+        )
+      )
+    );
   }
 
   void unfocusFields() {
@@ -93,36 +133,41 @@ class _SaveEducationState extends State<SaveEducation> {
     return DateFormat.y().format(date).toString();
   }
 
-  void showStartYearPicker(BuildContext context) {
+  void showStartYearPicker(School school) {
+    print(school);
     DatePicker(
       yearOnly: true,
-      initialValue: education['startYear'] != null
-        ? convertStringToDateTime(education['startYear'])
+      initialValue: school.startYear != null
+        ? convertStringToDateTime(school.startYear)
         : DateTime.now(),
       maxValue: DateTime.now(),
-      onConfirm: (picker, value) => handleStartYearConfirm(picker),
+      onConfirm: (picker, value) => handleStartYearConfirm(picker, school),
     ).build(context).showModal(context);
   }
 
-  void showEndYearPicker(BuildContext context) {
+  void showEndYearPicker(School school) {
     DatePicker(
       yearOnly: true,
-      initialValue: education['endYear'] != null 
-        ? convertStringToDateTime(education['endYear']) 
-        : convertStringToDateTime(education['startYear']),
-      minValue: convertStringToDateTime(education['startYear']),
-      onConfirm: (picker, value) => handleEndYearConfirm(picker),
+      initialValue: school.endYear != null 
+        ? convertStringToDateTime(school.endYear) 
+        : convertStringToDateTime(school.startYear),
+      minValue: convertStringToDateTime(school.startYear),
+      onConfirm: (picker, value) => handleEndYearConfirm(picker, school),
     ).build(context).showModal(context);
   }
 
-  void handleStartYearConfirm(Picker picker) {
+  void handleStartYearConfirm(Picker picker, School school) {
     var newStartDateTime = DateFormat('yyyy-MM-dd hh:mm:ss')
       .parse(picker.adapter.text);
     var newStartYear = convertDateTimeToString(newStartDateTime);
-    setState(() { 
-      education['startYear'] = newStartYear;
-      education['endYear'] = null;
-    });
+    store.dispatch(
+      UpdateSchool(
+        school.copyWith(
+          startYear: newStartYear,
+          endYear: null
+        )
+      )
+    );
     _saveEducationKey.currentState.fields['startYear'].currentState
       .didChange(newStartYear);
     _saveEducationKey.currentState.fields['endYear'].currentState
@@ -130,25 +175,36 @@ class _SaveEducationState extends State<SaveEducation> {
     _saveEducationKey.currentState.fields['startYear'].currentState.validate();
   }
 
-  void handleEndYearConfirm(Picker picker) {
+  void handleEndYearConfirm(Picker picker, School school) {
     var newEndDateTime = DateFormat('yyyy-MM-dd hh:mm:ss') 
       .parse(picker.adapter.text);
     var newEndYear = convertDateTimeToString(newEndDateTime);
-    setState(() => { education['endYear'] = newEndYear });
+    store.dispatch(
+      UpdateSchool(
+        school.copyWith(
+          endYear: newEndYear
+        )
+      )
+    );
     _saveEducationKey.currentState.fields['endYear'].currentState.
       didChange(newEndYear);
     _saveEducationKey.currentState.fields['endYear'].currentState.validate();
   }
 
-  Widget buildSchoolNameField() {
+  Widget buildSchoolNameField(School school) {
     return FormBuilderTextField(
       attribute: 'school',
-      initialValue: education['school'],
+      initialValue: school.name,
       decoration: fieldDecoration(),
       style: fieldTextStyle,
-      onChanged: (value) => setState(() { 
-        education['school'] = value as String;
-      }),
+      onChanged: (value) => store.dispatch(
+        UpdateSchool(
+          school.copyWith(
+            name: value,
+            endYear: school.endYear
+          )
+        )
+      ),
       focusNode: schoolFocus,
       validators: [
         FormBuilderValidators.required(),
@@ -158,15 +214,20 @@ class _SaveEducationState extends State<SaveEducation> {
     );
   }
 
-  Widget buildDegreeField() {
+  Widget buildDegreeField(School school) {
     return FormBuilderTextField(
       attribute: 'degree',
-      initialValue: education['degree'],
+      initialValue: school.program,
       decoration: fieldDecoration(),
       style: fieldTextStyle,
-      onChanged: (value) => setState(() { 
-        education['degree'] = value as String; 
-      }),
+      onChanged: (value) => store.dispatch(
+        UpdateSchool(
+          school.copyWith(
+            program: value,
+            endYear: school.endYear
+          )
+        )
+      ),
       focusNode: degreeFocus,
       validators: [
         FormBuilderValidators.required(),
@@ -176,7 +237,7 @@ class _SaveEducationState extends State<SaveEducation> {
     );
   }
 
-  Widget buildDateRangeRow() {
+  Widget buildDateRangeRow(School school) {
     return Row(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: <Widget>[
@@ -185,7 +246,7 @@ class _SaveEducationState extends State<SaveEducation> {
             padding: EdgeInsets.only(right: 10.0),
             child: InputField(
               labelText: saveEducationStartYear,
-              formField: buildStartYearField(),
+              formField: buildStartYearField(school),
             )
           )
         ),
@@ -193,9 +254,9 @@ class _SaveEducationState extends State<SaveEducation> {
           child: Container(
             padding: EdgeInsets.only(left: 10.0),
             child: InputField(
-              enabled: education['startYear'] != null,
+              enabled: school.startYear != null,
               labelText: saveEducationEndYear,
-              formField: buildEndYearField(),
+              formField: buildEndYearField(school),
             )
           )
         )
@@ -203,43 +264,43 @@ class _SaveEducationState extends State<SaveEducation> {
     );
   }
 
-  Widget buildStartYearField() {
+  Widget buildStartYearField(School school) {
     return PickerField(
       attribute: 'startYear',
-      initialValue: education['startYear'],
+      initialValue: school.startYear,
       isEnabled: true,
       isFocused: isStartYearFocused,
-      value: education['startYear'] ?? '',
+      value: school.startYear ?? '',
       onTap: () {
         unfocusTextFields();
         setState(() {
           isStartYearFocused = true;
           isEndYearFocused = false;
         });
-        showStartYearPicker(context);
+        showStartYearPicker(school);
       }
     );
   }
 
-  Widget buildEndYearField() {
+  Widget buildEndYearField(School school) {
     return PickerField(
       attribute: 'endYear',
-      initialValue: education['endYear'],
-      isEnabled: education['startYear'] != null,
+      initialValue: school.endYear,
+      isEnabled: school.startYear != null,
       isFocused: isEndYearFocused,
-      value: education['endYear'] ?? '',
+      value: school.endYear ?? '',
       onTap: () {
         unfocusTextFields();
         setState(() {
           isStartYearFocused = false;
           isEndYearFocused = true;
         });
-        showEndYearPicker(context);
+        showEndYearPicker(school);
       }
     );
   }
 
-  List<Widget> buildSaveEducationForm(context) {
+  List<Widget> buildSaveEducationForm(School school) {
     return <Widget>[
       FormBuilder(
         key: _saveEducationKey,
@@ -247,46 +308,16 @@ class _SaveEducationState extends State<SaveEducation> {
           children: <Widget>[
             InputField(
               labelText: saveEducationSchool,
-              formField: buildSchoolNameField()
+              formField: buildSchoolNameField(school)
             ),
             InputField(
               labelText: saveEducationDegree,
-              formField: buildDegreeField()
+              formField: buildDegreeField(school)
             ),
-            buildDateRangeRow()
+            buildDateRangeRow(school)
           ]
         )
       ),
     ];
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    return GestureDetector(
-      onTap: unfocusFields,
-      child: Scaffold(
-        appBar: AppBarWithSave(
-          appBarTitle: widget.editMode ? editEducation : addEducation,
-          data: education,
-          formKey: _saveEducationKey,
-          onActionTap: unfocusFields,
-        ),
-        backgroundColor: Colors.white,
-        body: Container(
-          padding: EdgeInsets.all(20.0),
-            child: ListView(
-            children: <Widget>[
-              ...buildSaveEducationForm(context),
-              widget.editMode
-              ? DeleteButton(
-                labelText: deleteEducation,
-                onPressed: () => 'Education deleted.'
-              )
-              : SizedBox()
-            ]
-          )
-        )
-      )
-    );
   }
 }

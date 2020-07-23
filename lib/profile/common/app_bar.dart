@@ -9,7 +9,6 @@ class AppBarWithSave extends StatelessWidget implements PreferredSizeWidget {
   final GlobalKey<FormBuilderState> formKey;
   final String appBarTitle;
   final void Function() onActionTap;
-  final Map<String, Object> data;
 
   final FocusNode saveFocus = FocusNode();
   final FocusNode closeFocus = FocusNode();
@@ -19,7 +18,6 @@ class AppBarWithSave extends StatelessWidget implements PreferredSizeWidget {
     @required this.appBarTitle,
     @required this.formKey,
     this.onActionTap,
-    this.data
   }) : super(key: key);
 
   @override
@@ -48,7 +46,6 @@ class AppBarWithSave extends StatelessWidget implements PreferredSizeWidget {
           getFocus(saveFocus);
           onActionTap();
           if (key.currentState.saveAndValidate()) {
-            print(data);
             print(key.currentState.value);
           } else {
             print("Validation failed.");

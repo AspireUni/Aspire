@@ -1,9 +1,12 @@
 import 'package:custom_navigation_bar/custom_navigation_bar.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_redux/flutter_redux.dart';
 
 import '../FTU/authentication.dart';
+import '../actions/actions.dart';
 import '../chat/chat.dart';
 import '../constants/app_controller_constants.dart';
+import '../models/models.dart';
 import '../pairings/pairings.dart';
 import '../profile/view_profile/user_profile.dart';
 
@@ -35,6 +38,8 @@ class _AppControllerState extends State<AppController> {
     try {
       await widget.auth.signOut();
       widget.logoutCallback();
+      StoreProvider.of<AppState>(context).dispatch(
+        UpdateUser(User.initial()));
     } on Exception catch (e) {
       print(e);
     }
@@ -56,6 +61,12 @@ class _AppControllerState extends State<AppController> {
           unSelectedColor: Colors.grey,
           backgroundColor: Colors.white,
         )
+      ),
+      // Temporary until profile and chat views are modified
+      // to look like the new mockups
+      theme: ThemeData(	
+        primaryColor: Color(0xFF0F1236),	
+        accentColor: Color(0xFF45cab9),	
       )
     ); 
   }
