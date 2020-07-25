@@ -24,7 +24,7 @@ Row addAppBarTextWidget() {
     mainAxisAlignment: MainAxisAlignment.spaceBetween,
     children: <Widget>[
       FormatText(
-        text: appTitle, 
+        text: appName, 
         fontSize: globalHeaderFontSize,
       ), 
       addAppBarActions()

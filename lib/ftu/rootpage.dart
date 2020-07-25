@@ -11,7 +11,7 @@ import '../profile/save_profile/save_profile.dart';
 import '../selectors/selectors.dart';
 import '../services/user_service.dart';
 import './authentication.dart';
-import './signuplogin.dart';
+import './get_started/intro.dart';
 
 class RootPage extends StatefulWidget {
   RootPage({Key key}) : super(key: key);
@@ -42,7 +42,7 @@ class _RootPageState extends State<RootPage>{
       case AuthStatus.notDetermined:
         return loadingScreen;
       case AuthStatus.notLoggedIn:
-        return LoginSignupPage();
+        return GetStartedIntro();
       case AuthStatus.loggedIn:
         if (state.userState.isFtu) {
           return SaveProfile(

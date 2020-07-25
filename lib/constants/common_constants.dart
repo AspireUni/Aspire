@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-const appTitle = "aspire";
+const appName = "aspire";
 
 enum AuthStatus {
   notDetermined,
