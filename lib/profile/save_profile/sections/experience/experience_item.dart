@@ -169,11 +169,7 @@ class _SaveExperienceItemState extends State<SaveExperienceItem> {
   }
 
   void handleSaveExperience() {
-    if (widget.editMode) {
-      store.dispatch(UpdateJob());
-    } else {
-      store.dispatch(AddJob());
-    }
+    store.dispatch(SaveJob(payload: widget.editMode));
     setState(() { isActive = false; });
     unfocusFields();
     Navigator.pop(context);

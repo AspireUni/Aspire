@@ -1,6 +1,7 @@
 import 'package:redux/redux.dart';
 
 import '../actions/actions.dart';
+import '../constants/common_constants.dart';
 import '../models/models.dart';
 import 'reducers.dart';
 
@@ -11,15 +12,21 @@ UserState _userReducer(UserState userState, dynamic action) {
     return action.payload;
   }
   if (action is ConvertToUserState) {
-    var user = User.fromJson(action.payload);
-    return UserState.initial().copyWith(
-      id: user.id,
-      isFtu: user.isFtu,
-      saveProfileState: SaveProfileState.initial().copyWith(
-        contact: Contact.initial().copyWith(
-          emailAddress: user.contact.emailAddress
+    if (action.payload != null) {
+      var user = User.fromJson(action.payload);
+      return UserState.initial().copyWith(
+        id: user.id,
+        isFtu: user.isFtu,
+        authStatus: AuthStatus.loggedIn,
+        saveProfileState: SaveProfileState.initial().copyWith(
+          contact: Contact.initial().copyWith(
+            emailAddress: user.contact.emailAddress
+          )
         )
-      )
+      );
+    }
+    return UserState.initial().copyWith(
+      authStatus: AuthStatus.notLoggedIn
     );
   }
   if (action is UpdateAuthStatus) {

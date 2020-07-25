@@ -110,8 +110,7 @@ class ProfileHeader extends StatelessWidget {
     var store = StoreProvider.of<AppState>(context);
     var uid = userIdSelector(store);
     var userData = await getUser(uid);
-    
-    store.dispatch(ConvertToSaveProfileState(User.fromJson(userData)));
+    store.dispatch(ConvertToSaveProfileState(userData));
     Navigator.push(
       context, 
       MaterialPageRoute(builder: (context) => 

@@ -3,7 +3,6 @@ import 'package:flutter_redux/flutter_redux.dart';
 import 'package:redux/redux.dart';
 
 import '../actions/actions.dart';
-import '../constants/common_constants.dart';
 import '../constants/signuplogin_constants.dart';
 import '../models/models.dart';
 import '../services/user_service.dart';
@@ -87,18 +86,10 @@ class _LoginSignupPageState extends State<LoginSignupPage> {
     var userId = await Auth().signIn(_email, _password);
     var userData = await getUser(userId);
     if (userData == null) {
-      await addUser(
-        User.initial().copyWith(
-          id: userId,
-          contact: Contact.initial().copyWith(
-            emailAddress: _email
-          )
-        ).toJson()
-      );
+      await addUser(userId, _email);
       userData = await getUser(userId);
     }
     store.dispatch(ConvertToUserState(userData));
-    store.dispatch(UpdateAuthStatus(AuthStatus.loggedIn));
   }
 
   Future<void> signUp() async {

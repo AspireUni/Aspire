@@ -125,11 +125,7 @@ class _SaveSkillItemState extends State<SaveSkillItem> {
   }
 
   void handleSaveSkill() {
-    if (widget.editMode) {
-      store.dispatch(UpdateSkill());
-    } else {
-      store.dispatch(AddSkill());
-    }
+    store.dispatch(SaveSkill(payload: widget.editMode));
     setState(() { isActive = false; });
     unfocusFields();
     Navigator.pop(context);

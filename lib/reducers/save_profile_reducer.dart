@@ -14,13 +14,14 @@ SaveProfileState _saveProfileStateReducer(
     return action.payload;
   }
   if (action is ConvertToSaveProfileState) {
+    var userJson = User.fromJson(action.payload);
     return SaveProfileState.initial().copyWith(
-      fullName: action.payload.fullName,
-      summary: action.payload.summary,
-      contact: action.payload.contact,
-      schools: action.payload.schools,
-      skills: action.payload.skills,
-      jobs: action.payload.jobs
+      fullName: userJson.fullName,
+      summary: userJson.summary,
+      contact: userJson.contact,
+      schools: userJson.schools,
+      skills: userJson.skills,
+      jobs: userJson.jobs
     );
   }
   if (action is UpdateFullName) {
@@ -29,24 +30,24 @@ SaveProfileState _saveProfileStateReducer(
   if (action is UpdateSummary) {
     return state.copyWith(summary: action.payload);
   }
-  if (action is AddSchool) {
+  if (action is SaveSchool) {
+    if (action.payload) {
+      var schools = state.schools.map((school) {
+        if (school.id == state.saveEducationState.id) {
+          return state.saveEducationState;
+        }
+        return school;
+      }).toList();
+      return state.copyWith(
+        schools: schools,
+        saveEducationState: School.initial()
+      );
+    }
     return state.copyWith(
       schools: [
         ...?state.schools,
         state.saveEducationState
       ],
-      saveEducationState: School.initial()
-    );
-  }
-  if (action is UpdateSchool) {
-    var schools = state.schools.map((school) {
-      if (school.id == state.saveEducationState.id) {
-        return state.saveEducationState;
-      }
-      return school;
-    }).toList();
-    return state.copyWith(
-      schools: schools,
       saveEducationState: School.initial()
     );
   }
@@ -58,24 +59,24 @@ SaveProfileState _saveProfileStateReducer(
       saveEducationState: School.initial()
     );
   }
-  if (action is AddJob) {
+  if (action is SaveJob) {
+    if (action.payload) {
+      var jobs = state.jobs.map((job) {
+        if (job.id == state.saveExperienceState.id) {
+          return state.saveExperienceState;
+        }
+        return job;
+      }).toList();
+      return state.copyWith(
+        jobs: jobs,
+        saveExperienceState: Job.initial()
+      );
+    }
     return state.copyWith(
       jobs: [
         ...?state.jobs,
         state.saveExperienceState
       ],
-      saveExperienceState: Job.initial()
-    );
-  }
-  if (action is UpdateJob) {
-    var jobs = state.jobs.map((job) {
-      if (job.id == state.saveExperienceState.id) {
-        return state.saveExperienceState;
-      }
-      return job;
-    }).toList();
-    return state.copyWith(
-      jobs: jobs,
       saveExperienceState: Job.initial()
     );
   }
@@ -87,24 +88,24 @@ SaveProfileState _saveProfileStateReducer(
       saveExperienceState: Job.initial()
     );
   }
-  if (action is AddSkill) {
+  if (action is SaveSkill) {
+    if (action.payload) {
+      var skills = state.skills.map((skill) {
+        if (skill.id == state.saveSkillState.id) {
+          return state.saveSkillState;
+        }
+        return skill;
+      }).toList();
+      return state.copyWith(
+        skills: skills,
+        saveSkillState: Skill.initial()
+      );
+    }
     return state.copyWith(
       skills: [
         ...?state.skills,
         state.saveSkillState
       ],
-      saveSkillState: Skill.initial()
-    );
-  }
-  if (action is UpdateSkill) {
-    var skills = state.skills.map((skill) {
-      if (skill.id == state.saveSkillState.id) {
-        return state.saveSkillState;
-      }
-      return skill;
-    }).toList();
-    return state.copyWith(
-      skills: skills,
       saveSkillState: Skill.initial()
     );
   }

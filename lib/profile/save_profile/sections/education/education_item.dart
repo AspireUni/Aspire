@@ -162,11 +162,7 @@ class _SaveEducationItemState extends State<SaveEducationItem> {
   }
 
   void handleSaveEducation() {
-    if (widget.editMode) {
-      store.dispatch(UpdateSchool());
-    } else {
-      store.dispatch(AddSchool());
-    }
+    store.dispatch(SaveSchool(payload: widget.editMode));
     setState(() { isActive = false; });
     unfocusFields();
     Navigator.pop(context);

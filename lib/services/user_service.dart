@@ -1,6 +1,8 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 
-Future getUser(id) async {
+import '../models/models.dart';
+
+Future<Map<String, dynamic>> getUser(String id) async {
   return (await Firestore
     .instance
     .collection("users")
@@ -8,22 +10,29 @@ Future getUser(id) async {
     .get()).data;
 }
 
-Future getUsers() async {
-  Firestore
+Future<QuerySnapshot> getUsers() async {
+  return Firestore
     .instance
     .collection("users")
     .getDocuments();
 }
 
-Future addUser(user) async {
+Future<void> addUser(String id, String email) async {
+  var user = User.initial().copyWith(
+    id: id,
+    contact: Contact.initial().copyWith(
+      emailAddress: email
+    )
+  ).toJson();
+
   Firestore
     .instance
     .collection("users")
-    .document(user["id"])
+    .document(id)
     .setData(user);
 }
 
-Future addUsers(allUsers) async {
+Future<void> addUsers(List<dynamic> allUsers) async {
   for (var user in allUsers) {
     Firestore
       .instance
@@ -33,7 +42,7 @@ Future addUsers(allUsers) async {
   }
 }
 
-Future updateUser(user) async {
+Future<void> updateUser(dynamic user) async {
   Firestore
     .instance
     .collection("users")

@@ -7,79 +7,57 @@ class UpdateSaveProfileState {
 }
 
 class ConvertToSaveProfileState {
-  final User payload;
-
+  final dynamic payload;
   ConvertToSaveProfileState(this.payload);
 }
 
 class UpdateFullName {
   final String payload;
-
   UpdateFullName(this.payload);
 }
 
 class UpdateSummary {
   final String payload;
-
   UpdateSummary(this.payload);
 }
 
 class UpdateContact {
   final Contact payload;
-
   UpdateContact(this.payload);
 }
 
-class UpdateSchool {
-  UpdateSchool();
+class SaveSchool {
+  final bool payload;
+  SaveSchool({this.payload});
 }
 
-class AddSchool {
-  AddSchool();
+class DeleteSchool {}
+
+class SaveJob {
+  final bool payload;
+  SaveJob({this.payload});
 }
 
-class DeleteSchool {
-  DeleteSchool();
+class DeleteJob {}
+
+class SaveSkill {
+  final bool payload;
+  SaveSkill({this.payload});
 }
 
-class UpdateJob {
-  UpdateJob();
-}
-
-class AddJob {
-  AddJob();
-}
-
-class DeleteJob {
-  DeleteJob();
-}
-
-class UpdateSkill {
-  UpdateSkill();
-}
-
-class AddSkill {
-  AddSkill();
-}
-
-class DeleteSkill {
-  DeleteSkill();
-}
+class DeleteSkill {}
 
 class UpdateSaveEducationState {
   final School payload;
-
   UpdateSaveEducationState(this.payload);
 }
 
 class UpdateSaveExperienceState {
   final Job payload;
-
   UpdateSaveExperienceState(this.payload);
 }
 
 class UpdateSaveSkillState {
   final Skill payload;
-
   UpdateSaveSkillState(this.payload);
 }

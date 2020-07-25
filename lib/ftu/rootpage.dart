@@ -33,14 +33,7 @@ class _RootPageState extends State<RootPage>{
   void getCurrentUser(Store<AppState> store) async {
     Auth().getCurrentUser().then((user) async {
       var userData = await getUser(user?.uid);
-      if (userData != null){
-        store.dispatch(ConvertToUserState(userData));
-      }
-      store.dispatch(
-        UpdateAuthStatus(
-          userData == null ? AuthStatus.notLoggedIn : AuthStatus.loggedIn
-        )
-      );
+      store.dispatch(ConvertToUserState(userData));
     });
   }
 
