@@ -32,6 +32,29 @@ Future<void> addUser(String id, String email) async {
     .setData(user);
 }
 
+Future<void> addMessage(
+  String idFrom, 
+  String idTo, 
+  String content, 
+  int type,
+  String groupChatId
+) async {
+  var message = Message(
+    idTo: idTo,
+    idFrom: idFrom,
+    content: content,
+    type: type,
+    timestamp: DateTime.now().millisecondsSinceEpoch.toString()
+  ).toJson();
+
+  Firestore
+    .instance
+    .collection('messages')
+    .document(groupChatId)
+    .collection(groupChatId)
+    .add(message);
+}
+
 Future<void> addUsers(List<dynamic> allUsers) async {
   for (var user in allUsers) {
     Firestore
@@ -49,3 +72,10 @@ Future<void> updateUser(dynamic user) async {
     .document(user["id"])
     .updateData(user);
 }
+
+// Future<void> getMatches() async {
+//   Firestore
+//     .instance
+//     .collection("matches")
+//     .document()
+// }

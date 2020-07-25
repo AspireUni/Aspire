@@ -10,6 +10,7 @@ import 'package:image_picker/image_picker.dart';
 import 'package:intl/intl.dart';
 
 import '../constants/chat_constants.dart';
+import '../services/user_service.dart';
 import './message.dart';
 
 class ChatMessengerState extends State<ChatMessenger> {
@@ -27,32 +28,14 @@ class ChatMessengerState extends State<ChatMessenger> {
   @override
   void initState() {
     super.initState();
-    groupChatId = '';
+    groupChatId = 'testtsteta';
     imageUrl = '';
   }
 
   void submitMessage (int type, String content) {
     if (content.trim() != '') {
       textInputController.clear();
-
-      var documentReference = Firestore.instance
-        .collection('messages')
-        .document('test')
-        .collection('test')
-        .document(DateTime.now().millisecondsSinceEpoch.toString());
-
-      Firestore.instance.runTransaction((transaction) async {
-        await transaction.set(
-          documentReference,
-          {
-            'idFrom': id,
-            'idTo': peerId,
-            'timestamp': DateTime.now().millisecondsSinceEpoch.toString(),
-            'content': content,
-            'type': type
-          },
-        );
-      });
+      addMessage(id, peerId, content, type, groupChatId);
       SystemSound.play(SystemSoundType.click);
     }
   }
@@ -185,8 +168,8 @@ class ChatMessengerState extends State<ChatMessenger> {
             child: StreamBuilder(
               stream: Firestore.instance
                 .collection('messages')
-                .document('test')
-                .collection('test')
+                .document(groupChatId)
+                .collection(groupChatId)
                 .orderBy('timestamp', descending: true)
                 .limit(20)
                 .snapshots(),
