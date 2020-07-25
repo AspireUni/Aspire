@@ -1,32 +1,38 @@
 import 'dart:convert';
 import 'package:meta/meta.dart';
 
-import './models.dart';
+import '../models.dart';
 
 @immutable
 class AppState {
-  final User user;
+  final UserState userState;
 
   const AppState({
-    @required this.user,
+    @required this.userState,
   });
 
   factory AppState.initial() {
     return AppState(
-      user: User.initial(),
+      userState: UserState.initial(),
     );
   }
 
-  AppState copyWith({@required User user}) {
-    return AppState(user: user ?? this.user);
+  AppState copyWith({
+    UserState userState,
+  }) {
+    return AppState(
+      userState: userState ?? this.userState
+    );
   }
 
   static AppState fromJson(dynamic json) => 
-    AppState(user: User.fromJson(json["user"]));
+    AppState(
+      userState: UserState.fromJson(json["userState"])
+    );
   
   dynamic toJson() => {
-      'user': user,
-    };
+    'userState': userState,
+  };
 
   @override
   String toString() {

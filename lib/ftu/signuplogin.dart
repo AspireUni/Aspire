@@ -1,17 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
+import 'package:redux/redux.dart';
 
 import '../actions/actions.dart';
 import '../constants/signuplogin_constants.dart';
 import '../models/models.dart';
+import '../services/user_service.dart';
 import './authentication.dart';
 
 
 class LoginSignupPage extends StatefulWidget {
-  LoginSignupPage({this.auth, this.loginCallback});
-
-  final BaseAuth auth;
-  final VoidCallback loginCallback;
+  LoginSignupPage({Key key}) : super(key: key);
 
   @override
   State<StatefulWidget> createState() => _LoginSignupPageState();
@@ -22,6 +21,7 @@ class _LoginSignupPageState extends State<LoginSignupPage> {
 
   String _email, _password, _errorMessage;
   bool _isLoginForm, _isLoading;
+  Store<AppState> store;
 
   bool validateAndSave() {
     final form = _formKey.currentState;
@@ -38,34 +38,16 @@ class _LoginSignupPageState extends State<LoginSignupPage> {
       _isLoading = true;
     });
     if (validateAndSave()) {
-      var userId = "";
       try {
         if (_isLoginForm) {
-          userId = await widget.auth.signIn(_email, _password);
-          StoreProvider.of<AppState>(context).dispatch(
-            UpdateUser(
-              User(
-                userID: userId,
-                contact: Contact(
-                  emailAddress: _email
-                )
-              )
-            )
-          );
-          print('Signed in: $userId');
+          await login();
         } else {
-          userId = await widget.auth.signUp(_email, _password);
-          widget.auth.sendEmailVerification();
-          _showVerifyEmailSentDialog();
-          print('Signed up user: $userId');
+          await signUp();
         }
         setState(() {
           _isLoading = false;
         });
 
-        if (userId.length > 0 && userId != null && _isLoginForm) {
-          widget.loginCallback();
-        }
       } on Exception catch (e) {
         print('Error: $e');
         setState(() {
@@ -79,10 +61,13 @@ class _LoginSignupPageState extends State<LoginSignupPage> {
 
   @override
   void initState() {
+    super.initState();
+
     _errorMessage = "";
     _isLoading = false;
     _isLoginForm = true;
-    super.initState();
+    
+    store = StoreProvider.of<AppState>(context, listen: false);
   }
 
   void resetForm() {
@@ -97,18 +82,34 @@ class _LoginSignupPageState extends State<LoginSignupPage> {
     });
   }
 
+  Future<void> login() async {
+    var userId = await Auth().signIn(_email, _password);
+    var userData = await getUser(userId);
+    if (userData == null) {
+      await addUser(userId, _email);
+      userData = await getUser(userId);
+    }
+    store.dispatch(ConvertToUserState(userData));
+  }
+
+  Future<void> signUp() async {
+    Auth().sendEmailVerification();
+    _showVerifyEmailSentDialog();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: AppBar(
-          title: Text(welcomeMessage),
-        ),
-        body: Stack(
-          children: <Widget>[
-            _showForm(),
-            _showCircularProgress(),
-          ],
-        ));
+      appBar: AppBar(
+        title: Text(welcomeMessage),
+      ),
+      body: Stack(
+        children: <Widget>[
+          _showForm(),
+          _showCircularProgress(),
+        ],
+      )
+    );
   }
 
   Widget _showCircularProgress() {

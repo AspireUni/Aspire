@@ -8,7 +8,9 @@ import '../../constants/profile_constants.dart';
 class AppBarWithSave extends StatelessWidget implements PreferredSizeWidget {
   final GlobalKey<FormBuilderState> formKey;
   final String appBarTitle;
-  final void Function() onActionTap;
+  final void Function() onSaveActionTap;
+  final void Function() onCloseActionTap;
+  final bool closeActionEnabled;
 
   final FocusNode saveFocus = FocusNode();
   final FocusNode closeFocus = FocusNode();
@@ -17,7 +19,9 @@ class AppBarWithSave extends StatelessWidget implements PreferredSizeWidget {
     Key key,
     @required this.appBarTitle,
     @required this.formKey,
-    this.onActionTap,
+    @required this.closeActionEnabled,
+    this.onSaveActionTap,
+    this.onCloseActionTap,
   }) : super(key: key);
 
   @override
@@ -26,7 +30,7 @@ class AppBarWithSave extends StatelessWidget implements PreferredSizeWidget {
   @override
   Widget build(BuildContext context) {
     return AppBar(
-      leading: closeAction(context),
+      leading: closeActionEnabled ? closeAction(context) : null,
       actions: <Widget>[saveAction(formKey)],
       backgroundColor: Theme.of(context).primaryColor,
       centerTitle: true,
@@ -44,9 +48,8 @@ class AppBarWithSave extends StatelessWidget implements PreferredSizeWidget {
         focusNode: saveFocus,
         onTap: () {
           getFocus(saveFocus);
-          onActionTap();
           if (key.currentState.saveAndValidate()) {
-            print(key.currentState.value);
+            onSaveActionTap();
           } else {
             print("Validation failed.");
           }
@@ -71,6 +74,7 @@ class AppBarWithSave extends StatelessWidget implements PreferredSizeWidget {
     return IconButton(
       focusNode: closeFocus,
       onPressed: () {
+        onCloseActionTap();
         getFocus(closeFocus);
         Navigator.pop(context);
         closeFocus.unfocus();

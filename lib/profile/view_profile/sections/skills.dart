@@ -1,28 +1,24 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_redux/flutter_redux.dart';
 
 import '../../../constants/profile_constants.dart';
 import '../../../models/models.dart';
-import '../../../selectors/selectors.dart';
 import '../../common/section.dart';
 import '../../common/skill_row.dart';
  
 class ProfileSkills extends StatelessWidget {  
-  ProfileSkills({Key key}) : super(key: key);
+  final List<Skill> skills;
+  ProfileSkills({Key key, @required this.skills}) : super(key: key);
   
   @override
   Widget build(BuildContext context) {
-    return StoreConnector<AppState, List<Skill>>(
-      converter: skillListSelector,
-      builder: (context, skills) => skills != null 
+    return skills.length > 0
       ? Section(
       title: sectionTitleSkills,
-      child: buildSkillList(skills)
-      ) : SizedBox()
-    );
+      child: buildSkillList()
+      ) : SizedBox();
   }
 
-  Widget buildSkillList(List<Skill> skills) {
+  Widget buildSkillList() {
     var expertList = <Widget>[];
     var intermediateList = <Widget>[];
     var beginnerList = <Widget>[];

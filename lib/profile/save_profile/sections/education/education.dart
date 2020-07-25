@@ -9,17 +9,17 @@ import '../../../common/add_row_button.dart';
 import '../../../common/school_row.dart';
 import '../../../common/section.dart';
 import '../../../common/styles.dart';
-import './save_education.dart';
+import './education_item.dart';
 
 
-class EditEducation extends StatefulWidget {
-  EditEducation({Key key}) : super(key: key);
+class SaveEducation extends StatefulWidget {
+  SaveEducation({Key key}) : super(key: key);
 
   @override
-  _EditEducationState createState() => _EditEducationState();
+  _SaveEducationState createState() => _SaveEducationState();
 }
 
-class _EditEducationState extends State<EditEducation> {
+class _SaveEducationState extends State<SaveEducation> {
 
   @override
   Widget build(BuildContext context) {
@@ -65,7 +65,7 @@ class _EditEducationState extends State<EditEducation> {
     Navigator.push(
       context, 
       MaterialPageRoute(
-        builder: (context) => SaveEducation(
+        builder: (context) => SaveEducationItem(
           editMode: false
         )
       )
@@ -76,7 +76,7 @@ class _EditEducationState extends State<EditEducation> {
     Navigator.push(
       context,
       MaterialPageRoute(
-        builder: (context) => SaveEducation(
+        builder: (context) => SaveEducationItem(
           editMode: true,
           schoolId: schoolId
         )

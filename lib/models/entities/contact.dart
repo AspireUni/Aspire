@@ -22,11 +22,12 @@ class Contact {
   }
 
   Contact copyWith({
+    String emailAddress,
     String phoneNumber,
     String website
   }) {
     return Contact(
-      emailAddress: emailAddress,
+      emailAddress: emailAddress ?? this.emailAddress,
       phoneNumber: phoneNumber ?? this.phoneNumber,
       website: website ?? this.website
     );

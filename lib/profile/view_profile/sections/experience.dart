@@ -1,28 +1,24 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_redux/flutter_redux.dart';
 
 import '../../../constants/profile_constants.dart';
 import '../../../models/models.dart';
-import '../../../selectors/selectors.dart';
 import '../../common/job_row.dart';
 import '../../common/section.dart';
  
-class ProfileExperience extends StatelessWidget {  
-  ProfileExperience({Key key}) : super(key: key);
+class ProfileExperience extends StatelessWidget {
+  final List<Job> jobs;
+  ProfileExperience({Key key, @required this.jobs}) : super(key: key);
   
   @override
   Widget build(BuildContext context) {
-    return StoreConnector<AppState, List<Job>>(
-      converter: jobListSelector,
-      builder: (context, jobs) => jobs != null 
+    return jobs.length > 0 
       ? Section(
         title: sectionTitleExperience,
-        child: buildJobList(jobs)
-      ) : SizedBox()
-    );
+        child: buildJobList()
+      ) : SizedBox();
   }
 
-  Widget buildJobList(List<Job> jobs) {
+  Widget buildJobList() {
     var jobList = <Widget>[];
     for (var i = 0; i < jobs.length; i++) {
       jobList.add(

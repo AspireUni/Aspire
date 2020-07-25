@@ -1,84 +1,48 @@
 import 'package:redux/redux.dart';
 
 import '../actions/actions.dart';
+import '../constants/common_constants.dart';
 import '../models/models.dart';
+import 'reducers.dart';
 
-final userReducer = TypedReducer<User, dynamic>(_updateUserReducer);
+final userReducer = TypedReducer<UserState, dynamic>(_userReducer);
 
-User _updateUserReducer(User user, dynamic action) {
-  if (action is UpdateUser) {
+UserState _userReducer(UserState userState, dynamic action) {
+  if (action is UpdateUserState) {
     return action.payload;
   }
-  if (action is UpdateFullName) {
-    return user.copyWith(fullName: action.payload);
-  }
-  if (action is UpdateSummary) {
-    return user.copyWith(summary: action.payload);
-  }
-  if (action is AddSchool) {
-    return user.copyWith(
-      schools: [
-        ...?user.schools,
-        action.payload
-      ]
+  if (action is ConvertToUserState) {
+    if (action.payload != null) {
+      var user = User.fromJson(action.payload);
+      return UserState.initial().copyWith(
+        id: user.id,
+        isFtu: user.isFtu,
+        authStatus: AuthStatus.loggedIn,
+        saveProfileState: SaveProfileState.initial().copyWith(
+          contact: Contact.initial().copyWith(
+            emailAddress: user.contact.emailAddress
+          )
+        )
+      );
+    }
+    return UserState.initial().copyWith(
+      authStatus: AuthStatus.notLoggedIn
     );
   }
-  if (action is UpdateSchool) {
-    var schools = user.schools.map((school) {
-      if (school.id == action.payload.id) {
-        return action.payload;
-      }
-      return school;
-    }).toList();
+  if (action is UpdateAuthStatus) {
+    return userState.copyWith(
+      authStatus: action.payload
+    );
+  }
+  if (action is UpdateIsFtu) {
+    return userState.copyWith(
+      isFtu: action.payload
+    );
+  }
 
-    return user.copyWith(
-      schools: schools
-    );
-  }
-  if (action is AddJob) {
-    return user.copyWith(
-      jobs: [
-        ...?user.jobs,
-        action.payload
-      ]
-    );
-  }
-  if (action is UpdateJob) {
-    var jobs = user.jobs.map((job) {
-      if (job.id == action.payload.id) {
-        return action.payload;
-      }
-      return job;
-    }).toList();
-
-    return user.copyWith(
-      jobs: jobs
-    );
-  }
-  if (action is AddSkill) {
-    return user.copyWith(
-      skills: [
-        ...?user.skills,
-        action.payload
-      ]
-    );
-  }
-  if (action is UpdateSkill) {
-    var skills = user.skills.map((skill) {
-      if (skill.id == action.payload.id) {
-        return action.payload;
-      }
-      return skill;
-    }).toList();
-
-    return user.copyWith(
-      skills: skills
-    );
-  }
-  if (action is UpdateContact) {
-    return user.copyWith(
-      contact: action.payload
-    );
-  }
-  return user;
+  return userState.copyWith(
+    saveProfileState: saveProfileStateReducer(
+      userState.saveProfileState, action
+    )
+  );
 }
