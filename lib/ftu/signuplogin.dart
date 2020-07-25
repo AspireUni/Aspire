@@ -5,6 +5,7 @@ import 'package:redux/redux.dart';
 import '../actions/actions.dart';
 import '../constants/signuplogin_constants.dart';
 import '../models/models.dart';
+import '../navigation/app_controller.dart';
 import '../services/user_service.dart';
 import './authentication.dart';
 
@@ -90,6 +91,12 @@ class _LoginSignupPageState extends State<LoginSignupPage> {
       userData = await getUser(userId);
     }
     store.dispatch(ConvertToUserState(userData));
+    Navigator.pushReplacement(
+      context,
+      MaterialPageRoute(
+        builder: (context) => AppController()
+      )
+    );
   }
 
   Future<void> signUp() async {
