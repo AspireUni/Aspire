@@ -1,23 +1,16 @@
 import 'package:custom_navigation_bar/custom_navigation_bar.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_redux/flutter_redux.dart';
 
-import '../FTU/authentication.dart';
-import '../actions/actions.dart';
 import '../chat/chat.dart';
 import '../constants/app_controller_constants.dart';
-import '../models/models.dart';
 import '../pairings/pairings.dart';
 import '../profile/view_profile/user_profile.dart';
 
 
 class AppController extends StatefulWidget {
-  AppController({Key key, this.auth, this.userId, this.logoutCallback})
-      : super(key: key);
+  final int tabIndex;
 
-  final BaseAuth auth;
-  final VoidCallback logoutCallback;
-  final String userId;
+  AppController({Key key, this.tabIndex}) : super(key: key);
 
   @override
   State<StatefulWidget> createState() => _AppControllerState();
@@ -25,30 +18,26 @@ class AppController extends StatefulWidget {
 
 class _AppControllerState extends State<AppController> {
 
+
   final GlobalKey<FormState> formKey = GlobalKey<FormState>();
   final List<Widget> _screens = [UserProfile(), Pairings(), Chat()];
-  int pageIndex = 1; 
+  int pageIndex; 
   double navBarIconSize = 25.0; 
+
+  @override
+  void initState() {
+    super.initState();
+
+    pageIndex = widget.tabIndex ?? 1;
+  }
 
   void tapNavItem(int tappedIndex) {
     setState(() { pageIndex = tappedIndex; });
   }
 
-  void signOut() async {
-    try {
-      await widget.auth.signOut();
-      widget.logoutCallback();
-      StoreProvider.of<AppState>(context).dispatch(
-        UpdateUser(User.initial()));
-    } on Exception catch (e) {
-      print(e);
-    }
-  }
-
   @override 
   Widget build(BuildContext context) {
-    return MaterialApp(
-      home: Scaffold(
+    return Scaffold(
         body: _screens[pageIndex],
         bottomNavigationBar: CustomNavigationBar(
           elevation: 0.0,
@@ -61,14 +50,7 @@ class _AppControllerState extends State<AppController> {
           unSelectedColor: Colors.grey,
           backgroundColor: Colors.white,
         )
-      ),
-      // Temporary until profile and chat views are modified
-      // to look like the new mockups
-      theme: ThemeData(	
-        primaryColor: Color(0xFF0F1236),	
-        accentColor: Color(0xFF45cab9),	
-      )
-    ); 
+      ); 
   }
 
   List<CustomNavigationBarItem> buildNavItems() {

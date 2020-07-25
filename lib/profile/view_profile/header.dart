@@ -1,15 +1,23 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:flutter_form_builder/flutter_form_builder.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:google_fonts/google_fonts.dart';
 
+import '../../actions/actions.dart';
 import '../../constants/profile_constants.dart';
 import '../../models/models.dart';
 import '../../selectors/selectors.dart';
-import '../edit_profile/edit_profile.dart';
+import '../../services/user_service.dart';
+import '../save_profile/save_profile.dart';
  
 class ProfileHeader extends StatelessWidget {
-  ProfileHeader({Key key}) : super(key: key);
+  final User user;
+
+  ProfileHeader({Key key, @required this.user}) : super(key: key);
+
+  final GlobalKey<FormBuilderState> _editProfileKey
+    = GlobalKey<FormBuilderState>();
   
   @override
   Widget build(BuildContext context) {
@@ -32,7 +40,7 @@ class ProfileHeader extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.center,
               children: <Widget> [
                 buildProfilePhoto(context),
-                buildFullName(),
+                buildFullName(context),
               ]
             )
           ),
@@ -57,27 +65,24 @@ class ProfileHeader extends StatelessWidget {
     );
   }
 
-  buildFullName() {
-    return StoreConnector<AppState, User>(
-      converter: userSelector,
-      builder: (context, user) => Container(
-        margin: EdgeInsets.only(top: 10.0),
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: <Text> [
-            Text(
-              user.fullName ?? '',
-              style: GoogleFonts.muli(
-                textStyle: TextStyle(
-                  color: Colors.white, 
-                  letterSpacing: .5, 
-                  fontSize: 20.0, 
-                  fontWeight: FontWeight.bold
-                ), 
-              )
+  buildFullName(context) {
+    return Container(
+      margin: EdgeInsets.only(top: 10.0),
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: <Text> [
+          Text(
+            user.fullName,
+            style: GoogleFonts.muli(
+              textStyle: TextStyle(
+                color: Colors.white, 
+                letterSpacing: .5, 
+                fontSize: 20.0, 
+                fontWeight: FontWeight.bold
+              ), 
             )
-          ]
-        )
+          )
+        ]
       )
     );
   }
@@ -101,10 +106,20 @@ class ProfileHeader extends StatelessWidget {
     );
   }
 
-  handleEditTap(BuildContext context) {
+  handleEditTap(BuildContext context) async {
+    var store = StoreProvider.of<AppState>(context);
+    var uid = userIdSelector(store);
+    var userData = await getUser(uid);
+    
+    store.dispatch(ConvertToSaveProfileState(User.fromJson(userData)));
     Navigator.push(
       context, 
-      MaterialPageRoute(builder: (context) => EditProfile())
+      MaterialPageRoute(builder: (context) => 
+        SaveProfile(
+          editMode: true,
+          formKey: _editProfileKey,
+        )
+      )
     );
   }
 }

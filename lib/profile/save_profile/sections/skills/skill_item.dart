@@ -17,24 +17,24 @@ import '../../../common/list_picker.dart';
 import '../../../common/picker_field.dart';
 import '../../../common/styles.dart';
 
-class SaveSkill extends StatefulWidget {
+class SaveSkillItem extends StatefulWidget {
   final bool editMode;
   final String skillId;
   
-  SaveSkill({Key key, @required this.editMode, this.skillId}) 
+  SaveSkillItem({Key key, @required this.editMode, this.skillId}) 
     : super(key: key);
 
   @override
-  _SaveSkillState createState() => _SaveSkillState();
+  _SaveSkillItemState createState() => _SaveSkillItemState();
 }
 
-class _SaveSkillState extends State<SaveSkill> {
-  final GlobalKey<FormBuilderState> _saveSkillKey 
+class _SaveSkillItemState extends State<SaveSkillItem> {
+  final GlobalKey<FormBuilderState> _saveSkillItemKey 
     = GlobalKey<FormBuilderState>();
   final FocusNode skillFocus = FocusNode();
   final List<String> skills = [skillBeginner, skillIntermediate, skillExpert];
   
-  bool isLevelFocused;
+  bool isLevelFocused, isActive;
   Store<AppState> store; 
   String generatedId;
 
@@ -43,11 +43,12 @@ class _SaveSkillState extends State<SaveSkill> {
     super.initState();
    
     isLevelFocused = false;
+    isActive = true;
 
     textFieldFocusListener(skillFocus, 'skill');
 
     if (!widget.editMode) {
-      generatedId = randomAlphaNumeric(10);
+      generatedId = randomAlphaNumeric(15);
     }
   }
 
@@ -66,13 +67,18 @@ class _SaveSkillState extends State<SaveSkill> {
       child: Scaffold(
         appBar: AppBarWithSave(
           appBarTitle: widget.editMode ? editSkill : addSkill,
-          formKey: _saveSkillKey,
-          onActionTap: unfocusFields,
+          formKey: _saveSkillItemKey,
+          closeActionEnabled: true,
+          onCloseActionTap: handleClose,
+          onSaveActionTap: handleSaveSkill,
         ),
         backgroundColor: Colors.white,
         body: StoreConnector<AppState, Skill>(
-          converter: (store) => skillSelector(
-            store, widget.skillId ?? generatedId
+          converter: (store) => saveSkillStateSelector(
+            store,
+            id: widget.skillId ?? generatedId,
+            editMode: widget.editMode,
+            isPageActive: isActive
           ),
           builder: (context, skill) => Container(
             padding: EdgeInsets.all(20.0),
@@ -82,7 +88,7 @@ class _SaveSkillState extends State<SaveSkill> {
                 widget.editMode
                 ? DeleteButton(
                   labelText: deleteSkill,
-                  onPressed: () => print('Skill deleted.')
+                  onPressed: handleDeleteSkill
                 )
                 : SizedBox()
               ]
@@ -109,23 +115,50 @@ class _SaveSkillState extends State<SaveSkill> {
       if (focus.hasFocus) {
         unfocusLevelField();
       } else {
-        _saveSkillKey.currentState.fields[attribute].currentState.validate();
+        _saveSkillItemKey
+          .currentState
+          .fields[attribute]
+          .currentState
+          .validate();
       }
     });
+  }
+
+  void handleSaveSkill() {
+    if (widget.editMode) {
+      store.dispatch(UpdateSkill());
+    } else {
+      store.dispatch(AddSkill());
+    }
+    setState(() { isActive = false; });
+    unfocusFields();
+    Navigator.pop(context);
+  }
+
+  void handleDeleteSkill() {
+    store.dispatch(DeleteSkill());
+    setState(() { isActive = false; });
+    unfocusFields();
+    Navigator.pop(context);
+  }
+
+  void handleClose() {
+    store.dispatch(UpdateSaveSkillState(Skill.initial()));
+    setState(() { isActive = false; });
   }
 
   void handleLevelConfirm(Picker picker, Skill skill) {
     var newLevel = picker.getSelectedValues()[0].toString();
     store.dispatch(
-      UpdateSkill(
+      UpdateSaveSkillState(
         skill.copyWith(
           level: newLevel
         )
       )
     );
-    _saveSkillKey.currentState.fields['level'].currentState
+    _saveSkillItemKey.currentState.fields['level'].currentState
       .didChange(newLevel);    
-    _saveSkillKey.currentState.fields['level'].currentState
+    _saveSkillItemKey.currentState.fields['level'].currentState
       .validate();
   }
 
@@ -147,7 +180,7 @@ class _SaveSkillState extends State<SaveSkill> {
       decoration: fieldDecoration(),
       style: fieldTextStyle,
       onChanged: (value) => store.dispatch(
-        UpdateSkill(
+        UpdateSaveSkillState(
           skill.copyWith(
             name: value
           )
@@ -182,7 +215,7 @@ class _SaveSkillState extends State<SaveSkill> {
   List<Widget> buildSaveSkillForm(Skill skill) {
     return <Widget>[
       FormBuilder(
-        key: _saveSkillKey,
+        key: _saveSkillItemKey,
         child: Column(
           children: <Widget>[
             InputField(

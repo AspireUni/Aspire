@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+
+import '../../../models/models.dart';
 import './contact.dart';
 import './education.dart';
 import './experience.dart';
@@ -6,8 +8,10 @@ import './skills.dart';
 import './summary.dart';
 
  
-class ProfileSections extends StatelessWidget {  
-  ProfileSections({Key key}) : super(key: key);
+class ProfileSections extends StatelessWidget {
+  final User user;
+
+  ProfileSections({Key key, @required this.user}) : super(key: key);
   
   @override
   Widget build(BuildContext context) {
@@ -19,11 +23,11 @@ class ProfileSections extends StatelessWidget {
           scrollDirection: Axis.vertical,
           shrinkWrap: true,
           children: <Widget> [
-            ProfileSummary(),
-            ProfileEducation(),
-            ProfileExperience(),
-            ProfileSkills(),
-            ProfileContact()
+            ProfileSummary(summary: user.summary),
+            ProfileEducation(schools: user.schools),
+            ProfileExperience(jobs: user.jobs),
+            ProfileSkills(skills: user.skills),
+            ProfileContact(user: user)
           ]
         )
       )

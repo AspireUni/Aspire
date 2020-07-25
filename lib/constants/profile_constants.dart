@@ -29,13 +29,12 @@ const String skillExpert = 'Expert';
 const String skillIntermediate = 'Intermediate';
 const String skillBeginner = 'Beginner';
 
-// Edit profile
+// Save profile
+const String buildProfile = 'Build your profile';
 const String editProfile = 'Edit profile';
-const String editContactInfo = 'Edit contact info';
-const String editSummary = 'Edit summary';
 const String editEducation = 'Edit education';
 const String editExperience = 'Edit experience';
-const String editSkills = 'Edit skills';
+const String editSkills = 'Edit skill';
 const String addEducationRowText = 'Add education...';
 const String addExperienceRowText = 'Add experience...';
 const String addSkillRowText = 'Add skill...';

@@ -1,28 +1,24 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_redux/flutter_redux.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 import '../../../constants/profile_constants.dart';
-import '../../../models/models.dart';
-import '../../../selectors/selectors.dart';
 import '../../common/section.dart';
  
-class ProfileSummary extends StatelessWidget {  
-  ProfileSummary({Key key}) : super(key: key);
+class ProfileSummary extends StatelessWidget {
+  final String summary;
+  
+  ProfileSummary({Key key, @required this.summary}) : super(key: key);
   
   @override
   Widget build(BuildContext context) {
-    return StoreConnector<AppState, User>(
-      converter: userSelector,
-      builder: (context, user) => user.summary != null 
+    return summary != '' 
       ? Section(
         title: sectionTitleSummary,
-        child: buildSummary(user.summary)
-      ) : SizedBox()
-    );
+        child: buildSummary()
+      ) : SizedBox();
   }
 
-  buildSummary(String summary) {
+  buildSummary() {
     return Padding(
       padding: EdgeInsets.only(bottom: 20.0),
       child: Row(

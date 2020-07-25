@@ -9,16 +9,16 @@ import '../../../common/add_row_button.dart';
 import '../../../common/section.dart';
 import '../../../common/skill_row.dart';
 import '../../../common/styles.dart';
-import './save_skill.dart';
+import 'skill_item.dart';
 
-class EditSkills extends StatefulWidget {
-  EditSkills({Key key}) : super(key: key);
+class SaveSkills extends StatefulWidget {
+  SaveSkills({Key key}) : super(key: key);
 
   @override
-  _EditSkillsState createState() => _EditSkillsState();
+  _SaveSkillsState createState() => _SaveSkillsState();
 }
 
-class _EditSkillsState extends State<EditSkills> {
+class _SaveSkillsState extends State<SaveSkills> {
 
   @override
   Widget build(BuildContext context) {
@@ -81,7 +81,7 @@ class _EditSkillsState extends State<EditSkills> {
     Navigator.push(
       context, 
       MaterialPageRoute(
-        builder: (context) => SaveSkill(
+        builder: (context) => SaveSkillItem(
           editMode: false
         )
       )
@@ -92,7 +92,7 @@ class _EditSkillsState extends State<EditSkills> {
     Navigator.push(
       context,
       MaterialPageRoute(
-        builder: (context) => SaveSkill(
+        builder: (context) => SaveSkillItem(
           editMode: true,
           skillId: skillId
         )

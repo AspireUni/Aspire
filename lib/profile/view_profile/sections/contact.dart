@@ -1,6 +1,5 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_redux/flutter_redux.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:url_launcher/url_launcher.dart';
 
@@ -8,13 +7,13 @@ import '../../../chat/chat_messenger.dart';
 import '../../../constants/chat_constants.dart';
 import '../../../constants/profile_constants.dart';
 import '../../../models/models.dart';
-import '../../../selectors/selectors.dart';
 import '../../common/section.dart';
 
  
-class ProfileContact extends StatelessWidget {  
-  ProfileContact({Key key}) 
-    : super(key: key);
+class ProfileContact extends StatelessWidget {
+  final User user;
+
+  ProfileContact({Key key, @required this.user}) : super(key: key);
 
   final IconData chat = IconData(
     chatIconCodePoint,
@@ -44,47 +43,44 @@ class ProfileContact extends StatelessWidget {
   Widget build(BuildContext context) {
     return Section(
       title: sectionTitleContact,
-      child: buildInfoList()
+      child: buildInfoList(context)
     );
   }
 
-  Widget buildInfoList() {
-    return StoreConnector<AppState, Contact>(
-      converter: contactSelector,
-      builder: (context, contact) => SectionList(
-        children: <Widget>[
-          // TODO: This row should only be visible 
-          // when the user is viewing other uses' profiles
-          buildInfoRow(
-            context, 
-            chat, 
-            contactChat, 
-            contactChatSubtitle,
-            () => handleChatTap(context)
-          ),
-          buildInfoRow(
-            context, 
-            email, 
-            contactEmailAddress, 
-            contact.emailAddress,
-            () => handleEmailTap(contact.emailAddress)
-          ),
-          buildInfoRow(
-            context,
-            phone,
-            contactPhoneNumber,
-            contact.phoneNumber ?? '',
-            () => handlePhoneTap(contact.phoneNumber)
-          ),
-          buildInfoRow(
-            context,
-            web,
-            contactWebsite,
-            contact.website ?? '',
-            () => handleWebsiteTap(contact.website)
-          )
-        ]
-      )
+  Widget buildInfoList(BuildContext context) {
+    return SectionList(
+      children: <Widget>[
+        // TODO: This row should only be visible 
+        // when the user is viewing other uses' profiles
+        buildInfoRow(
+          context, 
+          chat, 
+          contactChat, 
+          contactChatSubtitle,
+          () => handleChatTap(context)
+        ),
+        buildInfoRow(
+          context, 
+          email, 
+          contactEmailAddress, 
+          user.contact.emailAddress,
+          handleEmailTap
+        ),
+        buildInfoRow(
+          context,
+          phone,
+          contactPhoneNumber,
+          user.contact.phoneNumber,
+          handlePhoneTap
+        ),
+        buildInfoRow(
+          context,
+          web,
+          contactWebsite,
+          user.contact.website,
+          handleWebsiteTap
+        )
+      ]
     );
   }
 
@@ -139,27 +135,24 @@ class ProfileContact extends StatelessWidget {
     Navigator.push(
       context, 
       MaterialPageRoute(
-        builder: (context) => StoreConnector<AppState, User>(
-          converter: userSelector,
-          builder: (context, user) => ChatMessenger(
-            recipient: user.fullName ?? '',
-            peerId: mockPeerId
-          )
+        builder: (context) => ChatMessenger(
+          recipient: user.fullName,
+          peerId: mockPeerId
         )
       )
     );
   }
 
-  void handleEmailTap(String emailAddress) {
-    _launchUrl("mailto:$emailAddress");
+  void handleEmailTap() {
+    _launchUrl("mailto:${user.contact.emailAddress}");
   }
 
-  void handlePhoneTap(String phoneNumber) {
-    _launchUrl("tel:$phoneNumber");
+  void handlePhoneTap() {
+    _launchUrl("tel:${user.contact.phoneNumber}");
   }
 
-  void handleWebsiteTap(String website) {
-    _launchUrl(website);
+  void handleWebsiteTap() {
+    _launchUrl(user.contact.website);
   }
 
   void _launchUrl(String url) async {

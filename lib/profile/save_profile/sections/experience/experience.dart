@@ -9,17 +9,17 @@ import '../../../common/add_row_button.dart';
 import '../../../common/job_row.dart';
 import '../../../common/section.dart';
 import '../../../common/styles.dart';
-import './save_experience.dart';
+import './experience_item.dart';
 
 
-class EditExperience extends StatefulWidget {  
-  EditExperience({Key key}) : super(key: key);
+class SaveExperience extends StatefulWidget {  
+  SaveExperience({Key key}) : super(key: key);
 
   @override
-  _EditExperienceState createState() => _EditExperienceState();
+  _SaveExperienceState createState() => _SaveExperienceState();
 }
 
-class _EditExperienceState extends State<EditExperience> {
+class _SaveExperienceState extends State<SaveExperience> {
 
   @override
   Widget build(BuildContext context) {
@@ -67,7 +67,7 @@ class _EditExperienceState extends State<EditExperience> {
     Navigator.push(
       context, 
       MaterialPageRoute(
-        builder: (context) => SaveExperience(
+        builder: (context) => SaveExperienceItem(
           editMode: false
         )
       )
@@ -78,7 +78,7 @@ class _EditExperienceState extends State<EditExperience> {
     Navigator.push(
       context,
       MaterialPageRoute(
-        builder: (context) => SaveExperience(
+        builder: (context) => SaveExperienceItem(
           editMode: true,
           jobId: jobId
         )

@@ -18,28 +18,26 @@ import '../../../common/input_field.dart';
 import '../../../common/picker_field.dart';
 import '../../../common/styles.dart';
 
-class SaveExperience extends StatefulWidget {
+class SaveExperienceItem extends StatefulWidget {
   final bool editMode;
   final String jobId;
 
-  SaveExperience({Key key, @required this.editMode, this.jobId}) 
+  SaveExperienceItem({Key key, @required this.editMode, this.jobId}) 
     : super(key: key);
 
   @override
-  _SaveExperienceState createState() => _SaveExperienceState();
+  _SaveExperienceItemState createState() => _SaveExperienceItemState();
 }
 
-class _SaveExperienceState extends State<SaveExperience> {
-  final GlobalKey<FormBuilderState> _saveExperienceKey 
+class _SaveExperienceItemState extends State<SaveExperienceItem> {
+  final GlobalKey<FormBuilderState> _saveExperienceItemKey 
     = GlobalKey<FormBuilderState>();
   final FocusNode jobTitleFocus = FocusNode();
   final FocusNode companyFocus = FocusNode();
   
-  bool isStartDateFocused, isEndDateFocused, isEndDateEnabled;
+  bool isStartDateFocused, isEndDateFocused, isEndDateEnabled, isActive;
   Store<AppState> store; 
   String generatedId;
-
-  String stateText;
 
   @override
   void initState() {
@@ -48,12 +46,13 @@ class _SaveExperienceState extends State<SaveExperience> {
     isStartDateFocused = false;
     isEndDateFocused = false;
     isEndDateEnabled = widget.editMode;
+    isActive = true;
 
     textFieldFocusListener(jobTitleFocus, 'jobTitle');
     textFieldFocusListener(companyFocus, 'company');
 
      if (!widget.editMode) {
-      generatedId = randomAlphaNumeric(10);
+      generatedId = randomAlphaNumeric(15);
     }
   }
 
@@ -73,23 +72,28 @@ class _SaveExperienceState extends State<SaveExperience> {
       child: Scaffold(
         appBar: AppBarWithSave(
           appBarTitle: widget.editMode ? editExperience : addExperience,
-          formKey: _saveExperienceKey,
-          onActionTap: unfocusFields,
+          formKey: _saveExperienceItemKey,
+          closeActionEnabled: true,
+          onCloseActionTap: handleClose,
+          onSaveActionTap: handleSaveExperience,
         ),
         backgroundColor: Colors.white,
         body: StoreConnector<AppState, Job>(
-          converter: (store) => jobSelector(
-            store, widget.jobId ?? generatedId
+          converter: (store) => saveExperienceStateSelector(
+            store,
+            id: widget.jobId ?? generatedId,
+            editMode: widget.editMode,
+            isPageActive: isActive
           ),
           builder: (context, job) => Container(
           padding: EdgeInsets.all(20.0),
             child: ListView(
               children: <Widget>[
-                ...buildSaveExperienceForm(job),
+                ...buildSaveExperienceItemForm(job),
                 widget.editMode
                 ? DeleteButton(
                   labelText: deleteExperience,
-                  onPressed: () => 'Experience deleted.'
+                  onPressed: handleDeleteExperience
                 )
                 : SizedBox()
               ]
@@ -122,7 +126,7 @@ class _SaveExperienceState extends State<SaveExperience> {
       if (focus.hasFocus) {
         unfocusDateRangeFields();
       } else {
-        _saveExperienceKey.currentState.fields[attribute].currentState
+        _saveExperienceItemKey.currentState.fields[attribute].currentState
           .validate();
       }
     });
@@ -164,12 +168,35 @@ class _SaveExperienceState extends State<SaveExperience> {
     ).build(context).showModal(context);
   }
 
+  void handleSaveExperience() {
+    if (widget.editMode) {
+      store.dispatch(UpdateJob());
+    } else {
+      store.dispatch(AddJob());
+    }
+    setState(() { isActive = false; });
+    unfocusFields();
+    Navigator.pop(context);
+  }
+
+  void handleDeleteExperience() {
+    store.dispatch(DeleteJob());
+    setState(() { isActive = false; });
+    unfocusFields();
+    Navigator.pop(context);
+  }
+
+  void handleClose() {
+    store.dispatch(UpdateSaveExperienceState(Job.initial()));
+    setState(() { isActive = false; });
+  }
+
   void handleStartDateConfirm(Picker picker, Job job) {
     var newStartDateTime = DateFormat('yyyy-MM-dd hh:mm:ss')
       .parse(picker.adapter.text);
     var newStartDate = convertDateTimeToString(newStartDateTime);
     store.dispatch(
-      UpdateJob(
+      UpdateSaveExperienceState(
         job.copyWith(
           startDate: newStartDate,
           endDate: null
@@ -177,11 +204,11 @@ class _SaveExperienceState extends State<SaveExperience> {
       )
     );
     setState(() { isEndDateEnabled = true; });
-    _saveExperienceKey.currentState.fields['startDate'].currentState
+    _saveExperienceItemKey.currentState.fields['startDate'].currentState
       .didChange(newStartDate);
-    _saveExperienceKey.currentState.fields['endDate'].currentState
+    _saveExperienceItemKey.currentState.fields['endDate'].currentState
       .didChange(null);
-    _saveExperienceKey.currentState.fields['startDate'].currentState
+    _saveExperienceItemKey.currentState.fields['startDate'].currentState
       .validate();
   }
 
@@ -190,49 +217,45 @@ class _SaveExperienceState extends State<SaveExperience> {
       .parse(picker.adapter.text);
     var newEndDate = convertDateTimeToString(newEndDateTime);
     store.dispatch(
-      UpdateJob(
+      UpdateSaveExperienceState(
         job.copyWith(
           endDate: newEndDate
         )
       )
     );
-    _saveExperienceKey.currentState.fields['endDate'].currentState
+    _saveExperienceItemKey.currentState.fields['endDate'].currentState
       .didChange(newEndDate);
-    _saveExperienceKey.currentState.fields['endDate'].currentState
+    _saveExperienceItemKey.currentState.fields['endDate'].currentState
       .validate();
   }
 
   void handleCurrentJobSwitch(dynamic value, Job job){
     unfocusDateRangeFields();
-    print(value);
-    print(job);
     if (value as bool) {
-      print("present!");
       store.dispatch(
-        UpdateJob(
+        UpdateSaveExperienceState(
           job.copyWith(
             endDate: endDatePresent,
           )
         )
       );
       setState(() { isEndDateEnabled = false; });
-      _saveExperienceKey.currentState.fields['endDate'].currentState
+      _saveExperienceItemKey.currentState.fields['endDate'].currentState
         .didChange(endDatePresent);
     } else {
-      print("no!");
 
       store.dispatch(
-        UpdateJob(
+        UpdateSaveExperienceState(
           job.copyWith(
             endDate: null
           )
         )
       );
       setState(() { isEndDateEnabled = true; });
-      _saveExperienceKey.currentState.fields['endDate'].currentState
+      _saveExperienceItemKey.currentState.fields['endDate'].currentState
         .didChange(null);
     }
-    _saveExperienceKey.currentState.fields['endDate'].currentState
+    _saveExperienceItemKey.currentState.fields['endDate'].currentState
       .validate();
   }
 
@@ -243,7 +266,7 @@ class _SaveExperienceState extends State<SaveExperience> {
       decoration: fieldDecoration(),
       style: fieldTextStyle,
       onChanged: (value) => store.dispatch(
-        UpdateJob(
+        UpdateSaveExperienceState(
           job.copyWith(
             title: value,
             endDate: job.endDate
@@ -266,7 +289,7 @@ class _SaveExperienceState extends State<SaveExperience> {
       decoration: fieldDecoration(),
       style: fieldTextStyle,
       onChanged: (value) => store.dispatch(
-        UpdateJob(
+        UpdateSaveExperienceState(
           job.copyWith(
             company: value,
             endDate: job.endDate
@@ -369,10 +392,10 @@ class _SaveExperienceState extends State<SaveExperience> {
     );
   }
 
-  List<Widget> buildSaveExperienceForm(Job job) {
+  List<Widget> buildSaveExperienceItemForm(Job job) {
     return <Widget>[
       FormBuilder(
-        key: _saveExperienceKey,
+        key: _saveExperienceItemKey,
         child: Column(
           children: <Widget>[
             InputField(
@@ -390,4 +413,5 @@ class _SaveExperienceState extends State<SaveExperience> {
       ),
     ];
   }
+
 }

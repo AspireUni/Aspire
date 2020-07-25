@@ -10,14 +10,14 @@ import '../../../../models/models.dart';
 import '../../../../selectors/selectors.dart';
 import '../../../common/styles.dart';
 
-class EditSummary extends StatefulWidget {
-EditSummary({Key key}) : super(key: key);
+class SaveSummary extends StatefulWidget {
+  SaveSummary({Key key}) : super(key: key);
 
   @override
-  _EditSummaryState createState() => _EditSummaryState();
+  _SaveSummaryState createState() => _SaveSummaryState();
 }
 
-class _EditSummaryState extends State<EditSummary> {
+class _SaveSummaryState extends State<SaveSummary> {
 
   Store<AppState> store; 
 
@@ -25,15 +25,15 @@ class _EditSummaryState extends State<EditSummary> {
   Widget build(BuildContext context) {
     store = StoreProvider.of<AppState>(context);
 
-    return StoreConnector<AppState, User>(
-      converter: userSelector,
-      builder: (context, user) => Container(
+    return StoreConnector<AppState, SaveProfileState>(
+      converter: saveProfileStateSelector,
+      builder: (context, state) => Container(
         padding: EdgeInsets.only(bottom: 20.0),
         child: Column(
           children: <Widget>[
             FormBuilderTextField(
               attribute: 'summary',
-              initialValue: user.summary,
+              initialValue: state.summary,
               decoration: InputDecoration(
                 hintText: summaryHintMessage,
                 border: InputBorder.none,
