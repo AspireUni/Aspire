@@ -34,7 +34,7 @@ const String buildProfile = 'Build your profile';
 const String editProfile = 'Edit profile';
 const String editEducation = 'Edit education';
 const String editExperience = 'Edit experience';
-const String editSkills = 'Edit skill';
+const String editSkill = 'Edit skill';
 const String addEducationRowText = 'Add education...';
 const String addExperienceRowText = 'Add experience...';
 const String addSkillRowText = 'Add skill...';
@@ -68,7 +68,6 @@ const String currentJobSwitchText = 'I currently work here.';
 
 // Save (add/edit) skill
 const String addSkill = 'Add skill';
-const String editSkill = 'Edit skill';
 const String saveSkillSkill = 'Skill';
 const String saveSkillLevel = 'Level';
 const String deleteSkill = 'Delete skill';

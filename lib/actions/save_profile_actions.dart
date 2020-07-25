@@ -2,7 +2,6 @@ import '../models/models.dart';
 
 class UpdateSaveProfileState {
   final SaveProfileState payload;
-
   UpdateSaveProfileState(this.payload);
 }
 

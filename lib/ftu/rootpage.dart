@@ -3,10 +3,10 @@ import 'package:flutter_form_builder/flutter_form_builder.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:redux/redux.dart';
 
-import '../Navigation/app_controller.dart';
 import '../actions/actions.dart';
 import '../constants/common_constants.dart';
 import '../models/models.dart';
+import '../navigation/app_controller.dart';
 import '../profile/save_profile/save_profile.dart';
 import '../selectors/selectors.dart';
 import '../services/user_service.dart';
