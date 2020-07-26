@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import '../common/global_header/global_header.dart';
+import '../common/global_header.dart';
 import './pairings_card.dart';
 
 class Pairings extends StatelessWidget {
@@ -9,24 +9,13 @@ class Pairings extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: GlobalHeader(),
       backgroundColor: Colors.white,
-      body: Padding(
-        padding: EdgeInsets.only(top: 50.0),
-        child: Container(
-          child: Column(
-            children: buildPairingsView(context)
-          )
-        )
-      )
+      body: buildPairingsView(context)
     );
   }
 }
 
-buildPairingsView(BuildContext context) {
-  return (
-    <Widget>[
-      GlobalHeader(), 
-      PairingsCard()
-    ]
-  );
+Widget buildPairingsView(BuildContext context) {
+  return PairingsCard();
 }

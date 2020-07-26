@@ -3,6 +3,8 @@ import 'package:flutter_redux/flutter_redux.dart';
 import 'package:redux/redux.dart';
 
 import '../actions/actions.dart';
+import '../common/global_header.dart';
+import '../constants/common_constants.dart';
 import '../constants/signuplogin_constants.dart';
 import '../models/models.dart';
 import '../navigation/app_controller.dart';
@@ -107,8 +109,9 @@ class _LoginSignupPageState extends State<LoginSignupPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Text(welcomeMessage),
+      appBar: GlobalHeader(
+        actionText: signUpAction,
+        onActionTap: () => {}
       ),
       body: Stack(
         children: <Widget>[
@@ -194,7 +197,7 @@ class _LoginSignupPageState extends State<LoginSignupPage> {
         child: CircleAvatar(
           backgroundColor: Colors.transparent,
           radius: 48.0,
-          child: Image.asset('images/logos/logo_transparent.png'),
+          child: Image.asset('images/logos/light_logo_transparent.png'),
         ),
       ),
     );
