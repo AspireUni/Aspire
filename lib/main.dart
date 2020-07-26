@@ -1,4 +1,3 @@
-import 'package:custom_splash/custom_splash.dart';
 import 'package:device_preview/device_preview.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
@@ -8,7 +7,9 @@ import 'package:redux_persist/redux_persist.dart';
 import 'package:redux_persist_flutter/redux_persist_flutter.dart';
 
 import './constants/signuplogin_constants.dart';
+import './constants/theme_constants.dart';
 import './models/models.dart';
+import './navigation/app_controller.dart';
 import './navigation/root.dart';
 import './reducers/reducers.dart';
 
@@ -57,16 +58,15 @@ class App extends StatelessWidget {
     return MaterialApp(
       title: welcomeMessage,
       debugShowCheckedModeBanner: false,
-      theme: ThemeData(
-        primarySwatch: Colors.blue,
+      theme: ThemeData(	
+        primaryColor: primaryColor,	
+        accentColor: accentColor,	
       ),
-      home: CustomSplash(
-        imagePath: 'images/logos/light_logo_transparent.png', 
-        backGroundColor: Color(0xFF0A0B33),
-        home: Root(),
-        duration: 3000, 
-        type: CustomSplashType.StaticDuration
-      )
+      initialRoute: '/',
+      routes: {
+        '/': (context) => Root(),
+        '/AppController': (context) => AppController()
+      }
     );
   }
 }
