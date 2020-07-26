@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
 
 const appName = "aspire";
+const nextButtonText = "Next";
+const addButtonText = "Add";
+const skipButtonText = "Skip";
 
 // Global header
 const skipAction = "Skip";
