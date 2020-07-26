@@ -1,15 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
+import '../../common/footer_links.dart';
 import '../../common/format_text.dart';
 import '../../common/primary_button.dart';
 import '../../constants/common_constants.dart';
 import '../../constants/ftu_constants.dart';
-import '../login_create_account/login_create_account.dart';
+import '../signuplogin.dart';
 
-class GetStartedIntro extends StatelessWidget {
+class LoginCreateAccount extends StatelessWidget {
   
-  GetStartedIntro({Key key}) : super(key: key);
+  LoginCreateAccount({Key key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -17,7 +18,7 @@ class GetStartedIntro extends StatelessWidget {
     var screenHeight = MediaQuery.of(context).size.height;
 
     return Scaffold(
-      backgroundColor: Theme.of(context).primaryColor,
+      backgroundColor: Colors.white,
       body: Container(
         width: screenWidth,
         child: Stack(
@@ -25,17 +26,18 @@ class GetStartedIntro extends StatelessWidget {
           children: <Widget>[
              Positioned(
               top: screenHeight * 0.15,
-              child: buildTitle()
+              child: buildTitle(context)
             ),
             Column(
               children: <Widget>[
                 buildCenterLogo(screenHeight),
-                buildBottomText(screenHeight)
+                buildLoginButton(context, screenHeight),
+                buildCreateAccountButton(context),
               ]
             ),
             Positioned(
-              bottom: screenHeight * 0.10,
-              child: buildGetStartedButton(context)
+              bottom: screenHeight * 0.05,
+              child: FooterLinks()
             )
           ]
         )
@@ -43,69 +45,75 @@ class GetStartedIntro extends StatelessWidget {
     );
   }
 
-  Widget buildTitle() {
+  Widget buildTitle(BuildContext context) {
     return Column(
       children: <Widget>[
         FormatText(
           text: appName,
-          textColor: Colors.white,
+          textColor: Theme.of(context).primaryColor,
           fontSize: 50.0,
           fontWeight: FontWeight.w700,
         ),
-        buildSubTitle()
+        buildSubTitle(context)
       ]
     );
   }
 
-  Widget buildSubTitle() {
+  Widget buildSubTitle(BuildContext context) {
     return  Container(
       padding: EdgeInsets.only(top: 5.0),
       child: FormatText(
         text: getStartedSubTitle,
-        textColor: Colors.white,
+        textColor: Theme.of(context).primaryColor,
         fontSize: 14.0,
         fontWeight: FontWeight.w500,
       )
     );
   }
 
+  // TODO: Change when mockup svgs are available
   Widget buildCenterLogo(double screenHeight) {
     return Container(
       padding: EdgeInsets.only(
         top: screenHeight * 0.40
       ),
       child: SvgPicture.asset(
-        'images/light_logo.svg',
+        'images/dark_logo.svg',
         height: screenHeight * 0.15,
         width: screenHeight * 0.15,
       )
     );
   }
 
-  Widget buildBottomText(double screenHeight) {
+  Widget buildLoginButton(BuildContext context, double screenHeight) {
     return Container(
       padding: EdgeInsets.only(
         top: screenHeight * 0.20
       ),
-      child: FormatText(
-        text: getStartedBottomText,
-        textColor: Colors.white,
-        textAlign: TextAlign.center,
-        fontSize: 14.0,
-        fontWeight: FontWeight.w500,
-      )
-    );
-  }
-
-  Widget buildGetStartedButton(BuildContext context) {
-    return PrimaryButton(
-      text: getStartedButtonText,
-      isLight: true,
-      onPressed: () => Navigator.pushReplacement(
-        context, MaterialPageRoute(
-          builder: (context) => LoginCreateAccount()
+      child: PrimaryButton(
+        text: loginButtonText,
+        isLight: false,
+        onPressed: () => Navigator.pushReplacement(
+          context, MaterialPageRoute(
+            builder: (context) => LoginSignupPage()
+          )
         )
       )
     );
   }
+  Widget buildCreateAccountButton(BuildContext context) {
+    return Container(
+      padding: EdgeInsets.only(top: 5.0),
+      child: PrimaryButton(
+        text: createAccountButtonText,
+        isLight: true,
+        onPressed: () => Navigator.pushReplacement(
+          context, MaterialPageRoute(
+            builder: (context) => LoginSignupPage()
+          )
+        )
+      )
+    );
+  }
+
 }
