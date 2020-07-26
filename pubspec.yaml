@@ -22,6 +22,7 @@ dependencies:
   cached_network_image: ^2.0.0
   cupertino_icons: ^0.1.2         
   custom_navigation_bar: ^0.2.6
+  custom_splash: ^0.0.2
   cloud_firestore: ^0.12.9+5      
   device_preview: ^0.4.5
   effective_dart: ^1.0.0
