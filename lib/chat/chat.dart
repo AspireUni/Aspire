@@ -32,7 +32,6 @@ class _ChatState extends State<Chat> {
     store = StoreProvider.of<AppState>(context);
     uid = userIdSelector(store);
 
-
     return FutureBuilder<QuerySnapshot>(
       future: getMatches(uid),
       builder: (context, snapshot) {
@@ -103,9 +102,9 @@ buildChatView(var newMatchesList, var matchesList) {
     <Widget>[
       buildHeader(),
       NewMatches(newMatchesList: newMatchesList),
-      // Flexible(
-      //   child: UserMessageRows(matchesList),
-      // )
+      Flexible(
+        child: UserMessageRows(matchesList: matchesList),
+      )
     ]
   );
 }

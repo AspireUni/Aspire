@@ -8,14 +8,33 @@ import 'package:flutter/services.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:intl/intl.dart';
+import 'package:redux/redux.dart';
 
 import '../constants/chat_constants.dart';
+import '../models/models.dart';
 import '../services/user_service.dart';
 import './message.dart';
 
+class ChatMessenger extends StatefulWidget {
+  final String id;
+  final String peerId;
+  final String recipient;
+  ChatMessenger({
+    Key key,
+    @required this.id, 
+    @required this.peerId,
+    @required this.recipient,
+  }) : super(key: key);
+
+  @override
+  State<ChatMessenger> createState() => ChatMessengerState();
+
+}
+
 class ChatMessengerState extends State<ChatMessenger> {
-  String id;
-  String peerId;
+
+  Store<AppState> store;
+
   String recipient;
 
   String groupChatId;
@@ -28,14 +47,21 @@ class ChatMessengerState extends State<ChatMessenger> {
   @override
   void initState() {
     super.initState();
-    groupChatId = 'testtsteta';
+
+    if (widget.id.hashCode <= widget.peerId.hashCode) {
+      groupChatId = '${widget.id}-${widget.peerId}';
+    } else {
+      groupChatId = '${widget.peerId}-${widget.id}';
+    }
+
     imageUrl = '';
   }
 
   void submitMessage (int type, String content) {
     if (content.trim() != '') {
       textInputController.clear();
-      addMessage(id, peerId, content, type, groupChatId);
+      addMessage(widget.id, widget.peerId, content, type, groupChatId);
+      // updateMatchLastMessage(widget.id, widget.peerId, content, type, groupChatId);
       SystemSound.play(SystemSoundType.click);
     }
   }
@@ -142,10 +168,10 @@ class ChatMessengerState extends State<ChatMessenger> {
   }
 
   List<Widget> buildMessage(int index, int maxItem, DocumentSnapshot document) {
-    var isSent = document['idFrom'] == id;
+    var isSent = document['idFrom'] == widget.id;
     var widgets = <Widget>[];
     widgets.add(
-      Message(
+      MessageView(
         isSent: isSent,
         message: document['content'],
         type: document['type']
@@ -239,16 +265,4 @@ class ChatMessengerState extends State<ChatMessenger> {
       ]
     );
   }
-
-}
-
-class ChatMessenger extends StatefulWidget {
-  final String peerId;
-  final String recipient;
-  ChatMessenger({Key key, @required this.peerId, @required this.recipient})
-    : super(key: key);
-
-  @override
-  State<ChatMessenger> createState() => ChatMessengerState();
-
 }
