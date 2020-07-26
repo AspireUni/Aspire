@@ -1,3 +1,4 @@
+import 'package:custom_splash/custom_splash.dart';
 import 'package:device_preview/device_preview.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
@@ -11,7 +12,7 @@ import './models/models.dart';
 import './navigation/root.dart';
 import './reducers/reducers.dart';
 
-bool enableDevicePreview = false;
+bool enableDevicePreview = true;
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -59,7 +60,13 @@ class App extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
-      home: Root()
+      home: CustomSplash(
+        imagePath: 'images/logos/light_logo_transparent.png', 
+        backGroundColor: Color(0xFF0A0B33),
+        home: Root(),
+        duration: 3000, 
+        type: CustomSplashType.StaticDuration
+      )
     );
   }
 }
