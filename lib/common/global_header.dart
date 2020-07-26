@@ -51,7 +51,7 @@ class GlobalHeader extends StatelessWidget implements PreferredSizeWidget {
             textColor: Theme.of(context).accentColor,
             fontSize: 13.0,
             fontWeight: FontWeight.w500
-            )
+          )
         )
       ) : SizedBox();
   }
