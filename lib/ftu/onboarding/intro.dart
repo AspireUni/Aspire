@@ -5,11 +5,11 @@ import '../../common/format_text.dart';
 import '../../common/primary_button.dart';
 import '../../constants/common_constants.dart';
 import '../../constants/ftu_constants.dart';
-import '../login_create_account/login_create_account.dart';
+import './part_one.dart';
 
-class GetStartedIntro extends StatelessWidget {
+class OnboardingIntro extends StatelessWidget {
   
-  GetStartedIntro({Key key}) : super(key: key);
+  OnboardingIntro({Key key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -103,7 +103,7 @@ class GetStartedIntro extends StatelessWidget {
       isLight: true,
       onPressed: () => Navigator.pushReplacement(
         context, MaterialPageRoute(
-          builder: (context) => LoginCreateAccount()
+          builder: (context) => OnboardingPartOne()
         )
       )
     );
