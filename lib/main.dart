@@ -12,7 +12,7 @@ import './models/models.dart';
 import './navigation/root.dart';
 import './reducers/reducers.dart';
 
-bool enableDevicePreview = true;
+bool enableDevicePreview = false;
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
