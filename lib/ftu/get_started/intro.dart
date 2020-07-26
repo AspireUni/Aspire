@@ -5,7 +5,7 @@ import '../../common/format_text.dart';
 import '../../common/primary_button.dart';
 import '../../constants/common_constants.dart';
 import '../../constants/ftu_constants.dart';
-import '../signuplogin.dart';
+import '../login_create_account/login_create_account.dart';
 
 class GetStartedIntro extends StatelessWidget {
   
@@ -13,34 +13,47 @@ class GetStartedIntro extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    var screenWidth = MediaQuery.of(context).size.width;
+    var screenHeight = MediaQuery.of(context).size.height;
+
     return Scaffold(
       backgroundColor: Theme.of(context).primaryColor,
       body: Container(
-        width: MediaQuery.of(context).size.width,
-        child: Column(
+        width: screenWidth,
+        child: Stack(
+          alignment: Alignment.center,
           children: <Widget>[
-            buildTitle(context),
-            buildSubTitle(),
-            buildCenterLogo(context),
-            buildBottomText(context),
-            buildGetStartedButton(context)
+             Positioned(
+              top: screenHeight * 0.15,
+              child: buildTitle()
+            ),
+            Column(
+              children: <Widget>[
+                buildCenterLogo(screenHeight),
+                buildBottomText(screenHeight)
+              ]
+            ),
+            Positioned(
+              bottom: screenHeight * 0.10,
+              child: buildGetStartedButton(context)
+            )
           ]
         )
       )
     );
   }
 
-  Widget buildTitle(BuildContext context) {
-    return Container(
-      padding: EdgeInsets.only(
-        top: MediaQuery.of(context).size.width * 0.30
-      ),
-      child: FormatText(
-        text: appName,
-        textColor: Colors.white,
-        fontSize: 50.0,
-        fontWeight: FontWeight.w700,
-      )
+  Widget buildTitle() {
+    return Column(
+      children: <Widget>[
+        FormatText(
+          text: appName,
+          textColor: Colors.white,
+          fontSize: 50.0,
+          fontWeight: FontWeight.w700,
+        ),
+        buildSubTitle()
+      ]
     );
   }
 
@@ -50,49 +63,47 @@ class GetStartedIntro extends StatelessWidget {
       child: FormatText(
         text: getStartedSubTitle,
         textColor: Colors.white,
-        fontSize: 15.0,
+        fontSize: 14.0,
         fontWeight: FontWeight.w500,
       )
     );
   }
 
-  Widget buildCenterLogo(BuildContext context) {
+  Widget buildCenterLogo(double screenHeight) {
     return Container(
       padding: EdgeInsets.only(
-        top: MediaQuery.of(context).size.width * 0.30
+        top: screenHeight * 0.40
       ),
       child: SvgPicture.asset(
         'images/light_logo.svg',
-        height: 200.0,
-        width: 200.0,
+        height: screenHeight * 0.15,
+        width: screenHeight * 0.15,
       )
     );
   }
 
-  Widget buildBottomText(BuildContext context) {
+  Widget buildBottomText(double screenHeight) {
     return Container(
       padding: EdgeInsets.only(
-        top: MediaQuery.of(context).size.width * 0.30
+        top: screenHeight * 0.20
       ),
       child: FormatText(
         text: getStartedBottomText,
         textColor: Colors.white,
         textAlign: TextAlign.center,
-        fontSize: 15.0,
+        fontSize: 14.0,
         fontWeight: FontWeight.w500,
       )
     );
   }
 
   Widget buildGetStartedButton(BuildContext context) {
-    return Container(
-      padding: EdgeInsets.only(top: 20.0),
-      child: PrimaryButton(
-        text: getStartedButtonText,
-        onPressed: () => Navigator.pushReplacement(
-          context, MaterialPageRoute(
-            builder: (context) => LoginSignupPage()
-          )
+    return PrimaryButton(
+      text: getStartedButtonText,
+      isLight: true,
+      onPressed: () => Navigator.pushReplacement(
+        context, MaterialPageRoute(
+          builder: (context) => LoginCreateAccount()
         )
       )
     );
