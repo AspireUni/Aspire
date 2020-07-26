@@ -63,7 +63,11 @@ flutter_icons:
 flutter:
   uses-material-design: true        # material icon font
 
+  fonts:
+    - family:  Aspire
+      fonts:
+        - asset: fonts/Aspire.ttf
+
   assets:
     - images/
     - images/logos/
-
