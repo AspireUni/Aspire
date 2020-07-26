@@ -6,7 +6,7 @@ import '../models.dart';
 @immutable
 class Match {
   final bool hasContacted;
-  final List<User> pair;
+  final List<String> pair;
   final Message lastMessage;
 
   const Match({
@@ -19,13 +19,13 @@ class Match {
     return Match(
       hasContacted: false,
       pair: [],
-      lastMessage: Message.initial()
+      lastMessage: null
     );
   }
 
   Match copyWith({
     bool hasContacted,
-    List<User> pair,
+    List<String> pair,
   }) {
     return Match(
       hasContacted: hasContacted ?? this.hasContacted,
@@ -34,16 +34,16 @@ class Match {
   }
 
   static Match fromJson(dynamic json) {
-    var pairJson = json['pair'] as List;
+    var pairJson = (json['pair'] as List<dynamic>).cast<String>();
     return Match(
       hasContacted: json["hasContacted"] as bool,
-      pair: pairJson?.map(User.fromJson)?.toList(),
+      pair: pairJson?.toList(),
     );
   }
 
   dynamic toJson() => {
     'hasContacted': hasContacted,
-    'pair': pair?.map((user) => user.toJson())?.toList(),
+    'pair': pair?.toList(),
   };
 
   @override

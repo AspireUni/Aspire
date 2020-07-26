@@ -17,6 +17,14 @@ Future<QuerySnapshot> getUsers() async {
     .getDocuments();
 }
 
+Future<QuerySnapshot> getMatches(String uid) async {
+  return Firestore
+    .instance
+    .collection("matches")
+    .where('pair', arrayContains: uid)
+    .getDocuments();
+}
+
 Future<void> addUser(String id, String email) async {
   var user = User.initial().copyWith(
     id: id,
@@ -72,10 +80,3 @@ Future<void> updateUser(dynamic user) async {
     .document(user["id"])
     .updateData(user);
 }
-
-// Future<void> getMatches() async {
-//   Firestore
-//     .instance
-//     .collection("matches")
-//     .document()
-// }

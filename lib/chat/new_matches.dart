@@ -1,8 +1,15 @@
+import 'package:flutter_redux/flutter_redux.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:flutter/material.dart';
+import 'package:redux/redux.dart';
 
 import '../constants/chat_constants.dart';
+// import '../constants/common_constants.dart';
+import '../models/models.dart';
+import '../selectors/selectors.dart';
+import '../services/user_service.dart';
 import './chat_messenger.dart';
+
 
 const dummyData = [
   {
@@ -39,11 +46,37 @@ const dummyData = [
   },
 ];
 
-class NewMatches extends StatelessWidget {
-  NewMatches({Key key}) : super(key: key);
+class NewMatches extends StatefulWidget {
+  final List<Match> newMatchesList;
+  const NewMatches({Key key, @required this.newMatchesList}): super(key: key);
+
+  @override
+  _NewMatchesState createState() => _NewMatchesState();
+}
+
+class _NewMatchesState extends State<NewMatches> {
+
+  Store<AppState> store;
+  String uid;
+
+  bool isMatchesLoaded;
+
+  final List<User> _matchesList = [];
+
+  @override
+  void initState() {
+    super.initState();
+
+    isMatchesLoaded = false;
+
+    loadMatches();
+  }
 
   @override
   Widget build(BuildContext context) {
+    store = StoreProvider.of<AppState>(context);
+    uid = userIdSelector(store);
+
     return Column(
       children: <Widget>[
         Padding(
@@ -61,22 +94,41 @@ class NewMatches extends StatelessWidget {
             )
           )
         ),
-        buildNewMatches(context),
+        isMatchesLoaded ?
+        buildNewMatches(context, _matchesList) :
+        Text("loading")
       ]
     );
   }
+
+  loadMatches() async {
+    print(widget.newMatchesList.runtimeType);
+    for (var match in widget.newMatchesList) {
+      if (match.pair[0] == uid) {
+        var user = await getUser(match.pair[1]);
+        _matchesList.add(User.fromJson(user));
+      } else {
+        var user = await getUser(match.pair[0]);
+        _matchesList.add(User.fromJson(user));
+      }
+    }
+
+    setState(() {
+      isMatchesLoaded = true;
+    });
+  }
 }
 
-buildNewMatches(context) {
-  var newMatchesList = <Widget>[];
-  for (var i = 0; i < dummyData.length; i++) {
-    newMatchesList.add(
+buildNewMatches(context, matchesList) async {
+  var newMatchesWidgetList = <Widget>[];
+  for (var match in matchesList) {
+    newMatchesWidgetList.add(
       GestureDetector(
         onTap: () {
           Navigator.push(
             context,
             MaterialPageRoute(builder: (context) => 
-              ChatMessenger(recipient: dummyData[i]["name"], peerId: mockPeerId)
+              ChatMessenger(recipient: match.fullName, peerId: match.id)
             )
           );
         },
@@ -90,12 +142,12 @@ buildNewMatches(context) {
                 width: 60.0, 
                 height: 60.0, 
                 decoration: BoxDecoration(
-                  color: dummyData[i]["color"], 
+                  color: dummyData[0]["color"], 
                   shape: BoxShape.circle
                 )
               ),
               Text(
-                dummyData[i]["name"],
+                match.fullName,
                 overflow: TextOverflow.ellipsis,
                 style: GoogleFonts.muli(
                   textStyle: TextStyle(
@@ -113,10 +165,55 @@ buildNewMatches(context) {
     );
   }
 
+
+  // for (var i = 0; i < newMatchesList; i++) {
+  //   newMatchesList.add(
+  //     GestureDetector(
+  //       onTap: () {
+  //         Navigator.push(
+  //           context,
+  //           MaterialPageRoute(builder: (context) => 
+  //             ChatMessenger(recipient: dummyData[i]["name"], peerId: mockPeerId)
+  //           )
+  //         );
+  //       },
+  //       child: Container(
+  //         width: 80.0,
+  //         height: 80.0,
+  //         color: Colors.transparent,
+  //         child: Column(
+  //           children: <Widget>[
+  //             Container(
+  //               width: 60.0, 
+  //               height: 60.0, 
+  //               decoration: BoxDecoration(
+  //                 color: dummyData[i]["color"], 
+  //                 shape: BoxShape.circle
+  //               )
+  //             ),
+  //             Text(
+  //               dummyData[i]["name"],
+  //               overflow: TextOverflow.ellipsis,
+  //               style: GoogleFonts.muli(
+  //                 textStyle: TextStyle(
+  //                   color: Colors.black, 
+  //                   letterSpacing: .5, 
+  //                   fontSize: 12.0, 
+  //                   fontWeight: FontWeight.w600
+  //                 )
+  //               )
+  //             )
+  //           ]
+  //         )
+  //       )
+  //     ),
+  //   );
+  // }
+
   return SingleChildScrollView(
     scrollDirection: Axis.horizontal,
     child: Row(
-      children: newMatchesList,
+      children: newMatchesWidgetList,
     )
   );
 }

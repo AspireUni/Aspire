@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
@@ -20,6 +21,9 @@ class Chat extends StatefulWidget {
 
 class _ChatState extends State<Chat> {
 
+  final List<Match> _newMatchesList = [];
+  final List<Match> _matchesList = [];
+
   Store<AppState> store;
   String uid;
 
@@ -28,17 +32,36 @@ class _ChatState extends State<Chat> {
     store = StoreProvider.of<AppState>(context);
     uid = userIdSelector(store);
 
-    return Scaffold(
-      backgroundColor: Colors.transparent,
-      body: Container(
-        height: MediaQuery.of(context).size.height,
-        margin: EdgeInsets.all(0),
-        child: Center(
-          child: Column(
-            children: buildChatView()
-          )
-        )
-      )
+
+    return FutureBuilder<QuerySnapshot>(
+      future: getMatches(uid),
+      builder: (context, snapshot) {
+        if (snapshot.connectionState == ConnectionState.waiting) {
+          return loadingScreen;
+        } else {
+
+          for (var document in snapshot.data.documents) {
+            var match = Match.fromJson(document.data);
+            if (match.hasContacted) {
+              _matchesList.add(match);
+            } else {
+              _newMatchesList.add(match);
+            }
+          }
+          return Scaffold(
+            backgroundColor: Colors.transparent,
+            body: Container(
+              height: MediaQuery.of(context).size.height,
+              margin: EdgeInsets.all(0),
+              child: Center(
+                child: Column(
+                  children: buildChatView(_newMatchesList, _matchesList)
+                )
+              )
+            )
+          );
+        }
+      },
     );
   }
 }
@@ -75,14 +98,14 @@ buildHeader() {
   );
 }
 
-buildChatView() {
+buildChatView(var newMatchesList, var matchesList) {
   return (
     <Widget>[
       buildHeader(),
-      NewMatches(),
-      Flexible(
-        child: UserMessageRows(),
-      )
+      NewMatches(newMatchesList: newMatchesList),
+      // Flexible(
+      //   child: UserMessageRows(matchesList),
+      // )
     ]
   );
 }
