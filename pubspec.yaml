@@ -19,31 +19,32 @@ dependencies:
     sdk: flutter
 
   auto_size_text: ^2.1.0
-  cloud_firestore: ^0.12.9+5      # firebase database
-  cupertino_icons: ^0.1.2         # iOS stye icons
+  cached_network_image: ^2.0.0
+  cupertino_icons: ^0.1.2         
   custom_navigation_bar: ^0.2.6
+  custom_splash: ^0.0.2
+  cloud_firestore: ^0.12.9+5      
   device_preview: ^0.4.5
+  effective_dart: ^1.0.0
   firebase_analytics: ^5.0.2
   firebase_auth: ^0.14.0+5
   firebase_core: ^0.4.0+9
   firebase_database: ^3.0.7
   firebase_storage: ^3.1.6
+  flutter_form_builder: ^3.10.1
+  flutter_picker: ^1.1.5
+  flutter_redux: ^0.6.0
+  flutter_svg: ^0.17.4
   flutter_tindercard: ^0.1.8
   google_fonts: ^1.0.0
   image_picker: ^0.6.7
   intl: ^0.16.1
-  url_launcher: ^5.4.10
-  effective_dart: ^1.0.0
-  cached_network_image: ^2.0.0
-  flutter_form_builder: ^3.10.1
-  flutter_picker: ^1.1.5
+  random_string: ^2.1.0
   redux: ^4.0.0
-  flutter_redux: ^0.6.0
-  redux_logging: ^0.4.0
   redux_persist: ^0.8.4
   redux_persist_flutter: ^0.8.2
-  random_string: ^2.1.0
-  flutter_svg: ^0.17.4
+  redux_logging: ^0.4.0
+  url_launcher: ^5.4.10
 
 
 dev_dependencies:
