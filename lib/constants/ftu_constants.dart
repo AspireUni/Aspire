@@ -1,3 +1,9 @@
+import 'package:flutter/material.dart';
+
+import '../ftu/login_create_account/login_create_account.dart';
+import '../ftu/onboarding/screens.dart';
+import './common_constants.dart';
+
 // Onboarding Intro
 const String getStartedSubTitle = 'To reach new heights';
 const String getStartedBottomText = 
@@ -13,6 +19,31 @@ const String onboardingPartThreeText =
   'Take the next step by chatting with your matches';
 const String onboardingPartThreeButtonText = 'Let\'s get started';
 const String letsGetStartedButtonText = 'Let\'s get started';
+
+// Onboarding Screen Config
+var onboardingScreensConfig = [
+  {
+    "text": onboardingPartOneText,
+    "image": Image.asset('images/onboarding/ano_standing.png', height: 150),
+    "nextScreen": (context) => OnboardingScreens(screenNum: 1), 
+    "buttonText": nextButtonText, 
+    "isLight": true
+  },
+  {
+    "text": onboardingPartTwoText, 
+    "image": Image.asset('images/onboarding/two_anos_and_logo.png', height: 150),
+    "nextScreen": (context) => OnboardingScreens(screenNum: 2),
+    "buttonText": nextButtonText, 
+    "isLight": true
+  }, 
+  {
+    "text": onboardingPartThreeText, 
+    "image": Image.asset('images/onboarding/two_anos_talking.png', height: 150),
+    "nextScreen": (context) => LoginCreateAccount(), 
+    "buttonText": letsGetStartedButtonText, 
+    "isLight": false
+  }
+];
 
 // Login/CreateAccount
 const String loginButtonText = 'Log into your account';

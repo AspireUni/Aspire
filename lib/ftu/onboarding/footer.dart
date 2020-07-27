@@ -2,31 +2,8 @@ import 'package:flutter/material.dart';
 
 import '../../common/format_text.dart';
 import '../../common/primary_button.dart';
-import '../../constants/common_constants.dart';
 import '../../constants/ftu_constants.dart';
-import '../login_create_account/login_create_account.dart';
-import './screens.dart';
 
-var onboardingScreensConfig = [
-  {
-    "text": onboardingPartOneText,
-    "nextScreen": (context) => OnboardingScreens(screenNum: 1), 
-    "buttonText": nextButtonText, 
-    "isLight": true
-  },
-  {
-    "text": onboardingPartTwoText, 
-    "nextScreen": (context) => OnboardingScreens(screenNum: 2),
-    "buttonText": nextButtonText, 
-    "isLight": true
-  }, 
-  {
-    "text": onboardingPartThreeText, 
-    "nextScreen": (context) => LoginCreateAccount(), 
-    "buttonText": letsGetStartedButtonText, 
-    "isLight": false
-  }
-];
 
 class OnboardingFooter extends StatelessWidget {
   final int screenNum;

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 import '../../common/global_header.dart';
+import '../../constants/ftu_constants.dart';
 import 'footer.dart';
 
 class OnboardingScreens extends StatelessWidget {
@@ -30,7 +31,7 @@ class OnboardingScreens extends StatelessWidget {
     return Column(
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
-        Image.asset('images/ano.png', height: 150),
+        onboardingScreensConfig[screenNum]["image"],
         Container(height: 1.5, color: Colors.black)
       ]
     );
