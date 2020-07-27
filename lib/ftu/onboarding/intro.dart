@@ -5,7 +5,7 @@ import '../../common/format_text.dart';
 import '../../common/primary_button.dart';
 import '../../constants/common_constants.dart';
 import '../../constants/ftu_constants.dart';
-import './part_one.dart';
+import './screens.dart';
 
 class OnboardingIntro extends StatelessWidget {
   
@@ -103,7 +103,7 @@ class OnboardingIntro extends StatelessWidget {
       isLight: true,
       onPressed: () => Navigator.pushReplacement(
         context, MaterialPageRoute(
-          builder: (context) => OnboardingPartOne()
+          builder: (context) => OnboardingScreens(screenNum: 0)
         )
       )
     );
