@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import '../../common/global_header/global_header.dart';
+import '../../common/global_header.dart';
 import 'footer.dart';
 
 class OnboardingScreens extends StatelessWidget {
