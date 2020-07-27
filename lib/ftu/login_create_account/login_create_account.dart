@@ -6,7 +6,8 @@ import '../../common/format_text.dart';
 import '../../common/primary_button.dart';
 import '../../constants/common_constants.dart';
 import '../../constants/ftu_constants.dart';
-import '../signuplogin.dart';
+import './login.dart';
+import './signup.dart';
 
 class LoginCreateAccount extends StatelessWidget {
   
@@ -95,7 +96,7 @@ class LoginCreateAccount extends StatelessWidget {
         isLight: false,
         onPressed: () => Navigator.pushReplacement(
           context, MaterialPageRoute(
-            builder: (context) => LoginSignupPage()
+            builder: (context) => Login()
           )
         )
       )
@@ -109,7 +110,7 @@ class LoginCreateAccount extends StatelessWidget {
         isLight: true,
         onPressed: () => Navigator.pushReplacement(
           context, MaterialPageRoute(
-            builder: (context) => LoginSignupPage()
+            builder: (context) => SignUp()
           )
         )
       )

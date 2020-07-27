@@ -23,7 +23,7 @@ class OnboardingIntro extends StatelessWidget {
         child: Stack(
           alignment: Alignment.center,
           children: <Widget>[
-             Positioned(
+            Positioned(
               top: screenHeight * 0.15,
               child: buildTitle()
             ),

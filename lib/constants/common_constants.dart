@@ -8,6 +8,7 @@ const addAction = 'Add';
 const skipAction = 'Skip';
 const filterAction = 'Filter';
 const signUpAction = 'Sign up';
+const loginAction = 'Login';
 
 const globalHeaderFontSize = 22.0;
 const globalHeaderActionsFontSize = 16.0; 
