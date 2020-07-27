@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_animator/flutter_animator.dart';
 
-import '../ftu/login_create_account/login_create_account.dart';
-import '../ftu/onboarding/screens.dart';
 import './common_constants.dart';
 
 // Onboarding Intro
@@ -20,28 +19,36 @@ const String onboardingPartThreeText =
 const String onboardingPartThreeButtonText = 'Let\'s get started';
 const String letsGetStartedButtonText = 'Let\'s get started';
 
-// Onboarding Screen Config
-var onboardingScreensConfig = [
+// Animator keys
+GlobalKey<AnimatorWidgetState> onboardingPartOneKey
+  = GlobalKey<AnimatorWidgetState>();
+GlobalKey<AnimatorWidgetState> onboardingPartTwoKey
+  = GlobalKey<AnimatorWidgetState>();
+GlobalKey<AnimatorWidgetState> onboardingPartThreeKey
+  = GlobalKey<AnimatorWidgetState>();
+
+// Onboarding Steps Config
+List<Map<String, dynamic>> onboardingStepsConfig = [
   {
     "text": onboardingPartOneText,
     "image": Image.asset('images/onboarding/ano_standing.png', height: 150),
-    "nextScreen": (context) => OnboardingScreens(screenNum: 1), 
     "buttonText": nextButtonText, 
-    "isLight": true
+    "isLight": true,
+    "animatorKey": onboardingPartOneKey
   },
   {
     "text": onboardingPartTwoText, 
     "image": Image.asset('images/onboarding/two_anos_and_logo.png', height: 150),
-    "nextScreen": (context) => OnboardingScreens(screenNum: 2),
     "buttonText": nextButtonText, 
-    "isLight": true
+    "isLight": true,
+    "animatorKey": onboardingPartTwoKey
   }, 
   {
     "text": onboardingPartThreeText, 
     "image": Image.asset('images/onboarding/two_anos_talking.png', height: 150),
-    "nextScreen": (context) => LoginCreateAccount(), 
     "buttonText": letsGetStartedButtonText, 
-    "isLight": false
+    "isLight": false,
+    "animatorKey": onboardingPartThreeKey
   }
 ];
 
