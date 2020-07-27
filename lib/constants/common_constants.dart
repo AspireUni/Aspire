@@ -2,13 +2,12 @@ import 'package:flutter/material.dart';
 
 const appName = "aspire";
 const nextButtonText = "Next";
-const addButtonText = "Add";
-const skipButtonText = "Skip";
 
 // Global header
-const skipAction = "Skip";
-const filterAction = "Filter";
-const signUpAction = "No account? Sign up here.";
+const addAction = 'Add';
+const skipAction = 'Skip';
+const filterAction = 'Filter';
+const signUpAction = 'No account? Sign up here.';
 
 const globalHeaderFontSize = 22.0;
 const globalHeaderActionsFontSize = 16.0; 

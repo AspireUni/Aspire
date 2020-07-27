@@ -5,7 +5,7 @@ import 'format_text.dart';
 
 class GlobalHeader extends StatelessWidget implements PreferredSizeWidget {
   final String actionText;
-  final void Function() onActionTap;
+  final Function() onActionTap;
 
   GlobalHeader({
     Key key,

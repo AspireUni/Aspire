@@ -1,8 +1,11 @@
+
 import 'package:flutter/material.dart';
 
 import '../../common/global_header.dart';
+import '../../constants/common_constants.dart';
 import '../../constants/ftu_constants.dart';
-import 'footer.dart';
+import '../../ftu/login_create_account/login_create_account.dart';
+import './footer.dart';
 
 class OnboardingScreens extends StatelessWidget {
   final screenNum;
@@ -11,15 +14,19 @@ class OnboardingScreens extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    var screenHeight = MediaQuery.of(context).size.height;
+    var screenWidth = MediaQuery.of(context).size.width;
+    var isLastScreen = screenNum == onboardingScreensConfig.length - 1;
 
     return Scaffold(
       backgroundColor: Colors.white,
       body: Container(
         child: Stack(
-          children: [
-            GlobalHeader(), 
-            buildCenterAno(context, screenHeight),
+          children: [ 
+            isLastScreen ? GlobalHeader() : GlobalHeader(
+              actionText: skipAction, 
+              onActionTap: () => { getSkipPage(context) }
+            ), 
+            buildCenterAno(context, screenWidth),
             OnboardingFooter(screenNum: screenNum)
           ]
         )
@@ -27,7 +34,14 @@ class OnboardingScreens extends StatelessWidget {
     );
   }
 
-  Widget buildCenterAno(context, screenHeight) {
+  getSkipPage(context) {
+    Navigator.pushReplacement(
+      context,
+      MaterialPageRoute(builder: (context) => LoginCreateAccount())
+    );
+  }
+
+  Widget buildCenterAno(context, screenWidth) {
     return Column(
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
