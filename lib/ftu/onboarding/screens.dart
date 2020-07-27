@@ -15,17 +15,13 @@ class OnboardingScreens extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     var screenWidth = MediaQuery.of(context).size.width;
-    var isLastScreen = screenNum == onboardingScreensConfig.length - 1;
 
     return Scaffold(
       backgroundColor: Colors.white,
       body: Container(
         child: Stack(
           children: [ 
-            isLastScreen ? GlobalHeader() : GlobalHeader(
-              actionText: skipAction, 
-              onActionTap: () => { getSkipPage(context) }
-            ), 
+            buildHeader(context), 
             buildCenterAno(context, screenWidth),
             OnboardingFooter(screenNum: screenNum)
           ]
@@ -39,6 +35,16 @@ class OnboardingScreens extends StatelessWidget {
       context,
       MaterialPageRoute(builder: (context) => LoginCreateAccount())
     );
+  }
+
+  GlobalHeader buildHeader(context) {
+    var isLastScreen = screenNum == onboardingScreensConfig.length - 1;
+    return isLastScreen 
+      ? GlobalHeader()
+      : GlobalHeader(
+        actionText: skipAction, 
+        onActionTap: () => { getSkipPage(context) }
+      );
   }
 
   Widget buildCenterAno(context, screenWidth) {

@@ -7,7 +7,7 @@ const nextButtonText = "Next";
 const addAction = 'Add';
 const skipAction = 'Skip';
 const filterAction = 'Filter';
-const signUpAction = 'No account? Sign up here.';
+const signUpAction = 'Sign up';
 
 const globalHeaderFontSize = 22.0;
 const globalHeaderActionsFontSize = 16.0; 
