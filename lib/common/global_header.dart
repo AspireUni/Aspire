@@ -31,25 +31,25 @@ class GlobalHeader extends StatelessWidget implements PreferredSizeWidget {
   Size get preferredSize => const Size.fromHeight(50.0);
 
   Widget appBarTitle() {
-  return FormatText(
-    text: appName, 
-    fontSize: globalHeaderFontSize,
-  );
+    return Padding(
+      padding: EdgeInsets.only(left: 10.0), 
+      child: FormatText(
+      text: appName, 
+      fontSize: globalHeaderFontSize,
+    )
+    );
 }
 
   Widget appBarAction(BuildContext context, {bool isVisible}) {
     return isVisible
-      ? Container(
-        padding: EdgeInsets.only(
-          top: 18.5,
-          right: 20
-        ),
+      ? Container( 
+        padding: EdgeInsets.only(top: 18.5, right: 25.0),
         child: InkWell(
           onTap: onActionTap,
           child: FormatText(
             text: actionText,
             textColor: Theme.of(context).accentColor,
-            fontSize: 13.0,
+            fontSize: 14.0,
             fontWeight: FontWeight.w500
           )
         )
