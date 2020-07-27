@@ -7,7 +7,7 @@ import 'package:redux/redux.dart';
 import '../actions/actions.dart';
 import '../constants/common_constants.dart';
 import '../ftu/authentication.dart';
-import '../ftu/get_started/intro.dart';
+import '../ftu/onboarding/intro.dart';
 import '../models/models.dart';
 import '../profile/save_profile/save_profile.dart';
 import '../selectors/selectors.dart';
@@ -43,7 +43,7 @@ class _RootState extends State<Root>{
       case AuthStatus.notDetermined:
         return loadingScreen;
       case AuthStatus.notLoggedIn:
-        return GetStartedIntro();
+        return OnboardingIntro();
       case AuthStatus.loggedIn:
         if (state.userState.isFtu) {
           return SaveProfile(
