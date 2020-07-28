@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_animator/flutter_animator.dart';
 
+import '../../common/circle_indicators.dart';
 import '../../common/format_text.dart';
 import '../../common/global_header.dart';
 import '../../common/primary_button.dart';
@@ -106,33 +107,10 @@ class _OnboardingSteps extends State<OnboardingSteps> {
       bottom: screenHeight * 0.10,
       child: Column(
         children: <Widget>[
-          buildCircleIndicators(),
+          CircleIndicators(stepIndex: stepIndex),
           buildOnboardingButton()
         ]
       )
-    );
-  }
-
-  Row buildCircleIndicators() {
-    var circleDimensions = screenWidth * 0.01;
-    var circles = <Widget>[];
-    for (var i = 0; i < 3; i++) {
-      circles.add(
-        Container(
-          width: circleDimensions, 
-          height: circleDimensions, 
-          margin: EdgeInsets.all(screenWidth * 0.02), 
-          decoration: BoxDecoration(
-            color: i == stepIndex ? 
-              Theme.of(context).accentColor : Colors.grey, 
-            shape: BoxShape.circle
-          )
-        )
-      );
-    }
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.center,
-      children: circles
     );
   }
 
