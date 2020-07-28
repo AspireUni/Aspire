@@ -17,11 +17,28 @@ Future<QuerySnapshot> getUsers() async {
     .getDocuments();
 }
 
-Future<QuerySnapshot> getMatches(String uid) async {
+Future<QuerySnapshot> getMatches(String uid, isMentee) async {
+  if (isMentee == true) {
+    return Firestore
+      .instance
+      .collection("matches")
+      .where('mentee.id', isEqualTo: uid)
+      .getDocuments();
+  } else {
+    return Firestore
+      .instance
+      .collection("matches")
+      .where('mentor.id', isEqualTo: uid)
+      .getDocuments();
+  }
+}
+
+Future<QuerySnapshot> getMatch(String menteeId, String mentorId) async {
   return Firestore
     .instance
     .collection("matches")
-    .where('pair', arrayContains: uid)
+    .where('mentee.id', isEqualTo: menteeId)
+    .where('mentor.id', isEqualTo: mentorId)
     .getDocuments();
 }
 

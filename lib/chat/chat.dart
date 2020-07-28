@@ -31,9 +31,11 @@ class _ChatState extends State<Chat> {
   Widget build(BuildContext context) {
     store = StoreProvider.of<AppState>(context);
     uid = userIdSelector(store);
+    // TODO: get this from UserState
+    var isMentee = true;
 
     return FutureBuilder<QuerySnapshot>(
-      future: getMatches(uid),
+      future: getMatches(uid, isMentee),
       builder: (context, snapshot) {
         if (snapshot.connectionState == ConnectionState.waiting) {
           return loadingScreen;

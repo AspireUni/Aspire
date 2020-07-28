@@ -7,54 +7,67 @@ import '../models.dart';
 class Match {
   final String matchId;
   final bool hasContacted;
-  final List<String> pair;
+  final User mentee;
+  final User mentor;
   final Message lastMessage;
+  final String matchedDate;
 
   const Match({
     @required this.matchId,
-    @required this.pair,
+    @required this.mentee,
+    @required this.mentor,
     this.hasContacted,
     this.lastMessage,
+    this.matchedDate,
   });
 
   factory Match.initial() {
     return Match(
       matchId: '',
       hasContacted: false,
-      pair: [],
-      lastMessage: null
+      mentee: User.initial(),
+      mentor: User.initial(),
+      lastMessage: null,
+      matchedDate: '',
     );
   }
 
   Match copyWith({
     String matchId,
     bool hasContacted,
-    List<String> pair,
+    User mentee,
+    User mentor,
     Message lastMessage,
+    String matchedDate,
   }) {
     return Match(
       matchId: matchId ?? this.matchId,
       hasContacted: hasContacted ?? this.hasContacted,
-      pair: pair ?? this.pair,
-      lastMessage: lastMessage ?? this.lastMessage
+      mentee: mentee ?? this.mentee,
+      mentor: mentor ?? this.mentor,
+      lastMessage: lastMessage ?? this.lastMessage,
+      matchedDate: matchedDate ?? this.matchedDate
     );
   }
 
   static Match fromJson(dynamic json) {
-    var pairJson = (json['pair'] as List<dynamic>).cast<String>();
     return Match(
       matchId: json["matchId"] as String,
       hasContacted: json["hasContacted"] as bool,
-      pair: pairJson?.toList(),
-      lastMessage: Message.fromJson(json["lastMessage"])
+      mentee: User.fromJson(json["mentee"]),
+      mentor: User.fromJson(json["mentor"]),
+      lastMessage: Message.fromJson(json["lastMessage"]),
+      matchedDate: json["matchedDate"] as String
     );
   }
 
   dynamic toJson() => {
     'matchId': matchId,
     'hasContacted': hasContacted,
-    'pair': pair?.toList(),
-    'lastMessage': lastMessage.toJson()
+    'mentee': mentee.toJson(),
+    'mentor': mentor.toJson(),
+    'lastMessage': lastMessage.toJson(),
+    'matchedDate': matchedDate
   };
 
   @override

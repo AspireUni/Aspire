@@ -22,24 +22,17 @@ class _NewMatchesState extends State<NewMatches> {
   Store<AppState> store;
   String uid;
 
-  bool isMatchesLoaded;
-
-  final List<User> _matchesPeerList = [];
-
   @override
   void initState() {
     super.initState();
-    isMatchesLoaded = false;
   }
 
   @override
   Widget build(BuildContext context) {
     store = StoreProvider.of<AppState>(context);
     uid = userIdSelector(store);
-
-    if (!isMatchesLoaded) {
-      loadMatches(widget.newMatchesList, uid);
-    }
+    // TODO: Get this from UserState
+    var isMentee = true;
 
     return Column(
       children: <Widget>[
@@ -58,42 +51,21 @@ class _NewMatchesState extends State<NewMatches> {
             )
           )
         ),
-        isMatchesLoaded ?
-          buildNewMatches(
-            context, 
-            _matchesPeerList, 
-            widget.newMatchesList, 
-            uid
-          ) :
-          CircularProgressIndicator(
-            valueColor: AlwaysStoppedAnimation<Color>(
-              Theme.of(context).accentColor
-            )
-          )
+        buildNewMatches(
+          context, 
+          widget.newMatchesList, 
+          uid,
+          isMentee
+        )
       ]
     );
   }
-
-  loadMatches(newMatchesList, uid) async {
-    for (var match in newMatchesList) {
-      if (match.pair[0] == uid) {
-        var user = await getUser(match.pair[1]);
-        _matchesPeerList.add(User.fromJson(user));
-      } else {
-        var user = await getUser(match.pair[0]);
-        _matchesPeerList.add(User.fromJson(user));
-      }
-    }
-
-    setState(() {
-      isMatchesLoaded = true;
-    });
-  }
 }
 
-buildNewMatches(context, matchesPeerList, newMatchesList, id) {
+buildNewMatches(context, newMatchesList, id, isMentee) {
   var newMatchesWidgetList = <Widget>[];
-    for (var i = 0; i < matchesPeerList.length; i++) {
+  for (var match in newMatchesList) {
+    var recipient = isMentee == true ? match.mentor : match.mentee;
     newMatchesWidgetList.add(
       GestureDetector(
         onTap: () {
@@ -101,10 +73,10 @@ buildNewMatches(context, matchesPeerList, newMatchesList, id) {
             context,
             MaterialPageRoute(builder: (context) => 
               ChatMessenger(
-                recipient: matchesPeerList[i].fullName, 
-                peerId: matchesPeerList[i].id, 
+                recipient: recipient.fullName, 
+                peerId: recipient.id, 
                 id: id, 
-                groupChatId: newMatchesList[i].matchId,
+                groupChatId: match.matchId,
               )
             )
           );
@@ -125,7 +97,7 @@ buildNewMatches(context, matchesPeerList, newMatchesList, id) {
               ),
               Flexible(
                 child: Text(
-                  matchesPeerList[i].fullName,
+                  recipient.fullName,
                   maxLines: 1,
                   textAlign: TextAlign.center,
                   overflow: TextOverflow.ellipsis,

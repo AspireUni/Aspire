@@ -6,7 +6,6 @@ import 'package:redux/redux.dart';
 import '../constants/chat_constants.dart';
 import '../models/models.dart';
 import '../selectors/selectors.dart';
-import '../services/user_service.dart';
 import './chat_messenger.dart';
 
 class UserMessageRows extends StatefulWidget {
@@ -21,25 +20,18 @@ class _UserMessageRowsState extends State<UserMessageRows> {
 
   Store<AppState> store;
   String uid;
-
-  bool isMatchesLoaded;
-
-  final List<User> _matchesList = [];
-
+  
   @override
   void initState() {
     super.initState();
-    isMatchesLoaded = false;
   }
 
   @override
   Widget build(BuildContext context) {
     store = StoreProvider.of<AppState>(context);
     uid = userIdSelector(store);
-
-    if (!isMatchesLoaded) {
-      loadMatches(widget.matchesList, uid);
-    }
+    // TODO: get this from UserState
+    var isMentee = true;
 
     return Column(
       children: <Widget>[
@@ -58,50 +50,29 @@ class _UserMessageRowsState extends State<UserMessageRows> {
             )
           )
         ),
-        isMatchesLoaded ? 
-          buildMessageRows(
-            context, 
-            _matchesList, 
-            widget.matchesList, 
-            uid, 
-          ) :
-          CircularProgressIndicator(
-            valueColor: AlwaysStoppedAnimation<Color>(
-              Theme.of(context).accentColor
-            )
-          )      
+        buildMessageRows(
+          context, 
+          widget.matchesList, 
+          uid,
+          isMentee
+        )
       ]
     );
-  }
-
-  loadMatches(List<Match> matchesList, uid) async {
-    for (var match in matchesList) {
-      if (match.pair[0] == uid) {
-        var user = await getUser(match.pair[1]);
-        _matchesList.add(User.fromJson(user));
-      } else {
-        var user = await getUser(match.pair[0]);
-        _matchesList.add(User.fromJson(user));
-      }
-    }
-
-    setState(() {
-      isMatchesLoaded = true;
-    });
   }
 }
 
 buildMessageRows(
   context, 
-  matchesPeerList, 
   matchesList, 
-  id, 
+  id,
+  isMentee
 ) {
   var messagesList = <Widget>[];
-  for (var i = 0; i < matchesPeerList.length; i++) {
-    var lastMessage = matchesList[i].lastMessage;
+  for (var match in matchesList) {
+    var lastMessage = match.lastMessage;
     var lastMessageType = lastMessage.type;
     var isSent = lastMessage.idFrom == id;
+    var recipient = isMentee == true ? match.mentor : match.mentee;
     messagesList.add(
       GestureDetector(
         behavior: HitTestBehavior.translucent,
@@ -110,10 +81,10 @@ buildMessageRows(
             context, 
             MaterialPageRoute(builder: (context) => 
               ChatMessenger(
-              recipient: matchesPeerList[i].fullName, 
-                peerId: matchesPeerList[i].id, 
+              recipient: recipient.fullName, 
+                peerId: recipient.id, 
                 id: id,
-                groupChatId: matchesList[i].matchId,
+                groupChatId: match.matchId,
               )
             )
           );
@@ -141,7 +112,7 @@ buildMessageRows(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: <Widget>[
                   Text(
-                    matchesPeerList[i].fullName,
+                    recipient.fullName,
                     style: GoogleFonts.muli(
                       textStyle: TextStyle(
                         color: Colors.black, 
@@ -188,7 +159,6 @@ buildMessageRows(
       )
     );
   }
-
   return Flexible(
     child: ListView(
       padding: EdgeInsets.all(0.0),
