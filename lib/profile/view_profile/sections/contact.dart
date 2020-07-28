@@ -137,7 +137,7 @@ class ProfileContact extends StatelessWidget {
       MaterialPageRoute(
         builder: (context) => ChatMessenger(
           recipient: user.fullName,
-          peerId: mockPeerId
+          peerId: user.id,
         )
       )
     );

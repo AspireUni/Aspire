@@ -47,6 +47,9 @@ class _ChatState extends State<Chat> {
               _newMatchesList.add(match);
             }
           }
+          _matchesList.sort(
+            (a, b) => b.lastMessage.timestamp.compareTo(a.lastMessage.timestamp)
+          );
           return Scaffold(
             backgroundColor: Colors.transparent,
             body: Container(
@@ -101,10 +104,12 @@ buildChatView(var newMatchesList, var matchesList) {
   return (
     <Widget>[
       buildHeader(),
-      NewMatches(newMatchesList: newMatchesList),
-      Flexible(
-        child: UserMessageRows(matchesList: matchesList),
-      )
+      if (newMatchesList.length != 0)
+        NewMatches(newMatchesList: newMatchesList),
+      if (matchesList.length != 0)
+        Flexible(
+          child: UserMessageRows(matchesList: matchesList)
+        )
     ]
   );
 }

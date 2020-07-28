@@ -24,7 +24,7 @@ class _NewMatchesState extends State<NewMatches> {
 
   bool isMatchesLoaded;
 
-  final List<User> _matchesList = [];
+  final List<User> _matchesPeerList = [];
 
   @override
   void initState() {
@@ -59,8 +59,17 @@ class _NewMatchesState extends State<NewMatches> {
           )
         ),
         isMatchesLoaded ?
-          buildNewMatches(context, _matchesList, uid) :
-          Text("loading")
+          buildNewMatches(
+            context, 
+            _matchesPeerList, 
+            widget.newMatchesList, 
+            uid
+          ) :
+          CircularProgressIndicator(
+            valueColor: AlwaysStoppedAnimation<Color>(
+              Theme.of(context).accentColor
+            )
+          )
       ]
     );
   }
@@ -69,10 +78,10 @@ class _NewMatchesState extends State<NewMatches> {
     for (var match in newMatchesList) {
       if (match.pair[0] == uid) {
         var user = await getUser(match.pair[1]);
-        _matchesList.add(User.fromJson(user));
+        _matchesPeerList.add(User.fromJson(user));
       } else {
         var user = await getUser(match.pair[0]);
-        _matchesList.add(User.fromJson(user));
+        _matchesPeerList.add(User.fromJson(user));
       }
     }
 
@@ -82,16 +91,21 @@ class _NewMatchesState extends State<NewMatches> {
   }
 }
 
-buildNewMatches(context, matchesList, id) {
+buildNewMatches(context, matchesPeerList, newMatchesList, id) {
   var newMatchesWidgetList = <Widget>[];
-  for (var match in matchesList) {
+    for (var i = 0; i < matchesPeerList.length; i++) {
     newMatchesWidgetList.add(
       GestureDetector(
         onTap: () {
           Navigator.push(
             context,
             MaterialPageRoute(builder: (context) => 
-              ChatMessenger(recipient: match.fullName, peerId: match.id, id: id)
+              ChatMessenger(
+                recipient: matchesPeerList[i].fullName, 
+                peerId: matchesPeerList[i].id, 
+                id: id, 
+                groupChatId: newMatchesList[i].matchId,
+              )
             )
           );
         },
@@ -109,15 +123,19 @@ buildNewMatches(context, matchesList, id) {
                   shape: BoxShape.circle
                 )
               ),
-              Text(
-                match.fullName,
-                overflow: TextOverflow.ellipsis,
-                style: GoogleFonts.muli(
-                  textStyle: TextStyle(
-                    color: Colors.black, 
-                    letterSpacing: .5, 
-                    fontSize: 12.0, 
-                    fontWeight: FontWeight.w600
+              Flexible(
+                child: Text(
+                  matchesPeerList[i].fullName,
+                  maxLines: 1,
+                  textAlign: TextAlign.center,
+                  overflow: TextOverflow.ellipsis,
+                  style: GoogleFonts.muli(
+                    textStyle: TextStyle(
+                      color: Colors.black, 
+                      letterSpacing: .5, 
+                      fontSize: 12.0, 
+                      fontWeight: FontWeight.w600
+                    )
                   )
                 )
               )

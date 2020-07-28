@@ -19,11 +19,13 @@ class ChatMessenger extends StatefulWidget {
   final String id;
   final String peerId;
   final String recipient;
+  final String groupChatId;
   ChatMessenger({
     Key key,
     @required this.id, 
     @required this.peerId,
     @required this.recipient,
+    @required this.groupChatId,
   }) : super(key: key);
 
   @override
@@ -37,7 +39,6 @@ class ChatMessengerState extends State<ChatMessenger> {
 
   String recipient;
 
-  String groupChatId;
   File imageFile;
   String imageUrl;
 
@@ -47,21 +48,13 @@ class ChatMessengerState extends State<ChatMessenger> {
   @override
   void initState() {
     super.initState();
-
-    if (widget.id.hashCode <= widget.peerId.hashCode) {
-      groupChatId = '${widget.id}-${widget.peerId}';
-    } else {
-      groupChatId = '${widget.peerId}-${widget.id}';
-    }
-
     imageUrl = '';
   }
 
   void submitMessage (int type, String content) {
     if (content.trim() != '') {
       textInputController.clear();
-      addMessage(widget.id, widget.peerId, content, type, groupChatId);
-      // updateMatchLastMessage(widget.id, widget.peerId, content, type, groupChatId);
+      addMessage(widget.id, widget.peerId, content, type, widget.groupChatId);
       SystemSound.play(SystemSoundType.click);
     }
   }
@@ -194,8 +187,8 @@ class ChatMessengerState extends State<ChatMessenger> {
             child: StreamBuilder(
               stream: Firestore.instance
                 .collection('messages')
-                .document(groupChatId)
-                .collection(groupChatId)
+                .document(widget.groupChatId)
+                .collection(widget.groupChatId)
                 .orderBy('timestamp', descending: true)
                 .limit(20)
                 .snapshots(),

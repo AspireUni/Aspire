@@ -46,13 +46,16 @@ class Message {
   }
 
   static Message fromJson(dynamic json) {
-    return Message(
-      type: json["type"] as int,
-      timestamp: json["timestamp"] as String,
-      idTo: json["idTo"] as String,
-      idFrom: json["idFrom"] as String,
-      content: json["content"] as String,
-    );
+    if (json != null) {
+      return Message(
+        type: json["type"] as int,
+        timestamp: json["timestamp"] as String,
+        idTo: json["idTo"] as String,
+        idFrom: json["idFrom"] as String,
+        content: json["content"] as String,
+      );
+    }
+    return null;
   }
 
   dynamic toJson() => {

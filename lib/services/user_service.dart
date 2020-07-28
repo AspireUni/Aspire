@@ -61,28 +61,20 @@ Future<void> addMessage(
     .document(groupChatId)
     .collection(groupChatId)
     .add(message);
+
+  updateMatchesLastMessage(message, groupChatId);
 }
 
-// Future<void> updateMatchLastMessage(
-//   String idFrom, 
-//   String idTo, 
-//   String content, 
-//   int type,
-//   String groupChatId
-// ) async {
-//   var message = Message(
-//     idTo: idTo,
-//     idFrom: idFrom,
-//     content: content,
-//     type: type,
-//     timestamp: DateTime.now().millisecondsSinceEpoch.toString()
-//   ).toJson();
-
-//   Firestore
-//     .instance
-//     .collection("matches")
-
-// }
+Future<void> updateMatchesLastMessage(
+  message,
+  groupChatId
+) async {
+  Firestore
+    .instance
+    .collection("matches")
+    .document(groupChatId)
+    .updateData({'lastMessage': message, 'hasContacted': true});
+}
 
 Future<void> addUsers(List<dynamic> allUsers) async {
   for (var user in allUsers) {

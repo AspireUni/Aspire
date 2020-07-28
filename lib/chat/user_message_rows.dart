@@ -1,4 +1,3 @@
-import 'package:aspire/selectors/selectors.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:flutter/material.dart';
@@ -6,6 +5,7 @@ import 'package:redux/redux.dart';
 
 import '../constants/chat_constants.dart';
 import '../models/models.dart';
+import '../selectors/selectors.dart';
 import '../services/user_service.dart';
 import './chat_messenger.dart';
 
@@ -58,9 +58,18 @@ class _UserMessageRowsState extends State<UserMessageRows> {
             )
           )
         ),
-        isMatchesLoaded? 
-          buildMessageRows(context, _matchesList, uid) :
-          Text("loading")
+        isMatchesLoaded ? 
+          buildMessageRows(
+            context, 
+            _matchesList, 
+            widget.matchesList, 
+            uid, 
+          ) :
+          CircularProgressIndicator(
+            valueColor: AlwaysStoppedAnimation<Color>(
+              Theme.of(context).accentColor
+            )
+          )      
       ]
     );
   }
@@ -82,9 +91,17 @@ class _UserMessageRowsState extends State<UserMessageRows> {
   }
 }
 
-buildMessageRows(context, matchesList, id) {
+buildMessageRows(
+  context, 
+  matchesPeerList, 
+  matchesList, 
+  id, 
+) {
   var messagesList = <Widget>[];
-  for (var match in matchesList) {
+  for (var i = 0; i < matchesPeerList.length; i++) {
+    var lastMessage = matchesList[i].lastMessage;
+    var lastMessageType = lastMessage.type;
+    var isSent = lastMessage.idFrom == id;
     messagesList.add(
       GestureDetector(
         behavior: HitTestBehavior.translucent,
@@ -92,7 +109,12 @@ buildMessageRows(context, matchesList, id) {
           Navigator.push(
             context, 
             MaterialPageRoute(builder: (context) => 
-            ChatMessenger(recipient: match.fullName, peerId: match.id, id: id)
+              ChatMessenger(
+              recipient: matchesPeerList[i].fullName, 
+                peerId: matchesPeerList[i].id, 
+                id: id,
+                groupChatId: matchesList[i].matchId,
+              )
             )
           );
         },
@@ -119,7 +141,7 @@ buildMessageRows(context, matchesList, id) {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: <Widget>[
                   Text(
-                    match.fullName,
+                    matchesPeerList[i].fullName,
                     style: GoogleFonts.muli(
                       textStyle: TextStyle(
                         color: Colors.black, 
@@ -140,19 +162,21 @@ buildMessageRows(context, matchesList, id) {
                         )
                       ),
                       children: [
-                        // if(dummyData[i]["isSent"] != false) WidgetSpan(
-                        //   child: Container(
-                        //     margin: EdgeInsets.only(right: 6.0),
-                        //     child: Icon(
-                        //       Icons.send, 
-                        //       size: 12, 
-                        //       color: Colors.grey
-                        //     )
-                        //   ),
-                        // ),
-                        // TextSpan(
-                        //   text: dummyData[i]["lastMessage"]
-                        // )
+                        if(isSent != false) WidgetSpan(
+                          child: Container(
+                            margin: EdgeInsets.only(right: 6.0),
+                            child: Icon(
+                              Icons.send, 
+                              size: 12, 
+                              color: Colors.grey
+                            )
+                          ),
+                        ),
+                        TextSpan(
+                          text: lastMessageType == 0 ? 
+                            lastMessage.content : 
+                            "Sent an image message"
+                        )
                       ]
                     ),
                   )
