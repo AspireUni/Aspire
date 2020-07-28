@@ -8,11 +8,12 @@ const String vertifyAccountMessage =
 const String dissmissMessage = "Dismiss";
 
 //Hint Text
-const String emailHint = "Email";
-const String passwordHint = "Password";
+const String emailHint = "Enter your email";
+const String passwordHint = "Enter your password";
+const String forgotPassword = 'Forgot password?';
 
 //Primary Button
-const String loginButton = "Login";
+const String loginButton = "Log into your account";
 const String createAccountButtonPrimary = "Create Account";
 
 //Secondary Button

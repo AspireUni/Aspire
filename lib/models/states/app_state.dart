@@ -25,11 +25,14 @@ class AppState {
     );
   }
 
-  static AppState fromJson(dynamic json) => 
-    AppState(
-      userState: UserState.fromJson(json["userState"])
-    );
-  
+  static AppState fromJson(dynamic json) { 
+    if (json != null) {
+      return AppState(
+        userState: UserState.fromJson(json["userState"])
+      );
+    }
+    return AppState.initial();
+  }
   dynamic toJson() => {
     'userState': userState,
   };

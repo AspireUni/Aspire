@@ -2,25 +2,27 @@ import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:redux/redux.dart';
 
-import '../actions/actions.dart';
-import '../constants/signuplogin_constants.dart';
-import '../models/models.dart';
-import '../services/user_service.dart';
-import './authentication.dart';
+import '../../common/global_header.dart';
+import '../../constants/common_constants.dart';
+import '../../constants/signuplogin_constants.dart';
+import '../../models/models.dart';
+import '../authentication.dart';
+import './login.dart';
 
 
-class LoginSignupPage extends StatefulWidget {
-  LoginSignupPage({Key key}) : super(key: key);
+class SignUp extends StatefulWidget {
+  SignUp({Key key}) : super(key: key);
 
   @override
-  State<StatefulWidget> createState() => _LoginSignupPageState();
+  State<StatefulWidget> createState() => _SignUpState();
 }
 
-class _LoginSignupPageState extends State<LoginSignupPage> {
+class _SignUpState extends State<SignUp> {
   final _formKey = GlobalKey<FormState>();
 
-  String _email, _password, _errorMessage;
-  bool _isLoginForm, _isLoading;
+  String emailAddress, password;
+  String _errorMessage;
+  bool _isLoading;
   Store<AppState> store;
 
   bool validateAndSave() {
@@ -39,11 +41,7 @@ class _LoginSignupPageState extends State<LoginSignupPage> {
     });
     if (validateAndSave()) {
       try {
-        if (_isLoginForm) {
-          await login();
-        } else {
-          await signUp();
-        }
+        await signUp();
         setState(() {
           _isLoading = false;
         });
@@ -56,6 +54,10 @@ class _LoginSignupPageState extends State<LoginSignupPage> {
           _formKey.currentState.reset();
         });
       }
+    } else {
+      setState(() {
+          _isLoading = false;
+        });
     }
   }
 
@@ -65,7 +67,6 @@ class _LoginSignupPageState extends State<LoginSignupPage> {
 
     _errorMessage = "";
     _isLoading = false;
-    _isLoginForm = true;
     
     store = StoreProvider.of<AppState>(context, listen: false);
   }
@@ -75,24 +76,8 @@ class _LoginSignupPageState extends State<LoginSignupPage> {
     _errorMessage = "";
   }
 
-  void toggleFormMode() {
-    resetForm();
-    setState(() {
-      _isLoginForm = !_isLoginForm;
-    });
-  }
-
-  Future<void> login() async {
-    var userId = await Auth().signIn(_email, _password);
-    var userData = await getUser(userId);
-    if (userData == null) {
-      await addUser(userId, _email);
-      userData = await getUser(userId);
-    }
-    store.dispatch(ConvertToUserState(userData));
-  }
-
   Future<void> signUp() async {
+    await Auth().signUp(emailAddress, password);
     Auth().sendEmailVerification();
     _showVerifyEmailSentDialog();
   }
@@ -100,8 +85,13 @@ class _LoginSignupPageState extends State<LoginSignupPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Text(welcomeMessage),
+      appBar: GlobalHeader(
+        actionText: loginAction,
+        onActionTap: () => Navigator.pushReplacement(
+          context, MaterialPageRoute(
+            builder: (context) => Login()
+          )
+        )
       ),
       body: Stack(
         children: <Widget>[
@@ -133,7 +123,6 @@ class _LoginSignupPageState extends State<LoginSignupPage> {
             FlatButton(
               child: Text(dissmissMessage),
               onPressed: () {
-                toggleFormMode();
                 Navigator.of(context).pop();
               },
             ),
@@ -155,7 +144,6 @@ class _LoginSignupPageState extends State<LoginSignupPage> {
               showEmailInput(),
               showPasswordInput(),
               showPrimaryButton(),
-              showSecondaryButton(),
               showErrorMessage(),
             ],
           ),
@@ -187,7 +175,7 @@ class _LoginSignupPageState extends State<LoginSignupPage> {
         child: CircleAvatar(
           backgroundColor: Colors.transparent,
           radius: 48.0,
-          child: Image.asset('images/Logo.png'),
+          child: Image.asset('images/logos/light_logo_transparent.png'),
         ),
       ),
     );
@@ -207,7 +195,7 @@ class _LoginSignupPageState extends State<LoginSignupPage> {
               color: Colors.grey,
             )),
         validator: (value) => value.isEmpty ? emailEmptyMessage : null,
-        onSaved: (value) => _email = value.trim(),
+        onSaved: (value) => emailAddress = value.trim()
       ),
     );
   }
@@ -226,17 +214,9 @@ class _LoginSignupPageState extends State<LoginSignupPage> {
               color: Colors.grey,
             )),
         validator: (value) => value.isEmpty ? passwordEmptyMessage : null,
-        onSaved: (value) => _password = value.trim(),
+        onSaved: (value) => password = value.trim()
       ),
     );
-  }
-
-  Widget showSecondaryButton() {
-    return FlatButton(
-        child: Text(
-            _isLoginForm ? createAccountButtonSecondary : haveAccountButton,
-            style: TextStyle(fontSize: 18.0, fontWeight: FontWeight.w300)),
-        onPressed: toggleFormMode);
   }
 
   Widget showPrimaryButton() {
@@ -250,7 +230,7 @@ class _LoginSignupPageState extends State<LoginSignupPage> {
               borderRadius: BorderRadius.circular(30.0)),
           color: Colors.blue,
           child: Text(
-            _isLoginForm ? loginButton : createAccountButtonPrimary,
+            createAccountButtonPrimary,
             style: TextStyle(fontSize: 20.0, color: Colors.white)
           ),
           onPressed: validateAndSubmit,
