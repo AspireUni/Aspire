@@ -21,24 +21,25 @@ const String onboardingPartThreeButtonText = 'Let\'s get started';
 const String letsGetStartedButtonText = 'Let\'s get started';
 
 // Onboarding Screen Config
+const double imageHeight = 150.0; 
 var onboardingScreensConfig = [
   {
     "text": onboardingPartOneText,
-    "image": Image.asset('images/onboarding/ano_standing.png', height: 150),
+    "image": Image.asset('images/onboarding/ano_standing.png', height: imageHeight),
     "nextScreen": (context) => OnboardingScreens(screenNum: 1), 
     "buttonText": nextButtonText, 
     "isLight": true
   },
   {
     "text": onboardingPartTwoText, 
-    "image": Image.asset('images/onboarding/two_anos_and_logo.png', height: 150),
+    "image": Image.asset('images/onboarding/two_anos_and_logo.png', height: imageHeight),
     "nextScreen": (context) => OnboardingScreens(screenNum: 2),
     "buttonText": nextButtonText, 
     "isLight": true
   }, 
   {
     "text": onboardingPartThreeText, 
-    "image": Image.asset('images/onboarding/two_anos_talking.png', height: 150),
+    "image": Image.asset('images/onboarding/two_anos_talking.png', height: imageHeight),
     "nextScreen": (context) => LoginCreateAccount(), 
     "buttonText": letsGetStartedButtonText, 
     "isLight": false
@@ -52,3 +53,7 @@ const String termsAndConditions = 'Terms and Conditions';
 const String privacyPolicy = 'Privacy Policy';
 const String linkDivider = ' | ';
 
+// Sign Up Funnel
+const String funnelQuestionText = 'Are you a mentor or a mentee?';
+const String isMentorAction = 'I am a Mentor';
+const String isMenteeAction = 'I am a Mentee';

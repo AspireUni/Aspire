@@ -17,7 +17,7 @@ import '../../models/models.dart';
 import '../../navigation/app_controller.dart';
 import '../../services/user_service.dart';
 import '../authentication.dart';
-import './signup.dart';
+import '../sign_up/funnel.dart';
 
 
 class Login extends StatefulWidget {
@@ -76,7 +76,7 @@ class _Login extends State<Login> {
         actionText: signUpAction,
         onActionTap: () => Navigator.pushReplacement(
           context, MaterialPageRoute(
-            builder: (context) => SignUp()
+            builder: (context) => SignUpFunnel()
           )
         )
       ),
