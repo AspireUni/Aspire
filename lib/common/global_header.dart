@@ -6,11 +6,13 @@ import 'format_text.dart';
 class GlobalHeader extends StatelessWidget implements PreferredSizeWidget {
   final String actionText;
   final void Function() onActionTap;
+  final bool isLight;
 
   GlobalHeader({
     Key key,
     this.actionText,
-    this.onActionTap
+    this.onActionTap, 
+    this.isLight = false
   }) : super(key: key);
 
 
@@ -21,7 +23,7 @@ class GlobalHeader extends StatelessWidget implements PreferredSizeWidget {
     return AppBar(
       title: appBarTitle(), 
       actions: <Widget>[appBarAction(context, isVisible: showAction)],
-      backgroundColor: Colors.white,
+      backgroundColor: Colors.transparent,
       centerTitle: false,
       elevation: 0.0
     );
@@ -34,9 +36,10 @@ class GlobalHeader extends StatelessWidget implements PreferredSizeWidget {
     return Padding(
       padding: EdgeInsets.only(left: 10.0), 
       child: FormatText(
-      text: appName, 
-      fontSize: globalHeaderFontSize,
-    )
+        text: appName, 
+        fontSize: globalHeaderFontSize,
+        textColor: isLight ? Colors.white : Colors.black
+      )
     );
 }
 
@@ -48,7 +51,9 @@ class GlobalHeader extends StatelessWidget implements PreferredSizeWidget {
           onTap: onActionTap,
           child: FormatText(
             text: actionText,
-            textColor: Theme.of(context).accentColor,
+            textColor: isLight 
+              ? Colors.grey[50] 
+              : Theme.of(context).accentColor,
             fontSize: 14.0,
             fontWeight: FontWeight.w500
           )
