@@ -1,4 +1,4 @@
 # Aspire
 
 #### CodeCov
-[![codecov](https://codecov.io/gh/IndustryBear/aspire/branch/master/graph/badge.svg)](https://codecov.io/gh/IndustryBear/aspire)
+[![codecov](https://codecov.io/gh/AspireUni/Aspire/branch/master/graph/badge.svg)](https://codecov.io/gh/AspireUni/Aspire)
