@@ -87,7 +87,7 @@ buildMessageRows(context) {
           Navigator.push(
             context, 
             MaterialPageRoute(builder: (context) => 
-            ChatMessenger(recipient: dummyData[i]["name"])
+            ChatMessenger(recipient: dummyData[i]["name"], peerId: mockPeerId)
             )
           );
         },
@@ -160,7 +160,7 @@ buildMessageRows(context) {
     );
   }
 
-  return Flexible(    
+  return Flexible(
     child: ListView(
       padding: EdgeInsets.all(0.0),
       scrollDirection: Axis.vertical,

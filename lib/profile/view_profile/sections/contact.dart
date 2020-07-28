@@ -1,18 +1,19 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:url_launcher/url_launcher.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 import '../../../chat/chat_messenger.dart';
+import '../../../constants/chat_constants.dart';
 import '../../../constants/profile_constants.dart';
+import '../../../models/models.dart';
 import '../../common/section.dart';
 
  
-class ProfileContact extends StatelessWidget {  
-  final Map contact;
-  final String fullName;
-  ProfileContact({Key key, @required this.contact, @required this.fullName}) 
-    : super(key: key);
+class ProfileContact extends StatelessWidget {
+  final User user;
+
+  ProfileContact({Key key, @required this.user}) : super(key: key);
 
   final IconData chat = IconData(
     chatIconCodePoint,
@@ -38,15 +39,6 @@ class ProfileContact extends StatelessWidget {
     fontPackage: CupertinoIcons.iconFontPackage
   );
 
-  void handleChatTap(BuildContext context) {
-    Navigator.push(
-      context, 
-      MaterialPageRoute(builder: (context) => 
-      ChatMessenger(recipient: fullName)
-      )
-    );
-  }
-
   @override
   Widget build(BuildContext context) {
     return Section(
@@ -58,6 +50,8 @@ class ProfileContact extends StatelessWidget {
   Widget buildInfoList(BuildContext context) {
     return SectionList(
       children: <Widget>[
+        // TODO: This row should only be visible 
+        // when the user is viewing other uses' profiles
         buildInfoRow(
           context, 
           chat, 
@@ -69,21 +63,21 @@ class ProfileContact extends StatelessWidget {
           context, 
           email, 
           contactEmailAddress, 
-          contact["emailAddress"],
+          user.contact.emailAddress,
           handleEmailTap
         ),
         buildInfoRow(
           context,
           phone,
           contactPhoneNumber,
-          contact["phoneNumber"],
+          user.contact.phoneNumber,
           handlePhoneTap
         ),
         buildInfoRow(
           context,
           web,
           contactWebsite,
-          contact["website"],
+          user.contact.website,
           handleWebsiteTap
         )
       ]
@@ -97,7 +91,7 @@ class ProfileContact extends StatelessWidget {
     String info, 
     Function() handleTap
   ) {
-    return InkWell(
+    return info != '' ? InkWell(
       onTap: handleTap,
       child: SectionRow(
         children: <Widget> [
@@ -118,7 +112,7 @@ class ProfileContact extends StatelessWidget {
           )
         ]
       )
-    );
+    ) : SizedBox();
   }
 
   Widget buildContactText(String text, {bool isLabel}) {
@@ -137,16 +131,28 @@ class ProfileContact extends StatelessWidget {
     );
   }
 
+  void handleChatTap(BuildContext context) {
+    Navigator.push(
+      context, 
+      MaterialPageRoute(
+        builder: (context) => ChatMessenger(
+          recipient: user.fullName,
+          peerId: mockPeerId
+        )
+      )
+    );
+  }
+
   void handleEmailTap() {
-    _launchUrl("mailto:${contact["emailAddress"]}");
+    _launchUrl("mailto:${user.contact.emailAddress}");
   }
 
   void handlePhoneTap() {
-    _launchUrl("tel:${contact["phoneNumber"]}");
+    _launchUrl("tel:${user.contact.phoneNumber}");
   }
 
   void handleWebsiteTap() {
-    _launchUrl(contact["website"]);
+    _launchUrl(user.contact.website);
   }
 
   void _launchUrl(String url) async {

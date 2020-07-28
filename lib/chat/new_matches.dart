@@ -76,7 +76,7 @@ buildNewMatches(context) {
           Navigator.push(
             context,
             MaterialPageRoute(builder: (context) => 
-              ChatMessenger(recipient: dummyData[i]["name"])
+              ChatMessenger(recipient: dummyData[i]["name"], peerId: mockPeerId)
             )
           );
         },

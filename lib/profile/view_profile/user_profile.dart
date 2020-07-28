@@ -1,90 +1,105 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_redux/flutter_redux.dart';
+import 'package:redux/redux.dart';
+
+import '../../actions/actions.dart';
+import '../../constants/common_constants.dart';
+import '../../ftu/authentication.dart';
+import '../../models/models.dart';
+import '../../selectors/selectors.dart';
+import '../../services/user_service.dart';
 import './header.dart';
 import './sections/sections.dart';
-
-// TODO: Replace with real data
-Map dummyData = {
-  "fullName": "John Doe",
-  "contact": {
-    "emailAddress": "johndoe@ualberta.ca",
-    "phoneNumber": "1234567890",
-    "website": "http://johndoe.com"
-  },
-  "summary": """Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.""",
-  "schools": [
-    { "school": "University of Alberta",
-      "program": "Bachelor of Science (BSc) Specialization, Computing Science",
-      "startYear": "2015",
-      "endYear": "2020"
-    }
-  ],
-  "jobs": [
-    {
-      "jobTitle": "Software Developer Intern",
-      "company": "Intuit",
-      "startDate": "January 2020",
-      "endDate": "Present"
-    }, 
-    {
-      "jobTitle": "Research Assistant",
-      "company": "University of Alberta",
-      "startDate": "May 2019",
-      "endDate": "December 2019"
-    }
-  ],
-  "skills": [
-    {
-      "skill": "Front-end development",
-      "level": "Expert"
-    },
-    {
-      "skill": "Java",
-      "level": "Intermediate"
-    },
-    {
-      "skill": "React",
-      "level": "Expert"
-    },
-    {
-      "skill": "Back-end development",
-      "level": "Intermediate"
-    },
-    {
-      "skill": "C#",
-      "level": "Beginner"
-    }
-  ]
-};
  
-class UserProfile extends StatelessWidget {
+class UserProfile extends StatefulWidget {
   const UserProfile({Key key}) : super(key: key);
 
   @override
+  _UserProfileState createState() => _UserProfileState();
+}
+
+class _UserProfileState extends State<UserProfile> {
+
+  Store<AppState> store;
+  String uid;
+
+  @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: Colors.transparent,
-      body: Container(
-        margin: EdgeInsets.all(0),
-        child: Center(
-          child: Column(
-            children: buildUserProfileView()
+    store = StoreProvider.of<AppState>(context);
+    uid = userIdSelector(store);
+
+    return FutureBuilder(
+      future: getUser(uid),
+      builder: (context, snapshot) {
+        if (snapshot.connectionState == ConnectionState.waiting) {
+          return loadingScreen;
+        } else {
+          var user = User.fromJson(snapshot.data);
+          return Scaffold(
+            backgroundColor: Colors.white,
+            body: Container(
+              margin: EdgeInsets.all(0),
+              child: Center(
+                child: Column(
+                  children: buildUserProfileView(context, user)
+                )
+              )
+            )
+          );
+        }
+      }
+    );
+  }
+
+  buildUserProfileView(BuildContext context, User user) {
+    return (
+      <Widget>[
+        ProfileHeader(user: user),
+        ProfileSections(user: user),
+        // Temporary until we get a drawer with the logout button
+        buildLogoutButton(context)
+      ]
+    );
+  }
+
+  // Temporary until we get a drawer with the logout button
+  buildLogoutButton(BuildContext context){
+    return ButtonTheme(
+      padding: EdgeInsets.all(5.0),
+      minWidth: 50.0,
+      height: 20.0,
+      child:RaisedButton(
+        materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
+        onPressed: () => logout(context),
+        color: Colors.red,
+        
+        child: Text(
+          'LOGOUT',
+          style: TextStyle(
+            fontSize: 10,
+            fontWeight: FontWeight.w700,
+            color: Colors.white
           )
-        )
+        ),
       )
     );
   }
 
-  buildUserProfileView() {
-    return (
-      <Widget>[
-        ProfileHeader(
-          data: dummyData
-        ),
-        ProfileSections(
-          data: dummyData
-        )
-      ]
-    );
+  void logout(BuildContext context) async {
+    try {
+      await Auth().signOut();
+      StoreProvider.of<AppState>(context).dispatch(
+        UpdateUserState(UserState.initial().copyWith(
+          authStatus: AuthStatus.notLoggedIn
+        ))
+      );
+      Navigator.pushNamedAndRemoveUntil(context,
+        '/',
+        (route) => false
+      );
+    } on Exception catch (e) {
+      print(e);
+    }
   }
 
 }
