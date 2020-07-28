@@ -7,6 +7,7 @@ const nextButtonText = "Next";
 const addAction = 'Add';
 const skipAction = 'Skip';
 const filterAction = 'Filter';
+const signInAction = 'Sign in';
 const signUpAction = 'Sign up';
 const loginAction = 'Login';
 
