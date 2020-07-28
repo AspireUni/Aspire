@@ -55,5 +55,5 @@ const String linkDivider = ' | ';
 
 // Sign Up Funnel
 const String funnelQuestionText = 'Are you a mentor or a mentee?';
-const String isMentorAction = 'I am a mentor';
-const String isMenteeAction = 'I am a mentee';
+const String isMentorAction = 'I am a Mentor';
+const String isMenteeAction = 'I am a Mentee';

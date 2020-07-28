@@ -17,7 +17,8 @@ class SignUpFunnel extends StatelessWidget {
     var screenHeight = MediaQuery.of(context).size.height; 
 
     return Scaffold(
-      backgroundColor: Theme.of(context).primaryColor,
+      // TODO: Replace with primaryColor when center ano image is updated
+      backgroundColor: Color(0xFF0B0B33),
       body: Container(
         child: Stack(
           children: [ 
@@ -57,15 +58,16 @@ class SignUpFunnel extends StatelessWidget {
 
   // TODO: Make a common global_footer widget to maintain consistent padding
   Widget buildFooter(context, screenHeight, screenWidth) {
-    var heightPadding = screenHeight * 0.15;
-    var widthPadding = screenWidth * 0.22;
+    var heightPadding = screenHeight * 0.08;
+    var widthPadding = screenWidth * 0.21;
     return Padding(
       padding: EdgeInsets.fromLTRB(
         widthPadding, 
         heightPadding, 
         widthPadding, 
         heightPadding
-      ), child: Column(
+      ), 
+      child: Column(
         mainAxisAlignment: MainAxisAlignment.end,
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
@@ -79,7 +81,7 @@ class SignUpFunnel extends StatelessWidget {
 
   Widget buildFunnelText(context, screenHeight, screenWidth) {
     return Padding(
-      padding: EdgeInsets.only(bottom: 60.0),
+      padding: EdgeInsets.only(bottom: 40.0),
       child: FormatText(
         text: funnelQuestionText,
         textColor: Colors.white,
@@ -101,7 +103,7 @@ class SignUpFunnel extends StatelessWidget {
           height: circleDimensions, 
           margin: EdgeInsets.all(screenWidth * 0.02), 
           decoration: BoxDecoration(
-            color: i == 1 ? 
+            color: i == 0 ? 
               Theme.of(context).accentColor : Colors.grey, 
             shape: BoxShape.circle
           )
