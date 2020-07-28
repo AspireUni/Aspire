@@ -1,12 +1,11 @@
 import 'package:flutter_redux/flutter_redux.dart';
-import 'package:google_fonts/google_fonts.dart';
 import 'package:flutter/material.dart';
 import 'package:redux/redux.dart';
 
+import '../common/format_text.dart';
 import '../constants/chat_constants.dart';
 import '../models/models.dart';
 import '../selectors/selectors.dart';
-import '../services/user_service.dart';
 import './chat_messenger.dart';
 
 class NewMatches extends StatefulWidget {
@@ -38,17 +37,10 @@ class _NewMatchesState extends State<NewMatches> {
       children: <Widget>[
         Padding(
           padding: EdgeInsets.only(top: 20, bottom: 10),
-          child: Text(
-            chatNewMatchesTitle, 
+          child: FormatText(
+            text: chatNewMatchesTitle,
             textAlign: TextAlign.left,
-            style: GoogleFonts.muli(
-              textStyle: TextStyle(
-                color: Colors.black, 
-                letterSpacing: .5, 
-                fontSize: 18.0, 
-                fontWeight: FontWeight.bold
-              )
-            )
+            fontSize: 18.0,
           )
         ),
         buildNewMatches(
@@ -96,19 +88,13 @@ buildNewMatches(context, newMatchesList, id, isMentee) {
                 )
               ),
               Flexible(
-                child: Text(
-                  recipient.fullName,
-                  maxLines: 1,
+                child: FormatText(
+                  text: recipient.fullName,
                   textAlign: TextAlign.center,
                   overflow: TextOverflow.ellipsis,
-                  style: GoogleFonts.muli(
-                    textStyle: TextStyle(
-                      color: Colors.black, 
-                      letterSpacing: .5, 
-                      fontSize: 12.0, 
-                      fontWeight: FontWeight.w600
-                    )
-                  )
+                  maxLines: 1,
+                  fontSize: 12.0,
+                  fontWeight: FontWeight.w600,
                 )
               )
             ]

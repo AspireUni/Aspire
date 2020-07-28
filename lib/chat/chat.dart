@@ -40,7 +40,6 @@ class _ChatState extends State<Chat> {
         if (snapshot.connectionState == ConnectionState.waiting) {
           return loadingScreen;
         } else {
-
           for (var document in snapshot.data.documents) {
             var match = Match.fromJson(document.data);
             if (match.hasContacted) {
@@ -50,10 +49,12 @@ class _ChatState extends State<Chat> {
             }
           }
           _matchesList.sort(
-            (a, b) => b.lastMessage.timestamp.compareTo(a.lastMessage.timestamp)
+            (matchA, matchB) => 
+              matchB.lastMessage.timestamp.compareTo(
+                matchA.lastMessage.timestamp
+              )
           );
           return Scaffold(
-            backgroundColor: Colors.transparent,
             body: Container(
               height: MediaQuery.of(context).size.height,
               margin: EdgeInsets.all(0),

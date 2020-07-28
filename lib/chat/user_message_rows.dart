@@ -3,6 +3,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:flutter/material.dart';
 import 'package:redux/redux.dart';
 
+import '../common/format_text.dart';
 import '../constants/chat_constants.dart';
 import '../models/models.dart';
 import '../selectors/selectors.dart';
@@ -111,16 +112,9 @@ buildMessageRows(
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: <Widget>[
-                  Text(
-                    recipient.fullName,
-                    style: GoogleFonts.muli(
-                      textStyle: TextStyle(
-                        color: Colors.black, 
-                        letterSpacing: .5, 
-                        fontSize: 14.0, 
-                        fontWeight: FontWeight.bold
-                      )
-                    )
+                  FormatText(
+                    text: recipient.fullName,
+                    fontSize: 14.0,
                   ),
                   RichText(
                     overflow: TextOverflow.ellipsis,
@@ -146,7 +140,7 @@ buildMessageRows(
                         TextSpan(
                           text: lastMessageType == 0 ? 
                             lastMessage.content : 
-                            "Sent an image message"
+                            imageMessageDesciption
                         )
                       ]
                     ),
