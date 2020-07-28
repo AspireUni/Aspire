@@ -1,6 +1,5 @@
 import 'package:curved_navigation_bar/curved_navigation_bar.dart';
 import 'package:flutter/material.dart';
-
 import '../FTU/authentication.dart';
 import '../chat/chat.dart';
 import '../constants/navigation_constants.dart';
@@ -33,14 +32,6 @@ class _AppControllerState extends State<AppController> {
   @override Widget build(BuildContext context) {
     return MaterialApp(
       home: Scaffold(
-        appBar: AppBar(
-          actions: <Widget>[
-            FlatButton(
-                child: Text('Logout',
-                    style: TextStyle(fontSize: 17.0, color: Colors.white)),
-                onPressed: signOut)
-          ],
-        ),
         body: _widgets[pageIndex],
         bottomNavigationBar: CurvedNavigationBar(
           backgroundColor: Theme.of(context).primaryColor,
