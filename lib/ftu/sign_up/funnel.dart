@@ -13,9 +13,6 @@ class SignUpFunnel extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    var screenWidth = MediaQuery.of(context).size.width; 
-    var screenHeight = MediaQuery.of(context).size.height; 
-
     return Scaffold(
       // TODO: Replace with primaryColor when center ano image is updated
       backgroundColor: Color(0xFF0B0B33),
@@ -23,8 +20,8 @@ class SignUpFunnel extends StatelessWidget {
         child: Stack(
           children: [ 
             buildHeader(context), 
-            buildCenterAno(context, screenWidth), 
-            buildFooter(context, screenHeight, screenWidth)
+            buildCenterAno(context), 
+            buildFooter(context)
           ]
         )
       )
@@ -46,7 +43,7 @@ class SignUpFunnel extends StatelessWidget {
       );
   }
 
-  Widget buildCenterAno(context, screenWidth) {
+  Widget buildCenterAno(context) {
     return Column(
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
@@ -57,9 +54,12 @@ class SignUpFunnel extends StatelessWidget {
   }
 
   // TODO: Make a common global_footer widget to maintain consistent padding
-  Widget buildFooter(context, screenHeight, screenWidth) {
+  Widget buildFooter(context) {
+    var screenWidth = MediaQuery.of(context).size.width; 
+    var screenHeight = MediaQuery.of(context).size.height; 
     var heightPadding = screenHeight * 0.08;
     var widthPadding = screenWidth * 0.21;
+
     return Padding(
       padding: EdgeInsets.fromLTRB(
         widthPadding, 
@@ -71,7 +71,7 @@ class SignUpFunnel extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.end,
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
-          buildFunnelText(context, screenHeight, screenWidth), 
+          buildFunnelText(), 
           buildCircleIndicators(context, screenWidth), 
           ...buildFunnelButtons()
         ]
@@ -79,7 +79,7 @@ class SignUpFunnel extends StatelessWidget {
     );
   }
 
-  Widget buildFunnelText(context, screenHeight, screenWidth) {
+  Widget buildFunnelText() {
     return Padding(
       padding: EdgeInsets.only(bottom: 40.0),
       child: FormatText(
@@ -92,7 +92,7 @@ class SignUpFunnel extends StatelessWidget {
     );
   }
   
-  // TODO: Delete once CircleIndicators widget is created
+  // TODO: Make a common circle_indicators widget is created
   Row buildCircleIndicators(context, screenWidth) {
     var circleDimensions = screenWidth * 0.01;
     var circles = <Widget>[];
