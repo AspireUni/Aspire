@@ -62,39 +62,25 @@ class ChatMessengerState extends State<ChatMessenger> {
     imageUrl = '';
 
     scrollController.addListener(() {
-      if (scrollController.position.atEdge) {
-        if (scrollController.position.pixels != 0) {
-          var message = Message.fromJson(
-            _messagesSnapshots[_messagesSnapshots.length - 1]
-          );
-          Firestore.instance
-            .collection('messages')
-            .document(widget.groupChatId)
-            .collection(widget.groupChatId)
-            .where('timestamp', isLessThan: message.timestamp)
-            .orderBy('timestamp', descending: true)
-            .limit(20)
-            .getDocuments()
-            .then((snapshot) {
-              setState(() {
-                loadNewMessages();
-                _messagesSnapshots.addAll(snapshot.documents);
-              });
+      if (scrollController.position.atEdge &&
+          scrollController.position.pixels != 0) {
+        var message = Message.fromJson(
+          _messagesSnapshots[_messagesSnapshots.length - 1]
+        );
+        getMessagesOlderThanTimestamp(widget.groupChatId, message.timestamp)
+          .then((snapshot) {
+            setState(() {
+              loadNewMessages();
+              _messagesSnapshots.addAll(snapshot.documents);
             });
-        }
+          });
       }
     });
   }
 
   loadNewMessages() {
     _isLoading = true;
-    Firestore.instance
-      .collection('messages')
-      .document(widget.groupChatId)
-      .collection(widget.groupChatId)
-      .orderBy('timestamp', descending: true)
-      .limit(1)
-      .snapshots()
+    getMessageSnapshots(widget.groupChatId, 1)
       .listen((onData) {
         if (onData.documents[0] != null) {
           var result = Message.fromJson(onData.documents[0]);
@@ -250,13 +236,7 @@ class ChatMessengerState extends State<ChatMessenger> {
             child: StreamBuilder(
               stream: _isLoading ?
                 null : 
-                Firestore.instance
-                  .collection('messages')
-                  .document(widget.groupChatId)
-                  .collection(widget.groupChatId)
-                  .orderBy('timestamp', descending: true)
-                  .limit(20)
-                  .snapshots(),
+                getMessageSnapshots(widget.groupChatId, 20),
               builder: (context, snapshot) {
                 if (!snapshot.hasData) {
                   return Text("wait");
