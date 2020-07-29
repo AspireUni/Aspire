@@ -4,8 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:redux/redux.dart';
 
-import '../constants/chat_constants.dart';
-import '../constants/common_constants.dart';
+import '../constants/constants.dart';
 import '../models/models.dart';
 import '../selectors/selectors.dart';
 import '../services/services.dart';
