@@ -17,31 +17,6 @@ Future<QuerySnapshot> getUsers() async {
     .getDocuments();
 }
 
-Future<QuerySnapshot> getMatches(String uid, isMentee) async {
-  if (isMentee == true) {
-    return Firestore
-      .instance
-      .collection("matches")
-      .where('mentee.id', isEqualTo: uid)
-      .getDocuments();
-  } else {
-    return Firestore
-      .instance
-      .collection("matches")
-      .where('mentor.id', isEqualTo: uid)
-      .getDocuments();
-  }
-}
-
-Future<QuerySnapshot> getMatch(String menteeId, String mentorId) async {
-  return Firestore
-    .instance
-    .collection("matches")
-    .where('mentee.id', isEqualTo: menteeId)
-    .where('mentor.id', isEqualTo: mentorId)
-    .getDocuments();
-}
-
 Future<void> addUser(String id, String email) async {
   var user = User.initial().copyWith(
     id: id,
@@ -55,42 +30,6 @@ Future<void> addUser(String id, String email) async {
     .collection("users")
     .document(id)
     .setData(user);
-}
-
-Future<void> addMessage(
-  String idFrom, 
-  String idTo, 
-  String content, 
-  int type,
-  String groupChatId
-) async {
-  var message = Message(
-    idTo: idTo,
-    idFrom: idFrom,
-    content: content,
-    type: type,
-    timestamp: DateTime.now().millisecondsSinceEpoch.toString()
-  ).toJson();
-
-  Firestore
-    .instance
-    .collection('messages')
-    .document(groupChatId)
-    .collection(groupChatId)
-    .add(message);
-
-  updateMatchesLastMessage(message, groupChatId);
-}
-
-Future<void> updateMatchesLastMessage(
-  message,
-  groupChatId
-) async {
-  Firestore
-    .instance
-    .collection("matches")
-    .document(groupChatId)
-    .updateData({'lastMessage': message, 'hasContacted': true});
 }
 
 Future<void> addUsers(List<dynamic> allUsers) async {

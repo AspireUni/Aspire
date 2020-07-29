@@ -11,7 +11,7 @@ import '../ftu/onboarding/intro.dart';
 import '../models/models.dart';
 import '../profile/save_profile/save_profile.dart';
 import '../selectors/selectors.dart';
-import '../services/user_service.dart';
+import '../services/services.dart';
 import 'app_controller.dart';
 
 class Root extends StatefulWidget {

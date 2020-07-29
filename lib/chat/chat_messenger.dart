@@ -12,7 +12,7 @@ import 'package:redux/redux.dart';
 
 import '../constants/chat_constants.dart';
 import '../models/models.dart';
-import '../services/user_service.dart';
+import '../services/services.dart';
 import './message.dart';
 
 class ChatMessenger extends StatefulWidget {

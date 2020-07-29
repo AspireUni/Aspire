@@ -8,7 +8,7 @@ import '../constants/chat_constants.dart';
 import '../constants/common_constants.dart';
 import '../models/models.dart';
 import '../selectors/selectors.dart';
-import '../services/user_service.dart';
+import '../services/services.dart';
 import './new_matches.dart';
 import './user_message_rows.dart';
 
