@@ -78,8 +78,8 @@ buildChatView(var newMatchesList, var matchesList) {
         actionText: "New Message",
         onActionTap: () => {},
       ),
-      // if (newMatchesList.length != 0)
-        NewMatches(newMatchesList: matchesList),
+      if (newMatchesList.length != 0)
+        NewMatches(newMatchesList: newMatchesList),
       if (matchesList.length != 0)
         Flexible(
           child: UserMessageRows(matchesList: matchesList)

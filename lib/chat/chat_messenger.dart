@@ -158,7 +158,6 @@ class ChatMessengerState extends State<ChatMessenger> {
     return Container(
       decoration: BoxDecoration(
         color: Colors.white,
-        // border: Border(top: BorderSide(width: 1.0, color: Colors.grey[100]))
       ),
       constraints: BoxConstraints(minHeight: 50.0, maxHeight: 200.0),
       padding: EdgeInsets.all(15.0),
