@@ -2,7 +2,7 @@ import 'package:redux/redux.dart';
 
 import '../models/models.dart';
 import '../selectors/selectors.dart';
-import '../services/user_service.dart';
+import '../services/services.dart';
 
 dynamic convertProfileStateToUserEntity(Store<AppState> store) async {
   var userState = userStateSelector(store);

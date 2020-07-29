@@ -10,7 +10,7 @@ import '../../constants/profile_constants.dart';
 import '../../helpers/user_entity_helper.dart';
 import '../../models/models.dart';
 import '../../navigation/app_controller.dart';
-import '../../services/user_service.dart';
+import '../../services/services.dart';
 import '../common/app_bar.dart';
 import '../common/section.dart';
 import './sections/contact/save_contact.dart';

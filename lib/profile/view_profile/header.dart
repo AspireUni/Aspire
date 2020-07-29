@@ -8,7 +8,7 @@ import '../../actions/actions.dart';
 import '../../constants/profile_constants.dart';
 import '../../models/models.dart';
 import '../../selectors/selectors.dart';
-import '../../services/user_service.dart';
+import '../../services/services.dart';
 import '../save_profile/save_profile.dart';
  
 class ProfileHeader extends StatelessWidget {

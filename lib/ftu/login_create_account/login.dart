@@ -15,7 +15,7 @@ import '../../constants/signuplogin_constants.dart';
 import '../../icons/aspire_icons.dart';
 import '../../models/models.dart';
 import '../../navigation/app_controller.dart';
-import '../../services/user_service.dart';
+import '../../services/services.dart';
 import '../authentication.dart';
 import '../sign_up/funnel.dart';
 
