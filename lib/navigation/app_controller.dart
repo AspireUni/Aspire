@@ -30,10 +30,20 @@ class _AppControllerState extends State<AppController> {
   int pageIndex; 
   double navBarIconSize = 25.0; 
 
+
+  // final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
+
+  // void _openDrawer() {
+  //   _scaffoldKey.currentState.openDrawer();
+  // }
+
+  // void _closeDrawer() {
+  //   Navigator.of(context).pop();
+  // }
+
   @override
   void initState() {
     super.initState();
-
     pageIndex = widget.tabIndex ?? 1;
   }
 
@@ -44,7 +54,9 @@ class _AppControllerState extends State<AppController> {
   @override 
   Widget build(BuildContext context) {
     return Scaffold(
-        body: _screens[pageIndex],
+        // key: _scaffoldKey,
+        body: 
+        _screens[pageIndex],
         bottomNavigationBar: CustomNavigationBar(
           elevation: 0.0,
           onTap: tapNavItem,
@@ -55,16 +67,80 @@ class _AppControllerState extends State<AppController> {
           strokeColor: navItemColor, 
           unSelectedColor: Colors.grey,
           backgroundColor: Colors.white,
-        )
+        ),
+        // drawer: Drawer(
+        //   child: ListView(
+        //     // Important: Remove any padding from the ListView.
+        //     padding: EdgeInsets.zero,
+        //     children: <Widget>[
+        //       DrawerHeader(
+        //         child: Text('Drawer Header'),
+        //         decoration: BoxDecoration(
+        //           color: Colors.blue,
+        //         ),
+        //       ),
+        //       ListTile(
+        //         title: Text('Item 1'),
+        //         onTap: () {
+        //           // Update the state of the app
+        //           // ...
+        //           // Then close the drawer
+        //           Navigator.pop(context);
+        //         },
+        //       ),
+        //       ListTile(
+        //         title: Text('Item 2'),
+        //         onTap: () {
+        //           // Update the state of the app
+        //           // ...
+        //           // Then close the drawer
+        //           Navigator.pop(context);
+        //         },
+        //       ),
+        //       // RaisedButton(
+        //       //     onPressed: _closeDrawer,
+        //       //     child: const Text('Close Drawer'),
+        //       //   ),
+        //     ],
+        //   ),
+        // ),
+        // // Disable opening the drawer with a swipe gesture.
+        // drawerEnableOpenDragGesture: false,
       ); 
   }
 
-  // signOut() async {
-  //   try {
-  //     await widget.auth.signOut();
-  //     widget.logoutCallback();
-  //   } on Exception catch (e) {
-  //     print(e);
+
+  // buildControllerView(BuildContext context) {
+  //   return (
+  //     <Widget>[
+  //       _screens[pageIndex],
+  //       // Temporary until we get a drawer with the logout button
+  //       buildDrawerButton(context)
+  //     ]
+  //   );
+  // }
+
+  // buildDrawerButton(BuildContext context){
+  //   return ButtonTheme(
+  //     padding: EdgeInsets.all(5.0),
+  //     minWidth: 50.0,
+  //     height: 20.0,
+  //     child:RaisedButton(
+  //       materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
+  //       onPressed: () =>  _openDrawer,
+  //       color: Colors.red,
+        
+  //       child: Text(
+  //         'Open Drawer',
+  //         style: TextStyle(
+  //           fontSize: 10,
+  //           fontWeight: FontWeight.w700,
+  //           color: Colors.white
+  //         )
+  //       ),
+  //     )
+  //   );
+  // }
 
   List<CustomNavigationBarItem> buildNavItems() {
     var navItems = <CustomNavigationBarItem>[];
