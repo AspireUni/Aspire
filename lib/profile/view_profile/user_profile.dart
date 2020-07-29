@@ -22,6 +22,16 @@ class _UserProfileState extends State<UserProfile> {
 
   Store<AppState> store;
   String uid;
+  
+  final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
+
+  void _openDrawer() {
+    _scaffoldKey.currentState.openDrawer();
+  }
+
+  void _closeDrawer() {
+    Navigator.of(context).pop();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -36,15 +46,36 @@ class _UserProfileState extends State<UserProfile> {
         } else {
           var user = User.fromJson(snapshot.data);
           return Scaffold(
+            key: _scaffoldKey,
             backgroundColor: Colors.white,
             body: Container(
               margin: EdgeInsets.all(0),
               child: Center(
-                child: Column(
-                  children: buildUserProfileView(context, user)
-                )
+                child: 
+                RaisedButton(
+                  onPressed: _openDrawer,
+                  child: buildUserProfileView(context, user)
+              ),   
+
               )
             )
+            drawer: Drawer(
+              child: Center(
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: <Widget>[
+                    const Text('This is the Drawer'),
+                    RaisedButton(
+                      onPressed: _closeDrawer,
+                      child: const Text('Close Drawer'),
+                    ),
+                  ],
+                ),
+              ),
+            ),
+            // Disable opening the drawer with a swipe gesture.
+            drawerEnableOpenDragGesture: false,
+
           );
         }
       }

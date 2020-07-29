@@ -1,6 +1,6 @@
 import 'package:custom_navigation_bar/custom_navigation_bar.dart';
 import 'package:flutter/material.dart';
-import '../FTU/authentication.dart';
+//import '../FTU/authentication.dart';
 
 import '../chat/chat.dart';
 import '../constants/app_controller_constants.dart';
