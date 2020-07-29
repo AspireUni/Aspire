@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
 
 import '../../common/global_header.dart';
-import '../../constants/common_constants.dart';
-import '../../constants/ftu_constants.dart';
+import '../../constants/constants.dart';
 import '../../ftu/login_create_account/login_create_account.dart';
 import './footer.dart';
 

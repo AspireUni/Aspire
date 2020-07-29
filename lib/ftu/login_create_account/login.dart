@@ -5,13 +5,8 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:redux/redux.dart';
 
 import '../../actions/actions.dart';
-import '../../common/footer_links.dart';
-import '../../common/format_text.dart';
-import '../../common/global_header.dart';
-import '../../common/primary_button.dart';
-import '../../common/styles.dart';
-import '../../constants/common_constants.dart';
-import '../../constants/signuplogin_constants.dart';
+import '../../common/common.dart';
+import '../../constants/constants.dart';
 import '../../icons/aspire_icons.dart';
 import '../../models/models.dart';
 import '../../navigation/app_controller.dart';

@@ -6,8 +6,7 @@ import 'package:redux_logging/redux_logging.dart';
 import 'package:redux_persist/redux_persist.dart';
 import 'package:redux_persist_flutter/redux_persist_flutter.dart';
 
-import './constants/signuplogin_constants.dart';
-import './constants/theme_constants.dart';
+import './constants/constants.dart';
 import './models/models.dart';
 import './navigation/app_controller.dart';
 import './navigation/root.dart';

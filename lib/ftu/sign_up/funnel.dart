@@ -1,10 +1,7 @@
 import 'package:flutter/material.dart';
 
-import '../../common/format_text.dart';
-import '../../common/global_header.dart';
-import '../../common/primary_button.dart';
-import '../../constants/common_constants.dart';
-import '../../constants/ftu_constants.dart';
+import '../../common/common.dart';
+import '../../constants/constants.dart';
 import '../login_create_account/login.dart';
 
 class SignUpFunnel extends StatelessWidget {

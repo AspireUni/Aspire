@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 
-import '../../common/format_text.dart';
-import '../../common/primary_button.dart';
+import '../../common/common.dart';
 import '../../constants/ftu_constants.dart';
 
 
