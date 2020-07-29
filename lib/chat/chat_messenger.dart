@@ -37,24 +37,87 @@ class ChatMessengerState extends State<ChatMessenger> {
 
   Store<AppState> store;
 
+  List<DocumentSnapshot> _messagesSnapshots;
+  bool _isLoading = false;
+  Message lastMessage;
   String recipient;
 
   File imageFile;
   String imageUrl;
 
   final TextEditingController textInputController = TextEditingController();
+  final ScrollController scrollController = ScrollController();
   final ImagePicker imagePicker = ImagePicker();
+
+  @override
+  void setState(fn) {
+    if (mounted) {
+      super.setState(fn);
+    }
+  }
 
   @override
   void initState() {
     super.initState();
     imageUrl = '';
+
+    scrollController.addListener(() {
+      if (scrollController.position.atEdge) {
+        if (scrollController.position.pixels != 0) {
+          var message = Message.fromJson(
+            _messagesSnapshots[_messagesSnapshots.length - 1]
+          );
+          Firestore.instance
+            .collection('messages')
+            .document(widget.groupChatId)
+            .collection(widget.groupChatId)
+            .where('timestamp', isLessThan: message.timestamp)
+            .orderBy('timestamp', descending: true)
+            .limit(20)
+            .getDocuments()
+            .then((snapshot) {
+              setState(() {
+                loadNewMessages();
+                _messagesSnapshots.addAll(snapshot.documents);
+              });
+            });
+        }
+      }
+    });
+  }
+
+  loadNewMessages() {
+    _isLoading = true;
+    Firestore.instance
+      .collection('messages')
+      .document(widget.groupChatId)
+      .collection(widget.groupChatId)
+      .orderBy('timestamp', descending: true)
+      .limit(1)
+      .snapshots()
+      .listen((onData) {
+        if (onData.documents[0] != null) {
+          var result = Message.fromJson(onData.documents[0]);
+          if (lastMessage.toString() != result.toString()) {
+            setState(() {
+              _isLoading = false;
+            });
+          }
+        }
+      });
   }
 
   void submitMessage (int type, String content) {
     if (content.trim() != '') {
       textInputController.clear();
-      addMessage(widget.id, widget.peerId, content, type, widget.groupChatId);
+      var message = Message(
+        idTo: widget.peerId,
+        idFrom: widget.id,
+        content: content,
+        type: type,
+        timestamp: DateTime.now().millisecondsSinceEpoch.toString()
+      );
+      addMessage(message, widget.groupChatId);
       SystemSound.play(SystemSoundType.click);
     }
   }
@@ -185,18 +248,25 @@ class ChatMessengerState extends State<ChatMessenger> {
           child: GestureDetector(
             onTap: () => FocusScope.of(context).unfocus(),
             child: StreamBuilder(
-              stream: Firestore.instance
-                .collection('messages')
-                .document(widget.groupChatId)
-                .collection(widget.groupChatId)
-                .orderBy('timestamp', descending: true)
-                .limit(20)
-                .snapshots(),
+              stream: _isLoading ?
+                null : 
+                Firestore.instance
+                  .collection('messages')
+                  .document(widget.groupChatId)
+                  .collection(widget.groupChatId)
+                  .orderBy('timestamp', descending: true)
+                  .limit(20)
+                  .snapshots(),
               builder: (context, snapshot) {
                 if (!snapshot.hasData) {
                   return Text("wait");
                 } else {
+                  _messagesSnapshots = snapshot
+                    .data
+                    .documents as List<DocumentSnapshot>;
+                  lastMessage = Message.fromJson(_messagesSnapshots[0]);
                   return ListView.builder(
+                    controller: scrollController,
                     itemBuilder: (context, index) => Column(
                       children: buildMessage(
                         index,
