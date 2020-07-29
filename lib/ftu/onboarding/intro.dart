@@ -30,7 +30,7 @@ class OnboardingIntro extends StatelessWidget {
             Column(
               children: <Widget>[
                 buildCenterLogo(screenHeight),
-                buildBottomText(screenHeight)
+                buildBottomText(screenHeight, screenWidth)
               ]
             ),
             Positioned(
@@ -82,8 +82,9 @@ class OnboardingIntro extends StatelessWidget {
     );
   }
 
-  Widget buildBottomText(double screenHeight) {
+  Widget buildBottomText(double screenHeight, double screenWidth) {
     return Container(
+      width: screenWidth * 0.50,
       padding: EdgeInsets.only(
         top: screenHeight * 0.20
       ),

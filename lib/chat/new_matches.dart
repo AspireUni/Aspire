@@ -1,82 +1,75 @@
-import 'package:google_fonts/google_fonts.dart';
+import 'package:flutter_redux/flutter_redux.dart';
 import 'package:flutter/material.dart';
+import 'package:redux/redux.dart';
 
+import '../common/format_text.dart';
 import '../constants/chat_constants.dart';
+import '../models/models.dart';
+import '../selectors/selectors.dart';
 import './chat_messenger.dart';
 
-const dummyData = [
-  {
-    "name": "Charles",
-    "color": Colors.blue,
-  },
-  {
-    "name": "Rebecca",
-    "color": Colors.purple,
-  },
-  {
-    "name": "Mike",
-    "color": Colors.green,
-  },
-  {
-    "name": "Hawk",
-    "color": Colors.orange,
-  },
-  {
-    "name": "Pat",
-    "color": Colors.yellow,
-  },
-  {
-    "name": "Maweenie",
-    "color": Colors.red,
-  },
-  {
-    "name": "Simp",
-    "color": Colors.indigo,
-  },
-  {
-    "name": "Igotalongnamewowitisreallysosolong",
-    "color": Colors.black,
-  },
-];
+class NewMatches extends StatefulWidget {
+  final List<Match> newMatchesList;
+  const NewMatches({Key key, @required this.newMatchesList}): super(key: key);
 
-class NewMatches extends StatelessWidget {
-  NewMatches({Key key}) : super(key: key);
+  @override
+  _NewMatchesState createState() => _NewMatchesState();
+}
+
+class _NewMatchesState extends State<NewMatches> {
+
+  Store<AppState> store;
+  String uid;
+
+  @override
+  void initState() {
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
+    store = StoreProvider.of<AppState>(context);
+    uid = userIdSelector(store);
+    // TODO: Get this from UserState
+    var isMentee = true;
+
     return Column(
       children: <Widget>[
         Padding(
           padding: EdgeInsets.only(top: 20, bottom: 10),
-          child: Text(
-            chatNewMatchesTitle, 
+          child: FormatText(
+            text: chatNewMatchesTitle,
             textAlign: TextAlign.left,
-            style: GoogleFonts.muli(
-              textStyle: TextStyle(
-                color: Colors.black, 
-                letterSpacing: .5, 
-                fontSize: 18.0, 
-                fontWeight: FontWeight.bold
-              )
-            )
+            fontSize: 18.0,
           )
         ),
-        buildNewMatches(context),
+        buildNewMatches(
+          context, 
+          widget.newMatchesList, 
+          uid,
+          isMentee
+        )
       ]
     );
   }
 }
 
-buildNewMatches(context) {
-  var newMatchesList = <Widget>[];
-  for (var i = 0; i < dummyData.length; i++) {
-    newMatchesList.add(
+buildNewMatches(context, newMatchesList, id, isMentee) {
+  var newMatchesWidgetList = <Widget>[];
+  for (var match in newMatchesList) {
+    var recipient = isMentee == true ? match.mentor : match.mentee;
+    newMatchesWidgetList.add(
       GestureDetector(
         onTap: () {
           Navigator.push(
             context,
             MaterialPageRoute(builder: (context) => 
-              ChatMessenger(recipient: dummyData[i]["name"], peerId: mockPeerId)
+              ChatMessenger(
+                recipient: recipient.fullName, 
+                peerId: recipient.id, 
+                id: id, 
+                groupChatId: match.matchId,
+              )
             )
           );
         },
@@ -90,20 +83,18 @@ buildNewMatches(context) {
                 width: 60.0, 
                 height: 60.0, 
                 decoration: BoxDecoration(
-                  color: dummyData[i]["color"], 
+                  color: Colors.black, 
                   shape: BoxShape.circle
                 )
               ),
-              Text(
-                dummyData[i]["name"],
-                overflow: TextOverflow.ellipsis,
-                style: GoogleFonts.muli(
-                  textStyle: TextStyle(
-                    color: Colors.black, 
-                    letterSpacing: .5, 
-                    fontSize: 12.0, 
-                    fontWeight: FontWeight.w600
-                  )
+              Flexible(
+                child: FormatText(
+                  text: recipient.fullName,
+                  textAlign: TextAlign.center,
+                  overflow: TextOverflow.ellipsis,
+                  maxLines: 1,
+                  fontSize: 12.0,
+                  fontWeight: FontWeight.w600,
                 )
               )
             ]
@@ -116,7 +107,7 @@ buildNewMatches(context) {
   return SingleChildScrollView(
     scrollDirection: Axis.horizontal,
     child: Row(
-      children: newMatchesList,
+      children: newMatchesWidgetList,
     )
   );
 }

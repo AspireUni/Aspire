@@ -4,12 +4,13 @@ import 'package:flutter/material.dart';
 
 import '../constants/chat_constants.dart';
 
-class Message extends StatelessWidget {
+class MessageView extends StatelessWidget {
   final int type;
   final String message;
   final bool isSent;
-  Message({Key key, @required this.message, @required this.isSent, this.type}) 
-    : super(key: key);
+  MessageView(
+    {Key key, @required this.message, @required this.isSent, this.type}
+  ) : super(key: key);
 
   @override
   Widget build(BuildContext context) {

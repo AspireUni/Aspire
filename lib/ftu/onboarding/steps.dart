@@ -41,7 +41,7 @@ class _OnboardingSteps extends State<OnboardingSteps> {
         child: Stack(
           alignment: Alignment.center,
           children: [ 
-            buildSlidingContent(),
+            buildContent(),
             buildFooter()
           ]
         )
@@ -66,38 +66,43 @@ class _OnboardingSteps extends State<OnboardingSteps> {
     );
   }
 
-  Widget buildSlidingContent() {
-    return SlideInRight(
-      key: onboardingStepsConfig[stepIndex]["animatorKey"],
-      child: Padding(
-        padding: EdgeInsets.only(top: screenHeight * 0.30),
-        child: Column(
-          children:[
-            onboardingStepsConfig[stepIndex]["image"],
-            Container(height: 1.5, color: Colors.black),
-            buildOnboardingText()
-          ]
-        )
+  Widget buildContent() {
+    return Column(
+      children:[
+        buildCenterAno(),
+        Container(height: 1.5, color: Colors.black),
+        buildOnboardingText()
+      ]
+    );
+  }
+
+  Widget buildCenterAno() {
+    return Padding(
+      padding: EdgeInsets.only(top: screenHeight * 0.30),
+      child: SlideInRight(
+        key: onboardingStepsConfig[stepIndex]["imageKey"],
+        child: Image.asset(
+          onboardingStepsConfig[stepIndex]["image"],
+          height: screenHeight * 0.15
+        ),
       )
     );
   }
 
   Widget buildOnboardingText() {
-    var widthPadding = screenWidth * 0.24;
     var heightPadding = screenHeight * 0.15;
-    return Padding(
-      padding: EdgeInsets.fromLTRB(
-        widthPadding, 
-        heightPadding, 
-        widthPadding, 
-        heightPadding
-      ),
-      child: FormatText(
-        text: onboardingStepsConfig[stepIndex]["text"],
-        textColor: Colors.black,
-        textAlign: TextAlign.center,
-        fontSize: 14.0,
-        fontWeight: FontWeight.w500
+    return SlideInRight(
+      key: onboardingStepsConfig[stepIndex]["textKey"],
+      child: Container(
+        padding: EdgeInsets.only(top: heightPadding),
+        width: screenWidth * 0.50,
+        child: FormatText(
+          text: onboardingStepsConfig[stepIndex]["text"],
+          textColor: Colors.black,
+          textAlign: TextAlign.center,
+          fontSize: 14.0,
+          fontWeight: FontWeight.w500
+        )
       )
     );
   }

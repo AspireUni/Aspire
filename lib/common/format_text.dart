@@ -8,6 +8,8 @@ class FormatText extends StatelessWidget {
   final double fontSize;
   final FontWeight fontWeight;
   final double fontHeight;
+  final TextOverflow overflow;
+  final int maxLines;
 
   FormatText({
     Key key, 
@@ -16,7 +18,9 @@ class FormatText extends StatelessWidget {
     this.textAlign,
     this.fontSize, 
     this.fontWeight, 
-    this.fontHeight
+    this.fontHeight,
+    this.overflow,
+    this.maxLines,
   }) : super(key: key);
 
   @override
@@ -24,6 +28,8 @@ class FormatText extends StatelessWidget {
     return Text(
       text,
       textAlign: textAlign ?? TextAlign.left,
+      overflow: overflow,
+      maxLines: maxLines,
       style: GoogleFonts.muli(
         textStyle: TextStyle(
           color: textColor ?? Colors.black,

@@ -6,7 +6,7 @@ import './common_constants.dart';
 // Onboarding Intro
 const String getStartedSubTitle = 'To reach new heights';
 const String getStartedBottomText = 
-  'Let us find you a mentorship\nbased on your preferences';
+  'Let us find you a mentorship based on your preferences';
 const String getStartedButtonText = 'Get started';
 
 // Onboarding Parts 1-3
@@ -20,35 +20,44 @@ const String onboardingPartThreeButtonText = 'Let\'s get started';
 const String letsGetStartedButtonText = 'Let\'s get started';
 
 // Animator keys
-GlobalKey<AnimatorWidgetState> onboardingPartOneKey
+GlobalKey<AnimatorWidgetState> onboardingImagePartOneKey
   = GlobalKey<AnimatorWidgetState>();
-GlobalKey<AnimatorWidgetState> onboardingPartTwoKey
+GlobalKey<AnimatorWidgetState> onboardingImagePartTwoKey
   = GlobalKey<AnimatorWidgetState>();
-GlobalKey<AnimatorWidgetState> onboardingPartThreeKey
+GlobalKey<AnimatorWidgetState> onboardingImagePartThreeKey
+  = GlobalKey<AnimatorWidgetState>();
+  GlobalKey<AnimatorWidgetState> onboardingTextPartOneKey
+  = GlobalKey<AnimatorWidgetState>();
+GlobalKey<AnimatorWidgetState> onboardingTextPartTwoKey
+  = GlobalKey<AnimatorWidgetState>();
+GlobalKey<AnimatorWidgetState> onboardingTextPartThreeKey
   = GlobalKey<AnimatorWidgetState>();
 
 // Onboarding Steps Config
 List<Map<String, dynamic>> onboardingStepsConfig = [
   {
     "text": onboardingPartOneText,
-    "image": Image.asset('images/onboarding/ano_standing.png', height: 150),
+    "image": 'images/onboarding/ano_standing.png',
     "buttonText": nextButtonText, 
     "isLight": true,
-    "animatorKey": onboardingPartOneKey
+    "imageKey": onboardingImagePartOneKey,
+    "textKey": onboardingTextPartOneKey
   },
   {
     "text": onboardingPartTwoText, 
-    "image": Image.asset('images/onboarding/two_anos_and_logo.png', height: 150),
+    "image": 'images/onboarding/two_anos_and_logo.png',
     "buttonText": nextButtonText, 
     "isLight": true,
-    "animatorKey": onboardingPartTwoKey
+    "imageKey": onboardingImagePartTwoKey,
+    "textKey": onboardingTextPartTwoKey
   }, 
   {
     "text": onboardingPartThreeText, 
-    "image": Image.asset('images/onboarding/two_anos_talking.png', height: 150),
+    "image": 'images/onboarding/two_anos_talking.png',
     "buttonText": letsGetStartedButtonText, 
     "isLight": false,
-    "animatorKey": onboardingPartThreeKey
+    "imageKey": onboardingImagePartThreeKey,
+    "textKey": onboardingTextPartThreeKey
   }
 ];
 
@@ -59,3 +68,7 @@ const String termsAndConditions = 'Terms and Conditions';
 const String privacyPolicy = 'Privacy Policy';
 const String linkDivider = ' | ';
 
+// Sign Up Funnel
+const String funnelQuestionText = 'Are you a mentor or a mentee?';
+const String isMentorAction = 'I am a Mentor';
+const String isMenteeAction = 'I am a Mentee';

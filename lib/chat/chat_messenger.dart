@@ -8,16 +8,37 @@ import 'package:flutter/services.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:intl/intl.dart';
+import 'package:redux/redux.dart';
 
 import '../constants/chat_constants.dart';
+import '../models/models.dart';
+import '../services/services.dart';
 import './message.dart';
 
+class ChatMessenger extends StatefulWidget {
+  final String id;
+  final String peerId;
+  final String recipient;
+  final String groupChatId;
+  ChatMessenger({
+    Key key,
+    @required this.id, 
+    @required this.peerId,
+    @required this.recipient,
+    @required this.groupChatId,
+  }) : super(key: key);
+
+  @override
+  State<ChatMessenger> createState() => ChatMessengerState();
+
+}
+
 class ChatMessengerState extends State<ChatMessenger> {
-  String id;
-  String peerId;
+
+  Store<AppState> store;
+
   String recipient;
 
-  String groupChatId;
   File imageFile;
   String imageUrl;
 
@@ -27,32 +48,13 @@ class ChatMessengerState extends State<ChatMessenger> {
   @override
   void initState() {
     super.initState();
-    groupChatId = '';
     imageUrl = '';
   }
 
   void submitMessage (int type, String content) {
     if (content.trim() != '') {
       textInputController.clear();
-
-      var documentReference = Firestore.instance
-        .collection('messages')
-        .document('test')
-        .collection('test')
-        .document(DateTime.now().millisecondsSinceEpoch.toString());
-
-      Firestore.instance.runTransaction((transaction) async {
-        await transaction.set(
-          documentReference,
-          {
-            'idFrom': id,
-            'idTo': peerId,
-            'timestamp': DateTime.now().millisecondsSinceEpoch.toString(),
-            'content': content,
-            'type': type
-          },
-        );
-      });
+      addMessage(widget.id, widget.peerId, content, type, widget.groupChatId);
       SystemSound.play(SystemSoundType.click);
     }
   }
@@ -159,10 +161,10 @@ class ChatMessengerState extends State<ChatMessenger> {
   }
 
   List<Widget> buildMessage(int index, int maxItem, DocumentSnapshot document) {
-    var isSent = document['idFrom'] == id;
+    var isSent = document['idFrom'] == widget.id;
     var widgets = <Widget>[];
     widgets.add(
-      Message(
+      MessageView(
         isSent: isSent,
         message: document['content'],
         type: document['type']
@@ -185,8 +187,8 @@ class ChatMessengerState extends State<ChatMessenger> {
             child: StreamBuilder(
               stream: Firestore.instance
                 .collection('messages')
-                .document('test')
-                .collection('test')
+                .document(widget.groupChatId)
+                .collection(widget.groupChatId)
                 .orderBy('timestamp', descending: true)
                 .limit(20)
                 .snapshots(),
@@ -256,16 +258,4 @@ class ChatMessengerState extends State<ChatMessenger> {
       ]
     );
   }
-
-}
-
-class ChatMessenger extends StatefulWidget {
-  final String peerId;
-  final String recipient;
-  ChatMessenger({Key key, @required this.peerId, @required this.recipient})
-    : super(key: key);
-
-  @override
-  State<ChatMessenger> createState() => ChatMessengerState();
-
 }
