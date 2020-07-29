@@ -8,6 +8,7 @@ class Message {
   final String idTo;
   final String idFrom;
   final String content;
+  final bool isRead;
 
   const Message({
     @required this.type,
@@ -15,6 +16,7 @@ class Message {
     @required this.idTo,
     @required this.idFrom,
     @required this.content,
+    @required this.isRead,
   });
 
   factory Message.initial() {
@@ -23,7 +25,8 @@ class Message {
       timestamp: DateTime.now().millisecondsSinceEpoch.toString(),
       idTo: '',
       idFrom: '',
-      content: ''
+      content: '',
+      isRead: false,
     );
   }
 
@@ -33,6 +36,7 @@ class Message {
     String idTo,
     String idFrom,
     String content,
+    bool isRead,
   }) {
     return Message(
       type: type ?? this.type,
@@ -40,6 +44,7 @@ class Message {
       idTo: idTo ?? this.idTo,
       idFrom: idFrom ?? this.idFrom,
       content: content ?? this.content,
+      isRead: isRead ?? this.isRead,
     );
   }
 
@@ -51,6 +56,7 @@ class Message {
         idTo: json["idTo"] as String,
         idFrom: json["idFrom"] as String,
         content: json["content"] as String,
+        isRead: json["isRead"] as bool,
       );
     }
     return null;
@@ -62,6 +68,7 @@ class Message {
     'idTo': idTo,
     'idFrom': idFrom,
     'content': content,
+    'isRead': isRead,
   };
 
   @override
