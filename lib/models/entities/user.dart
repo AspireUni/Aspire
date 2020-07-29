@@ -1,12 +1,15 @@
 import 'dart:convert';
 import 'package:meta/meta.dart';
 
+import '../../constants/common_constants.dart';
+import '../../helpers/helpers.dart';
 import '../models.dart';
 
 
 @immutable
 class User {
   final String id;
+  final UserType type;
   final bool isFtu;
   final String fullName;
   final String summary;
@@ -17,6 +20,7 @@ class User {
 
   const User({
     @required this.id,
+    @required this.type,
     @required this.isFtu,
     @required this.contact,
     this.fullName,
@@ -29,6 +33,7 @@ class User {
   factory User.initial() {
     return User(
       id: '',
+      type: null,
       isFtu: true,
       fullName: '',
       summary: '',
@@ -41,6 +46,7 @@ class User {
 
   User copyWith({
     String id,
+    UserType type,
     bool isFtu,
     String fullName,
     String summary,
@@ -51,6 +57,7 @@ class User {
   }) {
     return User(
       id: id ?? this.id,
+      type: type ?? this.type,
       isFtu: isFtu ?? this.isFtu,
       fullName: fullName ?? this.fullName,
       summary: summary ?? this.summary,
@@ -67,6 +74,7 @@ class User {
     var skillsJson = json['skills'] as List;
     return User(
       id: json["id"] as String,
+      type: parseUserTypeToValue(json["type"]),
       isFtu: json["isFtu"] as bool,
       fullName: json["fullName"] as String,
       summary: json["summary"] as String,
@@ -79,6 +87,7 @@ class User {
 
   dynamic toJson() => {
     'id': id,
+    'type': parseUserTypeToString(type),
     'isFtu': isFtu,
     'fullName': fullName,
     'summary': summary,

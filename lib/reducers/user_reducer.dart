@@ -16,6 +16,7 @@ UserState _userReducer(UserState userState, dynamic action) {
       var user = User.fromJson(action.payload);
       return UserState.initial().copyWith(
         id: user.id,
+        type: user.type,
         isFtu: user.isFtu,
         authStatus: AuthStatus.loggedIn,
         saveProfileState: SaveProfileState.initial().copyWith(

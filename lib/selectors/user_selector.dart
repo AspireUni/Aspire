@@ -7,6 +7,10 @@ UserState userStateSelector(Store<AppState> store) {
   return store.state.userState;
 }
 
+UserType userTypeSelector(Store<AppState> store) {
+  return store.state.userState.type;
+}
+
 AuthStatus authStatusSelector(Store<AppState> store) {
   return store.state.userState.authStatus;
 }

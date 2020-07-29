@@ -128,7 +128,9 @@ class _Login extends State<Login> {
     var userId = await Auth().signIn(emailAddress, password);
     var userData = await getUser(userId);
     if (userData == null) {
-      await addUser(userId, emailAddress);
+      // Adding mentee users for now
+      // TODO: Fix when refactoring signup
+      await addUser(userId, emailAddress, UserType.mentee);
       userData = await getUser(userId);
     }
     store.dispatch(ConvertToUserState(userData));
