@@ -7,7 +7,7 @@ import '../../constants/common_constants.dart';
 import '../../ftu/authentication.dart';
 import '../../models/models.dart';
 import '../../selectors/selectors.dart';
-import '../../services/user_service.dart';
+import '../../services/services.dart';
 import './header.dart';
 import './sections/sections.dart';
  

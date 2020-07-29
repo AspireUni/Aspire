@@ -5,19 +5,14 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:redux/redux.dart';
 
 import '../../actions/actions.dart';
-import '../../common/footer_links.dart';
-import '../../common/format_text.dart';
-import '../../common/global_header.dart';
-import '../../common/primary_button.dart';
-import '../../common/styles.dart';
-import '../../constants/common_constants.dart';
-import '../../constants/signuplogin_constants.dart';
+import '../../common/common.dart';
+import '../../constants/constants.dart';
 import '../../icons/aspire_icons.dart';
 import '../../models/models.dart';
 import '../../navigation/app_controller.dart';
-import '../../services/user_service.dart';
+import '../../services/services.dart';
 import '../authentication.dart';
-import './signup.dart';
+import '../sign_up/funnel.dart';
 
 
 class Login extends StatefulWidget {
@@ -76,7 +71,7 @@ class _Login extends State<Login> {
         actionText: signUpAction,
         onActionTap: () => Navigator.pushReplacement(
           context, MaterialPageRoute(
-            builder: (context) => SignUp()
+            builder: (context) => SignUpFunnel()
           )
         )
       ),

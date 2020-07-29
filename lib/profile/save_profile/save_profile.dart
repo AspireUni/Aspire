@@ -5,20 +5,14 @@ import 'package:flutter_redux/flutter_redux.dart';
 import 'package:redux/redux.dart';
 
 import '../../actions/actions.dart';
-import '../../constants/common_constants.dart';
-import '../../constants/profile_constants.dart';
+import '../../constants/constants.dart';
 import '../../helpers/user_entity_helper.dart';
 import '../../models/models.dart';
 import '../../navigation/app_controller.dart';
-import '../../services/user_service.dart';
+import '../../services/services.dart';
 import '../common/app_bar.dart';
 import '../common/section.dart';
-import './sections/contact/save_contact.dart';
-import './sections/education/education.dart';
-import './sections/experience/experience.dart';
-import './sections/skills/skills.dart';
-import './sections/summary/summary.dart';
-
+import './sections/sections.dart';
 
 class SaveProfile extends StatefulWidget {
   final bool editMode;

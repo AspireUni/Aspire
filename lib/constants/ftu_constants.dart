@@ -1,13 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_animator/flutter_animator.dart';
 
-import '../ftu/login_create_account/login_create_account.dart';
-import '../ftu/onboarding/screens.dart';
 import './common_constants.dart';
 
 // Onboarding Intro
 const String getStartedSubTitle = 'To reach new heights';
 const String getStartedBottomText = 
-  'Let us find you a mentorship\nbased on your preferences';
+  'Let us find you a mentorship based on your preferences';
 const String getStartedButtonText = 'Get started';
 
 // Onboarding Parts 1-3
@@ -20,28 +19,45 @@ const String onboardingPartThreeText =
 const String onboardingPartThreeButtonText = 'Let\'s get started';
 const String letsGetStartedButtonText = 'Let\'s get started';
 
-// Onboarding Screen Config
-var onboardingScreensConfig = [
+// Animator keys
+GlobalKey<AnimatorWidgetState> onboardingImagePartOneKey
+  = GlobalKey<AnimatorWidgetState>();
+GlobalKey<AnimatorWidgetState> onboardingImagePartTwoKey
+  = GlobalKey<AnimatorWidgetState>();
+GlobalKey<AnimatorWidgetState> onboardingImagePartThreeKey
+  = GlobalKey<AnimatorWidgetState>();
+  GlobalKey<AnimatorWidgetState> onboardingTextPartOneKey
+  = GlobalKey<AnimatorWidgetState>();
+GlobalKey<AnimatorWidgetState> onboardingTextPartTwoKey
+  = GlobalKey<AnimatorWidgetState>();
+GlobalKey<AnimatorWidgetState> onboardingTextPartThreeKey
+  = GlobalKey<AnimatorWidgetState>();
+
+// Onboarding Steps Config
+List<Map<String, dynamic>> onboardingStepsConfig = [
   {
     "text": onboardingPartOneText,
-    "image": Image.asset('images/onboarding/ano_standing.png', height: 150),
-    "nextScreen": (context) => OnboardingScreens(screenNum: 1), 
+    "image": 'images/onboarding/ano_standing.png',
     "buttonText": nextButtonText, 
-    "isLight": true
+    "isLight": true,
+    "imageKey": onboardingImagePartOneKey,
+    "textKey": onboardingTextPartOneKey
   },
   {
     "text": onboardingPartTwoText, 
-    "image": Image.asset('images/onboarding/two_anos_and_logo.png', height: 150),
-    "nextScreen": (context) => OnboardingScreens(screenNum: 2),
+    "image": 'images/onboarding/two_anos_and_logo.png',
     "buttonText": nextButtonText, 
-    "isLight": true
+    "isLight": true,
+    "imageKey": onboardingImagePartTwoKey,
+    "textKey": onboardingTextPartTwoKey
   }, 
   {
     "text": onboardingPartThreeText, 
-    "image": Image.asset('images/onboarding/two_anos_talking.png', height: 150),
-    "nextScreen": (context) => LoginCreateAccount(), 
+    "image": 'images/onboarding/two_anos_talking.png',
     "buttonText": letsGetStartedButtonText, 
-    "isLight": false
+    "isLight": false,
+    "imageKey": onboardingImagePartThreeKey,
+    "textKey": onboardingTextPartThreeKey
   }
 ];
 
@@ -52,3 +68,7 @@ const String termsAndConditions = 'Terms and Conditions';
 const String privacyPolicy = 'Privacy Policy';
 const String linkDivider = ' | ';
 
+// Sign Up Funnel
+const String funnelQuestionText = 'Are you a mentor or a mentee?';
+const String isMentorAction = 'I am a Mentor';
+const String isMenteeAction = 'I am a Mentee';

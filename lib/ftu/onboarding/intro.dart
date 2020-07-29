@@ -1,11 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
-import '../../common/format_text.dart';
-import '../../common/primary_button.dart';
-import '../../constants/common_constants.dart';
-import '../../constants/ftu_constants.dart';
-import './screens.dart';
+import '../../common/common.dart';
+import '../../constants/constants.dart';
+import './steps.dart';
 
 class OnboardingIntro extends StatelessWidget {
   
@@ -30,7 +28,7 @@ class OnboardingIntro extends StatelessWidget {
             Column(
               children: <Widget>[
                 buildCenterLogo(screenHeight),
-                buildBottomText(screenHeight)
+                buildBottomText(screenHeight, screenWidth)
               ]
             ),
             Positioned(
@@ -82,8 +80,9 @@ class OnboardingIntro extends StatelessWidget {
     );
   }
 
-  Widget buildBottomText(double screenHeight) {
+  Widget buildBottomText(double screenHeight, double screenWidth) {
     return Container(
+      width: screenWidth * 0.50,
       padding: EdgeInsets.only(
         top: screenHeight * 0.20
       ),
@@ -103,7 +102,7 @@ class OnboardingIntro extends StatelessWidget {
       isLight: true,
       onPressed: () => Navigator.pushReplacement(
         context, MaterialPageRoute(
-          builder: (context) => OnboardingScreens(screenNum: 0)
+          builder: (context) => OnboardingSteps()
         )
       )
     );

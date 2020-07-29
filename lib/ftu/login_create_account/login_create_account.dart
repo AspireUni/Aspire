@@ -1,13 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
-import '../../common/footer_links.dart';
-import '../../common/format_text.dart';
-import '../../common/primary_button.dart';
-import '../../constants/common_constants.dart';
-import '../../constants/ftu_constants.dart';
+import '../../common/common.dart';
+import '../../constants/constants.dart';
+import '../sign_up/funnel.dart';
 import './login.dart';
-import './signup.dart';
 
 class LoginCreateAccount extends StatelessWidget {
   
@@ -110,7 +107,7 @@ class LoginCreateAccount extends StatelessWidget {
         isLight: true,
         onPressed: () => Navigator.pushReplacement(
           context, MaterialPageRoute(
-            builder: (context) => SignUp()
+            builder: (context) => SignUpFunnel()
           )
         )
       )

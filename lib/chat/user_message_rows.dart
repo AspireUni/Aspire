@@ -1,59 +1,39 @@
+import 'package:flutter_redux/flutter_redux.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:flutter/material.dart';
+import 'package:redux/redux.dart';
 
+import '../common/format_text.dart';
 import '../constants/chat_constants.dart';
+import '../models/models.dart';
+import '../selectors/selectors.dart';
 import './chat_messenger.dart';
 
-const dummyData = [
-  {
-    "name": "Lydia",
-    "color": Colors.blue,
-    "lastMessage": "What's that snap",
-    "isSent": true,
-  },
-  {
-    "name": "Ashley",
-    "color": Colors.purple,
-    "lastMessage": "Hey there 😛",
-    "isSent": true,
-  },
-  {
-    "name": "Mike",
-    "color": Colors.green,
-    "lastMessage": "I'm taking that as a yes",
-    "isSent": true,
-  },
-  {
-    "name": "Hawk",
-    "color": Colors.orange,
-    "lastMessage": "U can get this dick",
-    "isSent": true,
-  },
-  {
-    "name": "Pat",
-    "color": Colors.yellow,
-    "lastMessage": "Your welcome handsome! I'm fine just doing some laundry!",
-    "isSent": false,
-  },
-  {
-    "name": "Maweenie",
-    "color": Colors.red,
-    "lastMessage": "Damn that's crazy",
-    "isSent": false,
-  },
-  {
-    "name": "Simp",
-    "color": Colors.indigo,
-    "lastMessage": "wow",
-    "isSent": false,
-  },
-];
+class UserMessageRows extends StatefulWidget {
+  final List<Match> matchesList;
+  const UserMessageRows({Key key, @required this.matchesList});
 
-class UserMessageRows extends StatelessWidget {
-  UserMessageRows({Key key}) : super(key: key);
+  @override
+  _UserMessageRowsState createState() => _UserMessageRowsState();
+}
+
+class _UserMessageRowsState extends State<UserMessageRows> {
+
+  Store<AppState> store;
+  String uid;
+  
+  @override
+  void initState() {
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
+    store = StoreProvider.of<AppState>(context);
+    uid = userIdSelector(store);
+    // TODO: get this from UserState
+    var isMentee = true;
+
     return Column(
       children: <Widget>[
         Padding (
@@ -71,15 +51,29 @@ class UserMessageRows extends StatelessWidget {
             )
           )
         ),
-        buildMessageRows(context)
+        buildMessageRows(
+          context, 
+          widget.matchesList, 
+          uid,
+          isMentee
+        )
       ]
     );
   }
 }
 
-buildMessageRows(context) {
+buildMessageRows(
+  context, 
+  matchesList, 
+  id,
+  isMentee
+) {
   var messagesList = <Widget>[];
-  for (var i = 0; i < dummyData.length; i++) {
+  for (var match in matchesList) {
+    var lastMessage = match.lastMessage;
+    var lastMessageType = lastMessage.type;
+    var isSent = lastMessage.idFrom == id;
+    var recipient = isMentee == true ? match.mentor : match.mentee;
     messagesList.add(
       GestureDetector(
         behavior: HitTestBehavior.translucent,
@@ -87,7 +81,12 @@ buildMessageRows(context) {
           Navigator.push(
             context, 
             MaterialPageRoute(builder: (context) => 
-            ChatMessenger(recipient: dummyData[i]["name"], peerId: mockPeerId)
+              ChatMessenger(
+              recipient: recipient.fullName, 
+                peerId: recipient.id, 
+                id: id,
+                groupChatId: match.matchId,
+              )
             )
           );
         },
@@ -103,7 +102,7 @@ buildMessageRows(context) {
                   width: 60.0, 
                   height: 60.0, 
                   decoration: BoxDecoration(
-                    color: dummyData[i]["color"], 
+                    color: Colors.black, 
                     shape: BoxShape.circle
                   )
                 )
@@ -113,16 +112,9 @@ buildMessageRows(context) {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: <Widget>[
-                  Text(
-                    dummyData[i]["name"],
-                    style: GoogleFonts.muli(
-                      textStyle: TextStyle(
-                        color: Colors.black, 
-                        letterSpacing: .5, 
-                        fontSize: 14.0, 
-                        fontWeight: FontWeight.bold
-                      )
-                    )
+                  FormatText(
+                    text: recipient.fullName,
+                    fontSize: 14.0,
                   ),
                   RichText(
                     overflow: TextOverflow.ellipsis,
@@ -135,7 +127,7 @@ buildMessageRows(context) {
                         )
                       ),
                       children: [
-                        if(dummyData[i]["isSent"] != false) WidgetSpan(
+                        if(isSent != false) WidgetSpan(
                           child: Container(
                             margin: EdgeInsets.only(right: 6.0),
                             child: Icon(
@@ -146,7 +138,9 @@ buildMessageRows(context) {
                           ),
                         ),
                         TextSpan(
-                          text: dummyData[i]["lastMessage"]
+                          text: lastMessageType == 0 ? 
+                            lastMessage.content : 
+                            imageMessageDesciption
                         )
                       ]
                     ),
@@ -159,7 +153,6 @@ buildMessageRows(context) {
       )
     );
   }
-
   return Flexible(
     child: ListView(
       padding: EdgeInsets.all(0.0),
