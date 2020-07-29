@@ -23,6 +23,17 @@ class _UserProfileState extends State<UserProfile> {
   Store<AppState> store;
   String uid;
 
+
+  final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
+
+  void _openDrawer() {
+    _scaffoldKey.currentState.openDrawer();
+  }
+
+  void _closeDrawer() {
+    Navigator.of(context).pop();
+  }
+
   @override
   Widget build(BuildContext context) {
     store = StoreProvider.of<AppState>(context);
@@ -36,6 +47,7 @@ class _UserProfileState extends State<UserProfile> {
         } else {
           var user = User.fromJson(snapshot.data);
           return Scaffold(
+            key: _scaffoldKey,
             backgroundColor: Colors.white,
             body: Container(
               margin: EdgeInsets.all(0),
@@ -43,8 +55,46 @@ class _UserProfileState extends State<UserProfile> {
                 child: Column(
                   children: buildUserProfileView(context, user)
                 )
-              )
-            )
+              ),
+            ),
+            drawer: Drawer(
+              child: ListView(
+                // Important: Remove any padding from the ListView.
+                padding: EdgeInsets.zero,
+                children: <Widget>[
+                  DrawerHeader(
+                    child: Text('Drawer Header'),
+                    decoration: BoxDecoration(
+                      color: Colors.blue,
+                    ),
+                  ),
+                  ListTile(
+                    title: Text('Item 1'),
+                    onTap: () {
+                      // Update the state of the app
+                      // ...
+                      // Then close the drawer
+                      Navigator.pop(context);
+                    },
+                  ),
+                  ListTile(
+                    title: Text('Item 2'),
+                    onTap: () {
+                      // Update the state of the app
+                      // ...
+                      // Then close the drawer
+                      Navigator.pop(context);
+                    },
+                  ),
+                  // RaisedButton(
+                  //     onPressed: _closeDrawer,
+                  //     child: const Text('Close Drawer'),
+                  //   ),
+                ],
+              ),
+            ),
+            // Disable opening the drawer with a swipe gesture.
+            drawerEnableOpenDragGesture: false,
           );
         }
       }
@@ -70,10 +120,11 @@ class _UserProfileState extends State<UserProfile> {
       height: 20.0,
       child:RaisedButton(
         materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
-        onPressed: () => logout(context),
+        onPressed: () => _openDrawer,
         color: Colors.red,
+        
         child: Text(
-          'LOGOUT',
+          'Open Drawer',
           style: TextStyle(
             fontSize: 10,
             fontWeight: FontWeight.w700,
