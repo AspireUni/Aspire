@@ -90,11 +90,10 @@ class _OnboardingSteps extends State<OnboardingSteps> {
   }
 
   Widget buildOnboardingText() {
-    var heightPadding = screenHeight * 0.15;
     return SlideInRight(
       key: onboardingStepsConfig[stepIndex]["textKey"],
       child: Container(
-        padding: EdgeInsets.only(top: heightPadding),
+        padding: EdgeInsets.only(top: screenHeight * 0.15),
         width: screenWidth * 0.50,
         child: FormatText(
           text: onboardingStepsConfig[stepIndex]["text"],
