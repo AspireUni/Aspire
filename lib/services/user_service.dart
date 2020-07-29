@@ -1,5 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 
+import '../constants/common_constants.dart';
 import '../models/models.dart';
 
 Future<Map<String, dynamic>> getUser(String id) async {
@@ -17,9 +18,10 @@ Future<QuerySnapshot> getUsers() async {
     .getDocuments();
 }
 
-Future<void> addUser(String id, String email) async {
+Future<void> addUser(String id, String email, UserType type) async {
   var user = User.initial().copyWith(
     id: id,
+    type: type,
     contact: Contact.initial().copyWith(
       emailAddress: email
     )
