@@ -1,14 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
-import '../../common/common.dart';
-import '../../constants/constants.dart';
-import '../sign_up/funnel.dart';
+import '../common/common.dart';
+import '../constants/constants.dart';
 import './login.dart';
+import './sign_up/funnel.dart';
 
-class LoginCreateAccount extends StatelessWidget {
+class LoginSignupFunnel extends StatelessWidget {
   
-  LoginCreateAccount({Key key}) : super(key: key);
+  LoginSignupFunnel({Key key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {

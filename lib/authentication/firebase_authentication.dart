@@ -36,6 +36,11 @@ class Auth implements BaseAuth {
   @override
   Future<FirebaseUser> getCurrentUser() async {
     var user = await _firebaseAuth.currentUser();
+    if (user != null) {
+      if (!user.isEmailVerified) {
+        return null;
+      }
+    }
     return user;
   }
 

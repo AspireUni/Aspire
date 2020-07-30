@@ -1,36 +1,37 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:redux/redux.dart';
 
-import '../../actions/actions.dart';
 import '../../common/common.dart';
 import '../../constants/constants.dart';
 import '../../icons/aspire_icons.dart';
 import '../../models/models.dart';
-import '../../navigation/app_controller.dart';
 import '../../services/services.dart';
-import '../authentication.dart';
-import '../sign_up/funnel.dart';
+import '../firebase_authentication.dart';
+import '../login.dart';
+import './link_sent.dart';
 
 
-class Login extends StatefulWidget {
-  Login({Key key}) : super(key: key);
+class MenteeSignUp extends StatefulWidget {
+  MenteeSignUp({Key key}) : super(key: key);
 
   @override
-  State<StatefulWidget> createState() => _Login();
+  State<StatefulWidget> createState() => _MenteeSignUp();
 }
 
-class _Login extends State<Login> {
-  final GlobalKey<FormBuilderState> _loginFormKey
+class _MenteeSignUp extends State<MenteeSignUp> {
+  final GlobalKey<FormBuilderState> _signUpFormKey
     = GlobalKey<FormBuilderState>();
+  final FocusNode fullNameFocus = FocusNode();
   final FocusNode emailAddressFocus = FocusNode();
   final FocusNode passwordFocus = FocusNode();
 
-  String emailAddress, password;
-  bool isEmailAddressFocused, isPasswordFocused;
-  bool isEmailAddressInvalid, isPasswordInvalid;
+  String fullName, emailAddress, password;
+  bool isFullNameFocused, isEmailAddressFocused, isPasswordFocused;
+  bool isFullNameInvalid, isEmailAddressInvalid, isPasswordInvalid;
   bool isLoading;
   Store<AppState> store;
   double screenHeight, screenWidth;
@@ -40,24 +41,27 @@ class _Login extends State<Login> {
     super.initState();
 
     isLoading = false;
+
+    isFullNameInvalid = false;
     isEmailAddressInvalid = false;
     isPasswordInvalid = false;
+
+    isFullNameFocused = false;
     isEmailAddressFocused = false;
     isPasswordFocused = false;
   
-    emailAddressFocusListener();
-    passwordFocusListener();
+    fieldFocusListeners();
 
     store = StoreProvider.of<AppState>(context, listen: false);
   }
 
   @override
   void dispose() {
+    fullNameFocus.dispose();
     emailAddressFocus.dispose();
     passwordFocus.dispose();
     super.dispose();
   }
-
 
   @override
   Widget build(BuildContext context) {
@@ -68,29 +72,29 @@ class _Login extends State<Login> {
     return Scaffold(
       backgroundColor: Colors.white,
       appBar: GlobalHeader(
-        actionText: signUpAction,
+        actionText: signInAction,
         onActionTap: () => Navigator.pushReplacement(
           context, MaterialPageRoute(
-            builder: (context) => SignUpFunnel()
+            builder: (context) => Login()
           )
         )
       ),
       body: Stack(
         children: <Widget>[
-          buildLoginView(),
+          buildSignUpView(),
           buildCircularProgress(),
         ],
       )
     );
   }
 
-  void emailAddressFocusListener() {
+  void fieldFocusListeners() {
+    fullNameFocus.addListener(() {
+      setState(() { isFullNameFocused = fullNameFocus.hasFocus; });
+    });
     emailAddressFocus.addListener(() {
       setState(() { isEmailAddressFocused = emailAddressFocus.hasFocus; });
     });
-  }
-
-  void passwordFocusListener() {
     passwordFocus.addListener(() {
       setState(() { isPasswordFocused = passwordFocus.hasFocus; });
     });
@@ -100,11 +104,12 @@ class _Login extends State<Login> {
     setState(() {
       isLoading = true;
     });
-    if (_loginFormKey.currentState.saveAndValidate()) {
+    if (_signUpFormKey.currentState.saveAndValidate()) {
       try {
-        await login();
+        await signUp();
         setState(() {
           isLoading = false;
+          isFullNameInvalid = false;
           isEmailAddressInvalid = false;
           isPasswordInvalid = false;
         });
@@ -112,34 +117,40 @@ class _Login extends State<Login> {
         print('Error: $e');
         setState(() {
           isLoading = false;
-          _loginFormKey.currentState.reset();
+          _signUpFormKey.currentState.reset();
         });
       }
     } else {
         setState(() {
           isLoading = false;
+          isFullNameInvalid = true;
           isEmailAddressInvalid = true;
           isPasswordInvalid = true;
         });
     }
   }
 
-  Future<void> login() async {
-    var userId = await Auth().signIn(emailAddress, password);
-    var userData = await getUser(userId);
-    if (userData == null) {
-      // Adding mentee users for now
-      // TODO: Fix when refactoring signup
-      await addUser(userId, emailAddress, UserType.mentee);
-      userData = await getUser(userId);
+  Future<void> signUp() async {
+    try {
+      var userId = await Auth().signUp(emailAddress, password);
+      await Auth().sendEmailVerification();   
+      await addMentee(
+        userId,
+        emailAddress: emailAddress,
+        fullName: fullName
+      );
+      Navigator.pushReplacement(
+        context,
+        MaterialPageRoute(
+          builder: (context) => LinkSent(emailAddress: emailAddress)
+        )
+      );
+    } on PlatformException catch (e) {
+      // TODO: Handle errors
+      if (e.code =='ERROR_EMAIL_ALREADY_IN_USE') {
+        print("Email address is already taken.");
+      }
     }
-    store.dispatch(ConvertToUserState(userData));
-    Navigator.pushReplacement(
-      context,
-      MaterialPageRoute(
-        builder: (context) => AppController()
-      )
-    );
   }
 
   Widget buildCircularProgress() {
@@ -151,7 +162,7 @@ class _Login extends State<Login> {
     return SizedBox();
   }
 
-  Widget buildLoginView() {
+  Widget buildSignUpView() {
     return Stack(
       alignment: Alignment.center,
       children: <Widget>[
@@ -163,10 +174,7 @@ class _Login extends State<Login> {
           top: screenHeight * 0.35,
           child: buildForm()
         ),
-        Positioned(
-          bottom: screenHeight * 0.05,
-          child: FooterLinks()
-        )
+        buildFooter()
       ]
     );
   }
@@ -175,13 +183,12 @@ class _Login extends State<Login> {
     return Container(
       width: screenWidth * 0.60,
       child: FormBuilder(
-        key: _loginFormKey,
+        key: _signUpFormKey,
         child: Column(
           children: <Widget>[
+            buildFullNameField(),
             buildEmailAddressField(),
             buildPasswordField(),
-            buildForgotPasswordLink(),
-            buildLoginButton()
           ]
         )
       )
@@ -195,8 +202,7 @@ class _Login extends State<Login> {
         children: <Widget>[
           SvgPicture.asset(
             'images/diverse_ano.svg',
-            height: 100,
-            width: 100,
+            height: screenHeight * 0.11,
           ),
           Container(
             height: 1.5,
@@ -207,15 +213,38 @@ class _Login extends State<Login> {
     );
   }
 
+  Widget buildFullNameField() {
+    return Container(
+      padding: EdgeInsets.only(bottom: 10.0),
+      child: FormBuilderTextField(
+        attribute: 'fullName',
+        focusNode: fullNameFocus,
+        style: fieldTextStyle(color: Theme.of(context).primaryColor),
+        decoration: fieldDecoration(
+          context,
+          isFocused: isFullNameFocused,
+          isInvalid: isFullNameInvalid,
+          hintText: fullNameHint,
+          icon: AspireIcons.profile
+        ),
+        validators: [
+          FormBuilderValidators.required(),
+          FormBuilderValidators.maxLength(100),
+        ],
+        keyboardType: TextInputType.text,
+        onSaved: (value) => fullName = (value as String),
+      )
+    );
+  }
+
   Widget buildEmailAddressField() {
-    print(isEmailAddressInvalid);
     return Container(
       padding: EdgeInsets.only(bottom: 10.0),
       child: FormBuilderTextField(
         attribute: 'emailAddress',
         focusNode: emailAddressFocus,
         style: fieldTextStyle(color: Theme.of(context).primaryColor),
-        decoration: loginFieldDecoration(
+        decoration: fieldDecoration(
           context,
           isFocused: isEmailAddressFocused,
           isInvalid: isEmailAddressInvalid,
@@ -242,7 +271,7 @@ class _Login extends State<Login> {
         obscureText: true,
         maxLines: 1,
         style: fieldTextStyle(color: Theme.of(context).primaryColor),
-        decoration: loginFieldDecoration(
+        decoration: fieldDecoration(
           context,
           isFocused: isPasswordFocused,
           isInvalid: isPasswordInvalid,
@@ -259,31 +288,23 @@ class _Login extends State<Login> {
     );
   }
 
-  Widget buildLoginButton() {
-    return Container(
-      padding: EdgeInsets.only(
-        top: screenHeight * 0.10
-      ),
-      child: PrimaryButton(
-        isLight: true,
-        text: loginButton,
-        onPressed: validateAndSubmit,
+
+  Widget buildFooter() {
+    return Positioned(
+      bottom: screenHeight * 0.05,
+      child: Column(
+        children: <Widget>[
+          CircleIndicators(stepIndex: 1),
+          buildNextButton()
+        ]
       )
     );
   }
-
-  Widget buildForgotPasswordLink() {
-    return Container(
-      padding: EdgeInsets.only(top: 20.0),
-      child: InkWell(
-        onTap: () => print('Forgot Password.'),
-        child: FormatText(
-          text: forgotPassword,
-          textColor: Theme.of(context).accentColor,
-          fontSize: 14.0,
-          fontWeight: FontWeight.w500,
-        )
-      )
+  Widget buildNextButton() {
+    return PrimaryButton(
+      isLight: true,
+      text: nextButtonText,
+      onPressed: validateAndSubmit,
     );
   }
 }

@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_animator/flutter_animator.dart';
 
+import '../../authentication/login_signup_funnel.dart';
 import '../../common/circle_indicators.dart';
 import '../../common/format_text.dart';
 import '../../common/global_header.dart';
 import '../../common/primary_button.dart';
 import '../../constants/common_constants.dart';
 import '../../constants/ftu_constants.dart';
-import '../login_create_account/login_create_account.dart';
 
 class OnboardingSteps extends StatefulWidget {
  
@@ -62,7 +62,7 @@ class _OnboardingSteps extends State<OnboardingSteps> {
   void getSkipPage() {
     Navigator.pushReplacement(
       context,
-      MaterialPageRoute(builder: (context) => LoginCreateAccount())
+      MaterialPageRoute(builder: (context) => LoginSignupFunnel())
     );
   }
 
@@ -94,7 +94,7 @@ class _OnboardingSteps extends State<OnboardingSteps> {
       key: onboardingStepsConfig[stepIndex]["textKey"],
       child: Container(
         padding: EdgeInsets.only(top: screenHeight * 0.15),
-        width: screenWidth * 0.50,
+        width: screenWidth * 0.60,
         child: FormatText(
           text: onboardingStepsConfig[stepIndex]["text"],
           textColor: Colors.black,
@@ -132,7 +132,7 @@ class _OnboardingSteps extends State<OnboardingSteps> {
     } else {
       Navigator.pushReplacement(
         context,
-        MaterialPageRoute(builder: (context) => LoginCreateAccount())
+        MaterialPageRoute(builder: (context) => LoginSignupFunnel())
       );
     }
   }

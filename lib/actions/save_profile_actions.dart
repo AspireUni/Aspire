@@ -5,11 +5,6 @@ class UpdateSaveProfileState {
   UpdateSaveProfileState(this.payload);
 }
 
-class ConvertToSaveProfileState {
-  final dynamic payload;
-  ConvertToSaveProfileState(this.payload);
-}
-
 class UpdateFullName {
   final String payload;
   UpdateFullName(this.payload);
