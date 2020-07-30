@@ -10,9 +10,11 @@ import 'package:image_picker/image_picker.dart';
 import 'package:intl/intl.dart';
 import 'package:redux/redux.dart';
 
+import '../common/common.dart';
 import '../constants/chat_constants.dart';
 import '../models/models.dart';
 import '../services/services.dart';
+import './common/profile_picture.dart';
 import './message.dart';
 
 class ChatMessenger extends StatefulWidget {
@@ -154,6 +156,38 @@ class ChatMessengerState extends State<ChatMessenger> {
     }
   }
 
+  IconButton buildKeyboardIconButton(Icon icon, Function onPressed) {
+    return IconButton(
+      icon: icon,
+      iconSize: 24.0,
+      padding: EdgeInsets.all(0.0),
+      color: Theme.of(context).accentColor,
+      onPressed: onPressed,
+    );
+  }
+
+  Widget buildKeyboardTextInput() {
+    return Expanded(
+      child: TextField(
+        textCapitalization: TextCapitalization.sentences,
+        decoration: InputDecoration.collapsed(
+          hintText: keyboardInputHintText,
+        ),
+        style: GoogleFonts.muli(
+          textStyle: TextStyle(
+            color: Colors.black, 
+            letterSpacing: .5, 
+            fontSize: 14.0, 
+          )
+        ),
+        maxLines: null, // this allows for multi-line input
+        textInputAction: TextInputAction.send,
+        controller: textInputController,
+        onSubmitted: (value) => submitMessage(textMessage, value),
+      )
+    );
+  }
+
   Widget buildMessengerKeyboard() {
     return Container(
       decoration: BoxDecoration(
@@ -173,51 +207,24 @@ class ChatMessengerState extends State<ChatMessenger> {
               child: Row(
                 crossAxisAlignment: CrossAxisAlignment.end,
                 children: <Widget>[
-                  IconButton(
-                    icon: Icon(Icons.photo),
-                    iconSize: 24.0,
-                    padding: EdgeInsets.all(0.0),
-                    color: Theme.of(context).accentColor,
-                    onPressed: () => pickImage(ImageSource.gallery),
+                  buildKeyboardIconButton(
+                    Icon(Icons.photo), 
+                    () => pickImage(ImageSource.gallery)
                   ),
-                  IconButton(
-                    icon: Icon(Icons.camera_alt),
-                    iconSize: 24.0,
-                    padding: EdgeInsets.all(0.0),
-                    color: Theme.of(context).accentColor,
-                    onPressed: () => pickImage(ImageSource.camera),
+                  buildKeyboardIconButton(
+                    Icon(Icons.camera_alt), 
+                    () => pickImage(ImageSource.camera)
                   ),
-                  Expanded(
-                    child: TextField(
-                      textCapitalization: TextCapitalization.sentences,
-                      decoration: InputDecoration.collapsed(
-                        hintText: 'Send a message...',
-                      ),
-                      style: GoogleFonts.muli(
-                        textStyle: TextStyle(
-                          color: Colors.black, 
-                          letterSpacing: .5, 
-                          fontSize: 14.0, 
-                        )
-                      ),
-                      maxLines: null, // this allows for multi-line input
-                      textInputAction: TextInputAction.send,
-                      controller: textInputController,
-                      onSubmitted: (value) => submitMessage(textMessage, value),
-                    )
-                  ),
+                  buildKeyboardTextInput(),
                 ]
               )
             )
           ),
-          IconButton(
-            icon: Icon(Icons.send),
-            iconSize: 24.0,
-            padding: EdgeInsets.all(0.0),
-            color: Theme.of(context).accentColor,
-            onPressed: () => submitMessage(
+          buildKeyboardIconButton(
+            Icon(Icons.send), 
+            () => submitMessage(
               textMessage, textInputController.value.text
-            ),
+            )
           ),
         ]
       )
@@ -283,6 +290,21 @@ class ChatMessengerState extends State<ChatMessenger> {
     );
   }
 
+  Widget buildAppBarTitle() {
+    return Column (
+      children: <Widget>[
+        ProfilePicture(
+          containerSideLength: 35.0, profilePictureRadius: 35.0
+        ),
+        FormatText(
+          text: widget.recipient,
+          fontSize: 14.0,
+          fontWeight: FontWeight.bold,
+        ),
+      ],
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return Stack(
@@ -302,35 +324,7 @@ class ChatMessengerState extends State<ChatMessenger> {
             ),
             backgroundColor: Colors.white,
             centerTitle: true,
-            title: Column (
-              children: <Widget>[
-                Container(
-                  width: 35.0,
-                  height: 35.0,
-                  child: Center(
-                    child: Container(
-                      width: 35.0, 
-                      height: 35.0, 
-                      decoration: BoxDecoration(
-                        color: Colors.black, 
-                        shape: BoxShape.circle
-                      )
-                    )
-                  )
-                ),
-                Text(
-                  widget.recipient,
-                  style: GoogleFonts.muli(
-                    textStyle: TextStyle(
-                      color: Colors.black, 
-                      letterSpacing: .5, 
-                      fontSize: 14.0, 
-                      fontWeight: FontWeight.bold
-                    )
-                  )
-                ),
-              ],
-            )
+            title: buildAppBarTitle()
           ),
           backgroundColor: Colors.white,
           body: Container(

@@ -6,6 +6,7 @@ import '../common/format_text.dart';
 import '../models/models.dart';
 import '../selectors/selectors.dart';
 import './chat_messenger.dart';
+import './common/profile_picture.dart';
 
 class NewMatches extends StatefulWidget {
   final List<Match> newMatchesList;
@@ -70,13 +71,9 @@ buildNewMatches(context, newMatchesList, id, isMentee) {
           color: Colors.transparent,
           child: Column(
             children: <Widget>[
-              Container(
-                width: 60.0, 
-                height: 60.0, 
-                decoration: BoxDecoration(
-                  color: Colors.black, 
-                  shape: BoxShape.circle
-                )
+              ProfilePicture(
+                containerSideLength: 60.0, 
+                profilePictureRadius: 60.0
               ),
               Flexible(
                 child: FormatText(
