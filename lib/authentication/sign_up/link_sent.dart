@@ -1,12 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
-import 'package:flutter_redux/flutter_redux.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:redux/redux.dart';
 
 import '../../common/common.dart';
 import '../../constants/constants.dart';
-import '../../models/models.dart';
 import '../firebase_authentication.dart';
 import '../login.dart';
 
@@ -24,19 +21,7 @@ class _LinkSent extends State<LinkSent> {
   final GlobalKey<FormBuilderState> _disabledEmailAddressFormKey
     = GlobalKey<FormBuilderState>();
 
-  bool isLoading;
-  Store<AppState> store;
   double screenHeight, screenWidth;
-
-  @override
-  void initState() {
-    super.initState();
-
-    isLoading = false;
-
-    store = StoreProvider.of<AppState>(context, listen: false);
-  }
-
 
   @override
   Widget build(BuildContext context) {
@@ -54,22 +39,8 @@ class _LinkSent extends State<LinkSent> {
           )
         )
       ),
-      body: Stack(
-        children: <Widget>[
-          buildLinkSentView(),
-          buildCircularProgress(),
-        ],
-      )
+      body: buildLinkSentView()
     );
-  }
-
-  Widget buildCircularProgress() {
-    if (isLoading) {
-      return Center(
-        child: CircularProgressIndicator()
-      );
-    }
-    return SizedBox();
   }
 
   Widget buildLinkSentView() {
