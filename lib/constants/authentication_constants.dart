@@ -6,7 +6,7 @@ const String forgotPassword = 'Forgot password?';
 
 // Buttons
 const String loginButton = "Log into your account";
-const String createAccountButtonPrimary = "Create Account";
+const String createAccountButtonPrimary = "Create account";
 
 // Link sent
 const String linkSentInfoText = "Check your inbox for a confirmation link.";
