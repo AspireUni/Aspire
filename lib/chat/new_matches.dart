@@ -3,10 +3,10 @@ import 'package:flutter/material.dart';
 import 'package:redux/redux.dart';
 
 import '../common/format_text.dart';
-import '../constants/chat_constants.dart';
 import '../models/models.dart';
 import '../selectors/selectors.dart';
 import './chat_messenger.dart';
+import './common/profile_picture.dart';
 
 class NewMatches extends StatefulWidget {
   final List<Match> newMatchesList;
@@ -35,14 +35,6 @@ class _NewMatchesState extends State<NewMatches> {
 
     return Column(
       children: <Widget>[
-        Padding(
-          padding: EdgeInsets.only(top: 20, bottom: 10),
-          child: FormatText(
-            text: chatNewMatchesTitle,
-            textAlign: TextAlign.left,
-            fontSize: 18.0,
-          )
-        ),
         buildNewMatches(
           context, 
           widget.newMatchesList, 
@@ -79,13 +71,9 @@ buildNewMatches(context, newMatchesList, id, isMentee) {
           color: Colors.transparent,
           child: Column(
             children: <Widget>[
-              Container(
-                width: 60.0, 
-                height: 60.0, 
-                decoration: BoxDecoration(
-                  color: Colors.black, 
-                  shape: BoxShape.circle
-                )
+              ProfilePicture(
+                containerSideLength: 60.0, 
+                profilePictureRadius: 60.0
               ),
               Flexible(
                 child: FormatText(
@@ -104,10 +92,27 @@ buildNewMatches(context, newMatchesList, id, isMentee) {
     );
   }
 
-  return SingleChildScrollView(
-    scrollDirection: Axis.horizontal,
+  return Container(
+    width: MediaQuery.of(context).size.width,
     child: Row(
-      children: newMatchesWidgetList,
+      children: <Widget>[
+        Container(
+          child: Column(
+            children: <Widget>[
+              Image.asset('images/onboarding/ano_standing.png', height: 60.0),
+              Container(height: 1.5, width: 50, color: Colors.black),
+            ]
+          ),
+        ),
+        Expanded(
+          child: SingleChildScrollView(
+            scrollDirection: Axis.horizontal,
+            child: Row(
+              children: newMatchesWidgetList,
+            )
+          )
+        )
+      ]
     )
   );
 }
