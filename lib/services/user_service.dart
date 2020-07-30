@@ -30,7 +30,7 @@ Future<QuerySnapshot> getMentees() async {
   return Firestore
     .instance
     .collection("users")
-    .where("type", isEqualTo: "mentees")
+    .where("type", isEqualTo: "mentee")
     .getDocuments();
 }
 
@@ -38,7 +38,7 @@ Future<QuerySnapshot> getMentors() async {
   return Firestore
     .instance
     .collection("users")
-    .where("type", isEqualTo: "mentors")
+    .where("type", isEqualTo: "mentor")
     .getDocuments();
 }
 
