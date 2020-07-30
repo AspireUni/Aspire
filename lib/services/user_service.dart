@@ -18,12 +18,42 @@ Future<QuerySnapshot> getUsers() async {
     .getDocuments();
 }
 
-Future<void> addUser(String id, String email, UserType type) async {
+Future<QuerySnapshot> getVerifiedUsers() async {
+  return Firestore
+    .instance
+    .collection("users")
+    .where("isVerified", isEqualTo: true)
+    .getDocuments();
+}
+
+Future<QuerySnapshot> getMentees() async {
+  return Firestore
+    .instance
+    .collection("users")
+    .where("type", isEqualTo: "mentees")
+    .getDocuments();
+}
+
+Future<QuerySnapshot> getMentors() async {
+  return Firestore
+    .instance
+    .collection("users")
+    .where("type", isEqualTo: "mentors")
+    .getDocuments();
+}
+
+Future<void> addMentee(
+  String id, {
+    String emailAddress,
+    String fullName
+  }
+) async {
   var user = User.initial().copyWith(
     id: id,
-    type: type,
+    type: UserType.mentee,
+    fullName: fullName,
     contact: Contact.initial().copyWith(
-      emailAddress: email
+      emailAddress: emailAddress
     )
   ).toJson();
 
@@ -50,4 +80,16 @@ Future<void> updateUser(dynamic user) async {
     .collection("users")
     .document(user["id"])
     .updateData(user);
+}
+
+Future<void> verifyUser(String userId) async {
+  var data = {
+    'id': userId,
+    'isVerified': true
+  };
+  Firestore
+    .instance
+    .collection("users")
+    .document(userId)
+    .updateData(data);
 }

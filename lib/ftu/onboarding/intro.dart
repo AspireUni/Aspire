@@ -82,7 +82,7 @@ class OnboardingIntro extends StatelessWidget {
 
   Widget buildBottomText(double screenHeight, double screenWidth) {
     return Container(
-      width: screenWidth * 0.50,
+      width: screenWidth * 0.60,
       padding: EdgeInsets.only(
         top: screenHeight * 0.20
       ),

@@ -1,14 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
-import 'package:flutter_redux/flutter_redux.dart';
 import 'package:google_fonts/google_fonts.dart';
 
-import '../../actions/actions.dart';
 import '../../constants/profile_constants.dart';
 import '../../models/models.dart';
-import '../../selectors/selectors.dart';
-import '../../services/services.dart';
 import '../save_profile/save_profile.dart';
  
 class ProfileHeader extends StatelessWidget {
@@ -107,10 +103,6 @@ class ProfileHeader extends StatelessWidget {
   }
 
   handleEditTap(BuildContext context) async {
-    var store = StoreProvider.of<AppState>(context);
-    var uid = userIdSelector(store);
-    var userData = await getUser(uid);
-    store.dispatch(ConvertToSaveProfileState(userData));
     Navigator.push(
       context, 
       MaterialPageRoute(builder: (context) => 

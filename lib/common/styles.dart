@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
-InputDecoration loginFieldDecoration(
+InputDecoration fieldDecoration(
   BuildContext context, {
     String hintText,
     IconData icon,
