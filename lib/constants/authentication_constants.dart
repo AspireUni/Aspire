@@ -10,6 +10,6 @@ const String createAccountButtonPrimary = "Create Account";
 
 // Link sent
 const String linkSentInfoText = "Check your inbox for a confirmation link.";
-const String linkSentDisabledButton = "Link sent";
+const String linkSentInfoBorder = "Link sent";
 const String linkSentFooterText = "Didn't get the email? ";
 const String linkSentFooterLink = "Resend link.";

@@ -118,7 +118,7 @@ class _LinkSent extends State<LinkSent> {
       top: screenHeight * 0.50,
       child: Column(
         children: <Widget>[
-          buildLinkSentDisabledButton(),
+          buildLinkSentInfoBorder(),
           buildLinkSentInfoText()
         ]
       )
@@ -137,9 +137,9 @@ class _LinkSent extends State<LinkSent> {
     );
   }
 
-  Widget buildLinkSentDisabledButton() {
-    return DisabledButton(
-      text: linkSentDisabledButton
+  Widget buildLinkSentInfoBorder() {
+    return InfoBorder(
+      text: linkSentInfoBorder
     );
   }
 
