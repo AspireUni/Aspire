@@ -15,6 +15,7 @@ import '../selectors/selectors.dart';
 import '../services/services.dart';
 import './firebase_authentication.dart';
 import './sign_up/funnel.dart';
+import './sign_up/link_sent.dart';
 
 
 class Login extends StatefulWidget {
@@ -284,7 +285,14 @@ class _Login extends State<Login> {
     return Container(
       padding: EdgeInsets.only(top: 20.0),
       child: InkWell(
-        onTap: () => print('Forgot Password.'),
+        onTap: () => Navigator.pushReplacement(
+          context, MaterialPageRoute(
+            builder: (context) => LinkSent(
+              emailAddress: emailAddress, 
+              forgotPassword: true
+            )
+          ),
+        ),
         child: FormatText(
           text: forgotPassword,
           textColor: Theme.of(context).accentColor,

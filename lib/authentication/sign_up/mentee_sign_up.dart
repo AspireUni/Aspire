@@ -142,7 +142,10 @@ class _MenteeSignUp extends State<MenteeSignUp> {
       Navigator.pushReplacement(
         context,
         MaterialPageRoute(
-          builder: (context) => LinkSent(emailAddress: emailAddress)
+          builder: (context) => LinkSent(
+            emailAddress: emailAddress, 
+            forgotPassword: false
+          )
         )
       );
     } on PlatformException catch (e) {
