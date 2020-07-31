@@ -55,6 +55,10 @@ class Auth implements BaseAuth {
     user.sendEmailVerification();
   }
 
+  Future<void> resetPassword(String email) async {
+    await _firebaseAuth.sendPasswordResetEmail(email: email);
+  }
+
   @override
   Future<bool> isEmailVerified() async {
     var user = await _firebaseAuth.currentUser();

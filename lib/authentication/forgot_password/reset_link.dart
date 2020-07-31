@@ -3,6 +3,7 @@ import 'package:flutter_form_builder/flutter_form_builder.dart';
 
 import '../../common/common.dart';
 import '../../constants/constants.dart';
+import '../firebase_authentication.dart';
 import '../login.dart';
 
 
@@ -15,10 +16,21 @@ class ResetLink extends StatefulWidget {
 }
 
 class _ResetLink extends State<ResetLink> {
-  final GlobalKey<FormBuilderState> _disabledEmailAddressFormKey
+  final GlobalKey<FormBuilderState> _emailAddressFormKey
     = GlobalKey<FormBuilderState>();
 
   double screenHeight, screenWidth;
+  bool isLoading, isEmailAddressInvalid;
+  String emailAddress;
+
+  @override
+  void initState() {
+    super.initState();
+    
+    isLoading = false;
+    isEmailAddressInvalid = false;
+  }
+
 
   @override
   Widget build(BuildContext context) {
@@ -54,27 +66,13 @@ class _ResetLink extends State<ResetLink> {
         ), 
         Positioned(
           top: screenHeight * 0.50,
-          child: buildLoginButton()
+          child: buildResetLinkButton()
         )
       ]
     );
   }
 
-  Widget buildForm() {
-    return Container(
-      width: screenWidth * 0.60,
-      child: FormBuilder(
-        key: _disabledEmailAddressFormKey,
-        child: Column(
-          children: <Widget>[
-            buildEmailAddressField(),
-          ]
-        )
-      )
-    );
-  }
-
-  Widget buildCenterAno() {
+ Widget buildCenterAno() {
     return Container(
       width: screenWidth,
       child: Column(
@@ -89,31 +87,72 @@ class _ResetLink extends State<ResetLink> {
     );
   }
 
+  Widget buildForm() {
+    return Container(
+      width: screenWidth * 0.60,
+      child: FormBuilder(
+        key: _emailAddressFormKey,
+        child: buildEmailAddressField()
+      )
+    );
+  }
+
   Widget buildEmailAddressField() {
     return Container(
       padding: EdgeInsets.only(bottom: 10.0),
       child: FormBuilderTextField(
-        enabled: false,
-        readOnly: true,
         attribute: 'emailAddress',
-        style: fieldTextStyle(color: Colors.grey),
+        autofocus: true, 
         decoration: fieldDecoration(
           context,
-          isFocused: false,
+          isFocused: true,
           isInvalid: false,
           hintText: emailHint,
           icon: Icons.mail_outline
-        )
+        ), 
+        validators: [
+          FormBuilderValidators.required(),
+          FormBuilderValidators.email(),
+          FormBuilderValidators.maxLength(100),
+        ],
+        keyboardType: TextInputType.emailAddress,
+        onSaved: (value) => emailAddress = (value as String).trim()
       )
     );
   }
   
-  Widget buildLoginButton() {
+  Widget buildResetLinkButton() {
     return PrimaryButton(
         isLight: true,
         text: getResetLinkText,
-        onPressed: () => print("Pressed get reset link.")
+        onPressed: validateAndSubmit
     );
+  }
+
+void validateAndSubmit() async {
+    setState(() {
+      isLoading = true;
+    });
+    if (_emailAddressFormKey.currentState.saveAndValidate()) {
+      try {
+        await Auth().resetPassword(emailAddress);
+        setState(() {
+          isLoading = false;
+          isEmailAddressInvalid = false;
+        });
+      } on Exception catch (e) {
+        print('Error: $e');
+        setState(() {
+          isLoading = false;
+          _emailAddressFormKey.currentState.reset();
+        });
+      }
+    } else {
+      setState(() {
+        isLoading = false;
+        isEmailAddressInvalid = true;
+      });
+    }
   }
 
 }
