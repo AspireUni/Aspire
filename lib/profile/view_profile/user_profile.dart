@@ -31,7 +31,7 @@ class _UserProfileState extends State<UserProfile> {
   Widget build(BuildContext context) {
     store = StoreProvider.of<AppState>(context);
     uid = userIdSelector(store);
-    var isOwnProfile = uid == widget.profileId;
+    var viewOnly = uid == widget.profileId;
 
     return FutureBuilder(
       future: getUser(widget.profileId),
@@ -49,7 +49,7 @@ class _UserProfileState extends State<UserProfile> {
                   children: buildUserProfileView(
                     context, 
                     user, 
-                    isOwnProfile: isOwnProfile
+                    viewOnly: viewOnly
                   )
                 )
               )
@@ -60,18 +60,17 @@ class _UserProfileState extends State<UserProfile> {
     );
   }
 
-  buildUserProfileView(BuildContext context, User user, {bool isOwnProfile}) {
+  buildUserProfileView(BuildContext context, User user, {bool viewOnly}) {
     return (
       <Widget>[
-        ProfileHeader(user: user, isOwnProfile: isOwnProfile),
+        ProfileHeader(fullName: user.fullName, viewOnly: viewOnly),
         ProfileSections(
           user: user, 
-          isOwnProfile: isOwnProfile, 
-          id: uid, 
+          viewOnly: viewOnly, 
           matchId: widget.matchId
         ),
         // Temporary until we get a drawer with the logout button
-        if(isOwnProfile) buildLogoutButton(context)
+        if(viewOnly) buildLogoutButton(context)
       ]
     );
   }
