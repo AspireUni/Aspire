@@ -9,8 +9,11 @@ import '../save_profile/save_profile.dart';
  
 class ProfileHeader extends StatelessWidget {
   final User user;
+  final bool isOwnProfile;
 
-  ProfileHeader({Key key, @required this.user}) : super(key: key);
+  ProfileHeader(
+    {Key key, @required this.user, @required this.isOwnProfile}
+  ) : super(key: key);
 
   final GlobalKey<FormBuilderState> _editProfileKey
     = GlobalKey<FormBuilderState>();
@@ -40,7 +43,7 @@ class ProfileHeader extends StatelessWidget {
               ]
             )
           ),
-          Positioned(
+          if (isOwnProfile) Positioned(
             top: 20.0,
             right: 0,
             child: buildEditButton(context)

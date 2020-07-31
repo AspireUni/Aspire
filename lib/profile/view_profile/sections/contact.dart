@@ -11,8 +11,13 @@ import '../../common/section.dart';
  
 class ProfileContact extends StatelessWidget {
   final User user;
+  final String matchId;
+  final String id;
+  final bool isOwnProfile;
 
-  ProfileContact({Key key, @required this.user}) : super(key: key);
+  ProfileContact(
+    {Key key, @required this.user, this.matchId, this.id, this.isOwnProfile}
+  ) : super(key: key);
 
   final IconData chat = IconData(
     chatIconCodePoint,
@@ -51,13 +56,14 @@ class ProfileContact extends StatelessWidget {
       children: <Widget>[
         // TODO: This row should only be visible 
         // when the user is viewing other uses' profiles
-        buildInfoRow(
-          context, 
-          chat, 
-          contactChat, 
-          contactChatSubtitle,
-          () => handleChatTap(context)
-        ),
+        if (!isOwnProfile) 
+          buildInfoRow(
+            context, 
+            chat, 
+            contactChat, 
+            contactChatSubtitle,
+            () => handleChatTap(context)
+          ),
         buildInfoRow(
           context, 
           email, 
@@ -137,6 +143,8 @@ class ProfileContact extends StatelessWidget {
         builder: (context) => ChatMessenger(
           recipient: user.fullName,
           peerId: user.id,
+          groupChatId: matchId,
+          id: id
         )
       )
     );

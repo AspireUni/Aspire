@@ -12,7 +12,11 @@ import './header.dart';
 import './sections/sections.dart';
  
 class UserProfile extends StatefulWidget {
-  const UserProfile({Key key}) : super(key: key);
+  final String profileId;
+  final String matchId;
+  const UserProfile(
+    {Key key, @required this.profileId, this.matchId}
+  ) : super(key: key);
 
   @override
   _UserProfileState createState() => _UserProfileState();
@@ -27,9 +31,10 @@ class _UserProfileState extends State<UserProfile> {
   Widget build(BuildContext context) {
     store = StoreProvider.of<AppState>(context);
     uid = userIdSelector(store);
+    var isOwnProfile = uid == widget.profileId;
 
     return FutureBuilder(
-      future: getUser(uid),
+      future: getUser(widget.profileId),
       builder: (context, snapshot) {
         if (snapshot.connectionState == ConnectionState.waiting) {
           return loadingScreen;
@@ -41,7 +46,11 @@ class _UserProfileState extends State<UserProfile> {
               margin: EdgeInsets.all(0),
               child: Center(
                 child: Column(
-                  children: buildUserProfileView(context, user)
+                  children: buildUserProfileView(
+                    context, 
+                    user, 
+                    isOwnProfile: isOwnProfile
+                  )
                 )
               )
             )
@@ -51,13 +60,18 @@ class _UserProfileState extends State<UserProfile> {
     );
   }
 
-  buildUserProfileView(BuildContext context, User user) {
+  buildUserProfileView(BuildContext context, User user, {bool isOwnProfile}) {
     return (
       <Widget>[
-        ProfileHeader(user: user),
-        ProfileSections(user: user),
+        ProfileHeader(user: user, isOwnProfile: isOwnProfile),
+        ProfileSections(
+          user: user, 
+          isOwnProfile: isOwnProfile, 
+          id: uid, 
+          matchId: widget.matchId
+        ),
         // Temporary until we get a drawer with the logout button
-        buildLogoutButton(context)
+        if(isOwnProfile) buildLogoutButton(context)
       ]
     );
   }

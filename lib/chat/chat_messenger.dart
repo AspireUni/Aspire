@@ -13,6 +13,7 @@ import 'package:redux/redux.dart';
 import '../common/common.dart';
 import '../constants/chat_constants.dart';
 import '../models/models.dart';
+import '../profile/view_profile/user_profile.dart';
 import '../services/services.dart';
 import './common/profile_picture.dart';
 import './message.dart';
@@ -291,17 +292,27 @@ class ChatMessengerState extends State<ChatMessenger> {
   }
 
   Widget buildAppBarTitle() {
-    return Column (
-      children: <Widget>[
-        ProfilePicture(
-          containerSideLength: 35.0, profilePictureRadius: 35.0
-        ),
-        FormatText(
-          text: widget.recipient,
-          fontSize: 14.0,
-          fontWeight: FontWeight.bold,
-        ),
-      ],
+    return GestureDetector(
+      onTap: () {
+        Navigator.push(
+          context,
+          MaterialPageRoute(builder: (context) => 
+            UserProfile(profileId: widget.peerId, matchId: widget.groupChatId)
+          )
+        );
+      },
+      child: Column (
+        children: <Widget>[
+          ProfilePicture(
+            containerSideLength: 35.0, profilePictureRadius: 35.0
+          ),
+          FormatText(
+            text: widget.recipient,
+            fontSize: 14.0,
+            fontWeight: FontWeight.bold,
+          ),
+        ],
+      )
     );
   }
 
