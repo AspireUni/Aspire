@@ -85,10 +85,7 @@ class _LinkSent extends State<LinkSent> {
       width: screenWidth,
       child: Column(
         children: <Widget>[
-          SvgPicture.asset(
-            'images/diverse_ano.svg',
-            height: screenHeight * 0.11,
-          ),
+          Image.asset('images/sign_up/ano_hands_side.png', height: 100),
           Container(
             height: 1.5,
             color: Colors.black
