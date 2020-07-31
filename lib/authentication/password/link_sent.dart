@@ -85,7 +85,10 @@ class _LinkSent extends State<LinkSent> {
       width: screenWidth,
       child: Column(
         children: <Widget>[
-          Image.asset('images/sign_up/ano_hands_side.png', height: 100),
+          Image.asset(
+            'images/sign_up/ano_hands_side.png',
+             height: screenHeight * 0.10
+          ),
           Container(
             height: 1.5,
             color: Colors.black
