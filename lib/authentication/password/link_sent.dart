@@ -87,7 +87,7 @@ class _LinkSent extends State<LinkSent> {
         children: <Widget>[
           Image.asset(
             'images/sign_up/ano_hands_side.png',
-             height: screenHeight * 0.10
+             height: screenHeight * 0.11
           ),
           Container(
             height: 1.5,

@@ -80,7 +80,7 @@ class _ResetLink extends State<ResetLink> {
         children: <Widget>[
           Image.asset(
             'images/sign_up/ano_hands_straight_up.png', 
-            height: screenHeight * 0.10
+            height: screenHeight * 0.11
           ),
           Container(
             height: 1.5,
