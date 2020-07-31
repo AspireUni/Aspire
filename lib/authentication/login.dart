@@ -15,7 +15,7 @@ import '../selectors/selectors.dart';
 import '../services/services.dart';
 import './firebase_authentication.dart';
 import './sign_up/funnel.dart';
-import 'forgot_password/reset_link.dart';
+import 'password/reset_link.dart';
 
 
 class Login extends StatefulWidget {

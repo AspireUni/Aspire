@@ -5,6 +5,7 @@ import '../../common/common.dart';
 import '../../constants/constants.dart';
 import '../firebase_authentication.dart';
 import '../login.dart';
+import './link_sent.dart';
 
 
 class ResetLink extends StatefulWidget {
@@ -136,6 +137,14 @@ void validateAndSubmit() async {
     if (_emailAddressFormKey.currentState.saveAndValidate()) {
       try {
         await Auth().resetPassword(emailAddress);
+        Navigator.pushReplacement(
+          context,
+          MaterialPageRoute(
+            builder: (context) => LinkSent(
+              emailAddress: emailAddress
+            )
+          )
+        );
         setState(() {
           isLoading = false;
           isEmailAddressInvalid = false;

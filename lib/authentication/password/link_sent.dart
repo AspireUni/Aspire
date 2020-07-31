@@ -10,12 +10,10 @@ import '../login.dart';
 
 class LinkSent extends StatefulWidget {
   final String emailAddress;
-  final bool forgotPassword;
 
   LinkSent({
     Key key, 
-    @required this.emailAddress, 
-    @required this.forgotPassword
+    @required this.emailAddress
   }) : super(key: key);
 
   @override
