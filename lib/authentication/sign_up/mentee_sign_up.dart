@@ -12,7 +12,7 @@ import '../../models/models.dart';
 import '../../services/services.dart';
 import '../firebase_authentication.dart';
 import '../login.dart';
-import './link_sent.dart';
+import '../password/link_sent.dart';
 
 
 class MenteeSignUp extends StatefulWidget {
@@ -142,7 +142,9 @@ class _MenteeSignUp extends State<MenteeSignUp> {
       Navigator.pushReplacement(
         context,
         MaterialPageRoute(
-          builder: (context) => LinkSent(emailAddress: emailAddress)
+          builder: (context) => LinkSent(
+            emailAddress: emailAddress
+          )
         )
       );
     } on PlatformException catch (e) {

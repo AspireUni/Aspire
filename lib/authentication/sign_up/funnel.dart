@@ -42,10 +42,14 @@ class SignUpFunnel extends StatelessWidget {
   }
 
   Widget buildCenterAno(context) {
+    var screenHeight = MediaQuery.of(context).size.height;
     return Column(
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
-        Image.asset('images/sign_up/ano_hands_up.png', height: 150.0),
+        Image.asset(
+          'images/sign_up/ano_hands_up.png', 
+          height: screenHeight * 0.11
+        ),
         Container(height: 1.5, color: Colors.white)
       ]
     );

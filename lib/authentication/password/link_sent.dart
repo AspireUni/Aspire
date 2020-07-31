@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
-import 'package:flutter_svg/flutter_svg.dart';
+
 
 import '../../common/common.dart';
 import '../../constants/constants.dart';
@@ -10,8 +10,13 @@ import '../login.dart';
 
 class LinkSent extends StatefulWidget {
   final String emailAddress;
+  final bool resetLinkSent;
 
-  LinkSent({Key key, @required this.emailAddress}) : super(key: key);
+  LinkSent({
+    Key key, 
+    @required this.emailAddress, 
+    this.resetLinkSent = false
+  }) : super(key: key);
 
   @override
   State<StatefulWidget> createState() => _LinkSent();
@@ -80,9 +85,9 @@ class _LinkSent extends State<LinkSent> {
       width: screenWidth,
       child: Column(
         children: <Widget>[
-          SvgPicture.asset(
-            'images/diverse_ano.svg',
-            height: screenHeight * 0.11,
+          Image.asset(
+            'images/sign_up/ano_hands_side.png',
+            height: screenHeight * 0.11
           ),
           Container(
             height: 1.5,
@@ -129,7 +134,7 @@ class _LinkSent extends State<LinkSent> {
     return Container(
       padding: EdgeInsets.only(top: 15.0),
       child: FormatText(
-        text: linkSentInfoText,
+        text: widget.resetLinkSent ? resetLinkSentInfoText : linkSentInfoText,
         textColor: Theme.of(context).primaryColor,
         fontSize: 14.0,
         fontWeight: FontWeight.w500,
