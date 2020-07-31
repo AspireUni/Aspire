@@ -13,10 +13,36 @@ class Pairings extends StatelessWidget {
       body: buildPairingsView(context)
     );
   }
-}
 
-buildPairingsView(BuildContext context) {
-  return Column(
-    children: <Widget>[]
-  );
+
+  Widget buildAno(screenWidth, screenHeight) {
+    return Container(
+      width: screenWidth,
+      child: Column(
+        children: <Widget>[
+          Image.asset(
+            'images/ano_mountains.png',
+            height: screenHeight * 0.25,
+          ),
+          Container(
+            height: 1.5,
+            color: Colors.black
+          )
+        ]
+      )
+    );
+  }
+
+  buildPairingsView(BuildContext context) {
+    var screenWidth = MediaQuery.of(context).size.width;
+    var screenHeight = MediaQuery.of(context).size.height;
+    return Column(
+      children: <Widget>[
+        Positioned(
+          top: screenHeight * 0.15,
+          child: buildAno(screenWidth, screenHeight)
+        ),
+      ]
+    );
+  }
 }
