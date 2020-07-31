@@ -37,7 +37,6 @@ dependencies:
   flutter_picker: ^1.1.5
   flutter_redux: ^0.6.0
   flutter_svg: ^0.17.4
-  flutter_tindercard: ^0.1.8
   google_fonts: ^1.0.0
   image_picker: ^0.6.7
   intl: ^0.16.1

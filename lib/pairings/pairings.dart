@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 
 import '../common/global_header.dart';
-import './pairings_card.dart';
 
 class Pairings extends StatelessWidget {
   const Pairings({Key key}) : super(key: key);
@@ -16,6 +15,8 @@ class Pairings extends StatelessWidget {
   }
 }
 
-Widget buildPairingsView(BuildContext context) {
-  return PairingsCard();
+buildPairingsView(BuildContext context) {
+  return Column(
+    children: <Widget>[]
+  );
 }
