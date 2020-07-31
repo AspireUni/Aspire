@@ -55,7 +55,7 @@ dev_dependencies:
   flutter_launcher_icons: ^0.7.5
 
 flutter_icons:
-  image_path: "images/logos/logo_white_bg.png"
+  image_path: "images/app_icon.png"
   android: true
   ios: true
 
@@ -73,6 +73,5 @@ flutter:
 
   assets:
     - images/
-    - images/logos/
     - images/sign_up/
     - images/onboarding/

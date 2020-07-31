@@ -60,7 +60,7 @@ class _RootState extends State<Root>{
   @override
   Widget build(BuildContext context) {
     return CustomSplash(
-      imagePath: 'images/logos/light_logo_transparent.png', 
+      imagePath: 'images/splash_screen_icon.png', 
       backGroundColor: Color(0xFF0A0B33),
       home: StoreConnector<AppState, AppState>(
         converter: appStateSelector,
