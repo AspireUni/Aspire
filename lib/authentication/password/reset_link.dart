@@ -141,7 +141,8 @@ void validateAndSubmit() async {
           context,
           MaterialPageRoute(
             builder: (context) => LinkSent(
-              emailAddress: emailAddress
+              emailAddress: emailAddress, 
+              resetLinkSent: true
             )
           )
         );
