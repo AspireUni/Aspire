@@ -13,19 +13,18 @@ import 'package:redux/redux.dart';
 import '../common/common.dart';
 import '../constants/chat_constants.dart';
 import '../models/models.dart';
+import '../profile/view_profile/user_profile.dart';
 import '../services/services.dart';
 import './common/profile_picture.dart';
 import './message.dart';
 
 class ChatMessenger extends StatefulWidget {
-  final String id;
-  final String peerId;
-  final String recipient;
+  final String senderId;
+  final User recipient;
   final String groupChatId;
   ChatMessenger({
     Key key,
-    @required this.id, 
-    @required this.peerId,
+    @required this.senderId, 
     @required this.recipient,
     @required this.groupChatId,
   }) : super(key: key);
@@ -42,7 +41,6 @@ class ChatMessengerState extends State<ChatMessenger> {
   List<DocumentSnapshot> _messagesSnapshots;
   bool _isLoading = false;
   Message lastMessage;
-  String recipient;
 
   File imageFile;
   String imageUrl;
@@ -99,8 +97,8 @@ class ChatMessengerState extends State<ChatMessenger> {
     if (content.trim() != '') {
       textInputController.clear();
       var message = Message(
-        idTo: widget.peerId,
-        idFrom: widget.id,
+        idTo: widget.recipient.id,
+        idFrom: widget.senderId,
         content: content,
         type: type,
         timestamp: DateTime.now().millisecondsSinceEpoch.toString(),
@@ -232,7 +230,7 @@ class ChatMessengerState extends State<ChatMessenger> {
   }
 
   List<Widget> buildMessage(int index, int maxItem, DocumentSnapshot document) {
-    var isSent = document['idFrom'] == widget.id;
+    var isSent = document['idFrom'] == widget.senderId;
     var widgets = <Widget>[];
     widgets.add(
       MessageView(
@@ -291,17 +289,31 @@ class ChatMessengerState extends State<ChatMessenger> {
   }
 
   Widget buildAppBarTitle() {
-    return Column (
-      children: <Widget>[
-        ProfilePicture(
-          containerSideLength: 35.0, profilePictureRadius: 35.0
-        ),
-        FormatText(
-          text: widget.recipient,
-          fontSize: 14.0,
-          fontWeight: FontWeight.bold,
-        ),
-      ],
+    return GestureDetector(
+      onTap: () {
+        Navigator.push(
+          context,
+          MaterialPageRoute(
+            builder: (context) => UserProfile(
+              profileId: widget.recipient.id, 
+              matchId: widget.groupChatId
+            )
+          )
+        );
+      },
+      child: Column (
+        children: <Widget>[
+          ProfilePicture(
+            containerSideLength: 35.0, 
+            profilePictureRadius: 35.0
+          ),
+          FormatText(
+            text: widget.recipient.fullName,
+            fontSize: 14.0,
+            fontWeight: FontWeight.bold,
+          ),
+        ],
+      )
     );
   }
 

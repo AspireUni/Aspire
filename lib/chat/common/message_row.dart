@@ -103,9 +103,8 @@ class MessageRow extends StatelessWidget {
           context, 
           MaterialPageRoute(builder: (context) => 
             ChatMessenger(
-            recipient: recipient.fullName, 
-              peerId: recipient.id, 
-              id: id,
+              recipient: recipient, 
+              senderId: id,
               groupChatId: match.matchId,
             )
           )

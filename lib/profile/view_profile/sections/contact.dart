@@ -1,18 +1,24 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_redux/flutter_redux.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 import '../../../chat/chat_messenger.dart';
 import '../../../constants/profile_constants.dart';
 import '../../../models/models.dart';
+import '../../../selectors/selectors.dart';
 import '../../common/section.dart';
 
  
 class ProfileContact extends StatelessWidget {
   final User user;
+  final String matchId;
+  final bool viewOnly;
 
-  ProfileContact({Key key, @required this.user}) : super(key: key);
+  ProfileContact(
+    {Key key, @required this.user, this.matchId, this.viewOnly}
+  ) : super(key: key);
 
   final IconData chat = IconData(
     chatIconCodePoint,
@@ -51,13 +57,14 @@ class ProfileContact extends StatelessWidget {
       children: <Widget>[
         // TODO: This row should only be visible 
         // when the user is viewing other uses' profiles
-        buildInfoRow(
-          context, 
-          chat, 
-          contactChat, 
-          contactChatSubtitle,
-          () => handleChatTap(context)
-        ),
+        if (!viewOnly) 
+          buildInfoRow(
+            context, 
+            chat, 
+            contactChat, 
+            contactChatSubtitle,
+            () => handleChatTap(context)
+          ),
         buildInfoRow(
           context, 
           email, 
@@ -131,12 +138,15 @@ class ProfileContact extends StatelessWidget {
   }
 
   void handleChatTap(BuildContext context) {
+    var store = StoreProvider.of<AppState>(context);
+    var uid = userIdSelector(store);
     Navigator.push(
       context, 
       MaterialPageRoute(
         builder: (context) => ChatMessenger(
-          recipient: user.fullName,
-          peerId: user.id,
+          recipient: user,
+          groupChatId: matchId,
+          senderId: uid
         )
       )
     );
