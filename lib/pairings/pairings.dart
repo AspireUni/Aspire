@@ -4,39 +4,41 @@ import '../common/common.dart';
 import '../common/global_header.dart';
 import '../constants/constants.dart';
 
+double screenWidth;
+double screenHeight;
+
 class Pairings extends StatelessWidget {
   const Pairings({Key key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    var screenWidth = MediaQuery.of(context).size.width;
-    var screenHeight = MediaQuery.of(context).size.height;
+    screenWidth ??= MediaQuery.of(context)?.size?.width;
+    screenHeight ??= MediaQuery.of(context)?.size?.height;
 
     return Scaffold(
       appBar: GlobalHeader(),
       backgroundColor: Colors.white,
       body: Column(
         children: [
-          buildAno(screenHeight),
+          buildAno(),
           Align(
             alignment: Alignment.center, 
-            child: buildCardContainer(context, screenWidth, screenHeight)
-          ), 
-          buildReadMoreButton()
+            child: buildCards(context)
+          )
         ]
       )
     );
   }
 
 
-  Image buildAno(screenHeight) {
+  Image buildAno() {
     return Image.asset(
       'images/ano_mountains.png',
       height: screenHeight * 0.25
     );
   }
 
-  buildReadMoreButton() {
+  PrimaryButton buildReadMoreButton() {
     return PrimaryButton(
       isLight: true,
       text: readMoreAction,
@@ -44,7 +46,7 @@ class Pairings extends StatelessWidget {
     );
   }
 
-  Row buildCardHeader(context, screenWidth, screenHeight) {
+  Row buildCardHeader() {
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       crossAxisAlignment: CrossAxisAlignment.start,
@@ -68,7 +70,7 @@ class Pairings extends StatelessWidget {
     );
   }
 
-  FormatText buildCardBody(context, screenWidth, screenHeight) {
+  FormatText buildCardBody() {
     return FormatText(
       text: dummyCard["description"], 
       fontSize: 14.0,
@@ -77,14 +79,15 @@ class Pairings extends StatelessWidget {
     );
   }
   
-  Row buildCardFooter(context, screenWidth, screenHeight) {
+  Row buildCardFooter(context) {
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
         SizedBox(
-          width: screenWidth * 0.20, 
+          width: screenWidth * 0.11, 
           height: screenHeight * 0.10, 
           child: FlatButton(
+            padding: EdgeInsets.all(0.0),
             child: Image.asset("images/right_arrow.png"), 
             onPressed: () => print("Arrow pressed")
           )
@@ -99,7 +102,7 @@ class Pairings extends StatelessWidget {
     );
   }
 
-  Widget buildCard(context, screenWidth, screenHeight) {
+  Widget buildCurrentCard(context) {
     var sidePadding = screenWidth * 0.05;
     return Padding(
       padding: EdgeInsets.only(
@@ -109,29 +112,43 @@ class Pairings extends StatelessWidget {
       ),
       child: Column(
         children: [
-          buildCardHeader(context, screenWidth, screenHeight),
-          buildCardBody(context, screenWidth, screenHeight), 
-          buildCardFooter(context, screenWidth, screenHeight)
+          buildCardHeader(),
+          buildCardBody(), 
+          buildCardFooter(context)
         ]
       )
     );
   }
 
-  Container buildCardContainer(context, screenWidth, screenHeight) {
+  BoxDecoration buildCardContainer(context) {
+    return BoxDecoration(
+      border: Border.all(
+        color: Theme.of(context).accentColor,
+        width: 1.0,
+        style: BorderStyle.solid
+      ),
+      color: Colors.transparent,
+      shape: BoxShape.rectangle, 
+      borderRadius: BorderRadius.all(Radius.circular(20))
+    );
+  }
+
+  Container buildCards(context) {
     return Container(
       width: screenWidth * 0.80,
       height: screenHeight * 0.42,
-      decoration: BoxDecoration(
-        border: Border.all(
-          color: Theme.of(context).accentColor,
-          width: 1.0,
-          style: BorderStyle.solid
-        ),
-        color: Colors.transparent,
-        shape: BoxShape.rectangle, 
-        borderRadius: BorderRadius.all(Radius.circular(20))
-      ), 
-      child: buildCard(context, screenWidth, screenHeight)
+      decoration: buildCardContainer(context), 
+      child: Stack(
+        overflow: Overflow.visible, 
+        alignment: Alignment.center, 
+        children: [
+          buildCurrentCard(context), 
+          Positioned(
+            top: screenHeight * 0.38, 
+            child: buildReadMoreButton()
+          )
+        ]
+      )
     );
   }
 
