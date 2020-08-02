@@ -16,12 +16,16 @@ UserState _userReducer(UserState userState, dynamic action) {
       var user = User.fromJson(action.payload);
       return UserState.initial().copyWith(
         id: user.id,
+        type: user.type,
         isFtu: user.isFtu,
         authStatus: AuthStatus.loggedIn,
         saveProfileState: SaveProfileState.initial().copyWith(
-          contact: Contact.initial().copyWith(
-            emailAddress: user.contact.emailAddress
-          )
+          fullName: user.fullName,
+          summary: user.summary,
+          contact: user.contact,
+          schools: user.schools,
+          skills: user.skills,
+          jobs: user.jobs
         )
       );
     }

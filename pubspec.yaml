@@ -19,6 +19,7 @@ dependencies:
     sdk: flutter
 
   auto_size_text: ^2.1.0
+  bubble: ^1.1.9
   cached_network_image: ^2.0.0
   cupertino_icons: ^0.1.2         
   custom_navigation_bar: ^0.2.6
@@ -36,7 +37,6 @@ dependencies:
   flutter_picker: ^1.1.5
   flutter_redux: ^0.6.0
   flutter_svg: ^0.17.4
-  flutter_tindercard: ^0.1.8
   google_fonts: ^1.0.0
   image_picker: ^0.6.7
   intl: ^0.16.1
@@ -54,7 +54,7 @@ dev_dependencies:
   flutter_launcher_icons: ^0.7.5
 
 flutter_icons:
-  image_path: "images/logos/logo_white_bg.png"
+  image_path: 'images/app_icon.png'
   android: true
   ios: true
 
@@ -72,6 +72,5 @@ flutter:
 
   assets:
     - images/
-    - images/logos/
     - images/sign_up/
     - images/onboarding/

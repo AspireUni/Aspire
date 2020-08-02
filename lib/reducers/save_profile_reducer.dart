@@ -13,17 +13,6 @@ SaveProfileState _saveProfileStateReducer(
   if (action is UpdateSaveProfileState) {
     return action.payload;
   }
-  if (action is ConvertToSaveProfileState) {
-    var userJson = User.fromJson(action.payload);
-    return SaveProfileState.initial().copyWith(
-      fullName: userJson.fullName,
-      summary: userJson.summary,
-      contact: userJson.contact,
-      schools: userJson.schools,
-      skills: userJson.skills,
-      jobs: userJson.jobs
-    );
-  }
   if (action is UpdateFullName) {
     return state.copyWith(fullName: action.payload);
   }

@@ -1,10 +1,14 @@
 import 'package:custom_navigation_bar/custom_navigation_bar.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_redux/flutter_redux.dart';
+import 'package:redux/redux.dart';
 
 import '../chat/chat.dart';
 import '../constants/app_controller_constants.dart';
+import '../models/states/states.dart';
 import '../pairings/pairings.dart';
 import '../profile/view_profile/user_profile.dart';
+import '../selectors/selectors.dart';
 
 
 class AppController extends StatefulWidget {
@@ -17,8 +21,12 @@ class AppController extends StatefulWidget {
 }
 
 class _AppControllerState extends State<AppController> {
+
+  Store<AppState> store;
+  String uid;
+
   final GlobalKey<FormState> formKey = GlobalKey<FormState>();
-  final List<Widget> _screens = [UserProfile(), Pairings(), Chat()];
+  List<Widget> _screens;
   int pageIndex; 
   double navBarIconSize = 25.0; 
 
@@ -34,6 +42,9 @@ class _AppControllerState extends State<AppController> {
 
   @override 
   Widget build(BuildContext context) {
+    store = StoreProvider.of<AppState>(context);
+    uid = userIdSelector(store);
+    _screens = [UserProfile(profileId: uid), Pairings(), Chat()];
     return Scaffold(
         body: 
         _screens[pageIndex],

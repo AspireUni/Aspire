@@ -36,6 +36,11 @@ class Auth implements BaseAuth {
   @override
   Future<FirebaseUser> getCurrentUser() async {
     var user = await _firebaseAuth.currentUser();
+    if (user != null) {
+      if (!user.isEmailVerified) {
+        return null;
+      }
+    }
     return user;
   }
 
@@ -48,6 +53,10 @@ class Auth implements BaseAuth {
   Future<void> sendEmailVerification() async {
     var user = await _firebaseAuth.currentUser();
     user.sendEmailVerification();
+  }
+
+  Future<void> resetPassword(String email) async {
+    await _firebaseAuth.sendPasswordResetEmail(email: email);
   }
 
   @override

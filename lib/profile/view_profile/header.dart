@@ -1,20 +1,18 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
-import 'package:flutter_redux/flutter_redux.dart';
 import 'package:google_fonts/google_fonts.dart';
 
-import '../../actions/actions.dart';
 import '../../constants/profile_constants.dart';
-import '../../models/models.dart';
-import '../../selectors/selectors.dart';
-import '../../services/services.dart';
 import '../save_profile/save_profile.dart';
  
 class ProfileHeader extends StatelessWidget {
-  final User user;
+  final String fullName;
+  final bool viewOnly;
 
-  ProfileHeader({Key key, @required this.user}) : super(key: key);
+  ProfileHeader(
+    {Key key, @required this.fullName, @required this.viewOnly}
+  ) : super(key: key);
 
   final GlobalKey<FormBuilderState> _editProfileKey
     = GlobalKey<FormBuilderState>();
@@ -44,7 +42,7 @@ class ProfileHeader extends StatelessWidget {
               ]
             )
           ),
-          Positioned(
+          if (viewOnly) Positioned(
             top: 20.0,
             right: 0,
             child: buildEditButton(context)
@@ -72,7 +70,7 @@ class ProfileHeader extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.center,
         children: <Text> [
           Text(
-            user.fullName,
+            fullName,
             style: GoogleFonts.muli(
               textStyle: TextStyle(
                 color: Colors.white, 
@@ -107,10 +105,6 @@ class ProfileHeader extends StatelessWidget {
   }
 
   handleEditTap(BuildContext context) async {
-    var store = StoreProvider.of<AppState>(context);
-    var uid = userIdSelector(store);
-    var userData = await getUser(uid);
-    store.dispatch(ConvertToSaveProfileState(userData));
     Navigator.push(
       context, 
       MaterialPageRoute(builder: (context) => 

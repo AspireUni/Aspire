@@ -2,7 +2,8 @@ import 'package:flutter/material.dart';
 
 import '../../common/common.dart';
 import '../../constants/constants.dart';
-import '../login_create_account/login.dart';
+import '../login.dart';
+import './mentee_sign_up.dart';
 
 class SignUpFunnel extends StatelessWidget {
   
@@ -41,10 +42,14 @@ class SignUpFunnel extends StatelessWidget {
   }
 
   Widget buildCenterAno(context) {
+    var screenHeight = MediaQuery.of(context).size.height;
     return Column(
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
-        Image.asset('images/sign_up/ano_hands_up.png', height: 150.0),
+        Image.asset(
+          'images/sign_up/ano_hands_up.png', 
+          height: screenHeight * 0.11
+        ),
         Container(height: 1.5, color: Colors.white)
       ]
     );
@@ -70,7 +75,7 @@ class SignUpFunnel extends StatelessWidget {
         children: [
           buildFunnelText(), 
           buildCircleIndicators(context, screenWidth), 
-          ...buildFunnelButtons()
+          ...buildFunnelButtons(context)
         ]
       )
     );
@@ -115,7 +120,7 @@ class SignUpFunnel extends StatelessWidget {
 
   }
   
-  List<PrimaryButton> buildFunnelButtons() {
+  List<PrimaryButton> buildFunnelButtons(context) {
     var isLight = true;
     return [
       PrimaryButton(
@@ -126,7 +131,11 @@ class SignUpFunnel extends StatelessWidget {
       PrimaryButton(
         text: isMenteeAction,
         isLight: isLight, 
-        onPressed: () => { print("I am a mentee pressed.") }
+        onPressed: () => Navigator.pushReplacement(
+          context, MaterialPageRoute(
+            builder: (context) => MenteeSignUp()
+          )
+        )
       ), 
     ];
   }

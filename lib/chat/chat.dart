@@ -1,9 +1,9 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:google_fonts/google_fonts.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:redux/redux.dart';
 
+import '../common/global_header.dart';
 import '../constants/constants.dart';
 import '../models/models.dart';
 import '../selectors/selectors.dart';
@@ -70,42 +70,13 @@ class _ChatState extends State<Chat> {
   }
 }
 
-buildHeader() {
-  return Container (
-    margin: EdgeInsets.all(30.0),
-    child: Column(
-      children: <Text>[
-        Text(
-          chatHeaderTitle, 
-          style: GoogleFonts.muli(
-            textStyle: TextStyle(
-              color: Colors.black, 
-              letterSpacing: .5, 
-              fontSize: 30.0, 
-              fontWeight: FontWeight.bold
-            )
-          )
-        ), 
-        Text(
-          chatHeaderSubtitle, 
-          style: GoogleFonts.muli(
-            textStyle: TextStyle(
-              color: Colors.grey, 
-              letterSpacing: .5, 
-              fontSize: 18, 
-              fontWeight: FontWeight.w600
-            )
-          )
-        ), 
-      ]
-    )
-  );
-}
-
 buildChatView(var newMatchesList, var matchesList) {
   return (
     <Widget>[
-      buildHeader(),
+      GlobalHeader(
+        actionText: "New Message",
+        onActionTap: () => {},
+      ),
       if (newMatchesList.length != 0)
         NewMatches(newMatchesList: newMatchesList),
       if (matchesList.length != 0)

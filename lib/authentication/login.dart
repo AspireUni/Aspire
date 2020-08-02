@@ -1,18 +1,21 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:redux/redux.dart';
 
-import '../../actions/actions.dart';
-import '../../common/common.dart';
-import '../../constants/constants.dart';
-import '../../icons/aspire_icons.dart';
-import '../../models/models.dart';
-import '../../navigation/app_controller.dart';
-import '../../services/services.dart';
-import '../authentication.dart';
-import '../sign_up/funnel.dart';
+import '../actions/actions.dart';
+import '../common/common.dart';
+import '../constants/constants.dart';
+import '../icons/aspire_icons.dart';
+import '../models/models.dart';
+import '../navigation/root.dart';
+import '../selectors/selectors.dart';
+import '../services/services.dart';
+import './firebase_authentication.dart';
+import './sign_up/funnel.dart';
+import 'password/reset_link.dart';
 
 
 class Login extends StatefulWidget {
@@ -125,19 +128,29 @@ class _Login extends State<Login> {
   }
 
   Future<void> login() async {
-    var userId = await Auth().signIn(emailAddress, password);
-    var userData = await getUser(userId);
-    if (userData == null) {
-      await addUser(userId, emailAddress);
-      userData = await getUser(userId);
+    try {
+      var userId = await Auth().signIn(emailAddress, password);
+      var isVerified = await Auth().isEmailVerified();
+      if (isVerified) {
+        var userData = await getUser(userId);
+        store.dispatch(ConvertToUserState(userData));
+        if (isFtuSelector(store)) {
+          verifyUser(userId);
+        }
+        Navigator.pushReplacement(
+          context,
+          MaterialPageRoute(
+            builder: (context) => Root()
+          )
+        );
+      } else {
+        // TODO: Handle unverified email errors
+        print("Please verify your email.");
+      }
+    } on PlatformException {
+      // TODO:  Handle other errors
+       print("Invalid email address or password.");
     }
-    store.dispatch(ConvertToUserState(userData));
-    Navigator.pushReplacement(
-      context,
-      MaterialPageRoute(
-        builder: (context) => AppController()
-      )
-    );
   }
 
   Widget buildCircularProgress() {
@@ -193,8 +206,7 @@ class _Login extends State<Login> {
         children: <Widget>[
           SvgPicture.asset(
             'images/diverse_ano.svg',
-            height: 100,
-            width: 100,
+            height: screenHeight * 0.11,
           ),
           Container(
             height: 1.5,
@@ -206,14 +218,13 @@ class _Login extends State<Login> {
   }
 
   Widget buildEmailAddressField() {
-    print(isEmailAddressInvalid);
     return Container(
       padding: EdgeInsets.only(bottom: 10.0),
       child: FormBuilderTextField(
         attribute: 'emailAddress',
         focusNode: emailAddressFocus,
         style: fieldTextStyle(color: Theme.of(context).primaryColor),
-        decoration: loginFieldDecoration(
+        decoration: fieldDecoration(
           context,
           isFocused: isEmailAddressFocused,
           isInvalid: isEmailAddressInvalid,
@@ -240,7 +251,7 @@ class _Login extends State<Login> {
         obscureText: true,
         maxLines: 1,
         style: fieldTextStyle(color: Theme.of(context).primaryColor),
-        decoration: loginFieldDecoration(
+        decoration: fieldDecoration(
           context,
           isFocused: isPasswordFocused,
           isInvalid: isPasswordInvalid,
@@ -274,7 +285,11 @@ class _Login extends State<Login> {
     return Container(
       padding: EdgeInsets.only(top: 20.0),
       child: InkWell(
-        onTap: () => print('Forgot Password.'),
+        onTap: () => Navigator.pushReplacement(
+          context, MaterialPageRoute(
+            builder: (context) => ResetLink()
+          )
+        ),
         child: FormatText(
           text: forgotPassword,
           textColor: Theme.of(context).accentColor,

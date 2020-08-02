@@ -1,10 +1,6 @@
-const String pairingsHeaderTitle = "Pairings";
-const String pairingsSubtitle = "Browse your matches";
+const String readMoreAction = 'Read more';
 
-List<String> dummyImages = const [
-  "images/PairingsBg.png",
-  "images/DefaultBg.png",
-  "images/PairingsBg.png",
-  "images/DefaultBg.png", 
-  "images/PairingsBg.png"
-];
+const dummyCard = {
+  "name": "Helen Gezahegn", 
+  "description": """Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas suscipit fringilla purus, sed euismod odio. Nullam quam odio, ultrices at mi id, ornare lobortis diam. Quisque ultricies sem et magna rhoncus accumsan."""
+};

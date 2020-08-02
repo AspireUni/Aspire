@@ -14,6 +14,12 @@ const loginAction = 'Login';
 const globalHeaderFontSize = 22.0;
 const globalHeaderActionsFontSize = 16.0; 
 
+ // User types
+enum UserType {
+  mentor,
+  mentee
+}
+
  // Authentication
 enum AuthStatus {
   notDetermined,

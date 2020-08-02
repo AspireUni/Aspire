@@ -9,6 +9,7 @@ import '../../constants/constants.dart';
 import '../../helpers/user_entity_helper.dart';
 import '../../models/models.dart';
 import '../../navigation/app_controller.dart';
+import '../../selectors/selectors.dart';
 import '../../services/services.dart';
 import '../common/app_bar.dart';
 import '../common/section.dart';
@@ -30,6 +31,7 @@ class SaveProfile extends StatefulWidget {
 }
 
 class _SaveProfileState extends State<SaveProfile> {
+
   Store<AppState> store;
 
   @override
@@ -111,7 +113,9 @@ class _SaveProfileState extends State<SaveProfile> {
     
   }
 
-  void handleClose() {
-    store.dispatch(UpdateSaveProfileState(SaveProfileState.initial()));
+  void handleClose() async {
+    var uid = userIdSelector(store);
+    var userData = await getUser(uid);
+    store.dispatch(ConvertToUserState(userData));
   }
 }

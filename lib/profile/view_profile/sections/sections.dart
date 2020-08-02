@@ -10,8 +10,12 @@ import './summary.dart';
  
 class ProfileSections extends StatelessWidget {
   final User user;
+  final String matchId;
+  final bool viewOnly;
 
-  ProfileSections({Key key, @required this.user}) : super(key: key);
+  ProfileSections(
+    {Key key, @required this.user, this.matchId, this.viewOnly}
+  ) : super(key: key);
   
   @override
   Widget build(BuildContext context) {
@@ -27,7 +31,9 @@ class ProfileSections extends StatelessWidget {
             ProfileEducation(schools: user.schools),
             ProfileExperience(jobs: user.jobs),
             ProfileSkills(skills: user.skills),
-            ProfileContact(user: user)
+            ProfileContact(
+              user: user, viewOnly: viewOnly, matchId: matchId
+            )
           ]
         )
       )

@@ -1,5 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 
+import '../constants/common_constants.dart';
 import '../models/models.dart';
 
 Future<Map<String, dynamic>> getUser(String id) async {
@@ -17,11 +18,42 @@ Future<QuerySnapshot> getUsers() async {
     .getDocuments();
 }
 
-Future<void> addUser(String id, String email) async {
+Future<QuerySnapshot> getVerifiedUsers() async {
+  return Firestore
+    .instance
+    .collection("users")
+    .where("isVerified", isEqualTo: true)
+    .getDocuments();
+}
+
+Future<QuerySnapshot> getMentees() async {
+  return Firestore
+    .instance
+    .collection("users")
+    .where("type", isEqualTo: "mentee")
+    .getDocuments();
+}
+
+Future<QuerySnapshot> getMentors() async {
+  return Firestore
+    .instance
+    .collection("users")
+    .where("type", isEqualTo: "mentor")
+    .getDocuments();
+}
+
+Future<void> addMentee(
+  String id, {
+    String emailAddress,
+    String fullName
+  }
+) async {
   var user = User.initial().copyWith(
     id: id,
+    type: UserType.mentee,
+    fullName: fullName,
     contact: Contact.initial().copyWith(
-      emailAddress: email
+      emailAddress: emailAddress
     )
   ).toJson();
 
@@ -48,4 +80,16 @@ Future<void> updateUser(dynamic user) async {
     .collection("users")
     .document(user["id"])
     .updateData(user);
+}
+
+Future<void> verifyUser(String userId) async {
+  var data = {
+    'id': userId,
+    'isVerified': true
+  };
+  Firestore
+    .instance
+    .collection("users")
+    .document(userId)
+    .updateData(data);
 }

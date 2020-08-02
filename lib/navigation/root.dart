@@ -5,8 +5,8 @@ import 'package:flutter_redux/flutter_redux.dart';
 import 'package:redux/redux.dart';
 
 import '../actions/actions.dart';
+import '../authentication/firebase_authentication.dart';
 import '../constants/common_constants.dart';
-import '../ftu/authentication.dart';
 import '../ftu/onboarding/intro.dart';
 import '../models/models.dart';
 import '../profile/save_profile/save_profile.dart';
@@ -55,13 +55,12 @@ class _RootState extends State<Root>{
       default:
         return loadingScreen;
     }
-      
   }
 
   @override
   Widget build(BuildContext context) {
     return CustomSplash(
-      imagePath: 'images/logos/light_logo_transparent.png', 
+      imagePath: 'images/splash_screen_icon.png', 
       backGroundColor: Color(0xFF0A0B33),
       home: StoreConnector<AppState, AppState>(
         converter: appStateSelector,
