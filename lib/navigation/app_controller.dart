@@ -63,7 +63,6 @@ class _AppControllerState extends State<AppController> {
   }
 
 
-
   List<CustomNavigationBarItem> buildNavItems() {
     var navItems = <CustomNavigationBarItem>[];
     for( var i = 0; i < navItemIcons.length; i++ ) { 
