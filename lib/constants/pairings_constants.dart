@@ -1,4 +1,4 @@
-const String readMoreAction = 'Read more';
+const String readMoreButtonText = 'Read more';
 
 const dummyCard = {
   "name": "Helen Gezahegn", 
