@@ -21,10 +21,7 @@ class Pairings extends StatelessWidget {
       body: Column(
         children: [
           buildAno(),
-          Align(
-            alignment: Alignment.center, 
-            child: buildCards(context)
-          )
+          buildCards(context)
         ]
       )
     );
@@ -41,7 +38,7 @@ class Pairings extends StatelessWidget {
   PrimaryButton buildReadMoreButton() {
     return PrimaryButton(
       isLight: true,
-      text: readMoreAction,
+      text: readMoreButtonText,
       onPressed: () => print("Read more pressed")
     );
   }
@@ -73,7 +70,7 @@ class Pairings extends StatelessWidget {
   FormatText buildCardBody() {
     return FormatText(
       text: dummyCard["description"], 
-      fontSize: 14.0,
+      fontSize: 12.0,
       fontWeight: FontWeight.w300,
       fontHeight: 1.6
     );
@@ -83,15 +80,13 @@ class Pairings extends StatelessWidget {
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
-        SizedBox(
-          width: screenWidth * 0.11, 
-          height: screenHeight * 0.10, 
-          child: FlatButton(
-            padding: EdgeInsets.all(0.0),
-            child: Image.asset("images/right_arrow.png"), 
-            onPressed: () => print("Arrow pressed")
+        InkWell(
+          onTap: () => print("Arrow pressed"),
+          child: Image.asset(
+            'images/right_arrow.png', 
+            height: screenHeight * 0.015
           )
-        ), 
+        ),
         IconButton(
           icon: Icon(Icons.favorite),
           iconSize: screenHeight * 0.03, 
@@ -103,17 +98,16 @@ class Pairings extends StatelessWidget {
   }
 
   Widget buildCurrentCard(context) {
-    var sidePadding = screenWidth * 0.05;
     return Padding(
-      padding: EdgeInsets.only(
-        top: screenHeight * 0.02, 
-        left: sidePadding, 
-        right: sidePadding
+      padding: EdgeInsets.symmetric(
+        vertical: screenHeight * 0.02, 
+        horizontal: screenWidth * 0.05
       ),
       child: Column(
         children: [
           buildCardHeader(),
           buildCardBody(), 
+          Spacer(), 
           buildCardFooter(context)
         ]
       )
@@ -133,21 +127,24 @@ class Pairings extends StatelessWidget {
     );
   }
 
-  Container buildCards(context) {
-    return Container(
-      width: screenWidth * 0.80,
-      height: screenHeight * 0.42,
-      decoration: buildCardContainer(context), 
-      child: Stack(
-        overflow: Overflow.visible, 
-        alignment: Alignment.center, 
-        children: [
-          buildCurrentCard(context), 
-          Positioned(
-            top: screenHeight * 0.38, 
-            child: buildReadMoreButton()
-          )
-        ]
+  Widget buildCards(context) {
+    return Align(
+      alignment: Alignment.center, 
+      child: Container(
+        width: screenWidth * 0.80,
+        height: screenHeight * 0.42,
+        decoration: buildCardContainer(context), 
+        child: Stack(
+          overflow: Overflow.visible, 
+          alignment: Alignment.center, 
+          children: [
+            buildCurrentCard(context), 
+            Positioned(
+              top: screenHeight * 0.39, 
+              child: buildReadMoreButton()
+            )
+          ]
+        )
       )
     );
   }
