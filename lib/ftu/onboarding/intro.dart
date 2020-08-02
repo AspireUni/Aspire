@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
 import '../../common/common.dart';
-import '../../common/common_context.dart';
 import '../../constants/constants.dart';
 import './steps.dart';
 

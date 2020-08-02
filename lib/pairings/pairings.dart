@@ -1,19 +1,14 @@
 import 'package:flutter/material.dart';
 
 import '../common/common.dart';
-import '../common/global_header.dart';
 import '../constants/constants.dart';
-
-double screenWidth;
-double screenHeight;
 
 class Pairings extends StatelessWidget {
   const Pairings({Key key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    screenWidth ??= MediaQuery.of(context)?.size?.width;
-    screenHeight ??= MediaQuery.of(context)?.size?.height;
+    CommonContext().init(context);
 
     return Scaffold(
       appBar: GlobalHeader(),
@@ -31,7 +26,7 @@ class Pairings extends StatelessWidget {
   Image buildAno() {
     return Image.asset(
       'images/ano_mountains.png',
-      height: screenHeight * 0.25
+      height: ScreenSize.height * 0.25
     );
   }
 
@@ -49,15 +44,15 @@ class Pairings extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Container(
-          width: screenWidth * 0.10, 
-          height: screenHeight * 0.10,
+          width: ScreenSize.width * 0.10, 
+          height: ScreenSize.height * 0.10,
           decoration: BoxDecoration(
             color: Colors.grey[200], 
             shape: BoxShape.circle
           )
         ), 
         Padding(
-          padding: EdgeInsets.only(top: screenHeight * 0.03), 
+          padding: EdgeInsets.only(top: ScreenSize.height * 0.03), 
           child: FormatText(
             text: dummyCard["name"],
             fontSize: 22.0
@@ -84,13 +79,13 @@ class Pairings extends StatelessWidget {
           onTap: () => print("Arrow pressed"),
           child: Image.asset(
             'images/right_arrow.png', 
-            height: screenHeight * 0.015
+            height: ScreenSize.height * 0.015
           )
         ),
         IconButton(
           icon: Icon(Icons.favorite),
-          iconSize: screenHeight * 0.03, 
-          color: Theme.of(context).accentColor,
+          iconSize: ScreenSize.height * 0.03, 
+          color: ThemeColors.accent,
           onPressed: () => print("Heart pressed"),
         )
       ]
@@ -100,8 +95,8 @@ class Pairings extends StatelessWidget {
   Widget buildCurrentCard(context) {
     return Padding(
       padding: EdgeInsets.symmetric(
-        vertical: screenHeight * 0.02, 
-        horizontal: screenWidth * 0.05
+        vertical: ScreenSize.height * 0.02, 
+        horizontal: ScreenSize.width * 0.05
       ),
       child: Column(
         children: [
@@ -117,7 +112,7 @@ class Pairings extends StatelessWidget {
   BoxDecoration buildCardContainer(context) {
     return BoxDecoration(
       border: Border.all(
-        color: Theme.of(context).accentColor,
+        color: ThemeColors.accent,
         width: 1.0,
         style: BorderStyle.solid
       ),
@@ -131,8 +126,8 @@ class Pairings extends StatelessWidget {
     return Align(
       alignment: Alignment.center, 
       child: Container(
-        width: screenWidth * 0.80,
-        height: screenHeight * 0.42,
+        width: ScreenSize.width * 0.80,
+        height: ScreenSize.height * 0.42,
         decoration: buildCardContainer(context), 
         child: Stack(
           overflow: Overflow.visible, 
@@ -140,7 +135,7 @@ class Pairings extends StatelessWidget {
           children: [
             buildCurrentCard(context), 
             Positioned(
-              top: screenHeight * 0.39, 
+              top: ScreenSize.height * 0.39, 
               child: buildReadMoreButton()
             )
           ]

@@ -26,13 +26,9 @@ class _LinkSent extends State<LinkSent> {
   final GlobalKey<FormBuilderState> _disabledEmailAddressFormKey
     = GlobalKey<FormBuilderState>();
 
-  double screenHeight, screenWidth;
-
   @override
   Widget build(BuildContext context) {
-
-    screenWidth = MediaQuery.of(context).size.width;
-    screenHeight = MediaQuery.of(context).size.height;
+    CommonContext().init(context);
 
     return Scaffold(
       backgroundColor: Colors.white,
@@ -53,11 +49,11 @@ class _LinkSent extends State<LinkSent> {
       alignment: Alignment.center,
       children: <Widget>[
         Positioned(
-          top: screenHeight * 0.15,
+          top: ScreenSize.screenHeight * 0.15,
           child: buildCenterAno()
         ),
         Positioned(
-          top: screenHeight * 0.35,
+          top: ScreenSize.screenHeight * 0.35,
           child: buildForm()
         ),
         buildReminderSection(),
@@ -68,7 +64,7 @@ class _LinkSent extends State<LinkSent> {
 
   Widget buildForm() {
     return Container(
-      width: screenWidth * 0.60,
+      width: ScreenSize.screenWidth * 0.60,
       child: FormBuilder(
         key: _disabledEmailAddressFormKey,
         child: Column(
@@ -82,12 +78,12 @@ class _LinkSent extends State<LinkSent> {
 
   Widget buildCenterAno() {
     return Container(
-      width: screenWidth,
+      width: ScreenSize.screenWidth,
       child: Column(
         children: <Widget>[
           Image.asset(
             'images/sign_up/ano_hands_side.png',
-            height: screenHeight * 0.11
+            height: ScreenSize.screenHeight * 0.11
           ),
           Container(
             height: 1.5,
@@ -120,7 +116,7 @@ class _LinkSent extends State<LinkSent> {
 
   Widget buildReminderSection() {
     return Positioned(
-      top: screenHeight * 0.50,
+      top: ScreenSize.screenHeight * 0.50,
       child: Column(
         children: <Widget>[
           buildLinkSentInfoBorder(),
@@ -150,7 +146,7 @@ class _LinkSent extends State<LinkSent> {
 
   Widget buildFooter() {
     return Positioned(
-      bottom: screenHeight * 0.05,
+      bottom: ScreenSize.screenHeight * 0.05,
       child: Row(
         children: <Widget>[
           buildFooterText(),

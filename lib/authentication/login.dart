@@ -36,7 +36,6 @@ class _Login extends State<Login> {
   bool isEmailAddressInvalid, isPasswordInvalid;
   bool isLoading;
   Store<AppState> store;
-  double screenHeight, screenWidth;
 
   @override
   void initState() {
@@ -64,9 +63,7 @@ class _Login extends State<Login> {
 
   @override
   Widget build(BuildContext context) {
-
-    screenWidth = MediaQuery.of(context).size.width;
-    screenHeight = MediaQuery.of(context).size.height;
+    CommonContext().init(context);
 
     return Scaffold(
       backgroundColor: Colors.white,
@@ -167,15 +164,15 @@ class _Login extends State<Login> {
       alignment: Alignment.center,
       children: <Widget>[
         Positioned(
-          top: screenHeight * 0.15,
+          top: ScreenSize.screenHeight * 0.15,
           child: buildCenterAno()
         ),
         Positioned(
-          top: screenHeight * 0.35,
+          top: ScreenSize.screenHeight * 0.35,
           child: buildForm()
         ),
         Positioned(
-          bottom: screenHeight * 0.05,
+          bottom: ScreenSize.screenHeight * 0.05,
           child: FooterLinks()
         )
       ]
@@ -184,7 +181,7 @@ class _Login extends State<Login> {
 
   Widget buildForm() {
     return Container(
-      width: screenWidth * 0.60,
+      width: ScreenSize.screenWidth * 0.60,
       child: FormBuilder(
         key: _loginFormKey,
         child: Column(
@@ -201,12 +198,12 @@ class _Login extends State<Login> {
 
   Widget buildCenterAno() {
     return Container(
-      width: screenWidth,
+      width: ScreenSize.screenWidth,
       child: Column(
         children: <Widget>[
           SvgPicture.asset(
             'images/diverse_ano.svg',
-            height: screenHeight * 0.11,
+            height: ScreenSize.screenHeight * 0.11,
           ),
           Container(
             height: 1.5,
@@ -271,7 +268,7 @@ class _Login extends State<Login> {
   Widget buildLoginButton() {
     return Container(
       padding: EdgeInsets.only(
-        top: screenHeight * 0.10
+        top: ScreenSize.screenHeight * 0.10
       ),
       child: PrimaryButton(
         isLight: true,
