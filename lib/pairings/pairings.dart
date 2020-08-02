@@ -98,13 +98,10 @@ class Pairings extends StatelessWidget {
   }
 
   Widget buildCurrentCard(context) {
-    var sidePadding = screenWidth * 0.05;
     return Padding(
-      padding: EdgeInsets.only(
-        top: screenHeight * 0.02, 
-        left: sidePadding, 
-        right: sidePadding,
-        bottom: screenHeight * 0.02,
+      padding: EdgeInsets.symmetric(
+        vertical: screenHeight * 0.02, 
+        horizontal: screenWidth * 0.05
       ),
       child: Column(
         children: [
