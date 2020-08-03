@@ -21,8 +21,6 @@ class PrimaryButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    CommonContext().init(context);
-
     return MaterialButton(
       minWidth: minWidth ?? ScreenSize.width * 0.50,
       height: height,

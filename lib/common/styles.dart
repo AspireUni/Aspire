@@ -3,8 +3,7 @@ import 'package:google_fonts/google_fonts.dart';
 
 import './common_context.dart';
 
-InputDecoration fieldDecoration(
-  BuildContext context, {
+InputDecoration fieldDecoration({
     String hintText,
     String errorText,
     IconData icon,

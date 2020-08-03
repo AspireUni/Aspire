@@ -29,9 +29,7 @@ class ListPicker {
     )).toList();
   }
 
-  Picker build(BuildContext context) {
-    CommonContext().init(context);
-    
+  Picker build(BuildContext context) {    
     return Picker(
       adapter: PickerDataAdapter(data: getData()),
       selecteds: selecteds,

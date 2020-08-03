@@ -30,8 +30,6 @@ class CustomField extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    CommonContext().init(context);
-
     return isEnabled ? FormBuilderCustomField(
       attribute: attribute,
       initialValue: initialValue,
@@ -39,35 +37,36 @@ class CustomField extends StatelessWidget {
         FormBuilderValidators.required(),
       ],
       formField: FormField(
-        builder: (field) {
-          return InputDecorator(
-            isFocused: isFocused,
-            decoration: fieldDecoration(
-              context,
-              isFocused: isFocused,
-              isInvalid: isInvalid,
-              icon: icon,
-              errorText: field.errorText
-            ),
-            baseStyle: fieldTextStyle(color: ThemeColors.primary),
-            child: Container(
-              height: 20.0,
-              child: InkWell(
-                onTap: onTap,
-                child: FormatText(
-                  text: value == '' || value == null ? hintText : value,
-                  fontSize: 14.0,
-                  fontWeight: FontWeight.w500,
-                  overflow: TextOverflow.ellipsis,
-                  textColor: value == '' || value == null
-                      ? Colors.grey
-                      : ThemeColors.primary
-                ),
-              )
-            ),
-          );
-        }
+        builder: buildFormField
       )
     ) : SizedBox();
+  }
+
+  Widget buildFormField(FormFieldState<dynamic> field) {
+    return InputDecorator(
+      isFocused: isFocused,
+      decoration: fieldDecoration(
+        isFocused: isFocused,
+        isInvalid: isInvalid,
+        icon: icon,
+        errorText: field.errorText
+      ),
+      baseStyle: fieldTextStyle(color: ThemeColors.primary),
+      child: Container(
+        height: 20.0,
+        child: InkWell(
+          onTap: onTap,
+          child: FormatText(
+            text: value == '' || value == null ? hintText : value,
+            fontSize: 14.0,
+            fontWeight: FontWeight.w500,
+            overflow: TextOverflow.ellipsis,
+            textColor: value == '' || value == null
+                ? Colors.grey
+                : ThemeColors.primary
+          ),
+        )
+      ),
+    );
   }
 }

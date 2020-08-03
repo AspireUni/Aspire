@@ -26,8 +26,6 @@ class MultiSelectModal extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    CommonContext().init(context);
-
     return SmartSelect<String>.multiple(
       padding: EdgeInsets.all(0),
       title: hintText,

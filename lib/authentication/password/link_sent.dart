@@ -28,8 +28,6 @@ class _LinkSent extends State<LinkSent> {
 
   @override
   Widget build(BuildContext context) {
-    CommonContext().init(context);
-
     return Scaffold(
       backgroundColor: Colors.white,
       appBar: GlobalHeader(
@@ -104,7 +102,6 @@ class _LinkSent extends State<LinkSent> {
         initialValue: widget.emailAddress,
         style: fieldTextStyle(color: Colors.grey),
         decoration: fieldDecoration(
-          context,
           isFocused: false,
           isInvalid: false,
           hintText: emailHint,

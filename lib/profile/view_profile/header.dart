@@ -20,8 +20,6 @@ class ProfileHeader extends StatelessWidget {
   
   @override
   Widget build(BuildContext context) {
-    CommonContext().init(context);
-
     return Container(
       width: ScreenSize.width, 
       height: profileHeaderHeight,

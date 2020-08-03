@@ -19,8 +19,6 @@ class ListPicker {
   });
 
   Picker build(BuildContext context) {
-    CommonContext().init(context);
-
     return Picker(
       adapter: PickerDataAdapter(data: getData()),
       selecteds: selecteds,

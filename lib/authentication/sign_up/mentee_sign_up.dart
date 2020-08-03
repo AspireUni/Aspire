@@ -79,8 +79,6 @@ class _MenteeSignUp extends State<MenteeSignUp> {
 
   @override
   Widget build(BuildContext context) {
-    CommonContext().init(context);
-
     return GestureDetector(
       onTap: unfocusFields,
       child: Scaffold(
@@ -153,6 +151,7 @@ class _MenteeSignUp extends State<MenteeSignUp> {
           isEmailAddressInvalid = false;
           isPasswordInvalid = false;
           isIndustryInvalid = false;
+          isAreasOfInterestInvalid = false;
         });
       } on Exception catch (e) {
         print('Error: $e');
@@ -168,6 +167,7 @@ class _MenteeSignUp extends State<MenteeSignUp> {
           isEmailAddressInvalid = true;
           isPasswordInvalid = true;
           isIndustryInvalid = true;
+          isAreasOfInterestInvalid = true;
         });
     }
   }
@@ -275,7 +275,6 @@ class _MenteeSignUp extends State<MenteeSignUp> {
         focusNode: fullNameFocus,
         style: fieldTextStyle(color: ThemeColors.primary),
         decoration: fieldDecoration(
-          context,
           isFocused: isFullNameFocused,
           isInvalid: isFullNameInvalid,
           hintText: fullNameHint,
@@ -300,7 +299,6 @@ class _MenteeSignUp extends State<MenteeSignUp> {
         focusNode: emailAddressFocus,
         style: fieldTextStyle(color: ThemeColors.primary),
         decoration: fieldDecoration(
-          context,
           isFocused: isEmailAddressFocused,
           isInvalid: isEmailAddressInvalid,
           hintText: emailHint,
@@ -328,7 +326,6 @@ class _MenteeSignUp extends State<MenteeSignUp> {
         maxLines: 1,
         style: fieldTextStyle(color: ThemeColors.primary),
         decoration: fieldDecoration(
-          context,
           isFocused: isPasswordFocused,
           isInvalid: isPasswordInvalid,
           hintText: passwordHint,

@@ -21,8 +21,6 @@ class DatePicker {
   });
 
   Picker build(BuildContext context) {
-    CommonContext().init(context);
-
     return Picker(
       adapter: DateTimePickerAdapter(
         value: initialValue,

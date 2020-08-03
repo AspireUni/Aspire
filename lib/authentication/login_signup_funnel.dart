@@ -11,9 +11,7 @@ class LoginSignupFunnel extends StatelessWidget {
   LoginSignupFunnel({Key key}) : super(key: key);
 
   @override
-  Widget build(BuildContext context) {
-    CommonContext().init(context);
-    
+  Widget build(BuildContext context) {    
     return Scaffold(
       backgroundColor: Colors.white,
       body: Container(
