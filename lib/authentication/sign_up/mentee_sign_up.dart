@@ -45,7 +45,6 @@ class _MenteeSignUp extends State<MenteeSignUp> {
     isAreasOfInterestInvalid;
   bool isLoading;
   Store<AppState> store;
-  double screenHeight, screenWidth;
 
   @override
   void initState() {
@@ -80,9 +79,7 @@ class _MenteeSignUp extends State<MenteeSignUp> {
 
   @override
   Widget build(BuildContext context) {
-
-    screenWidth = MediaQuery.of(context).size.width;
-    screenHeight = MediaQuery.of(context).size.height;
+    CommonContext().init(context);
 
     return GestureDetector(
       onTap: unfocusFields,
@@ -216,11 +213,11 @@ class _MenteeSignUp extends State<MenteeSignUp> {
       alignment: Alignment.center,
       children: <Widget>[
         Positioned(
-          top: screenHeight * 0.10,
+          top: ScreenSize.height * 0.10,
           child: buildCenterAno()
         ),
         Positioned(
-          top: screenHeight * 0.26,
+          top: ScreenSize.height * 0.26,
           child: buildForm()
         ),
         buildFooter()
@@ -230,11 +227,11 @@ class _MenteeSignUp extends State<MenteeSignUp> {
 
   Widget buildForm() {
     return Container(
-      width: screenWidth * 0.70,
+      width: ScreenSize.width * 0.70,
         child: FormBuilder(
           key: _menteeSignUpFormKey,
           child: SizedBox(
-            height: screenHeight * 0.47,
+            height: ScreenSize.height * 0.47,
             child: Center( child: ListView(
             padding: EdgeInsets.all(0.0),
             scrollDirection: Axis.vertical,
@@ -254,12 +251,12 @@ class _MenteeSignUp extends State<MenteeSignUp> {
 
   Widget buildCenterAno() {
     return Container(
-      width: screenWidth,
+      width: ScreenSize.width,
       child: Column(
         children: <Widget>[
           SvgPicture.asset(
             'images/diverse_ano.svg',
-            height: screenHeight * 0.11,
+            height: ScreenSize.height * 0.11,
           ),
           Container(
             height: 1.5,
@@ -276,7 +273,7 @@ class _MenteeSignUp extends State<MenteeSignUp> {
       child: FormBuilderTextField(
         attribute: 'fullName',
         focusNode: fullNameFocus,
-        style: fieldTextStyle(color: Theme.of(context).primaryColor),
+        style: fieldTextStyle(color: ThemeColors.primary),
         decoration: fieldDecoration(
           context,
           isFocused: isFullNameFocused,
@@ -301,7 +298,7 @@ class _MenteeSignUp extends State<MenteeSignUp> {
       child: FormBuilderTextField(
         attribute: 'emailAddress',
         focusNode: emailAddressFocus,
-        style: fieldTextStyle(color: Theme.of(context).primaryColor),
+        style: fieldTextStyle(color: ThemeColors.primary),
         decoration: fieldDecoration(
           context,
           isFocused: isEmailAddressFocused,
@@ -329,7 +326,7 @@ class _MenteeSignUp extends State<MenteeSignUp> {
         focusNode: passwordFocus,
         obscureText: true,
         maxLines: 1,
-        style: fieldTextStyle(color: Theme.of(context).primaryColor),
+        style: fieldTextStyle(color: ThemeColors.primary),
         decoration: fieldDecoration(
           context,
           isFocused: isPasswordFocused,
@@ -459,7 +456,7 @@ class _MenteeSignUp extends State<MenteeSignUp> {
 
   Widget buildFooter() {
     return Positioned(
-      bottom: screenHeight * 0.05,
+      bottom: ScreenSize.height * 0.05,
       child: Column(
         children: <Widget>[
           CircleIndicators(stepIndex: 1),

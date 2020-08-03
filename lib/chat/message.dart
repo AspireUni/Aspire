@@ -18,7 +18,7 @@ class MessageView extends StatelessWidget {
     var margin = isSent ? 
       BubbleEdges.fromLTRB(50.0, 10.0, 10.0, 10.0) :
       BubbleEdges.fromLTRB(10.0, 10.0, 50.0, 10.0);
-    var color = isSent ? Theme.of(context).accentColor : Colors.grey;
+    var color = isSent ? ThemeColors.accent : Colors.grey;
     return Bubble(
       nip: nip,
       nipOffset: 0.0,
@@ -40,7 +40,7 @@ class MessageView extends StatelessWidget {
     var margin = isSent ? 
       BubbleEdges.fromLTRB(50.0, 10.0, 10.0, 10.0) :
       BubbleEdges.fromLTRB(10.0, 10.0, 50.0, 10.0);
-    var color = isSent ? Theme.of(context).accentColor : Colors.grey;
+    var color = isSent ? ThemeColors.accent : Colors.grey;
     return Bubble(
       nip: nip,
       nipOffset: 0.0,

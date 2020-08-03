@@ -12,29 +12,28 @@ class LoginSignupFunnel extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    var screenWidth = MediaQuery.of(context).size.width;
-    var screenHeight = MediaQuery.of(context).size.height;
-
+    CommonContext().init(context);
+    
     return Scaffold(
       backgroundColor: Colors.white,
       body: Container(
-        width: screenWidth,
+        width: ScreenSize.width,
         child: Stack(
           alignment: Alignment.center,
           children: <Widget>[
              Positioned(
-              top: screenHeight * 0.15,
+              top: ScreenSize.height * 0.15,
               child: buildTitle(context)
             ),
             Column(
               children: <Widget>[
-                buildCenterLogo(screenHeight),
-                buildLoginButton(context, screenHeight),
+                buildCenterLogo(),
+                buildLoginButton(context),
                 buildCreateAccountButton(context),
               ]
             ),
             Positioned(
-              bottom: screenHeight * 0.05,
+              bottom: ScreenSize.height * 0.05,
               child: FooterLinks()
             )
           ]
@@ -48,21 +47,21 @@ class LoginSignupFunnel extends StatelessWidget {
       children: <Widget>[
         FormatText(
           text: appName,
-          textColor: Theme.of(context).primaryColor,
+          textColor: ThemeColors.primary,
           fontSize: 50.0,
           fontWeight: FontWeight.w700,
         ),
-        buildSubTitle(context)
+        buildSubTitle()
       ]
     );
   }
 
-  Widget buildSubTitle(BuildContext context) {
+  Widget buildSubTitle() {
     return  Container(
       padding: EdgeInsets.only(top: 5.0),
       child: FormatText(
         text: getStartedSubTitle,
-        textColor: Theme.of(context).primaryColor,
+        textColor: ThemeColors.primary,
         fontSize: 14.0,
         fontWeight: FontWeight.w500,
       )
@@ -70,23 +69,23 @@ class LoginSignupFunnel extends StatelessWidget {
   }
 
   // TODO: Change when mockup svgs are available
-  Widget buildCenterLogo(double screenHeight) {
+  Widget buildCenterLogo() {
     return Container(
       padding: EdgeInsets.only(
-        top: screenHeight * 0.40
+        top: ScreenSize.height * 0.40
       ),
       child: SvgPicture.asset(
         'images/dark_logo.svg',
-        height: screenHeight * 0.15,
-        width: screenHeight * 0.15,
+        height: ScreenSize.height * 0.15,
+        width: ScreenSize.height * 0.15,
       )
     );
   }
 
-  Widget buildLoginButton(BuildContext context, double screenHeight) {
+  Widget buildLoginButton(BuildContext context) {
     return Container(
       padding: EdgeInsets.only(
-        top: screenHeight * 0.20
+        top: ScreenSize.height * 0.20
       ),
       child: PrimaryButton(
         text: loginButtonText,
@@ -99,6 +98,7 @@ class LoginSignupFunnel extends StatelessWidget {
       )
     );
   }
+  
   Widget buildCreateAccountButton(BuildContext context) {
     return Container(
       padding: EdgeInsets.only(top: 5.0),

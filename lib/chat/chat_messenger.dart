@@ -159,7 +159,7 @@ class ChatMessengerState extends State<ChatMessenger> {
       icon: icon,
       iconSize: 24.0,
       padding: EdgeInsets.all(0.0),
-      color: Theme.of(context).accentColor,
+      color: ThemeColors.accent,
       onPressed: onPressed,
     );
   }
@@ -331,7 +331,7 @@ class ChatMessengerState extends State<ChatMessenger> {
               },
               icon: Icon(
                 Icons.arrow_back_ios,
-                color: Theme.of(context).accentColor
+                color: ThemeColors.accent
               )
             ),
             backgroundColor: Colors.white,
@@ -340,7 +340,7 @@ class ChatMessengerState extends State<ChatMessenger> {
           ),
           backgroundColor: Colors.white,
           body: Container(
-            height: MediaQuery.of(context).size.height,
+            height: ScreenSize.height,
             margin: EdgeInsets.all(0),
             child: Center(
               child: Column(
