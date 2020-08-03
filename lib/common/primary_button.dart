@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+import './common_context.dart';
 import './format_text.dart';
 
 class PrimaryButton extends StatelessWidget {
@@ -20,13 +21,15 @@ class PrimaryButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    CommonContext().init(context);
+
     return MaterialButton(
-      minWidth: minWidth ?? MediaQuery.of(context).size.width * 0.50,
+      minWidth: minWidth ?? ScreenSize.width * 0.50,
       height: height,
       onPressed: onPressed,
       color: isLight 
-        ? Theme.of(context).accentColor
-        : Theme.of(context).primaryColor,
+        ? ThemeColors.accent
+        : ThemeColors.primary,
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.all(Radius.circular(20.0))
       ),

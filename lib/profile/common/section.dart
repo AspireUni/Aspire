@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+
+import '../../common/common.dart';
  
 class Section extends StatelessWidget {  
   final String title;
@@ -9,6 +11,7 @@ class Section extends StatelessWidget {
   
   @override
   Widget build(BuildContext context) {
+    CommonContext().init(context);
 
     final sectionTheme = Theme.of(context).copyWith(
       dividerColor: Colors.transparent,
@@ -17,7 +20,7 @@ class Section extends StatelessWidget {
     );
 
     return Container(
-      width: MediaQuery.of(context).size.width,
+      width: ScreenSize.width,
       padding: EdgeInsets.fromLTRB(30.0, 0, 30.0 ,0),
       decoration: BoxDecoration(
         border: Border(
@@ -69,7 +72,7 @@ class SectionRow extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      width: MediaQuery.of(context).size.width,
+      width: ScreenSize.width,
       padding: EdgeInsets.only(bottom: 10.0),
       margin: EdgeInsets.only(bottom: 10.0),
       decoration: BoxDecoration(

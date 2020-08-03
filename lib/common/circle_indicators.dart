@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 
+import './common_context.dart';
+
 class CircleIndicators extends StatelessWidget {
   final int stepIndex;
   
@@ -7,6 +9,8 @@ class CircleIndicators extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    CommonContext().init(context);
+
     return Row(
       mainAxisAlignment: MainAxisAlignment.center,
       children: buildCircles(context)
@@ -14,7 +18,7 @@ class CircleIndicators extends StatelessWidget {
   }
 
   List<Widget> buildCircles(BuildContext context) {
-    var screenWidth = MediaQuery.of(context).size.width;
+    var screenWidth = ScreenSize.width;
     var circleDimensions = screenWidth * 0.01;
     var circles = <Widget>[];
     
@@ -26,7 +30,7 @@ class CircleIndicators extends StatelessWidget {
           margin: EdgeInsets.all(screenWidth * 0.02), 
           decoration: BoxDecoration(
             color: i == stepIndex ? 
-              Theme.of(context).accentColor : Colors.grey, 
+              ThemeColors.accent : Colors.grey, 
             shape: BoxShape.circle
           )
         )

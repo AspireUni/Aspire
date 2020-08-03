@@ -11,28 +11,27 @@ class OnboardingIntro extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    var screenWidth = MediaQuery.of(context).size.width;
-    var screenHeight = MediaQuery.of(context).size.height;
-
+    CommonContext().init(context);
+  
     return Scaffold(
-      backgroundColor: Theme.of(context).primaryColor,
+      backgroundColor: ThemeColors.primary,
       body: Container(
-        width: screenWidth,
+        width: ScreenSize.width,
         child: Stack(
           alignment: Alignment.center,
           children: <Widget>[
             Positioned(
-              top: screenHeight * 0.15,
+              top: ScreenSize.height * 0.15,
               child: buildTitle()
             ),
             Column(
               children: <Widget>[
-                buildCenterLogo(screenHeight),
-                buildBottomText(screenHeight, screenWidth)
+                buildCenterLogo(),
+                buildBottomText()
               ]
             ),
             Positioned(
-              bottom: screenHeight * 0.10,
+              bottom: ScreenSize.height * 0.10,
               child: buildGetStartedButton(context)
             )
           ]
@@ -67,24 +66,24 @@ class OnboardingIntro extends StatelessWidget {
     );
   }
 
-  Widget buildCenterLogo(double screenHeight) {
+  Widget buildCenterLogo() {
     return Container(
       padding: EdgeInsets.only(
-        top: screenHeight * 0.40
+        top: ScreenSize.height * 0.40
       ),
       child: SvgPicture.asset(
         'images/light_logo.svg',
-        height: screenHeight * 0.15,
-        width: screenHeight * 0.15,
+        height: ScreenSize.height * 0.15,
+        width: ScreenSize.height * 0.15,
       )
     );
   }
 
-  Widget buildBottomText(double screenHeight, double screenWidth) {
+  Widget buildBottomText() {
     return Container(
-      width: screenWidth * 0.60,
+      width: ScreenSize.width * 0.60,
       padding: EdgeInsets.only(
-        top: screenHeight * 0.20
+        top: ScreenSize.height * 0.20
       ),
       child: FormatText(
         text: getStartedBottomText,

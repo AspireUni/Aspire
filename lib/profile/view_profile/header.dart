@@ -3,6 +3,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
 import 'package:google_fonts/google_fonts.dart';
 
+import '../../common/common_context.dart';
 import '../../constants/profile_constants.dart';
 import '../save_profile/save_profile.dart';
  
@@ -19,11 +20,13 @@ class ProfileHeader extends StatelessWidget {
   
   @override
   Widget build(BuildContext context) {
+    CommonContext().init(context);
+
     return Container(
-      width: MediaQuery.of(context).size.width, 
+      width: ScreenSize.width, 
       height: profileHeaderHeight,
       decoration: BoxDecoration(
-        color: Theme.of(context).primaryColor, 
+        color: ThemeColors.primary, 
         borderRadius: BorderRadius.only(
           bottomLeft: Radius.circular(40.0)
         ),
@@ -33,7 +36,7 @@ class ProfileHeader extends StatelessWidget {
           Positioned(
             top: 40.0,
             left: 0,
-            width: MediaQuery.of(context).size.width,
+            width: ScreenSize.width,
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: <Widget> [
@@ -57,7 +60,7 @@ class ProfileHeader extends StatelessWidget {
       width: 60.0, 
       height: 60.0, 
       decoration: BoxDecoration(
-        color: Theme.of(context).accentColor, 
+        color: ThemeColors.accent, 
         shape: BoxShape.circle
       )
     );

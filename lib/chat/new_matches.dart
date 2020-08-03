@@ -2,7 +2,7 @@ import 'package:flutter_redux/flutter_redux.dart';
 import 'package:flutter/material.dart';
 import 'package:redux/redux.dart';
 
-import '../common/format_text.dart';
+import '../common/common.dart';
 import '../models/models.dart';
 import '../selectors/selectors.dart';
 import './chat_messenger.dart';
@@ -92,7 +92,7 @@ buildNewMatches(context, newMatchesList, id, isMentee) {
   }
 
   return Container(
-    width: MediaQuery.of(context).size.width,
+    width: ScreenSize.width,
     child: Row(
       children: <Widget>[
         Container(

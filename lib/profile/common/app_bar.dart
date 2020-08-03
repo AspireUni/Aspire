@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
 import 'package:google_fonts/google_fonts.dart';
 
+import '../../common/common_context.dart';
 import '../../constants/profile_constants.dart';
 
 class AppBarWithSave extends StatelessWidget implements PreferredSizeWidget {
@@ -32,7 +33,7 @@ class AppBarWithSave extends StatelessWidget implements PreferredSizeWidget {
     return AppBar(
       leading: closeActionEnabled ? closeAction(context) : null,
       actions: <Widget>[saveAction(formKey)],
-      backgroundColor: Theme.of(context).primaryColor,
+      backgroundColor: ThemeColors.primary,
       centerTitle: true,
       title: buildAppBarTitle()
     );

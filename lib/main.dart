@@ -6,9 +6,8 @@ import 'package:redux_logging/redux_logging.dart';
 import 'package:redux_persist/redux_persist.dart';
 import 'package:redux_persist_flutter/redux_persist_flutter.dart';
 
-import './constants/constants.dart';
+import './common/common_context.dart';
 import './models/models.dart';
-import './navigation/app_controller.dart';
 import './navigation/root.dart';
 import './reducers/reducers.dart';
 
@@ -45,26 +44,19 @@ void main() async {
       child: DevicePreview(
         enabled: enableDevicePreview,
         areSettingsEnabled: true,  
-        builder: (context) => App()
+        builder: app
       )
     )
   );
 }
 
-class App extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    return MaterialApp(
-      debugShowCheckedModeBanner: false,
-      theme: ThemeData(	
-        primaryColor: primaryColor,	
-        accentColor: accentColor,	
-      ),
-      initialRoute: '/',
-      routes: {
-        '/': (context) => Root(),
-        '/AppController': (context) => AppController()
-      }
-    );
-  }
+MaterialApp app(context) {
+  return MaterialApp(
+    debugShowCheckedModeBanner: false,
+    theme: ThemeData(	
+      primaryColor: ThemeColors.primary,	
+      accentColor: ThemeColors.accent,	
+    ),
+    home: Root()
+  );
 }
