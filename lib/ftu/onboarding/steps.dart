@@ -2,11 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_animator/flutter_animator.dart';
 
 import '../../authentication/login_signup_funnel.dart';
-import '../../common/circle_indicators.dart';
-import '../../common/common_context.dart';
-import '../../common/format_text.dart';
-import '../../common/global_header.dart';
-import '../../common/primary_button.dart';
+import '../../common/common.dart';
 import '../../constants/common_constants.dart';
 import '../../constants/ftu_constants.dart';
 
