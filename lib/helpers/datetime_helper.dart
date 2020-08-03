@@ -1,8 +1,13 @@
 import 'package:intl/intl.dart';
 
-DateTime convertMonthYearStringToDateTime(String date) {
-  return DateFormat('MMMM yyyy').parse(date);
-}
+import '../constants/constants.dart';
+
+DateTime convertMonthYearStringToDateTime(String date) {	
+  if (date == endDatePresent) {	
+    return DateTime.now();	
+  }	
+  return DateFormat('MMMM yyyy').parse(date);	
+}	
 
 String convertDateTimeToMonthYearString(DateTime date) {
   var month = DateFormat.MMMM().format(date).toString();
