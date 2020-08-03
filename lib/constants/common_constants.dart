@@ -1,18 +1,21 @@
 import 'package:flutter/material.dart';
 
-const appName = "aspire";
-const nextButtonText = "Next";
+const String appName = 'aspire';
+const String nextButtonText = 'Next';
 
 // Global header
-const addAction = 'Add';
-const skipAction = 'Skip';
-const filterAction = 'Filter';
-const signInAction = 'Sign in';
-const signUpAction = 'Sign up';
-const loginAction = 'Login';
+const String addAction = 'Add';
+const String skipAction = 'Skip';
+const String filterAction = 'Filter';
+const String signInAction = 'Sign in';
+const String signUpAction = 'Sign up';
+const String loginAction = 'Login';
 
-const globalHeaderFontSize = 22.0;
-const globalHeaderActionsFontSize = 16.0; 
+const double globalHeaderFontSize = 22.0;
+const double globalHeaderActionsFontSize = 16.0; 
+
+// Modal
+const String confirmModalAction = 'Confirm';
 
  // User types
 enum UserType {

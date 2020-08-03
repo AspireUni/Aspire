@@ -5,6 +5,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 import '../../../chat/chat_messenger.dart';
+import '../../../common/common.dart';
 import '../../../constants/profile_constants.dart';
 import '../../../models/models.dart';
 import '../../../selectors/selectors.dart';
@@ -19,30 +20,6 @@ class ProfileContact extends StatelessWidget {
   ProfileContact(
     {Key key, @required this.user, this.matchId, this.viewOnly}
   ) : super(key: key);
-
-  final IconData chat = IconData(
-    chatIconCodePoint,
-    fontFamily: CupertinoIcons.iconFont,
-    fontPackage: CupertinoIcons.iconFontPackage
-  );
-  
-  final IconData email = IconData(
-    emailIconCodePoint,
-    fontFamily: CupertinoIcons.iconFont,
-    fontPackage: CupertinoIcons.iconFontPackage
-  );
-
-  final IconData phone = IconData(
-    phoneIconCodePoint,
-    fontFamily: CupertinoIcons.iconFont,
-    fontPackage: CupertinoIcons.iconFontPackage
-  );
-
-  final IconData web = IconData(
-    webIconCodePoint,
-    fontFamily: CupertinoIcons.iconFont,
-    fontPackage: CupertinoIcons.iconFontPackage
-  );
 
   @override
   Widget build(BuildContext context) {
@@ -60,28 +37,28 @@ class ProfileContact extends StatelessWidget {
         if (!viewOnly) 
           buildInfoRow(
             context, 
-            chat, 
+            chatIconData, 
             contactChat, 
             contactChatSubtitle,
             () => handleChatTap(context)
           ),
         buildInfoRow(
           context, 
-          email, 
+          emailIconData, 
           contactEmailAddress, 
           user.contact.emailAddress,
           handleEmailTap
         ),
         buildInfoRow(
           context,
-          phone,
+          phoneIconData,
           contactPhoneNumber,
           user.contact.phoneNumber,
           handlePhoneTap
         ),
         buildInfoRow(
           context,
-          web,
+          webIconData,
           contactWebsite,
           user.contact.website,
           handleWebsiteTap

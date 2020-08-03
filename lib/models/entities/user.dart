@@ -12,6 +12,7 @@ class User {
   final UserType type;
   final bool isVerified;
   final bool isFtu;
+  final Industry industry;
   final String fullName;
   final String summary;
   final List<School> schools;
@@ -24,6 +25,7 @@ class User {
     @required this.type,
     @required this.isVerified,
     @required this.isFtu,
+    @required this.industry,
     @required this.contact,
     this.fullName,
     this.summary,
@@ -38,6 +40,7 @@ class User {
       type: null,
       isVerified: false,
       isFtu: true,
+      industry: Industry.initial(),
       fullName: '',
       summary: '',
       schools: [],
@@ -52,6 +55,7 @@ class User {
     UserType type,
     bool isVerified,
     bool isFtu,
+    Industry industry,
     String fullName,
     String summary,
     List<School> schools,
@@ -64,6 +68,7 @@ class User {
       type: type ?? this.type,
       isVerified: isVerified ?? this.isVerified,
       isFtu: isFtu ?? this.isFtu,
+      industry: industry ?? this.industry,
       fullName: fullName ?? this.fullName,
       summary: summary ?? this.summary,
       schools: schools ?? this.schools,
@@ -82,6 +87,7 @@ class User {
       type: parseUserTypeToValue(json["type"]),
       isVerified: json["isVerified"] as bool,
       isFtu: json["isFtu"] as bool,
+      industry: Industry.fromJson(json["industry"]),
       fullName: json["fullName"] as String,
       summary: json["summary"] as String,
       schools: schoolsJson?.map(School.fromJson)?.toList(),
@@ -96,6 +102,7 @@ class User {
     'type': parseUserTypeToString(type),
     'isVerified': isVerified,
     'isFtu': isFtu,
+    'industry': industry.toJson(),
     'fullName': fullName,
     'summary': summary,
     'schools': schools?.map((school) => school.toJson())?.toList(),

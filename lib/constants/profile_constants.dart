@@ -1,15 +1,6 @@
 // Widget dimensions
 const double profileHeaderHeight = 160.0;
 
-// Cupertino icon code points
-const int plusIconCodePoint = 0xf2c7;
-const int rowEditIconCodePoint = 0xf2bf;
-const int headerEditIconCodePoint = 0xf417;
-const int chatIconCodePoint = 0xf3fb;
-const int emailIconCodePoint = 0xf422;
-const int phoneIconCodePoint = 0xf4b8;
-const int webIconCodePoint = 0xf4d2;
-
 // Section titles
 const String sectionTitleSummary = 'Summary';
 const String sectionTitleEducation = 'Education';

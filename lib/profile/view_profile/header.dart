@@ -3,6 +3,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
 import 'package:google_fonts/google_fonts.dart';
 
+import '../../common/common.dart';
 import '../../constants/profile_constants.dart';
 import '../save_profile/save_profile.dart';
  
@@ -86,17 +87,12 @@ class ProfileHeader extends StatelessWidget {
   }
 
   buildEditButton(BuildContext context){
-    var edit = IconData(
-      headerEditIconCodePoint,
-      fontFamily: CupertinoIcons.iconFont,
-      fontPackage: CupertinoIcons.iconFontPackage
-    );
     return InkWell(
       onTap: () => handleEditTap(context),
       child: Container(
         padding: EdgeInsets.all(20.0),
         child: Icon(
-          edit,
+          headerEditIconData,
           color: Colors.white,
           size: 30.0,
         )

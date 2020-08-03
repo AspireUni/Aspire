@@ -4,6 +4,7 @@ import 'package:google_fonts/google_fonts.dart';
 InputDecoration fieldDecoration(
   BuildContext context, {
     String hintText,
+    String errorText,
     IconData icon,
     bool isFocused,
     bool isInvalid
@@ -33,7 +34,11 @@ InputDecoration fieldDecoration(
       ),
       borderRadius: BorderRadius.all(Radius.zero),
     ),
-    errorStyle: fieldTextStyle(fontSize: 13.0, color: Colors.red),
+    errorText: errorText,
+    errorStyle: fieldTextStyle(
+      fontSize: 13.0,
+      color: Colors.red
+    ),
     hintText: hintText,
     hintStyle: fieldTextStyle(),
     prefixIcon: Icon(
@@ -54,5 +59,15 @@ TextStyle fieldTextStyle({double fontSize, Color color}) =>
       fontSize: fontSize ?? 14.0,  
       fontWeight: FontWeight.w500,
       height: 1.2
+    )
+  );
+
+TextStyle modalTextStyle({bool isButton, Color color}) =>
+  GoogleFonts.muli(
+    textStyle: TextStyle(
+      color: color ?? Colors.grey, 
+      letterSpacing: .5, 
+      fontSize: 15.0,
+      fontWeight: isButton ? FontWeight.w600 : FontWeight.normal
     )
   );
