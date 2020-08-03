@@ -19,11 +19,13 @@ class ListPicker {
   });
 
   Picker build(BuildContext context) {
+    CommonContext().init(context);
+
     return Picker(
-      adapter: PickerDataAdapter(data: getData(context)),
+      adapter: PickerDataAdapter(data: getData()),
       selecteds: selecteds,
       hideHeader: false,
-      height: MediaQuery.of(context).size.height * 0.30,
+      height: ScreenSize.height * 0.30,
       itemExtent: 30.0,
       magnification: 1.5,
       squeeze: 0.80,
@@ -33,11 +35,11 @@ class ListPicker {
     );
   }
 
-  List<PickerItem<String>> getData(BuildContext context) {
+  List<PickerItem<String>> getData() {
     return data.map((item) => PickerItem(
       text: FormatText(
         text: item,
-        textColor: Theme.of(context).primaryColor, 
+        textColor: ThemeColors.primary, 
         fontSize: 15.0,
         fontWeight: FontWeight.normal
       ),
@@ -60,17 +62,17 @@ class ListPicker {
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: <Widget>[
-          buildTitle(context),
+          buildTitle(),
           buildConfirmAction(context)
         ]
       )
     );
   }
 
-  Widget buildTitle(BuildContext context) {
+  Widget buildTitle() {
     return FormatText(
       text: titleText,
-      textColor: Theme.of(context).primaryColor, 
+      textColor: ThemeColors.primary, 
       fontSize: 15.0,
       fontWeight: FontWeight.w600
     );
@@ -81,7 +83,7 @@ class ListPicker {
       onTap: () => build(context).doConfirm(context),
       child: FormatText(
         text: confirmModalAction,
-        textColor: Theme.of(context).accentColor, 
+        textColor: ThemeColors.accent, 
         fontSize: 15.0,
         fontWeight: FontWeight.w600
       ),

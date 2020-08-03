@@ -26,6 +26,8 @@ class MultiSelectModal extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    CommonContext().init(context);
+
     return SmartSelect<String>.multiple(
       padding: EdgeInsets.all(0),
       title: hintText,
@@ -39,13 +41,13 @@ class MultiSelectModal extends StatelessWidget {
       onChange: onConfirm,
       modalType: SmartSelectModalType.bottomSheet,
       choiceType: SmartSelectChoiceType.chips,
-      modalConfig: getModalConfig(context),
-      choiceConfig: getChoiceConfig(context),
+      modalConfig: getModalConfig(),
+      choiceConfig: getChoiceConfig(),
       builder: field
     );
   }
 
-  SmartSelectModalConfig getModalConfig(BuildContext context) {
+  SmartSelectModalConfig getModalConfig() {
     return SmartSelectModalConfig(
       useConfirmation: true,
       headerStyle: SmartSelectModalHeaderStyle(
@@ -57,7 +59,7 @@ class MultiSelectModal extends StatelessWidget {
           ),
         ),
         textStyle: modalTextStyle(
-          color: Theme.of(context).primaryColor,
+          color: ThemeColors.primary,
           isButton: true
         )
       ),
@@ -74,7 +76,7 @@ class MultiSelectModal extends StatelessWidget {
         onTap: onConfirm,
         child: FormatText(
           text: confirmModalAction,
-          textColor: Theme.of(context).accentColor, 
+          textColor: ThemeColors.accent, 
           fontSize: 15.0,
           fontWeight: FontWeight.w600
         )
@@ -82,13 +84,13 @@ class MultiSelectModal extends StatelessWidget {
     );
   }
 
-  SmartSelectChoiceConfig<String> getChoiceConfig(BuildContext context) {
+  SmartSelectChoiceConfig<String> getChoiceConfig() {
     return SmartSelectChoiceConfig(
       style: SmartSelectChoiceStyle(
         activeColor: Colors.white,
-        inactiveColor: Theme.of(context).accentColor,
+        inactiveColor: ThemeColors.accent,
         inactiveTrackColor: Colors.white,
-        checkColor:Theme.of(context).accentColor,
+        checkColor:ThemeColors.accent,
         titleStyle: fieldTextStyle(),
       )
     );

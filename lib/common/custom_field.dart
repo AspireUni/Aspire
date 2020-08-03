@@ -30,6 +30,8 @@ class CustomField extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    CommonContext().init(context);
+
     return isEnabled ? FormBuilderCustomField(
       attribute: attribute,
       initialValue: initialValue,
@@ -47,7 +49,7 @@ class CustomField extends StatelessWidget {
               icon: icon,
               errorText: field.errorText
             ),
-            baseStyle: fieldTextStyle(color: Theme.of(context).primaryColor),
+            baseStyle: fieldTextStyle(color: ThemeColors.primary),
             child: Container(
               height: 20.0,
               child: InkWell(
@@ -59,7 +61,7 @@ class CustomField extends StatelessWidget {
                   overflow: TextOverflow.ellipsis,
                   textColor: value == '' || value == null
                       ? Colors.grey
-                      : Theme.of(context).primaryColor
+                      : ThemeColors.primary
                 ),
               )
             ),
