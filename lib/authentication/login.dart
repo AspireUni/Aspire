@@ -220,7 +220,7 @@ class _Login extends State<Login> {
       child: FormBuilderTextField(
         attribute: 'emailAddress',
         focusNode: emailAddressFocus,
-        style: fieldTextStyle(color: Theme.of(context).primaryColor),
+        style: fieldTextStyle(color: ThemeColors.primary),
         decoration: fieldDecoration(
           context,
           isFocused: isEmailAddressFocused,
@@ -247,7 +247,7 @@ class _Login extends State<Login> {
         focusNode: passwordFocus,
         obscureText: true,
         maxLines: 1,
-        style: fieldTextStyle(color: Theme.of(context).primaryColor),
+        style: fieldTextStyle(color: ThemeColors.primary),
         decoration: fieldDecoration(
           context,
           isFocused: isPasswordFocused,
@@ -289,7 +289,7 @@ class _Login extends State<Login> {
         ),
         child: FormatText(
           text: forgotPassword,
-          textColor: Theme.of(context).accentColor,
+          textColor: ThemeColors.accent,
           fontSize: 14.0,
           fontWeight: FontWeight.w500,
         )

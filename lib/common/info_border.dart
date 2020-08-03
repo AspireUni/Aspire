@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import 'format_text.dart';
+import './common.dart';
 
 class InfoBorder extends StatelessWidget {
   final String text;
@@ -23,13 +23,13 @@ class InfoBorder extends StatelessWidget {
       decoration: ShapeDecoration(
         color: Colors.white,
         shape: RoundedRectangleBorder(
-          side: BorderSide(color: Theme.of(context).accentColor),
+          side: BorderSide(color: ThemeColors.accent),
           borderRadius: BorderRadius.all(Radius.circular(20.0))
         )
       ),
       child: FormatText(
         text: text,
-        textColor: Theme.of(context).accentColor,
+        textColor: ThemeColors.accent,
         textAlign: TextAlign.center,
         fontSize: 14.0,
         fontWeight: FontWeight.w500,

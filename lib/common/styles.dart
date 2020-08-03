@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
+import './common_context.dart';
+
 InputDecoration fieldDecoration(
   BuildContext context, {
     String hintText,
@@ -21,7 +23,7 @@ InputDecoration fieldDecoration(
     ),
     focusedBorder: OutlineInputBorder(
       borderSide: BorderSide(
-        color: Theme.of(context).accentColor,
+        color: ThemeColors.accent,
         width: 1.0
       ),
       borderRadius: BorderRadius.all(Radius.zero),
@@ -39,7 +41,7 @@ InputDecoration fieldDecoration(
     prefixIcon: Icon(
       icon,
       color: isFocused && !isInvalid 
-      ? Theme.of(context).accentColor
+      ? ThemeColors.accent
       : Colors.grey,
       size: 20.0
     )

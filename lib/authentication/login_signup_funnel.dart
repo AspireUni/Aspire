@@ -47,7 +47,7 @@ class LoginSignupFunnel extends StatelessWidget {
       children: <Widget>[
         FormatText(
           text: appName,
-          textColor: ThemeColors.primaryColor,
+          textColor: ThemeColors.primary,
           fontSize: 50.0,
           fontWeight: FontWeight.w700,
         ),
@@ -61,7 +61,7 @@ class LoginSignupFunnel extends StatelessWidget {
       padding: EdgeInsets.only(top: 5.0),
       child: FormatText(
         text: getStartedSubTitle,
-        textColor: ThemeColors.primaryColor,
+        textColor: ThemeColors.primary,
         fontSize: 14.0,
         fontWeight: FontWeight.w500,
       )

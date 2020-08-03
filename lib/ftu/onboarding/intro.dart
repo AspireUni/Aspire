@@ -14,7 +14,7 @@ class OnboardingIntro extends StatelessWidget {
     CommonContext().init(context);
   
     return Scaffold(
-      backgroundColor: ThemeColors.primaryColor,
+      backgroundColor: ThemeColors.primary,
       body: Container(
         width: ScreenSize.screenWidth,
         child: Stack(

@@ -8,6 +8,7 @@ import 'package:random_string/random_string.dart';
 import 'package:redux/redux.dart';
 
 import '../../../../actions/actions.dart';
+import '../../../../common/common_context.dart';
 import '../../../../constants/profile_constants.dart';
 import '../../../../models/models.dart';
 import '../../../../selectors/selectors.dart';
@@ -374,7 +375,7 @@ class _SaveExperienceItemState extends State<SaveExperienceItem> {
         style: labelTextStyle(isEnabled: job.startDate != null),
       ),
       contentPadding: EdgeInsets.all(0.0),
-      activeColor: Theme.of(context).primaryColor,
+      activeColor: ThemeColors.primary,
       decoration: InputDecoration(
         isDense: true,
         contentPadding: EdgeInsets.all(0.0),

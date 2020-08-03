@@ -37,11 +37,11 @@ class ScreenSize {
 }
 
 class ThemeColors {
-  static var primaryColor;
-  static var accentColor;
+  static var primary;
+  static var accent;
 
   void init(BuildContext context) {
-    primaryColor = Color(0xFF0F1236);
-    accentColor = Color(0xFF45cab9); 
+    primary = Color(0xFF0F1236);
+    accent = Color(0xFF45cab9); 
   }
 }

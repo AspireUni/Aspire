@@ -218,7 +218,7 @@ class _MenteeSignUp extends State<MenteeSignUp> {
       child: FormBuilderTextField(
         attribute: 'fullName',
         focusNode: fullNameFocus,
-        style: fieldTextStyle(color: Theme.of(context).primaryColor),
+        style: fieldTextStyle(color: ThemeColors.primary),
         decoration: fieldDecoration(
           context,
           isFocused: isFullNameFocused,
@@ -242,7 +242,7 @@ class _MenteeSignUp extends State<MenteeSignUp> {
       child: FormBuilderTextField(
         attribute: 'emailAddress',
         focusNode: emailAddressFocus,
-        style: fieldTextStyle(color: Theme.of(context).primaryColor),
+        style: fieldTextStyle(color: ThemeColors.primary),
         decoration: fieldDecoration(
           context,
           isFocused: isEmailAddressFocused,
@@ -269,7 +269,7 @@ class _MenteeSignUp extends State<MenteeSignUp> {
         focusNode: passwordFocus,
         obscureText: true,
         maxLines: 1,
-        style: fieldTextStyle(color: Theme.of(context).primaryColor),
+        style: fieldTextStyle(color: ThemeColors.primary),
         decoration: fieldDecoration(
           context,
           isFocused: isPasswordFocused,

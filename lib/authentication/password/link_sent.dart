@@ -131,7 +131,7 @@ class _LinkSent extends State<LinkSent> {
       padding: EdgeInsets.only(top: 15.0),
       child: FormatText(
         text: widget.resetLinkSent ? resetLinkSentInfoText : linkSentInfoText,
-        textColor: Theme.of(context).primaryColor,
+        textColor: ThemeColors.primary,
         fontSize: 14.0,
         fontWeight: FontWeight.w500,
       )
@@ -159,7 +159,7 @@ class _LinkSent extends State<LinkSent> {
   Widget buildFooterText() {
     return FormatText(
       text: linkSentFooterText,
-      textColor: Theme.of(context).primaryColor,
+      textColor: ThemeColors.primary,
       fontSize: 14.0,
       fontWeight: FontWeight.w500,
     );
@@ -170,7 +170,7 @@ class _LinkSent extends State<LinkSent> {
       onTap: () => Auth().sendEmailVerification(),
       child: FormatText(
         text: linkSentFooterLink,
-        textColor: Theme.of(context).accentColor,
+        textColor: ThemeColors.accent,
         fontSize: 14.0,
         fontWeight: FontWeight.w500,
       )

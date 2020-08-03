@@ -14,7 +14,7 @@ class SignUpFunnel extends StatelessWidget {
     CommonContext().init(context);
 
     return Scaffold(
-      // TODO: Replace with primaryColor when center ano image is updated
+      // TODO: Replace with primary when center ano image is updated
       backgroundColor: Color(0xFF0B0B33),
       body: Container(
         child: Stack(
@@ -103,7 +103,7 @@ class SignUpFunnel extends StatelessWidget {
           margin: EdgeInsets.all(ScreenSize.screenWidth * 0.02), 
           decoration: BoxDecoration(
             color: i == 0 ? 
-              ThemeColors.accentColor : Colors.grey, 
+              ThemeColors.accent : Colors.grey, 
             shape: BoxShape.circle
           )
         )
