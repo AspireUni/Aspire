@@ -11,8 +11,6 @@ class SignUpFunnel extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    CommonContext().init(context);
-
     return Scaffold(
       // TODO: Replace with primary when center ano image is updated
       backgroundColor: Color(0xFF0B0B33),

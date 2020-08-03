@@ -26,9 +26,7 @@ class _OnboardingSteps extends State<OnboardingSteps> {
   }
 
   @override
-  Widget build(BuildContext context) {
-    CommonContext().init(context);
-    
+  Widget build(BuildContext context) {    
     return Scaffold(
       backgroundColor: Colors.white,
       appBar: buildHeader(),

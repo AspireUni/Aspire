@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
+import 'package:flutter_picker/flutter_picker.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:redux/redux.dart';
+import 'package:smart_select/smart_select.dart';
 
 import '../../common/common.dart';
 import '../../constants/constants.dart';
@@ -23,15 +25,24 @@ class MenteeSignUp extends StatefulWidget {
 }
 
 class _MenteeSignUp extends State<MenteeSignUp> {
-  final GlobalKey<FormBuilderState> _signUpFormKey
+  final GlobalKey<FormBuilderState> _menteeSignUpFormKey
     = GlobalKey<FormBuilderState>();
   final FocusNode fullNameFocus = FocusNode();
   final FocusNode emailAddressFocus = FocusNode();
   final FocusNode passwordFocus = FocusNode();
 
-  String fullName, emailAddress, password;
-  bool isFullNameFocused, isEmailAddressFocused, isPasswordFocused;
-  bool isFullNameInvalid, isEmailAddressInvalid, isPasswordInvalid;
+  String fullName, emailAddress, password, industry;
+  List<String> areasOfInterest;
+  bool isFullNameFocused,
+    isEmailAddressFocused,
+    isPasswordFocused,
+    isIndustryFocused,
+    isAreasOfInterestFocused;
+  bool isFullNameInvalid,
+    isEmailAddressInvalid,
+    isPasswordInvalid,
+    isIndustryInvalid,
+    isAreasOfInterestInvalid;
   bool isLoading;
   Store<AppState> store;
 
@@ -44,10 +55,14 @@ class _MenteeSignUp extends State<MenteeSignUp> {
     isFullNameInvalid = false;
     isEmailAddressInvalid = false;
     isPasswordInvalid = false;
+    isIndustryInvalid = false;
+    isAreasOfInterestInvalid = false;
 
     isFullNameFocused = false;
     isEmailAddressFocused = false;
     isPasswordFocused = false;
+    isIndustryFocused = false;
+    isAreasOfInterestFocused = false;
   
     fieldFocusListeners();
 
@@ -64,23 +79,24 @@ class _MenteeSignUp extends State<MenteeSignUp> {
 
   @override
   Widget build(BuildContext context) {
-    CommonContext().init(context);
-
-    return Scaffold(
-      backgroundColor: Colors.white,
-      appBar: GlobalHeader(
-        actionText: signInAction,
-        onActionTap: () => Navigator.pushReplacement(
-          context, MaterialPageRoute(
-            builder: (context) => Login()
+    return GestureDetector(
+      onTap: unfocusFields,
+      child: Scaffold(
+        backgroundColor: Colors.white,
+        appBar: GlobalHeader(
+          actionText: signInAction,
+          onActionTap: () => Navigator.pushReplacement(
+            context, MaterialPageRoute(
+              builder: (context) => Login()
+            )
           )
+        ),
+        body: Stack(
+          children: <Widget>[
+            buildSignUpView(),
+            buildCircularProgress(),
+          ],
         )
-      ),
-      body: Stack(
-        children: <Widget>[
-          buildSignUpView(),
-          buildCircularProgress(),
-        ],
       )
     );
   }
@@ -97,11 +113,36 @@ class _MenteeSignUp extends State<MenteeSignUp> {
     });
   }
 
+  void unfocusFields() {
+    fullNameFocus.unfocus();
+    emailAddressFocus.unfocus();
+    passwordFocus.unfocus();
+    unfocusCustomFields();
+  }
+
+  void unfocusCustomFields() {
+    unfocusIndustryField();
+    unfocusAreasOfInterestField();
+  }
+
+  void unfocusIndustryField() {
+    setState(() {
+      isIndustryFocused = false;
+    });
+  }
+
+  void unfocusAreasOfInterestField() {
+    setState(() {
+      isAreasOfInterestFocused = false;
+    });
+  }
+
   void validateAndSubmit() async {
+    unfocusFields();
     setState(() {
       isLoading = true;
     });
-    if (_signUpFormKey.currentState.saveAndValidate()) {
+    if (_menteeSignUpFormKey.currentState.saveAndValidate()) {
       try {
         await signUp();
         setState(() {
@@ -109,12 +150,14 @@ class _MenteeSignUp extends State<MenteeSignUp> {
           isFullNameInvalid = false;
           isEmailAddressInvalid = false;
           isPasswordInvalid = false;
+          isIndustryInvalid = false;
+          isAreasOfInterestInvalid = false;
         });
       } on Exception catch (e) {
         print('Error: $e');
         setState(() {
           isLoading = false;
-          _signUpFormKey.currentState.reset();
+          _menteeSignUpFormKey.currentState.reset();
         });
       }
     } else {
@@ -123,6 +166,8 @@ class _MenteeSignUp extends State<MenteeSignUp> {
           isFullNameInvalid = true;
           isEmailAddressInvalid = true;
           isPasswordInvalid = true;
+          isIndustryInvalid = true;
+          isAreasOfInterestInvalid = true;
         });
     }
   }
@@ -134,7 +179,9 @@ class _MenteeSignUp extends State<MenteeSignUp> {
       await addMentee(
         userId,
         emailAddress: emailAddress,
-        fullName: fullName
+        fullName: fullName,
+        industry: industry,
+        areasOfInterest: areasOfInterest
       );
       Navigator.pushReplacement(
         context,
@@ -166,11 +213,11 @@ class _MenteeSignUp extends State<MenteeSignUp> {
       alignment: Alignment.center,
       children: <Widget>[
         Positioned(
-          top: ScreenSize.height * 0.15,
+          top: ScreenSize.height * 0.10,
           child: buildCenterAno()
         ),
         Positioned(
-          top: ScreenSize.height * 0.35,
+          top: ScreenSize.height * 0.26,
           child: buildForm()
         ),
         buildFooter()
@@ -180,15 +227,25 @@ class _MenteeSignUp extends State<MenteeSignUp> {
 
   Widget buildForm() {
     return Container(
-      width: ScreenSize.width * 0.60,
+      width: ScreenSize.width * 0.70,
       child: FormBuilder(
-        key: _signUpFormKey,
-        child: Column(
-          children: <Widget>[
-            buildFullNameField(),
-            buildEmailAddressField(),
-            buildPasswordField(),
-          ]
+        key: _menteeSignUpFormKey,
+        child: SizedBox(
+          height: ScreenSize.height * 0.47,
+          child: Center(
+            child: ListView(
+              padding: EdgeInsets.all(0.0),
+              scrollDirection: Axis.vertical,
+              shrinkWrap: true,
+              children: <Widget>[
+                buildFullNameField(),
+                buildEmailAddressField(),
+                buildPasswordField(),
+                buildIndustryField(),
+                buildAreasOfInterestSelector()
+              ]
+            )
+          )
         )
       )
     );
@@ -220,7 +277,6 @@ class _MenteeSignUp extends State<MenteeSignUp> {
         focusNode: fullNameFocus,
         style: fieldTextStyle(color: ThemeColors.primary),
         decoration: fieldDecoration(
-          context,
           isFocused: isFullNameFocused,
           isInvalid: isFullNameInvalid,
           hintText: fullNameHint,
@@ -231,7 +287,8 @@ class _MenteeSignUp extends State<MenteeSignUp> {
           FormBuilderValidators.maxLength(100),
         ],
         keyboardType: TextInputType.text,
-        onSaved: (value) => fullName = (value as String),
+        onTap: unfocusCustomFields,
+        onChanged: (value) => setState(() { fullName = value as String; })
       )
     );
   }
@@ -244,11 +301,10 @@ class _MenteeSignUp extends State<MenteeSignUp> {
         focusNode: emailAddressFocus,
         style: fieldTextStyle(color: ThemeColors.primary),
         decoration: fieldDecoration(
-          context,
           isFocused: isEmailAddressFocused,
           isInvalid: isEmailAddressInvalid,
           hintText: emailHint,
-          icon: Icons.mail_outline
+          icon: emailIconData
         ),
         validators: [
           FormBuilderValidators.required(),
@@ -256,7 +312,8 @@ class _MenteeSignUp extends State<MenteeSignUp> {
           FormBuilderValidators.maxLength(100),
         ],
         keyboardType: TextInputType.emailAddress,
-        onSaved: (value) => emailAddress = (value as String).trim(),
+        onTap: unfocusCustomFields,
+        onChanged: (value) => setState(() { emailAddress = value as String; })
       )
     );
   }
@@ -271,22 +328,130 @@ class _MenteeSignUp extends State<MenteeSignUp> {
         maxLines: 1,
         style: fieldTextStyle(color: ThemeColors.primary),
         decoration: fieldDecoration(
-          context,
           isFocused: isPasswordFocused,
           isInvalid: isPasswordInvalid,
           hintText: passwordHint,
-          icon: AspireIcons.lock
+          icon: lockIconData
         ),
         validators: [
           FormBuilderValidators.required(),
           FormBuilderValidators.maxLength(100),
         ],
         keyboardType: TextInputType.text,
-        onSaved: (value) => password = (value as String).trim(),
+        onTap: unfocusCustomFields,
+        onChanged: (value) => setState(() { password = value as String; })
       )
     );
   }
 
+  Widget buildIndustryField() {
+    return Container(
+      padding: EdgeInsets.only(bottom: 10.0),
+      child: CustomField(
+        attribute: 'industry',
+        initialValue: industry,
+        hintText: industryHint,
+        icon: briefCaseIconData,
+        isFocused: isIndustryFocused,
+        isInvalid: isIndustryInvalid,
+        isEnabled: true,
+        value: industry ?? '',
+        onTap: () {
+          setState(() {
+            isIndustryFocused = true;
+            isAreasOfInterestFocused = false;
+          });
+          showIndustryPicker(); 
+        }
+      )
+    );
+  }
+
+  void showIndustryPicker() {
+    ListPicker(
+      titleText: industryHint,
+      data: industries.map((item) => item.name).toList(),
+      selecteds: [industry != null
+        ? industries.indexWhere((item) => industry == item.name)
+        : 0
+      ],
+      onConfirm: (picker, index) => handleIndustryConfirm(picker)
+    ).build(context).showModal(context);
+  }
+
+  void handleIndustryConfirm(Picker picker) {
+    var newIndustry = industries[picker.selecteds[0]].name;
+    setState(() {
+      industry = newIndustry;
+      areasOfInterest = null;
+    });
+    _menteeSignUpFormKey.currentState.fields['industry']?.currentState
+      ?.didChange(newIndustry);
+    _menteeSignUpFormKey.currentState.fields['areasOfInterest']?.currentState
+      ?.didChange(null);
+  }
+
+  Widget buildAreasOfInterestSelector() {
+    var options = <String>[];
+    if (industry != null) {
+      var chosenIndustry = (industries.singleWhere(
+        (item) => item.name == industry)
+      );
+      options = chosenIndustry.areas;
+    }
+    return MultiSelectModal(
+      hintText: areasOfInterestHint,
+      values: areasOfInterest,
+      options: options,
+      onConfirm: handleAreasOfInterestConfirm,
+      field: (context, state, showChoices) {
+        return buildAreasOfInterestField(
+          showSelector: options.isNotEmpty ? showChoices : null
+        );
+      }
+    );
+  }
+
+  Widget buildAreasOfInterestField({SmartSelectShowModal showSelector}) {
+    return CustomField(
+      attribute: 'areasOfInterest',
+      initialValue: null,
+      hintText: areasOfInterestHint,
+      icon: lightBulbIconData,
+      isFocused: isAreasOfInterestFocused,
+      isInvalid: isAreasOfInterestInvalid,
+      isEnabled: showSelector != null,
+      value: getAreasOfInterestDisplayString(),
+      onTap: () {
+        setState(() {
+          isAreasOfInterestFocused = true;
+          isIndustryFocused = false;
+        });
+        showSelector(context);
+      }
+    );
+  }
+
+  String getAreasOfInterestDisplayString() {
+    if (areasOfInterest != null) {
+      var suffix = '';
+      if (areasOfInterest.length > 1) {
+        suffix = 's';
+      }
+      return '${areasOfInterest.length} area$suffix of interest selected';
+    }
+    return null;
+  }
+  
+  void handleAreasOfInterestConfirm(List<String> values) {
+    List<String> newAreas;
+    if (values.isNotEmpty) {
+      newAreas = values;
+    }
+    setState(() { areasOfInterest = newAreas; });
+    _menteeSignUpFormKey.currentState.fields['areasOfInterest'].currentState
+      .didChange(getAreasOfInterestDisplayString());
+  }
 
   Widget buildFooter() {
     return Positioned(
@@ -299,6 +464,7 @@ class _MenteeSignUp extends State<MenteeSignUp> {
       )
     );
   }
+  
   Widget buildNextButton() {
     return PrimaryButton(
       isLight: true,

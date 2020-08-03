@@ -45,12 +45,18 @@ Future<QuerySnapshot> getMentors() async {
 Future<void> addMentee(
   String id, {
     String emailAddress,
-    String fullName
+    String fullName,
+    String industry,
+    List<String> areasOfInterest
   }
 ) async {
   var user = User.initial().copyWith(
     id: id,
     type: UserType.mentee,
+    industry: Industry(
+      name: industry,
+      areas: areasOfInterest
+    ),
     fullName: fullName,
     contact: Contact.initial().copyWith(
       emailAddress: emailAddress

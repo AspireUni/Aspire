@@ -10,9 +10,7 @@ class OnboardingIntro extends StatelessWidget {
   OnboardingIntro({Key key}) : super(key: key);
 
   @override
-  Widget build(BuildContext context) {
-    CommonContext().init(context);
-  
+  Widget build(BuildContext context) {  
     return Scaffold(
       backgroundColor: ThemeColors.primary,
       body: Container(

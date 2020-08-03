@@ -63,8 +63,6 @@ class _Login extends State<Login> {
 
   @override
   Widget build(BuildContext context) {
-    CommonContext().init(context);
-
     return Scaffold(
       backgroundColor: Colors.white,
       appBar: GlobalHeader(
@@ -222,7 +220,6 @@ class _Login extends State<Login> {
         focusNode: emailAddressFocus,
         style: fieldTextStyle(color: ThemeColors.primary),
         decoration: fieldDecoration(
-          context,
           isFocused: isEmailAddressFocused,
           isInvalid: isEmailAddressInvalid,
           hintText: emailHint,
@@ -249,7 +246,6 @@ class _Login extends State<Login> {
         maxLines: 1,
         style: fieldTextStyle(color: ThemeColors.primary),
         decoration: fieldDecoration(
-          context,
           isFocused: isPasswordFocused,
           isInvalid: isPasswordInvalid,
           hintText: passwordHint,

@@ -8,8 +8,6 @@ class Pairings extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    CommonContext().init(context);
-
     return Scaffold(
       appBar: GlobalHeader(),
       backgroundColor: Colors.white,

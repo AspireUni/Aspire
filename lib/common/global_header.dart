@@ -19,7 +19,6 @@ class GlobalHeader extends StatelessWidget implements PreferredSizeWidget {
   @override
   Widget build(BuildContext context) {
     var showAction = actionText != null && onActionTap != null;
-    CommonContext().init(context);
 
     return AppBar(
       title: appBarTitle(), 

@@ -9,8 +9,6 @@ class CircleIndicators extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    CommonContext().init(context);
-
     return Row(
       mainAxisAlignment: MainAxisAlignment.center,
       children: buildCircles(context)

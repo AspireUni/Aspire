@@ -34,8 +34,6 @@ class _ResetLink extends State<ResetLink> {
 
   @override
   Widget build(BuildContext context) {
-    CommonContext().init(context);
-
     return Scaffold(
       backgroundColor: Colors.white,
       appBar: GlobalHeader(
@@ -105,7 +103,6 @@ class _ResetLink extends State<ResetLink> {
         attribute: 'emailAddress',
         autofocus: true, 
         decoration: fieldDecoration(
-          context,
           isFocused: true,
           isInvalid: isEmailAddressInvalid,
           hintText: emailHint,
