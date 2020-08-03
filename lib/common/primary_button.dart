@@ -24,7 +24,7 @@ class PrimaryButton extends StatelessWidget {
     CommonContext().init(context);
 
     return MaterialButton(
-      minWidth: minWidth ?? MediaQuery.of(context).size.width * 0.50,
+      minWidth: minWidth ?? ScreenSize.width * 0.50,
       height: height,
       onPressed: onPressed,
       color: isLight 

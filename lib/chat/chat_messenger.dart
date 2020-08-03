@@ -340,7 +340,7 @@ class ChatMessengerState extends State<ChatMessenger> {
           ),
           backgroundColor: Colors.white,
           body: Container(
-            height: MediaQuery.of(context).size.height,
+            height: ScreenSize.height,
             margin: EdgeInsets.all(0),
             child: Center(
               child: Column(

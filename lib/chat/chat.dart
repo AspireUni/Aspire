@@ -55,7 +55,7 @@ class _ChatState extends State<Chat> {
           );
           return Scaffold(
             body: Container(
-              height: MediaQuery.of(context).size.height,
+              height: ScreenSize.height,
               margin: EdgeInsets.all(0),
               child: Center(
                 child: Column(

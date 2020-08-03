@@ -8,8 +8,8 @@ class CommonContext {
 }
 class ScreenSize {
   static MediaQueryData _mediaQueryData;
-  static double screenWidth;
-  static double screenHeight;
+  static double width;
+  static double height;
   static double blockSizeHorizontal;
   static double blockSizeVertical;
   
@@ -20,18 +20,18 @@ class ScreenSize {
   
   void init(BuildContext context) {
     _mediaQueryData = MediaQuery.of(context);
-    screenWidth = _mediaQueryData.size.width;
-    screenHeight = _mediaQueryData.size.height;
-    blockSizeHorizontal = screenWidth / 100;
-    blockSizeVertical = screenHeight / 100;
+    width = _mediaQueryData.size.width;
+    height = _mediaQueryData.size.height;
+    blockSizeHorizontal = width / 100;
+    blockSizeVertical = height / 100;
     
     _safeAreaHorizontal = _mediaQueryData.padding.left + 
     _mediaQueryData.padding.right;
     _safeAreaVertical = _mediaQueryData.padding.top +
     _mediaQueryData.padding.bottom;
-    safeBlockHorizontal = (screenWidth -
+    safeBlockHorizontal = (width -
     _safeAreaHorizontal) / 100;
-    safeBlockVertical = (screenHeight -
+    safeBlockVertical = (height -
     _safeAreaVertical) / 100;
   }
 }

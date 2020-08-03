@@ -92,7 +92,7 @@ buildNewMatches(context, newMatchesList, id, isMentee) {
   }
 
   return Container(
-    width: MediaQuery.of(context).size.width,
+    width: ScreenSize.width,
     child: Row(
       children: <Widget>[
         Container(

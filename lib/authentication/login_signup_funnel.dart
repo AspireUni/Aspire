@@ -17,12 +17,12 @@ class LoginSignupFunnel extends StatelessWidget {
     return Scaffold(
       backgroundColor: Colors.white,
       body: Container(
-        width: ScreenSize.screenWidth,
+        width: ScreenSize.width,
         child: Stack(
           alignment: Alignment.center,
           children: <Widget>[
              Positioned(
-              top: ScreenSize.screenHeight * 0.15,
+              top: ScreenSize.height * 0.15,
               child: buildTitle(context)
             ),
             Column(
@@ -33,7 +33,7 @@ class LoginSignupFunnel extends StatelessWidget {
               ]
             ),
             Positioned(
-              bottom: ScreenSize.screenHeight * 0.05,
+              bottom: ScreenSize.height * 0.05,
               child: FooterLinks()
             )
           ]
@@ -72,12 +72,12 @@ class LoginSignupFunnel extends StatelessWidget {
   Widget buildCenterLogo() {
     return Container(
       padding: EdgeInsets.only(
-        top: ScreenSize.screenHeight * 0.40
+        top: ScreenSize.height * 0.40
       ),
       child: SvgPicture.asset(
         'images/dark_logo.svg',
-        height: ScreenSize.screenHeight * 0.15,
-        width: ScreenSize.screenHeight * 0.15,
+        height: ScreenSize.height * 0.15,
+        width: ScreenSize.height * 0.15,
       )
     );
   }
@@ -85,7 +85,7 @@ class LoginSignupFunnel extends StatelessWidget {
   Widget buildLoginButton(BuildContext context) {
     return Container(
       padding: EdgeInsets.only(
-        top: ScreenSize.screenHeight * 0.20
+        top: ScreenSize.height * 0.20
       ),
       child: PrimaryButton(
         text: loginButtonText,

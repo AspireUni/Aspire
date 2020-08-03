@@ -2,6 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_picker/flutter_picker.dart';
 
+import '../../common/common_context.dart';
 import '../common/styles.dart';
 
 class DatePicker {
@@ -20,6 +21,8 @@ class DatePicker {
   });
 
   Picker build(BuildContext context) {
+    CommonContext().init(context);
+
     return Picker(
       adapter: DateTimePickerAdapter(
         value: initialValue,
@@ -31,7 +34,7 @@ class DatePicker {
       textAlign: TextAlign.right,
       onConfirm: onConfirm,
       hideHeader: false,
-      height: MediaQuery.of(context).size.height * 0.30,
+      height: ScreenSize.height * 0.30,
       itemExtent: 30.0,
       magnification: 1.5,
       squeeze: 0.80,

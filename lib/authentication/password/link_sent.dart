@@ -49,11 +49,11 @@ class _LinkSent extends State<LinkSent> {
       alignment: Alignment.center,
       children: <Widget>[
         Positioned(
-          top: ScreenSize.screenHeight * 0.15,
+          top: ScreenSize.height * 0.15,
           child: buildCenterAno()
         ),
         Positioned(
-          top: ScreenSize.screenHeight * 0.35,
+          top: ScreenSize.height * 0.35,
           child: buildForm()
         ),
         buildReminderSection(),
@@ -64,7 +64,7 @@ class _LinkSent extends State<LinkSent> {
 
   Widget buildForm() {
     return Container(
-      width: ScreenSize.screenWidth * 0.60,
+      width: ScreenSize.width * 0.60,
       child: FormBuilder(
         key: _disabledEmailAddressFormKey,
         child: Column(
@@ -78,12 +78,12 @@ class _LinkSent extends State<LinkSent> {
 
   Widget buildCenterAno() {
     return Container(
-      width: ScreenSize.screenWidth,
+      width: ScreenSize.width,
       child: Column(
         children: <Widget>[
           Image.asset(
             'images/sign_up/ano_hands_side.png',
-            height: ScreenSize.screenHeight * 0.11
+            height: ScreenSize.height * 0.11
           ),
           Container(
             height: 1.5,
@@ -116,7 +116,7 @@ class _LinkSent extends State<LinkSent> {
 
   Widget buildReminderSection() {
     return Positioned(
-      top: ScreenSize.screenHeight * 0.50,
+      top: ScreenSize.height * 0.50,
       child: Column(
         children: <Widget>[
           buildLinkSentInfoBorder(),
@@ -146,7 +146,7 @@ class _LinkSent extends State<LinkSent> {
 
   Widget buildFooter() {
     return Positioned(
-      bottom: ScreenSize.screenHeight * 0.05,
+      bottom: ScreenSize.height * 0.05,
       child: Row(
         children: <Widget>[
           buildFooterText(),

@@ -73,12 +73,12 @@ class _OnboardingSteps extends State<OnboardingSteps> {
 
   Widget buildCenterAno() {
     return Padding(
-      padding: EdgeInsets.only(top: ScreenSize.screenHeight * 0.30),
+      padding: EdgeInsets.only(top: ScreenSize.height * 0.30),
       child: SlideInRight(
         key: onboardingStepsConfig[stepIndex]["imageKey"],
         child: Image.asset(
           onboardingStepsConfig[stepIndex]["image"],
-          height: ScreenSize.screenHeight * 0.15
+          height: ScreenSize.height * 0.15
         ),
       )
     );
@@ -88,8 +88,8 @@ class _OnboardingSteps extends State<OnboardingSteps> {
     return SlideInRight(
       key: onboardingStepsConfig[stepIndex]["textKey"],
       child: Container(
-        padding: EdgeInsets.only(top: ScreenSize.screenHeight * 0.15),
-        width: ScreenSize.screenWidth * 0.60,
+        padding: EdgeInsets.only(top: ScreenSize.height * 0.15),
+        width: ScreenSize.width * 0.60,
         child: FormatText(
           text: onboardingStepsConfig[stepIndex]["text"],
           textColor: Colors.black,
@@ -103,7 +103,7 @@ class _OnboardingSteps extends State<OnboardingSteps> {
 
   Widget buildFooter() {
     return Positioned(
-      bottom: ScreenSize.screenHeight * 0.10,
+      bottom: ScreenSize.height * 0.10,
       child: Column(
         children: <Widget>[
           CircleIndicators(stepIndex: stepIndex),

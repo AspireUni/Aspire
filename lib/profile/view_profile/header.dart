@@ -23,7 +23,7 @@ class ProfileHeader extends StatelessWidget {
     CommonContext().init(context);
 
     return Container(
-      width: MediaQuery.of(context).size.width, 
+      width: ScreenSize.width, 
       height: profileHeaderHeight,
       decoration: BoxDecoration(
         color: ThemeColors.primary, 
@@ -36,7 +36,7 @@ class ProfileHeader extends StatelessWidget {
           Positioned(
             top: 40.0,
             left: 0,
-            width: MediaQuery.of(context).size.width,
+            width: ScreenSize.width,
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: <Widget> [

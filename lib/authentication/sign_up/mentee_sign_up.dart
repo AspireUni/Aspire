@@ -166,11 +166,11 @@ class _MenteeSignUp extends State<MenteeSignUp> {
       alignment: Alignment.center,
       children: <Widget>[
         Positioned(
-          top: ScreenSize.screenHeight * 0.15,
+          top: ScreenSize.height * 0.15,
           child: buildCenterAno()
         ),
         Positioned(
-          top: ScreenSize.screenHeight * 0.35,
+          top: ScreenSize.height * 0.35,
           child: buildForm()
         ),
         buildFooter()
@@ -180,7 +180,7 @@ class _MenteeSignUp extends State<MenteeSignUp> {
 
   Widget buildForm() {
     return Container(
-      width: ScreenSize.screenWidth * 0.60,
+      width: ScreenSize.width * 0.60,
       child: FormBuilder(
         key: _signUpFormKey,
         child: Column(
@@ -196,12 +196,12 @@ class _MenteeSignUp extends State<MenteeSignUp> {
 
   Widget buildCenterAno() {
     return Container(
-      width: ScreenSize.screenWidth,
+      width: ScreenSize.width,
       child: Column(
         children: <Widget>[
           SvgPicture.asset(
             'images/diverse_ano.svg',
-            height: ScreenSize.screenHeight * 0.11,
+            height: ScreenSize.height * 0.11,
           ),
           Container(
             height: 1.5,
@@ -290,7 +290,7 @@ class _MenteeSignUp extends State<MenteeSignUp> {
 
   Widget buildFooter() {
     return Positioned(
-      bottom: ScreenSize.screenHeight * 0.05,
+      bottom: ScreenSize.height * 0.05,
       child: Column(
         children: <Widget>[
           CircleIndicators(stepIndex: 1),

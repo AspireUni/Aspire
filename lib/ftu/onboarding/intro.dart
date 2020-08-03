@@ -16,12 +16,12 @@ class OnboardingIntro extends StatelessWidget {
     return Scaffold(
       backgroundColor: ThemeColors.primary,
       body: Container(
-        width: ScreenSize.screenWidth,
+        width: ScreenSize.width,
         child: Stack(
           alignment: Alignment.center,
           children: <Widget>[
             Positioned(
-              top: ScreenSize.screenHeight * 0.15,
+              top: ScreenSize.height * 0.15,
               child: buildTitle()
             ),
             Column(
@@ -31,7 +31,7 @@ class OnboardingIntro extends StatelessWidget {
               ]
             ),
             Positioned(
-              bottom: ScreenSize.screenHeight * 0.10,
+              bottom: ScreenSize.height * 0.10,
               child: buildGetStartedButton(context)
             )
           ]
@@ -69,21 +69,21 @@ class OnboardingIntro extends StatelessWidget {
   Widget buildCenterLogo() {
     return Container(
       padding: EdgeInsets.only(
-        top: ScreenSize.screenHeight * 0.40
+        top: ScreenSize.height * 0.40
       ),
       child: SvgPicture.asset(
         'images/light_logo.svg',
-        height: ScreenSize.screenHeight * 0.15,
-        width: ScreenSize.screenHeight * 0.15,
+        height: ScreenSize.height * 0.15,
+        width: ScreenSize.height * 0.15,
       )
     );
   }
 
   Widget buildBottomText() {
     return Container(
-      width: ScreenSize.screenWidth * 0.60,
+      width: ScreenSize.width * 0.60,
       padding: EdgeInsets.only(
-        top: ScreenSize.screenHeight * 0.20
+        top: ScreenSize.height * 0.20
       ),
       child: FormatText(
         text: getStartedBottomText,

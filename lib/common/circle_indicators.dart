@@ -18,7 +18,7 @@ class CircleIndicators extends StatelessWidget {
   }
 
   List<Widget> buildCircles(BuildContext context) {
-    var screenWidth = MediaQuery.of(context).size.width;
+    var screenWidth = ScreenSize.width;
     var circleDimensions = screenWidth * 0.01;
     var circles = <Widget>[];
     
