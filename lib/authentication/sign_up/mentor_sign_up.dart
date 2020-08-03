@@ -47,7 +47,7 @@ class _MentorSignUp extends State<MentorSignUp> {
     isEmailAddressFocused,
     isPasswordFocused,
     isIndustryFocused,
-    isAreasOfInterestFocused,
+    isAreasOfExpertiseFocused,
     isCompanyFocused,
     isJobTitleFocused,
     isStartDateFocused;
@@ -55,7 +55,7 @@ class _MentorSignUp extends State<MentorSignUp> {
     isEmailAddressInvalid,
     isPasswordInvalid,
     isIndustryInvalid,
-    isAreasOfInterestInvalid,
+    isAreasOfExpertiseInvalid,
     isCompanyInvalid,
     isJobTitleInvalid,
     isStartDateInvalid;
@@ -72,7 +72,7 @@ class _MentorSignUp extends State<MentorSignUp> {
     isEmailAddressInvalid = false;
     isPasswordInvalid = false;
     isIndustryInvalid = false;
-    isAreasOfInterestInvalid = false;
+    isAreasOfExpertiseInvalid = false;
     isCompanyInvalid = false;
     isJobTitleInvalid = false;
     isStartDateInvalid = false;
@@ -81,7 +81,7 @@ class _MentorSignUp extends State<MentorSignUp> {
     isEmailAddressFocused = false;
     isPasswordFocused = false;
     isIndustryFocused = false;
-    isAreasOfInterestFocused = false;
+    isAreasOfExpertiseFocused = false;
     isCompanyFocused = false;
     isJobTitleFocused = false;
     isStartDateFocused = false;
@@ -159,7 +159,7 @@ class _MentorSignUp extends State<MentorSignUp> {
   void unfocusCustomFields() {
     setState(() {
       isIndustryFocused = false;
-      isAreasOfInterestFocused = false;
+      isAreasOfExpertiseFocused = false;
       isStartDateFocused = false;
     });
   }
@@ -178,7 +178,7 @@ class _MentorSignUp extends State<MentorSignUp> {
           isEmailAddressInvalid = false;
           isPasswordInvalid = false;
           isIndustryInvalid = false;
-          isAreasOfInterestInvalid = false;
+          isAreasOfExpertiseInvalid = false;
           isCompanyInvalid = false;
           isJobTitleInvalid = false;
           isStartDateInvalid = false;
@@ -197,7 +197,7 @@ class _MentorSignUp extends State<MentorSignUp> {
           isEmailAddressInvalid = true;
           isPasswordInvalid = true;
           isIndustryInvalid = true;
-          isAreasOfInterestInvalid = true;
+          isAreasOfExpertiseInvalid = true;
           isCompanyInvalid = true;
           isJobTitleInvalid = true;
           isStartDateInvalid = true;
@@ -281,7 +281,7 @@ class _MentorSignUp extends State<MentorSignUp> {
                 buildJobTitleField(),
                 buildStartDateField(),
                 buildIndustryField(),
-                buildAreasOfInterestSelector()
+                buildAreasOfExpertiseSelector()
               ]
             )
           )
@@ -448,7 +448,7 @@ class _MentorSignUp extends State<MentorSignUp> {
           setState(() {
             isStartDateFocused = true;
             isIndustryFocused = false;
-            isAreasOfInterestFocused = false;
+            isAreasOfExpertiseFocused = false;
           });
           showStartDatePicker(); 
         }
@@ -493,7 +493,7 @@ class _MentorSignUp extends State<MentorSignUp> {
           unfocusTextFields();
           setState(() {
             isIndustryFocused = true;
-            isAreasOfInterestFocused = false;
+            isAreasOfExpertiseFocused = false;
             isStartDateFocused = false;
           });
           showIndustryPicker(); 
@@ -526,7 +526,7 @@ class _MentorSignUp extends State<MentorSignUp> {
       ?.didChange(null);
   }
 
-  Widget buildAreasOfInterestSelector() {
+  Widget buildAreasOfExpertiseSelector() {
     var options = <String>[];
     if (industry != null) {
       var chosenIndustry = (industries.singleWhere(
@@ -538,16 +538,16 @@ class _MentorSignUp extends State<MentorSignUp> {
       hintText: areasOfExpertiseHint,
       values: areasOfExpertise,
       options: options,
-      onConfirm: handleAreasOfInterestConfirm,
+      onConfirm: handleAreasOfExpertiseConfirm,
       field: (context, state, showChoices) {
-        return buildAreasOfInterestField(
+        return buildAreasOfExpertiseField(
           showSelector: options.isNotEmpty ? showChoices : null
         );
       }
     );
   }
 
-  Widget buildAreasOfInterestField({SmartSelectShowModal showSelector}) {
+  Widget buildAreasOfExpertiseField({SmartSelectShowModal showSelector}) {
     return showSelector != null
       ? Container(
         padding: EdgeInsets.only(bottom: 10.0),
@@ -556,14 +556,14 @@ class _MentorSignUp extends State<MentorSignUp> {
           initialValue: null,
           hintText: areasOfExpertiseHint,
           icon: lightBulbIconData,
-          isFocused: isAreasOfInterestFocused,
-          isInvalid: isAreasOfInterestInvalid,
+          isFocused: isAreasOfExpertiseFocused,
+          isInvalid: isAreasOfExpertiseInvalid,
           isEnabled: showSelector != null,
-          value: getAreasOfInterestDisplayString(),
+          value: getAreasOfExpertiseDisplayString(),
           onTap: () {
             unfocusTextFields();
             setState(() {
-              isAreasOfInterestFocused = true;
+              isAreasOfExpertiseFocused = true;
               isIndustryFocused = false;
               isStartDateFocused = false;
             });
@@ -573,7 +573,7 @@ class _MentorSignUp extends State<MentorSignUp> {
       ) : SizedBox();
   }
 
-  String getAreasOfInterestDisplayString() {
+  String getAreasOfExpertiseDisplayString() {
     if (areasOfExpertise != null) {
       var suffix = '';
       if (areasOfExpertise.length > 1) {
@@ -584,14 +584,14 @@ class _MentorSignUp extends State<MentorSignUp> {
     return null;
   }
   
-  void handleAreasOfInterestConfirm(List<String> values) {
+  void handleAreasOfExpertiseConfirm(List<String> values) {
     List<String> newAreas;
     if (values.isNotEmpty) {
       newAreas = values;
     }
     setState(() { areasOfExpertise = newAreas; });
     _mentorSignUpFormKey.currentState.fields['areasOfExpertise'].currentState
-      .didChange(getAreasOfInterestDisplayString());
+      .didChange(getAreasOfExpertiseDisplayString());
   }
 
   Widget buildFooter() {
