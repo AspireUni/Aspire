@@ -54,7 +54,7 @@ class MultiSelectModal extends StatelessWidget {
           bottom: BorderSide(
             color: Colors.grey,
             width: 0.3
-          ),
+          )
         ),
         textStyle: modalTextStyle(
           color: ThemeColors.primary,

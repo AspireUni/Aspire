@@ -242,7 +242,7 @@ class _MenteeSignUp extends State<MenteeSignUp> {
                 buildEmailAddressField(),
                 buildPasswordField(),
                 buildIndustryField(),
-                buildAreasOfInterestSelector(),
+                buildAreasOfInterestSelector()
               ]
             )
           )
