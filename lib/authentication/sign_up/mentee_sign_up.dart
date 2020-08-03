@@ -228,24 +228,26 @@ class _MenteeSignUp extends State<MenteeSignUp> {
   Widget buildForm() {
     return Container(
       width: ScreenSize.width * 0.70,
-        child: FormBuilder(
-          key: _menteeSignUpFormKey,
-          child: SizedBox(
-            height: ScreenSize.height * 0.47,
-            child: Center( child: ListView(
-            padding: EdgeInsets.all(0.0),
-            scrollDirection: Axis.vertical,
-            shrinkWrap: true,
-            children: <Widget>[
-              buildFullNameField(),
-              buildEmailAddressField(),
-              buildPasswordField(),
-              buildIndustryField(),
-              buildAreasOfInterestSelector(),
-            ]
+      child: FormBuilder(
+        key: _menteeSignUpFormKey,
+        child: SizedBox(
+          height: ScreenSize.height * 0.47,
+          child: Center(
+            child: ListView(
+              padding: EdgeInsets.all(0.0),
+              scrollDirection: Axis.vertical,
+              shrinkWrap: true,
+              children: <Widget>[
+                buildFullNameField(),
+                buildEmailAddressField(),
+                buildPasswordField(),
+                buildIndustryField(),
+                buildAreasOfInterestSelector(),
+              ]
+            )
           )
         )
-      ))
+      )
     );
   }
 
