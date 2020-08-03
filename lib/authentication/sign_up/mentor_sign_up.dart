@@ -4,11 +4,13 @@ import 'package:flutter_form_builder/flutter_form_builder.dart';
 import 'package:flutter_picker/flutter_picker.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:intl/intl.dart';
 import 'package:redux/redux.dart';
 import 'package:smart_select/smart_select.dart';
 
 import '../../common/common.dart';
 import '../../constants/constants.dart';
+import '../../helpers/helpers.dart';
 import '../../icons/aspire_icons.dart';
 import '../../models/models.dart';
 import '../../services/services.dart';
@@ -17,32 +19,46 @@ import '../login.dart';
 import '../password/link_sent.dart';
 
 
-class MenteeSignUp extends StatefulWidget {
-  MenteeSignUp({Key key}) : super(key: key);
+class MentorSignUp extends StatefulWidget {
+  MentorSignUp({Key key}) : super(key: key);
 
   @override
-  State<StatefulWidget> createState() => _MenteeSignUp();
+  State<StatefulWidget> createState() => _MentorSignUp();
 }
 
-class _MenteeSignUp extends State<MenteeSignUp> {
-  final GlobalKey<FormBuilderState> _menteeSignUpFormKey
+class _MentorSignUp extends State<MentorSignUp> {
+  final GlobalKey<FormBuilderState> _mentorSignUpFormKey
     = GlobalKey<FormBuilderState>();
   final FocusNode fullNameFocus = FocusNode();
   final FocusNode emailAddressFocus = FocusNode();
   final FocusNode passwordFocus = FocusNode();
+  final FocusNode companyFocus = FocusNode();
+  final FocusNode jobTitleFocus = FocusNode();
 
-  String fullName, emailAddress, password, industry;
-  List<String> areasOfInterest;
+  String fullName,
+    emailAddress,
+    password,
+    industry,
+    company,
+    jobTitle,
+    startDate;
+  List<String> areasOfExpertise;
   bool isFullNameFocused,
     isEmailAddressFocused,
     isPasswordFocused,
     isIndustryFocused,
-    isAreasOfInterestFocused;
+    isAreasOfInterestFocused,
+    isCompanyFocused,
+    isJobTitleFocused,
+    isStartDateFocused;
   bool isFullNameInvalid,
     isEmailAddressInvalid,
     isPasswordInvalid,
     isIndustryInvalid,
-    isAreasOfInterestInvalid;
+    isAreasOfInterestInvalid,
+    isCompanyInvalid,
+    isJobTitleInvalid,
+    isStartDateInvalid;
   bool isLoading;
   Store<AppState> store;
 
@@ -57,12 +73,18 @@ class _MenteeSignUp extends State<MenteeSignUp> {
     isPasswordInvalid = false;
     isIndustryInvalid = false;
     isAreasOfInterestInvalid = false;
+    isCompanyInvalid = false;
+    isJobTitleInvalid = false;
+    isStartDateInvalid = false;
 
     isFullNameFocused = false;
     isEmailAddressFocused = false;
     isPasswordFocused = false;
     isIndustryFocused = false;
     isAreasOfInterestFocused = false;
+    isCompanyFocused = false;
+    isJobTitleFocused = false;
+    isStartDateFocused = false;
   
     fieldFocusListeners();
 
@@ -74,6 +96,8 @@ class _MenteeSignUp extends State<MenteeSignUp> {
     fullNameFocus.dispose();
     emailAddressFocus.dispose();
     passwordFocus.dispose();
+    companyFocus.dispose();
+    jobTitleFocus.dispose();
     super.dispose();
   }
 
@@ -111,6 +135,12 @@ class _MenteeSignUp extends State<MenteeSignUp> {
     passwordFocus.addListener(() {
       setState(() { isPasswordFocused = passwordFocus.hasFocus; });
     });
+    companyFocus.addListener(() {
+      setState(() { isCompanyFocused = companyFocus.hasFocus; });
+    });
+    jobTitleFocus.addListener(() {
+      setState(() { isJobTitleFocused = jobTitleFocus.hasFocus; });
+    });
   }
 
   void unfocusFields() {
@@ -122,12 +152,15 @@ class _MenteeSignUp extends State<MenteeSignUp> {
     fullNameFocus.unfocus();
     emailAddressFocus.unfocus();
     passwordFocus.unfocus();
+    companyFocus.unfocus();
+    jobTitleFocus.unfocus();
   }
 
   void unfocusCustomFields() {
     setState(() {
       isIndustryFocused = false;
       isAreasOfInterestFocused = false;
+      isStartDateFocused = false;
     });
   }
 
@@ -136,7 +169,7 @@ class _MenteeSignUp extends State<MenteeSignUp> {
     setState(() {
       isLoading = true;
     });
-    if (_menteeSignUpFormKey.currentState.saveAndValidate()) {
+    if (_mentorSignUpFormKey.currentState.saveAndValidate()) {
       try {
         await signUp();
         setState(() {
@@ -146,12 +179,15 @@ class _MenteeSignUp extends State<MenteeSignUp> {
           isPasswordInvalid = false;
           isIndustryInvalid = false;
           isAreasOfInterestInvalid = false;
+          isCompanyInvalid = false;
+          isJobTitleInvalid = false;
+          isStartDateInvalid = false;
         });
       } on Exception catch (e) {
         print('Error: $e');
         setState(() {
           isLoading = false;
-          _menteeSignUpFormKey.currentState.reset();
+          _mentorSignUpFormKey.currentState.reset();
         });
       }
     } else {
@@ -162,6 +198,9 @@ class _MenteeSignUp extends State<MenteeSignUp> {
           isPasswordInvalid = true;
           isIndustryInvalid = true;
           isAreasOfInterestInvalid = true;
+          isCompanyInvalid = true;
+          isJobTitleInvalid = true;
+          isStartDateInvalid = true;
         });
     }
   }
@@ -170,12 +209,15 @@ class _MenteeSignUp extends State<MenteeSignUp> {
     try {
       var userId = await Auth().signUp(emailAddress, password);
       await Auth().sendEmailVerification();   
-      await addMentee(
+      await addMentor(
         userId,
         emailAddress: emailAddress,
         fullName: fullName,
         industry: industry,
-        areasOfInterest: areasOfInterest
+        areasOfExpertise: areasOfExpertise,
+        company: company,
+        jobTitle: jobTitle,
+        startDate: startDate
       );
       Navigator.pushReplacement(
         context,
@@ -223,7 +265,7 @@ class _MenteeSignUp extends State<MenteeSignUp> {
     return Container(
       width: ScreenSize.width * 0.70,
       child: FormBuilder(
-        key: _menteeSignUpFormKey,
+        key: _mentorSignUpFormKey,
         child: SizedBox(
           height: ScreenSize.height * 0.47,
           child: Center(
@@ -235,6 +277,9 @@ class _MenteeSignUp extends State<MenteeSignUp> {
                 buildFullNameField(),
                 buildEmailAddressField(),
                 buildPasswordField(),
+                buildCompanyField(),
+                buildJobTitleField(),
+                buildStartDateField(),
                 buildIndustryField(),
                 buildAreasOfInterestSelector()
               ]
@@ -338,6 +383,100 @@ class _MenteeSignUp extends State<MenteeSignUp> {
     );
   }
 
+  Widget buildCompanyField() {
+    return Container(
+      padding: EdgeInsets.only(bottom: 10.0),
+      child: FormBuilderTextField(
+        attribute: 'company',
+        focusNode: companyFocus,
+        style: fieldTextStyle(color: ThemeColors.primary),
+        decoration: fieldDecoration(
+          isFocused: isCompanyFocused,
+          isInvalid: isCompanyInvalid,
+          hintText: currentCompanyHint,
+          icon: briefCaseIconData
+        ),
+        validators: [
+          FormBuilderValidators.required(),
+          FormBuilderValidators.maxLength(100),
+        ],
+        keyboardType: TextInputType.text,
+        onTap: unfocusCustomFields,
+        onChanged: (value) => setState(() { company = value as String; })
+      )
+    );
+  }
+
+  Widget buildJobTitleField() {
+    return Container(
+      padding: EdgeInsets.only(bottom: 10.0),
+      child: FormBuilderTextField(
+        attribute: 'jobTitle',
+        focusNode: jobTitleFocus,
+        style: fieldTextStyle(color: ThemeColors.primary),
+        decoration: fieldDecoration(
+          isFocused: isJobTitleFocused,
+          isInvalid: isJobTitleInvalid,
+          hintText: jobTitleHint,
+          icon: briefCaseIconData
+        ),
+        validators: [
+          FormBuilderValidators.required(),
+          FormBuilderValidators.maxLength(100),
+        ],
+        keyboardType: TextInputType.text,
+        onTap: unfocusCustomFields,
+        onChanged: (value) => setState(() { jobTitle = value as String; })
+      )
+    );
+  }
+
+  Widget buildStartDateField() {
+    return Container(
+      padding: EdgeInsets.only(bottom: 10.0),
+      child: CustomField(
+        attribute: 'startDate',
+        initialValue: startDate,
+        hintText: startDateHint,
+        icon: briefCaseIconData,
+        isFocused: isStartDateFocused,
+        isInvalid: isStartDateInvalid,
+        isEnabled: true,
+        value: startDate ?? '',
+        onTap: () {
+          unfocusTextFields();
+          setState(() {
+            isStartDateFocused = true;
+            isIndustryFocused = false;
+            isAreasOfInterestFocused = false;
+          });
+          showStartDatePicker(); 
+        }
+      )
+    );
+  }
+
+  void showStartDatePicker() {
+    DatePicker(
+      titleText: startDateHint,
+      yearOnly: false,
+      initialValue: startDate != null 
+        ? convertMonthYearStringToDateTime(startDate)
+        : DateTime.now(),
+      maxValue: DateTime.now(),
+      onConfirm: (picker, value) => handleStartDateConfirm(picker),
+    ).build(context).showModal(context);
+  }
+
+  void handleStartDateConfirm(Picker picker) {
+    var newStartDateTime = DateFormat('yyyy-MM-dd hh:mm:ss')
+      .parse(picker.adapter.text);
+    var newStartDate = convertDateTimeToMonthYearString(newStartDateTime);
+    setState(() { startDate = newStartDate; });
+    _mentorSignUpFormKey.currentState.fields['startDate'].currentState
+      .didChange(newStartDate);
+  }
+
   Widget buildIndustryField() {
     return Container(
       padding: EdgeInsets.only(bottom: 10.0),
@@ -355,6 +494,7 @@ class _MenteeSignUp extends State<MenteeSignUp> {
           setState(() {
             isIndustryFocused = true;
             isAreasOfInterestFocused = false;
+            isStartDateFocused = false;
           });
           showIndustryPicker(); 
         }
@@ -378,11 +518,11 @@ class _MenteeSignUp extends State<MenteeSignUp> {
     var newIndustry = industries[picker.selecteds[0]].name;
     setState(() {
       industry = newIndustry;
-      areasOfInterest = null;
+      areasOfExpertise = null;
     });
-    _menteeSignUpFormKey.currentState.fields['industry']?.currentState
+    _mentorSignUpFormKey.currentState.fields['industry']?.currentState
       ?.didChange(newIndustry);
-    _menteeSignUpFormKey.currentState.fields['areasOfInterest']?.currentState
+    _mentorSignUpFormKey.currentState.fields['areasOfExpertise']?.currentState
       ?.didChange(null);
   }
 
@@ -395,8 +535,8 @@ class _MenteeSignUp extends State<MenteeSignUp> {
       options = chosenIndustry.areas;
     }
     return MultiSelectModal(
-      hintText: areasOfInterestHint,
-      values: areasOfInterest,
+      hintText: areasOfExpertiseHint,
+      values: areasOfExpertise,
       options: options,
       onConfirm: handleAreasOfInterestConfirm,
       field: (context, state, showChoices) {
@@ -408,33 +548,38 @@ class _MenteeSignUp extends State<MenteeSignUp> {
   }
 
   Widget buildAreasOfInterestField({SmartSelectShowModal showSelector}) {
-    return CustomField(
-      attribute: 'areasOfInterest',
-      initialValue: null,
-      hintText: areasOfInterestHint,
-      icon: lightBulbIconData,
-      isFocused: isAreasOfInterestFocused,
-      isInvalid: isAreasOfInterestInvalid,
-      isEnabled: showSelector != null,
-      value: getAreasOfInterestDisplayString(),
-      onTap: () {
-        unfocusTextFields();
-        setState(() {
-          isAreasOfInterestFocused = true;
-          isIndustryFocused = false;
-        });
-        showSelector(context);
-      }
-    );
+    return showSelector != null
+      ? Container(
+        padding: EdgeInsets.only(bottom: 10.0),
+        child: CustomField(
+          attribute: 'areasOfExpertise',
+          initialValue: null,
+          hintText: areasOfExpertiseHint,
+          icon: lightBulbIconData,
+          isFocused: isAreasOfInterestFocused,
+          isInvalid: isAreasOfInterestInvalid,
+          isEnabled: showSelector != null,
+          value: getAreasOfInterestDisplayString(),
+          onTap: () {
+            unfocusTextFields();
+            setState(() {
+              isAreasOfInterestFocused = true;
+              isIndustryFocused = false;
+              isStartDateFocused = false;
+            });
+            showSelector(context);
+          }
+        )
+      ) : SizedBox();
   }
 
   String getAreasOfInterestDisplayString() {
-    if (areasOfInterest != null) {
+    if (areasOfExpertise != null) {
       var suffix = '';
-      if (areasOfInterest.length > 1) {
+      if (areasOfExpertise.length > 1) {
         suffix = 's';
       }
-      return '${areasOfInterest.length} area$suffix of interest selected';
+      return '${areasOfExpertise.length} area$suffix of expertise selected';
     }
     return null;
   }
@@ -444,8 +589,8 @@ class _MenteeSignUp extends State<MenteeSignUp> {
     if (values.isNotEmpty) {
       newAreas = values;
     }
-    setState(() { areasOfInterest = newAreas; });
-    _menteeSignUpFormKey.currentState.fields['areasOfInterest'].currentState
+    setState(() { areasOfExpertise = newAreas; });
+    _mentorSignUpFormKey.currentState.fields['areasOfExpertise'].currentState
       .didChange(getAreasOfInterestDisplayString());
   }
 

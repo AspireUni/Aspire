@@ -10,6 +10,7 @@ import 'package:redux/redux.dart';
 import '../../../../actions/actions.dart';
 import '../../../../common/common_context.dart';
 import '../../../../constants/profile_constants.dart';
+import '../../../../helpers/helpers.dart';
 import '../../../../models/models.dart';
 import '../../../../selectors/selectors.dart';
 import '../../../common/app_bar.dart';
@@ -133,24 +134,11 @@ class _SaveExperienceItemState extends State<SaveExperienceItem> {
     });
   }
 
-  DateTime convertStringToDateTime(String date) {
-    if (date == endDatePresent) {
-      return DateTime.now();
-    }
-    return DateFormat('MMMM yyyy').parse(date);
-  }
-
-  String convertDateTimeToString(DateTime date) {
-    var month = DateFormat.MMMM().format(date).toString();
-    var year = DateFormat.y().format(date).toString();
-    return '$month $year';
-  }
-
   void showStartDatePicker(Job job) {
     DatePicker(
       yearOnly: false,
       initialValue: job.startDate != null 
-        ? convertStringToDateTime(job.startDate)
+        ? convertMonthYearStringToDateTime(job.startDate)
         : DateTime.now(),
       maxValue: DateTime.now(),
       onConfirm: (picker, value) => handleStartDateConfirm(picker, job),
@@ -161,9 +149,9 @@ class _SaveExperienceItemState extends State<SaveExperienceItem> {
     DatePicker(
       yearOnly: false,
       initialValue: job.endDate != null 
-        ? convertStringToDateTime(job.endDate)
-        : convertStringToDateTime(job.startDate),
-      minValue: convertStringToDateTime(job.startDate),
+        ? convertMonthYearStringToDateTime(job.endDate)
+        : convertMonthYearStringToDateTime(job.startDate),
+      minValue: convertMonthYearStringToDateTime(job.startDate),
       maxValue: DateTime.now(),
       onConfirm: (picker, value) => handleEndDateConfirm(picker, job),
     ).build(context).showModal(context);
@@ -191,7 +179,7 @@ class _SaveExperienceItemState extends State<SaveExperienceItem> {
   void handleStartDateConfirm(Picker picker, Job job) {
     var newStartDateTime = DateFormat('yyyy-MM-dd hh:mm:ss')
       .parse(picker.adapter.text);
-    var newStartDate = convertDateTimeToString(newStartDateTime);
+    var newStartDate = convertDateTimeToMonthYearString(newStartDateTime);
     store.dispatch(
       UpdateSaveExperienceState(
         job.copyWith(
@@ -212,7 +200,7 @@ class _SaveExperienceItemState extends State<SaveExperienceItem> {
   void handleEndDateConfirm(Picker picker, Job job) {
     var newEndDateTime = DateFormat('yyyy-MM-dd hh:mm:ss')
       .parse(picker.adapter.text);
-    var newEndDate = convertDateTimeToString(newEndDateTime);
+    var newEndDate = convertDateTimeToMonthYearString(newEndDateTime);
     store.dispatch(
       UpdateSaveExperienceState(
         job.copyWith(
