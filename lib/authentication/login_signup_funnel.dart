@@ -88,7 +88,7 @@ class LoginSignupFunnel extends StatelessWidget {
       child: PrimaryButton(
         text: loginButtonText,
         isLight: false,
-        onPressed: () => Navigator.pushReplacement(
+        onPressed: () => Navigator.push(
           context, MaterialPageRoute(
             builder: (context) => Login()
           )
@@ -103,7 +103,7 @@ class LoginSignupFunnel extends StatelessWidget {
       child: PrimaryButton(
         text: createAccountButtonText,
         isLight: true,
-        onPressed: () => Navigator.pushReplacement(
+        onPressed: () => Navigator.push(
           context, MaterialPageRoute(
             builder: (context) => SignUpFunnel()
           )

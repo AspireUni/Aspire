@@ -19,9 +19,12 @@ class GlobalHeader extends StatelessWidget implements PreferredSizeWidget {
   @override
   Widget build(BuildContext context) {
     var showAction = actionText != null && onActionTap != null;
-
+    var showBackButton = Navigator.canPop(context);
     return AppBar(
       title: appBarTitle(), 
+      leading: showBackButton ? 
+        BackButton(color: isLight ? Colors.white : Colors.black) :
+        null,
       actions: <Widget>[appBarAction(context, isVisible: showAction)],
       backgroundColor: Colors.transparent,
       centerTitle: false,
