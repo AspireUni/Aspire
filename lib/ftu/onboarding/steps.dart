@@ -18,6 +18,11 @@ class _OnboardingSteps extends State<OnboardingSteps> {
 
   int stepIndex;
 
+  final GlobalKey<InOutAnimationState> inOutAnimationText = 
+    GlobalKey<InOutAnimationState>();
+  final GlobalKey<InOutAnimationState> inOutAnimationAno = 
+    GlobalKey<InOutAnimationState>();
+
   @override
   void initState() {
     super.initState();
@@ -72,8 +77,10 @@ class _OnboardingSteps extends State<OnboardingSteps> {
   Widget buildCenterAno() {
     return Padding(
       padding: EdgeInsets.only(top: ScreenSize.height * 0.30),
-      child: SlideInRight(
-        key: onboardingStepsConfig[stepIndex]["imageKey"],
+      child: InOutAnimation(
+        key: inOutAnimationAno,
+        inDefinition: SlideInRightAnimation(),
+        outDefinition: SlideOutLeftAnimation(),
         child: Image.asset(
           onboardingStepsConfig[stepIndex]["image"],
           height: ScreenSize.height * 0.15
@@ -83,8 +90,10 @@ class _OnboardingSteps extends State<OnboardingSteps> {
   }
 
   Widget buildOnboardingText() {
-    return SlideInRight(
-      key: onboardingStepsConfig[stepIndex]["textKey"],
+    return InOutAnimation(
+      key: inOutAnimationText,
+      inDefinition: SlideInRightAnimation(),
+      outDefinition: SlideOutLeftAnimation(),
       child: Container(
         padding: EdgeInsets.only(top: ScreenSize.height * 0.15),
         width: ScreenSize.width * 0.60,
@@ -119,10 +128,17 @@ class _OnboardingSteps extends State<OnboardingSteps> {
     );
   }
 
-  void getNextStep() {
-    if (stepIndex < 2) {
+  void getNextStep() async {
+    if (stepIndex < 2 && 
+      inOutAnimationText.currentState.status != InOutAnimationStatus.Out
+    ) {
+      inOutAnimationText.currentState.animateOut();
+      inOutAnimationAno.currentState.animateOut();
+      await Future.delayed(Duration(milliseconds: 400));
       setState(() { stepIndex += 1; });
-    } else {
+      inOutAnimationText.currentState.animateIn();
+      inOutAnimationAno.currentState.animateIn();
+    } else if (stepIndex >= 2) {
       Navigator.pushReplacement(
         context,
         MaterialPageRoute(builder: (context) => LoginSignupFunnel())
