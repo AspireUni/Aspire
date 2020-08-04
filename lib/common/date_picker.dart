@@ -4,23 +4,42 @@ import 'package:flutter_picker/flutter_picker.dart';
 
 import './common.dart';
 
-class ListPicker {
+class DatePicker {
   final String titleText;
-  final List<String> data;
-  final List<int> selecteds;
+  final bool yearOnly;
+  final DateTime initialValue;
+  final DateTime minValue;
+  final DateTime maxValue;
   final void Function(Picker, List<int>) onConfirm;
 
-  ListPicker({
+  DatePicker({
     @required this.titleText,
-    @required this.data,
-    @required this.selecteds,
-    @required this.onConfirm
+    @required this.yearOnly,
+    @required this.onConfirm,
+    @required this.initialValue,
+    @required this.maxValue,
+    this.minValue,
   });
 
   Picker build(BuildContext context) {
     return Picker(
-      adapter: PickerDataAdapter(data: getData()),
-      selecteds: selecteds,
+      adapter: DateTimePickerAdapter(
+        value: initialValue,
+        customColumnType: yearOnly ? [0] : [1, 0],
+        isNumberMonth: false,
+        minValue: minValue,
+        maxValue: maxValue,
+      ),
+      textStyle: modalTextStyle(
+        color: ThemeColors.primary,
+        isButton: false
+      ),
+      confirmTextStyle: modalTextStyle(
+        color: ThemeColors.accent, 
+        isButton: true
+      ),
+      cancel: buildTitle(),
+      textAlign: TextAlign.right,
       onConfirm: onConfirm,
       hideHeader: false,
       height: ScreenSize.height * 0.30,
@@ -28,24 +47,7 @@ class ListPicker {
       magnification: 1.5,
       squeeze: 0.80,
       diameterRatio: 4.0,
-      cancel: buildTitle(),
-      confirmTextStyle: modalTextStyle(
-        color: ThemeColors.accent, 
-        isButton: true
-      ),
     );
-  }
-
-  List<PickerItem<String>> getData() {
-    return data.map((item) => PickerItem(
-      text: FormatText(
-        text: item,
-        textColor: ThemeColors.primary, 
-        fontSize: 15.0,
-        fontWeight: FontWeight.normal
-      ),
-      value: item
-    )).toList();
   }
 
   Widget buildTitle() {

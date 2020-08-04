@@ -4,6 +4,7 @@ import '../../common/common.dart';
 import '../../constants/constants.dart';
 import '../login.dart';
 import './mentee_sign_up.dart';
+import './mentor_sign_up.dart';
 
 class SignUpFunnel extends StatelessWidget {
   
@@ -121,7 +122,11 @@ class SignUpFunnel extends StatelessWidget {
       PrimaryButton(
         text: isMentorAction,
         isLight: isLight, 
-        onPressed: () => { print("I am a mentor pressed.") }
+        onPressed: () => Navigator.pushReplacement(
+          context, MaterialPageRoute(
+            builder: (context) => MentorSignUp()
+          )
+        )
       ), 
       PrimaryButton(
         text: isMenteeAction,
