@@ -2,10 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_animator/flutter_animator.dart';
 
 import '../../authentication/login_signup_funnel.dart';
-import '../../common/circle_indicators.dart';
-import '../../common/format_text.dart';
-import '../../common/global_header.dart';
-import '../../common/primary_button.dart';
+import '../../common/common.dart';
 import '../../constants/common_constants.dart';
 import '../../constants/ftu_constants.dart';
 
@@ -20,7 +17,6 @@ class OnboardingSteps extends StatefulWidget {
 class _OnboardingSteps extends State<OnboardingSteps> {
 
   int stepIndex;
-  double screenWidth, screenHeight;
 
   @override
   void initState() {
@@ -30,10 +26,7 @@ class _OnboardingSteps extends State<OnboardingSteps> {
   }
 
   @override
-  Widget build(BuildContext context) {
-    screenWidth = MediaQuery.of(context).size.width;
-    screenHeight = MediaQuery.of(context).size.height;
-
+  Widget build(BuildContext context) {    
     return Scaffold(
       backgroundColor: Colors.white,
       appBar: buildHeader(),
@@ -78,12 +71,12 @@ class _OnboardingSteps extends State<OnboardingSteps> {
 
   Widget buildCenterAno() {
     return Padding(
-      padding: EdgeInsets.only(top: screenHeight * 0.30),
+      padding: EdgeInsets.only(top: ScreenSize.height * 0.30),
       child: SlideInRight(
         key: onboardingStepsConfig[stepIndex]["imageKey"],
         child: Image.asset(
           onboardingStepsConfig[stepIndex]["image"],
-          height: screenHeight * 0.15
+          height: ScreenSize.height * 0.15
         ),
       )
     );
@@ -93,8 +86,8 @@ class _OnboardingSteps extends State<OnboardingSteps> {
     return SlideInRight(
       key: onboardingStepsConfig[stepIndex]["textKey"],
       child: Container(
-        padding: EdgeInsets.only(top: screenHeight * 0.15),
-        width: screenWidth * 0.60,
+        padding: EdgeInsets.only(top: ScreenSize.height * 0.15),
+        width: ScreenSize.width * 0.60,
         child: FormatText(
           text: onboardingStepsConfig[stepIndex]["text"],
           textColor: Colors.black,
@@ -108,7 +101,7 @@ class _OnboardingSteps extends State<OnboardingSteps> {
 
   Widget buildFooter() {
     return Positioned(
-      bottom: screenHeight * 0.10,
+      bottom: ScreenSize.height * 0.10,
       child: Column(
         children: <Widget>[
           CircleIndicators(stepIndex: stepIndex),

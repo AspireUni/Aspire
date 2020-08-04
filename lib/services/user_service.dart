@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:random_string/random_string.dart';
 
-import '../constants/common_constants.dart';
+import '../constants/constants.dart';
 import '../models/models.dart';
 
 Future<Map<String, dynamic>> getUser(String id) async {
@@ -45,16 +46,62 @@ Future<QuerySnapshot> getMentors() async {
 Future<void> addMentee(
   String id, {
     String emailAddress,
-    String fullName
+    String fullName,
+    String industry,
+    List<String> areasOfInterest
   }
 ) async {
   var user = User.initial().copyWith(
     id: id,
     type: UserType.mentee,
+    industry: Industry(
+      name: industry,
+      areas: areasOfInterest
+    ),
     fullName: fullName,
     contact: Contact.initial().copyWith(
       emailAddress: emailAddress
     )
+  ).toJson();
+
+  Firestore
+    .instance
+    .collection("users")
+    .document(id)
+    .setData(user);
+}
+
+Future<void> addMentor(
+  String id, {
+    String emailAddress,
+    String fullName,
+    String industry,
+    List<String> areasOfExpertise,
+    String company,
+    String jobTitle,
+    String startDate
+  }
+) async {
+  var user = User.initial().copyWith(
+    id: id,
+    type: UserType.mentor,
+    industry: Industry(
+      name: industry,
+      areas: areasOfExpertise
+    ),
+    fullName: fullName,
+    contact: Contact.initial().copyWith(
+      emailAddress: emailAddress
+    ),
+    jobs: [
+      Job(
+        id: randomAlphaNumeric(15), 
+        title: jobTitle,
+        company: company,
+        startDate: startDate,
+        endDate: endDatePresent
+      )
+    ]
   ).toJson();
 
   Firestore

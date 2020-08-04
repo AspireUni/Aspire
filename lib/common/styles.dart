@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
-InputDecoration fieldDecoration(
-  BuildContext context, {
+import './common_context.dart';
+
+InputDecoration fieldDecoration({
     String hintText,
+    String errorText,
     IconData icon,
     bool isFocused,
     bool isInvalid
@@ -21,7 +23,7 @@ InputDecoration fieldDecoration(
     ),
     focusedBorder: OutlineInputBorder(
       borderSide: BorderSide(
-        color: Theme.of(context).accentColor,
+        color: ThemeColors.accent,
         width: 1.0
       ),
       borderRadius: BorderRadius.all(Radius.zero),
@@ -33,13 +35,17 @@ InputDecoration fieldDecoration(
       ),
       borderRadius: BorderRadius.all(Radius.zero),
     ),
-    errorStyle: fieldTextStyle(fontSize: 13.0, color: Colors.red),
+    errorText: errorText,
+    errorStyle: fieldTextStyle(
+      fontSize: 13.0,
+      color: Colors.red
+    ),
     hintText: hintText,
     hintStyle: fieldTextStyle(),
     prefixIcon: Icon(
       icon,
       color: isFocused && !isInvalid 
-      ? Theme.of(context).accentColor
+      ? ThemeColors.accent
       : Colors.grey,
       size: 20.0
     )
@@ -54,5 +60,15 @@ TextStyle fieldTextStyle({double fontSize, Color color}) =>
       fontSize: fontSize ?? 14.0,  
       fontWeight: FontWeight.w500,
       height: 1.2
+    )
+  );
+
+TextStyle modalTextStyle({bool isButton, Color color}) =>
+  GoogleFonts.muli(
+    textStyle: TextStyle(
+      color: color ?? Colors.grey, 
+      letterSpacing: .5, 
+      fontSize: 15.0,
+      fontWeight: isButton ? FontWeight.w600 : FontWeight.normal
     )
   );

@@ -4,6 +4,7 @@ import '../../common/common.dart';
 import '../../constants/constants.dart';
 import '../login.dart';
 import './mentee_sign_up.dart';
+import './mentor_sign_up.dart';
 
 class SignUpFunnel extends StatelessWidget {
   
@@ -12,7 +13,7 @@ class SignUpFunnel extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      // TODO: Replace with primaryColor when center ano image is updated
+      // TODO: Replace with primary when center ano image is updated
       backgroundColor: Color(0xFF0B0B33),
       body: Container(
         child: Stack(
@@ -42,13 +43,12 @@ class SignUpFunnel extends StatelessWidget {
   }
 
   Widget buildCenterAno(context) {
-    var screenHeight = MediaQuery.of(context).size.height;
     return Column(
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
         Image.asset(
           'images/sign_up/ano_hands_up.png', 
-          height: screenHeight * 0.11
+          height: ScreenSize.height * 0.11
         ),
         Container(height: 1.5, color: Colors.white)
       ]
@@ -57,24 +57,20 @@ class SignUpFunnel extends StatelessWidget {
 
   // TODO: Make a common global_footer widget to maintain consistent padding
   Widget buildFooter(context) {
-    var screenWidth = MediaQuery.of(context).size.width; 
-    var screenHeight = MediaQuery.of(context).size.height; 
-    var heightPadding = screenHeight * 0.08;
-    var widthPadding = screenWidth * 0.21;
+    var verticalPadding = ScreenSize.height * 0.08;
+    var horizontalPadding = ScreenSize.width * 0.21;
 
     return Padding(
-      padding: EdgeInsets.fromLTRB(
-        widthPadding, 
-        heightPadding, 
-        widthPadding, 
-        heightPadding
+      padding: EdgeInsets.symmetric(
+        horizontal: horizontalPadding, 
+        vertical: verticalPadding
       ), 
       child: Column(
         mainAxisAlignment: MainAxisAlignment.end,
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
           buildFunnelText(), 
-          buildCircleIndicators(context, screenWidth), 
+          buildCircleIndicators(), 
           ...buildFunnelButtons(context)
         ]
       )
@@ -95,18 +91,18 @@ class SignUpFunnel extends StatelessWidget {
   }
   
   // TODO: Make a common circle_indicators widget is created
-  Row buildCircleIndicators(context, screenWidth) {
-    var circleDimensions = screenWidth * 0.01;
+  Row buildCircleIndicators() {
+    var circleDimensions = ScreenSize.width * 0.01;
     var circles = <Widget>[];
     for (var i = 0; i < 3; i++) {
       circles.add(
         Container(
           width: circleDimensions, 
           height: circleDimensions, 
-          margin: EdgeInsets.all(screenWidth * 0.02), 
+          margin: EdgeInsets.all(ScreenSize.width * 0.02), 
           decoration: BoxDecoration(
             color: i == 0 ? 
-              Theme.of(context).accentColor : Colors.grey, 
+              ThemeColors.accent : Colors.grey, 
             shape: BoxShape.circle
           )
         )
@@ -126,7 +122,11 @@ class SignUpFunnel extends StatelessWidget {
       PrimaryButton(
         text: isMentorAction,
         isLight: isLight, 
-        onPressed: () => { print("I am a mentor pressed.") }
+        onPressed: () => Navigator.pushReplacement(
+          context, MaterialPageRoute(
+            builder: (context) => MentorSignUp()
+          )
+        )
       ), 
       PrimaryButton(
         text: isMenteeAction,

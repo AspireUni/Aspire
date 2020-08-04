@@ -2,6 +2,12 @@
 const String fullNameHint = 'Enter your full name';
 const String emailHint = 'Enter your email';
 const String passwordHint = 'Enter your password';
+const String industryHint = 'Select your industry';
+const String areasOfInterestHint = 'Select your areas of interest';
+const String areasOfExpertiseHint = 'Select your areas of expertise';
+const String currentCompanyHint = 'Enter your current company';
+const String jobTitleHint = 'Enter your job title';
+const String startDateHint = 'Select the date you started';
 const String forgotPassword = 'Forgot password?';
 const String newPasswordHint = 'Enter your new password';
 const String confirmPasswordHint = 'Confirm your password';

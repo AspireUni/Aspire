@@ -20,7 +20,6 @@ class _ResetLink extends State<ResetLink> {
   final GlobalKey<FormBuilderState> _emailAddressFormKey
     = GlobalKey<FormBuilderState>();
 
-  double screenHeight, screenWidth;
   bool isLoading, isEmailAddressInvalid;
   String emailAddress;
 
@@ -35,10 +34,6 @@ class _ResetLink extends State<ResetLink> {
 
   @override
   Widget build(BuildContext context) {
-
-    screenWidth = MediaQuery.of(context).size.width;
-    screenHeight = MediaQuery.of(context).size.height;
-
     return Scaffold(
       backgroundColor: Colors.white,
       appBar: GlobalHeader(
@@ -58,15 +53,15 @@ class _ResetLink extends State<ResetLink> {
       alignment: Alignment.center,
       children: <Widget>[
         Positioned(
-          top: screenHeight * 0.15,
+          top: ScreenSize.height * 0.15,
           child: buildCenterAno()
         ),
         Positioned(
-          top: screenHeight * 0.35,
+          top: ScreenSize.height * 0.35,
           child: buildForm()
         ), 
         Positioned(
-          top: screenHeight * 0.50,
+          top: ScreenSize.height * 0.50,
           child: buildResetLinkButton()
         )
       ]
@@ -75,12 +70,12 @@ class _ResetLink extends State<ResetLink> {
 
  Widget buildCenterAno() {
     return Container(
-      width: screenWidth,
+      width: ScreenSize.width,
       child: Column(
         children: <Widget>[
           Image.asset(
             'images/sign_up/ano_hands_straight_up.png', 
-            height: screenHeight * 0.11
+            height: ScreenSize.height * 0.11
           ),
           Container(
             height: 1.5,
@@ -93,7 +88,7 @@ class _ResetLink extends State<ResetLink> {
 
   Widget buildForm() {
     return Container(
-      width: screenWidth * 0.60,
+      width: ScreenSize.width * 0.60,
       child: FormBuilder(
         key: _emailAddressFormKey,
         child: buildEmailAddressField()
@@ -108,7 +103,6 @@ class _ResetLink extends State<ResetLink> {
         attribute: 'emailAddress',
         autofocus: true, 
         decoration: fieldDecoration(
-          context,
           isFocused: true,
           isInvalid: isEmailAddressInvalid,
           hintText: emailHint,

@@ -54,7 +54,7 @@ class MessageRow extends StatelessWidget {
             style: TextStyle(
               color: isRead == true || isSent == true ? 
                 Colors.grey : 
-                Theme.of(context).accentColor,
+                ThemeColors.accent,
             ),
             text: lastMessageType == 0 ? 
               lastMessage.content : 
@@ -116,7 +116,7 @@ class MessageRow extends StatelessWidget {
           border: Border.all(
             color: isRead || isSent ? 
               Colors.grey : 
-              Theme.of(context).accentColor, 
+              ThemeColors.accent, 
             width: 1.0
           ),
           borderRadius: BorderRadius.all(Radius.circular(15.0)),

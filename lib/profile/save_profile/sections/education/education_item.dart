@@ -10,6 +10,7 @@ import 'package:redux/redux.dart';
 import '../../../../actions/actions.dart';
 import '../../../../common/common.dart';
 import '../../../../constants/profile_constants.dart';
+import '../../../../helpers/helpers.dart';
 import '../../../../icons/aspire_icons.dart';
 import '../../../../models/models.dart';
 import '../../../../selectors/selectors.dart';
@@ -147,19 +148,11 @@ class _SaveEducationItemState extends State<SaveEducationItem> {
     });
   }
 
-  DateTime convertStringToDateTime(String date) {
-    return DateFormat.y().parse(date);
-  }
-
-  String convertDateTimeToString(DateTime date) {
-    return DateFormat.y().format(date).toString();
-  }
-
   void showStartYearPicker(School school) {
     DatePicker(
       yearOnly: true,
       initialValue: school.startYear != null
-        ? convertStringToDateTime(school.startYear)
+        ? convertYearStringToDateTime(school.startYear)
         : DateTime.now(),
       maxValue: DateTime.now(),
       onConfirm: (picker, value) => handleStartYearConfirm(picker, school),
@@ -170,9 +163,9 @@ class _SaveEducationItemState extends State<SaveEducationItem> {
     DatePicker(
       yearOnly: true,
       initialValue: school.endYear != null 
-        ? convertStringToDateTime(school.endYear) 
-        : convertStringToDateTime(school.startYear),
-      minValue: convertStringToDateTime(school.startYear),
+        ? convertYearStringToDateTime(school.endYear) 
+        : convertYearStringToDateTime(school.startYear),
+      minValue: convertYearStringToDateTime(school.startYear),
       onConfirm: (picker, value) => handleEndYearConfirm(picker, school),
     ).build(context).showModal(context);
   }
@@ -199,7 +192,7 @@ class _SaveEducationItemState extends State<SaveEducationItem> {
   void handleStartYearConfirm(Picker picker, School school) {
     var newStartDateTime = DateFormat('yyyy-MM-dd hh:mm:ss')
       .parse(picker.adapter.text);
-    var newStartYear = convertDateTimeToString(newStartDateTime);
+    var newStartYear = convertDateTimeToYearString(newStartDateTime);
     store.dispatch(
       UpdateSaveEducationState(
         school.copyWith(
@@ -222,7 +215,7 @@ class _SaveEducationItemState extends State<SaveEducationItem> {
   void handleEndYearConfirm(Picker picker, School school) {
     var newEndDateTime = DateFormat('yyyy-MM-dd hh:mm:ss') 
       .parse(picker.adapter.text);
-    var newEndYear = convertDateTimeToString(newEndDateTime);
+    var newEndYear = convertDateTimeToYearString(newEndDateTime);
     store.dispatch(
       UpdateSaveEducationState(
         school.copyWith(
@@ -356,7 +349,6 @@ class _SaveEducationItemState extends State<SaveEducationItem> {
         )
       ),
         decoration: fieldDecoration(
-          context,
           isFocused: isSchoolNameFocused,
           isInvalid: isSchoolNameInvalid,
           hintText: "Enter your institution",
@@ -390,7 +382,6 @@ class _SaveEducationItemState extends State<SaveEducationItem> {
         )
       ),
         decoration: fieldDecoration(
-          context,
           isFocused: isDegreeFocused,
           isInvalid: isDegreeInvalid,
           hintText: "Enter your credential",

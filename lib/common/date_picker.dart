@@ -2,10 +2,10 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_picker/flutter_picker.dart';
 
-import '../../common/common_context.dart';
-import '../common/styles.dart';
+import './common.dart';
 
 class DatePicker {
+  final String titleText;
   final bool yearOnly;
   final DateTime initialValue;
   final DateTime minValue;
@@ -13,11 +13,12 @@ class DatePicker {
   final void Function(Picker, List<int>) onConfirm;
 
   DatePicker({
-    this.yearOnly,
-    this.initialValue,
+    @required this.titleText,
+    @required this.yearOnly,
+    @required this.onConfirm,
+    @required this.initialValue,
+    @required this.maxValue,
     this.minValue,
-    this.maxValue,
-    this.onConfirm
   });
 
   Picker build(BuildContext context) {
@@ -29,6 +30,15 @@ class DatePicker {
         minValue: minValue,
         maxValue: maxValue,
       ),
+      textStyle: modalTextStyle(
+        color: ThemeColors.primary,
+        isButton: false
+      ),
+      confirmTextStyle: modalTextStyle(
+        color: ThemeColors.accent, 
+        isButton: true
+      ),
+      cancel: buildTitle(),
       textAlign: TextAlign.right,
       onConfirm: onConfirm,
       hideHeader: false,
@@ -37,18 +47,18 @@ class DatePicker {
       magnification: 1.5,
       squeeze: 0.80,
       diameterRatio: 4.0,
-      textStyle: pickerTextStyle(
-        isCancel: false,
-        isButton: false
-      ),
-      cancelTextStyle: pickerTextStyle(
-        isCancel: true,
-        isButton: true
-      ),
-      confirmTextStyle: pickerTextStyle(
-        isCancel: false,
-        isButton: true
-      ),
+    );
+  }
+
+  Widget buildTitle() {
+    return Container(
+      padding: EdgeInsets.all(20.0),
+      child: FormatText(
+        text: titleText,
+        textColor: ThemeColors.primary, 
+        fontSize: 15.0,
+        fontWeight: FontWeight.w600
+      )
     );
   }
 }

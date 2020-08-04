@@ -36,7 +36,6 @@ class _Login extends State<Login> {
   bool isEmailAddressInvalid, isPasswordInvalid;
   bool isLoading;
   Store<AppState> store;
-  double screenHeight, screenWidth;
 
   @override
   void initState() {
@@ -64,10 +63,6 @@ class _Login extends State<Login> {
 
   @override
   Widget build(BuildContext context) {
-
-    screenWidth = MediaQuery.of(context).size.width;
-    screenHeight = MediaQuery.of(context).size.height;
-
     return Scaffold(
       backgroundColor: Colors.white,
       appBar: GlobalHeader(
@@ -167,15 +162,15 @@ class _Login extends State<Login> {
       alignment: Alignment.center,
       children: <Widget>[
         Positioned(
-          top: screenHeight * 0.15,
+          top: ScreenSize.height * 0.15,
           child: buildCenterAno()
         ),
         Positioned(
-          top: screenHeight * 0.35,
+          top: ScreenSize.height * 0.35,
           child: buildForm()
         ),
         Positioned(
-          bottom: screenHeight * 0.05,
+          bottom: ScreenSize.height * 0.05,
           child: FooterLinks()
         )
       ]
@@ -184,7 +179,7 @@ class _Login extends State<Login> {
 
   Widget buildForm() {
     return Container(
-      width: screenWidth * 0.60,
+      width: ScreenSize.width * 0.60,
       child: FormBuilder(
         key: _loginFormKey,
         child: Column(
@@ -201,12 +196,12 @@ class _Login extends State<Login> {
 
   Widget buildCenterAno() {
     return Container(
-      width: screenWidth,
+      width: ScreenSize.width,
       child: Column(
         children: <Widget>[
           SvgPicture.asset(
             'images/diverse_ano.svg',
-            height: screenHeight * 0.11,
+            height: ScreenSize.height * 0.11,
           ),
           Container(
             height: 1.5,
@@ -223,9 +218,8 @@ class _Login extends State<Login> {
       child: FormBuilderTextField(
         attribute: 'emailAddress',
         focusNode: emailAddressFocus,
-        style: fieldTextStyle(color: Theme.of(context).primaryColor),
+        style: fieldTextStyle(color: ThemeColors.primary),
         decoration: fieldDecoration(
-          context,
           isFocused: isEmailAddressFocused,
           isInvalid: isEmailAddressInvalid,
           hintText: emailHint,
@@ -250,9 +244,8 @@ class _Login extends State<Login> {
         focusNode: passwordFocus,
         obscureText: true,
         maxLines: 1,
-        style: fieldTextStyle(color: Theme.of(context).primaryColor),
+        style: fieldTextStyle(color: ThemeColors.primary),
         decoration: fieldDecoration(
-          context,
           isFocused: isPasswordFocused,
           isInvalid: isPasswordInvalid,
           hintText: passwordHint,
@@ -271,7 +264,7 @@ class _Login extends State<Login> {
   Widget buildLoginButton() {
     return Container(
       padding: EdgeInsets.only(
-        top: screenHeight * 0.10
+        top: ScreenSize.height * 0.10
       ),
       child: PrimaryButton(
         isLight: true,
@@ -292,7 +285,7 @@ class _Login extends State<Login> {
         ),
         child: FormatText(
           text: forgotPassword,
-          textColor: Theme.of(context).accentColor,
+          textColor: ThemeColors.accent,
           fontSize: 14.0,
           fontWeight: FontWeight.w500,
         )

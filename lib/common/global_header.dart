@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 import '../constants/common_constants.dart';
-import 'format_text.dart';
+import './common.dart';
 
 class GlobalHeader extends StatelessWidget implements PreferredSizeWidget {
   final String actionText;
@@ -53,7 +53,7 @@ class GlobalHeader extends StatelessWidget implements PreferredSizeWidget {
             text: actionText,
             textColor: isLight 
               ? Colors.grey[50] 
-              : Theme.of(context).accentColor,
+              : ThemeColors.accent,
             fontSize: 14.0,
             fontWeight: FontWeight.w500
           )

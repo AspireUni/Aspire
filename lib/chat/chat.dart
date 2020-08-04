@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:redux/redux.dart';
 
-import '../common/global_header.dart';
+import '../common/common.dart';
 import '../constants/constants.dart';
 import '../models/models.dart';
 import '../selectors/selectors.dart';
@@ -55,7 +55,7 @@ class _ChatState extends State<Chat> {
           );
           return Scaffold(
             body: Container(
-              height: MediaQuery.of(context).size.height,
+              height: ScreenSize.height,
               margin: EdgeInsets.all(0),
               child: Center(
                 child: Column(

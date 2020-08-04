@@ -6,6 +6,7 @@ import 'package:redux/redux.dart';
 
 import '../actions/actions.dart';
 import '../authentication/firebase_authentication.dart';
+import '../common/common.dart';
 import '../constants/common_constants.dart';
 import '../ftu/onboarding/intro.dart';
 import '../models/models.dart';
@@ -58,7 +59,9 @@ class _RootState extends State<Root>{
   }
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context) {   
+    CommonContext().init(context); 
+
     return CustomSplash(
       imagePath: 'images/splash_screen_icon.png', 
       backGroundColor: Color(0xFF0A0B33),
