@@ -1,25 +1,68 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_animator/flutter_animator.dart';
 
 import '../common/common.dart';
 import '../constants/constants.dart';
 
-class Pairings extends StatelessWidget {
+class Pairings extends StatefulWidget {
   const Pairings({Key key}) : super(key: key);
+
+  @override
+  State<StatefulWidget> createState() => _Pairings();
+}
+
+class _Pairings extends State<Pairings> {
+  int matchIndex;
+  final GlobalKey<InOutAnimationState> inOutAnimationText = 
+  GlobalKey<InOutAnimationState>();
+  final GlobalKey<InOutAnimationState> upDownAno = 
+  GlobalKey<InOutAnimationState>();
+
+  @override
+  void initState() {
+    super.initState();
+
+    matchIndex = 0;
+  }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: GlobalHeader(),
       backgroundColor: Colors.white,
-      body: Column(
+      body: Stack(
+        alignment: Alignment.center,
         children: [
-          buildAno(),
-          buildCards(context)
+          Positioned(
+            top: ScreenSize.height * 0.04, 
+            child: buildCardAnimation(context)
+          ),
+          Positioned(
+            bottom: 0, 
+            child: buildAnoAnimation()
+          )
         ]
       )
     );
   }
 
+  InOutAnimation buildAnoAnimation() {
+      return InOutAnimation(
+        key: upDownAno,
+        inDefinition: SlideInUpAnimation(),
+        outDefinition: SlideOutDownAnimation(),
+        child: buildAno()
+      );
+    }
+
+  InOutAnimation buildCardAnimation(context) {
+    return InOutAnimation(
+      key: inOutAnimationText,
+      inDefinition: SlideInRightAnimation(),
+      outDefinition: SlideOutLeftAnimation(),
+      child: buildCards(context)
+    );
+  }
 
   Image buildAno() {
     return Image.asset(
@@ -121,23 +164,20 @@ class Pairings extends StatelessWidget {
   }
 
   Widget buildCards(context) {
-    return Align(
-      alignment: Alignment.center, 
-      child: Container(
-        width: ScreenSize.width * 0.80,
-        height: ScreenSize.height * 0.42,
-        decoration: buildCardContainer(context), 
-        child: Stack(
-          overflow: Overflow.visible, 
-          alignment: Alignment.center, 
-          children: [
-            buildCurrentCard(context), 
-            Positioned(
-              top: ScreenSize.height * 0.39, 
-              child: buildReadMoreButton()
-            )
-          ]
-        )
+    return Container(
+      width: ScreenSize.width * 0.80,
+      height: ScreenSize.height * 0.42,
+      decoration: buildCardContainer(context), 
+      child: Stack(
+        overflow: Overflow.visible, 
+        alignment: Alignment.center, 
+        children: [
+          buildCurrentCard(context), 
+          Positioned(
+            top: ScreenSize.height * 0.39, 
+            child: buildReadMoreButton()
+          )
+        ]
       )
     );
   }
