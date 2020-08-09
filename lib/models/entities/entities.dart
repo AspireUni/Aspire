@@ -1,5 +1,3 @@
-export 'contact.dart';
-export 'industry.dart';
 export 'job.dart';
 export 'match.dart';
 export 'message.dart';

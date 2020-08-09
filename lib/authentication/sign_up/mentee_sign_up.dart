@@ -364,9 +364,9 @@ class _MenteeSignUp extends State<MenteeSignUp> {
   void showIndustryPicker() {
     ListPicker(
       titleText: industryHint,
-      data: industries.map((item) => item.name).toList(),
+      data: industries.map((item) => item['name']).toList(),
       selecteds: [industry != null
-        ? industries.indexWhere((item) => industry == item.name)
+        ? industries.indexWhere((item) => industry == item['name'])
         : 0
       ],
       onConfirm: (picker, index) => handleIndustryConfirm(picker)
@@ -374,7 +374,7 @@ class _MenteeSignUp extends State<MenteeSignUp> {
   }
 
   void handleIndustryConfirm(Picker picker) {
-    var newIndustry = industries[picker.selecteds[0]].name;
+    var newIndustry = industries[picker.selecteds[0]]['name'] as String;
     setState(() {
       industry = newIndustry;
       areasOfInterest = null;
@@ -389,9 +389,9 @@ class _MenteeSignUp extends State<MenteeSignUp> {
     var options = <String>[];
     if (industry != null) {
       var chosenIndustry = (industries.singleWhere(
-        (item) => item.name == industry)
+        (item) => item['name'] == industry)
       );
-      options = chosenIndustry.areas;
+      options = chosenIndustry['areas'] as List<String>;
     }
     return MultiSelectModal(
       hintText: areasOfInterestHint,

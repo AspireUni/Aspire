@@ -46,21 +46,21 @@ class ProfileContact extends StatelessWidget {
           context, 
           emailIconData, 
           contactEmailAddress, 
-          user.contact.emailAddress,
+          user.emailAddress,
           handleEmailTap
         ),
         buildInfoRow(
           context,
           phoneIconData,
           contactPhoneNumber,
-          user.contact.phoneNumber,
+          user.phoneNumber,
           handlePhoneTap
         ),
         buildInfoRow(
           context,
           webIconData,
           contactWebsite,
-          user.contact.website,
+          user.website,
           handleWebsiteTap
         )
       ]
@@ -130,15 +130,15 @@ class ProfileContact extends StatelessWidget {
   }
 
   void handleEmailTap() {
-    _launchUrl("mailto:${user.contact.emailAddress}");
+    _launchUrl("mailto:${user.emailAddress}");
   }
 
   void handlePhoneTap() {
-    _launchUrl("tel:${user.contact.phoneNumber}");
+    _launchUrl("tel:${user.phoneNumber}");
   }
 
   void handleWebsiteTap() {
-    _launchUrl(user.contact.website);
+    _launchUrl(user.website);
   }
 
   void _launchUrl(String url) async {
