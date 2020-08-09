@@ -1,144 +1,54 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_animator/flutter_animator.dart';
 
 import '../common/common.dart';
-import '../constants/constants.dart';
+import './cards.dart';
 
 class Pairings extends StatelessWidget {
-  const Pairings({Key key}) : super(key: key);
+  final GlobalKey<InOutAnimationState> upDownAnimationAno = 
+    GlobalKey<InOutAnimationState>();
+  
+  Pairings({Key key}) : super(key: key);
+  
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: GlobalHeader(),
       backgroundColor: Colors.white,
-      body: Column(
-        children: [
-          buildAno(),
-          buildCards(context)
-        ]
-      )
+      body: buildPairings()
     );
   }
 
+  Stack buildPairings() {
+    return Stack(
+      alignment: Alignment.center,
+      children: [
+        Positioned(
+          top: ScreenSize.height * 0.04, 
+          child: Cards()
+        ),
+        Positioned(
+          bottom: 0, 
+          child: buildAnoAnimation()
+        )
+      ]
+    );
+  }
+
+  InOutAnimation buildAnoAnimation() {
+      return InOutAnimation(
+        key: upDownAnimationAno,
+        inDefinition: SlideInUpAnimation(),
+        outDefinition: SlideOutDownAnimation(),
+        child: buildAno()
+      );
+    }
 
   Image buildAno() {
     return Image.asset(
       'images/ano_mountains.png',
       height: ScreenSize.height * 0.25
-    );
-  }
-
-  PrimaryButton buildReadMoreButton() {
-    return PrimaryButton(
-      isLight: true,
-      text: readMoreButtonText,
-      onPressed: () => print("Read more pressed")
-    );
-  }
-
-  Row buildCardHeader() {
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        Container(
-          width: ScreenSize.width * 0.10, 
-          height: ScreenSize.height * 0.10,
-          decoration: BoxDecoration(
-            color: Colors.grey[200], 
-            shape: BoxShape.circle
-          )
-        ), 
-        Padding(
-          padding: EdgeInsets.only(top: ScreenSize.height * 0.03), 
-          child: FormatText(
-            text: dummyCard["name"],
-            fontSize: 22.0
-          )
-        )
-      ]
-    );
-  }
-
-  FormatText buildCardBody() {
-    return FormatText(
-      text: dummyCard["description"], 
-      fontSize: 12.0,
-      fontWeight: FontWeight.w300,
-      fontHeight: 1.6
-    );
-  }
-  
-  Row buildCardFooter(context) {
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-      children: [
-        InkWell(
-          onTap: () => print("Arrow pressed"),
-          child: Image.asset(
-            'images/right_arrow.png', 
-            height: ScreenSize.height * 0.015
-          )
-        ),
-        IconButton(
-          icon: Icon(Icons.favorite),
-          iconSize: ScreenSize.height * 0.03, 
-          color: ThemeColors.accent,
-          onPressed: () => print("Heart pressed"),
-        )
-      ]
-    );
-  }
-
-  Widget buildCurrentCard(context) {
-    return Padding(
-      padding: EdgeInsets.symmetric(
-        vertical: ScreenSize.height * 0.02, 
-        horizontal: ScreenSize.width * 0.05
-      ),
-      child: Column(
-        children: [
-          buildCardHeader(),
-          buildCardBody(), 
-          Spacer(), 
-          buildCardFooter(context)
-        ]
-      )
-    );
-  }
-
-  BoxDecoration buildCardContainer(context) {
-    return BoxDecoration(
-      border: Border.all(
-        color: ThemeColors.accent,
-        width: 1.0,
-        style: BorderStyle.solid
-      ),
-      color: Colors.transparent,
-      shape: BoxShape.rectangle, 
-      borderRadius: BorderRadius.all(Radius.circular(20))
-    );
-  }
-
-  Widget buildCards(context) {
-    return Align(
-      alignment: Alignment.center, 
-      child: Container(
-        width: ScreenSize.width * 0.80,
-        height: ScreenSize.height * 0.42,
-        decoration: buildCardContainer(context), 
-        child: Stack(
-          overflow: Overflow.visible, 
-          alignment: Alignment.center, 
-          children: [
-            buildCurrentCard(context), 
-            Positioned(
-              top: ScreenSize.height * 0.39, 
-              child: buildReadMoreButton()
-            )
-          ]
-        )
-      )
     );
   }
 

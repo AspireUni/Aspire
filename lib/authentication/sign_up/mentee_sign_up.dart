@@ -12,7 +12,6 @@ import '../../constants/constants.dart';
 import '../../icons/aspire_icons.dart';
 import '../../models/models.dart';
 import '../../services/services.dart';
-import '../firebase_authentication.dart';
 import '../login.dart';
 import '../password/link_sent.dart';
 
@@ -168,8 +167,8 @@ class _MenteeSignUp extends State<MenteeSignUp> {
 
   Future<void> signUp() async {
     try {
-      var userId = await Auth().signUp(emailAddress, password);
-      await Auth().sendEmailVerification();   
+      var userId = await authSignUp(emailAddress, password);
+      await sendEmailVerification();   
       await addMentee(
         userId,
         emailAddress: emailAddress,
