@@ -6,7 +6,6 @@ import '../constants/constants.dart';
 
 class Cards extends StatefulWidget {
   const Cards({Key key}) : super(key: key);
-  
 
   @override
   State<StatefulWidget> createState() => _Cards();
@@ -62,11 +61,16 @@ class _Cards extends State<Cards> {
     );
   }
 
-  PrimaryButton buildReadMoreButton() {
-    return PrimaryButton(
-      isLight: true,
-      text: readMoreButtonText,
-      onPressed: () => print("Read more pressed")
+  BoxDecoration buildCardContainer() {
+    return BoxDecoration(
+      border: Border.all(
+        color: ThemeColors.accent,
+        width: 1.0,
+        style: BorderStyle.solid
+      ),
+      color: Colors.transparent,
+      shape: BoxShape.rectangle, 
+      borderRadius: BorderRadius.all(Radius.circular(20))
     );
   }
 
@@ -86,17 +90,12 @@ class _Cards extends State<Cards> {
       )
     );
   }
-
-  BoxDecoration buildCardContainer() {
-    return BoxDecoration(
-      border: Border.all(
-        color: ThemeColors.accent,
-        width: 1.0,
-        style: BorderStyle.solid
-      ),
-      color: Colors.transparent,
-      shape: BoxShape.rectangle, 
-      borderRadius: BorderRadius.all(Radius.circular(20))
+  
+  PrimaryButton buildReadMoreButton() {
+    return PrimaryButton(
+      isLight: true,
+      text: readMoreButtonText,
+      onPressed: () => print("Read more pressed")
     );
   }
 
