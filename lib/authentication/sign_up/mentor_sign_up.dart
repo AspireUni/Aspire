@@ -14,7 +14,6 @@ import '../../helpers/helpers.dart';
 import '../../icons/aspire_icons.dart';
 import '../../models/models.dart';
 import '../../services/services.dart';
-import '../firebase_authentication.dart';
 import '../login.dart';
 import '../password/link_sent.dart';
 
@@ -207,8 +206,8 @@ class _MentorSignUp extends State<MentorSignUp> {
 
   Future<void> signUp() async {
     try {
-      var userId = await Auth().signUp(emailAddress, password);
-      await Auth().sendEmailVerification();   
+      var userId = await authSignUp(emailAddress, password);
+      await sendEmailVerification();   
       await addMentor(
         userId,
         emailAddress: emailAddress,

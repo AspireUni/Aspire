@@ -3,7 +3,6 @@ import 'package:flutter_redux/flutter_redux.dart';
 import 'package:redux/redux.dart';
 
 import '../../actions/actions.dart';
-import '../../authentication/firebase_authentication.dart';
 import '../../constants/common_constants.dart';
 import '../../models/models.dart';
 import '../../selectors/selectors.dart';
@@ -100,7 +99,7 @@ class _UserProfileState extends State<UserProfile> {
 
   void logout(BuildContext context) async {
     try {
-      await Auth().signOut();
+      await authSignOut();
       StoreProvider.of<AppState>(context).dispatch(
         UpdateUserState(UserState.initial().copyWith(
           authStatus: AuthStatus.notLoggedIn
