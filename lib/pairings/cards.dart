@@ -1,14 +1,46 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_animator/flutter_animator.dart';
 
 import '../common/common.dart';
 import '../constants/constants.dart';
 
-class Cards extends StatelessWidget {
+class Cards extends StatefulWidget {
   const Cards({Key key}) : super(key: key);
+  
+
+  @override
+  State<StatefulWidget> createState() => _Cards();
+}
+
+class _Cards extends State<Cards> {
+  int matchIndex;
+  final GlobalKey<InOutAnimationState> inOutAnimationCard = 
+    GlobalKey<InOutAnimationState>();
+
+  @override
+  void initState() {
+    super.initState();
+
+    matchIndex = 0;
+  }
 
   @override
   Widget build(BuildContext context) {
-    return buildCards();
+    return InOutAnimation(
+      key: inOutAnimationCard,
+      inDefinition: SlideInRightAnimation(),
+      outDefinition: SlideOutLeftAnimation(),
+      child: buildCards()
+    );
+  }
+
+  void getNextCard() async {
+    inOutAnimationCard.currentState.animateOut();
+    await Future.delayed(Duration(milliseconds: 500));
+    matchIndex == 1 
+      ? setState(() { matchIndex = 0; }) 
+      : setState(() { matchIndex += 1; });
+    inOutAnimationCard.currentState.animateIn();
   }
 
   Widget buildCards() {
@@ -20,7 +52,7 @@ class Cards extends StatelessWidget {
         overflow: Overflow.visible, 
         alignment: Alignment.center, 
         children: [
-          buildCurrentCard(), 
+          buildCardContent(), 
           Positioned(
             top: ScreenSize.height * 0.39, 
             child: buildReadMoreButton()
@@ -38,7 +70,7 @@ class Cards extends StatelessWidget {
     );
   }
 
-  Widget buildCurrentCard() {
+  Widget buildCardContent() {
     return Padding(
       padding: EdgeInsets.symmetric(
         vertical: ScreenSize.height * 0.02, 
@@ -47,7 +79,7 @@ class Cards extends StatelessWidget {
       child: Column(
         children: [
           buildCardHeader(),
-          buildCardBody(), 
+          buildCardSummary(), 
           Spacer(), 
           buildCardFooter()
         ]
@@ -84,7 +116,7 @@ class Cards extends StatelessWidget {
         Padding(
           padding: EdgeInsets.only(top: ScreenSize.height * 0.03), 
           child: FormatText(
-            text: dummyCard["name"],
+            text: dummyCard[matchIndex]["name"],
             fontSize: 22.0
           )
         )
@@ -92,9 +124,9 @@ class Cards extends StatelessWidget {
     );
   }
 
-  FormatText buildCardBody() {
+  FormatText buildCardSummary() {
     return FormatText(
-      text: dummyCard["description"], 
+      text: dummyCard[matchIndex]["description"], 
       fontSize: 12.0,
       fontWeight: FontWeight.w300,
       fontHeight: 1.6
@@ -106,7 +138,7 @@ class Cards extends StatelessWidget {
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
         InkWell(
-          onTap: () => print("Arrow pressed"),
+          onTap: getNextCard,
           child: Image.asset(
             'images/right_arrow.png', 
             height: ScreenSize.height * 0.015

@@ -4,26 +4,12 @@ import 'package:flutter_animator/flutter_animator.dart';
 import '../common/common.dart';
 import './cards.dart';
 
-class Pairings extends StatefulWidget {
-  const Pairings({Key key}) : super(key: key);
-
-  @override
-  State<StatefulWidget> createState() => _Pairings();
-}
-
-class _Pairings extends State<Pairings> {
-  int matchIndex;
-  final GlobalKey<InOutAnimationState> inOutAnimationCard = 
-    GlobalKey<InOutAnimationState>();
+class Pairings extends StatelessWidget {
   final GlobalKey<InOutAnimationState> upDownAnimationAno = 
     GlobalKey<InOutAnimationState>();
-
-  @override
-  void initState() {
-    super.initState();
-
-    matchIndex = 0;
-  }
+  
+  Pairings({Key key}) : super(key: key);
+  
 
   @override
   Widget build(BuildContext context) {
@@ -40,7 +26,7 @@ class _Pairings extends State<Pairings> {
       children: [
         Positioned(
           top: ScreenSize.height * 0.04, 
-          child: buildCardAnimation()
+          child: Cards()
         ),
         Positioned(
           bottom: 0, 
@@ -63,15 +49,6 @@ class _Pairings extends State<Pairings> {
     return Image.asset(
       'images/ano_mountains.png',
       height: ScreenSize.height * 0.25
-    );
-  }
-
-  InOutAnimation buildCardAnimation() {
-    return InOutAnimation(
-      key: inOutAnimationCard,
-      inDefinition: SlideInRightAnimation(),
-      outDefinition: SlideOutLeftAnimation(),
-      child: Cards()
     );
   }
 
