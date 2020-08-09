@@ -4,7 +4,7 @@ import 'package:flutter_form_builder/flutter_form_builder.dart';
 
 import '../../common/common.dart';
 import '../../constants/constants.dart';
-import '../firebase_authentication.dart';
+import '../../services/services.dart';
 import '../login.dart';
 
 
@@ -164,7 +164,7 @@ class _LinkSent extends State<LinkSent> {
 
   Widget buildFooterLink() {
     return InkWell(
-      onTap: () => Auth().sendEmailVerification(),
+      onTap: sendEmailVerification,
       child: FormatText(
         text: linkSentFooterLink,
         textColor: ThemeColors.accent,

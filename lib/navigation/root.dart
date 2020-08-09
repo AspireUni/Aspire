@@ -5,7 +5,6 @@ import 'package:flutter_redux/flutter_redux.dart';
 import 'package:redux/redux.dart';
 
 import '../actions/actions.dart';
-import '../authentication/firebase_authentication.dart';
 import '../common/common.dart';
 import '../constants/common_constants.dart';
 import '../ftu/onboarding/intro.dart';
@@ -33,7 +32,7 @@ class _RootState extends State<Root>{
   }
  
   void getCurrentUser(Store<AppState> store) async {
-    Auth().getCurrentUser().then((user) async {
+    getCurrentAuthUser().then((user) async {
       var userData = await getUser(user?.uid);
       store.dispatch(ConvertToUserState(userData));
     });

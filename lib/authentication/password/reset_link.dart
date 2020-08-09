@@ -3,7 +3,7 @@ import 'package:flutter_form_builder/flutter_form_builder.dart';
 
 import '../../common/common.dart';
 import '../../constants/constants.dart';
-import '../firebase_authentication.dart';
+import '../../services/services.dart';
 import '../login.dart';
 import './link_sent.dart';
 
@@ -133,7 +133,7 @@ void validateAndSubmit() async {
     });
     if (_emailAddressFormKey.currentState.saveAndValidate()) {
       try {
-        await Auth().resetPassword(emailAddress);
+        await resetPassword(emailAddress);
         Navigator.pushReplacement(
           context,
           MaterialPageRoute(
