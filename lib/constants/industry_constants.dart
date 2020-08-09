@@ -1,9 +1,7 @@
-import '../models/models.dart';
-
-List<Industry> industries = [
-  Industry(
-    name: 'Business',
-    areas: [
+List<Map<String, dynamic>> industries = [
+  {
+    'name': 'Business',
+    'areas': [
       'Accounting',
       'Entrepreneurship',
       'Finance',
@@ -12,19 +10,19 @@ List<Industry> industries = [
       'Marketing',
       'Real estate'
     ]
-  ),
-  Industry(
-    name: 'Communications',
-    areas: [
+  },
+  {
+    'name': 'Communications',
+    'areas': [
       'Advertising',
       'Journalism',
       'Public relations',
       'Publishing'
     ]
-  ),
-  Industry(
-    name: 'Health & Medicine',
-    areas: [
+  },
+  {
+    'name': 'Health & Medicine',
+    'areas': [
       'Chiropractic',
       'Dentistry',
       'Mental health',
@@ -33,10 +31,10 @@ List<Industry> industries = [
       'Optometry',
       'Pharmacy'
     ]
-  ),
-  Industry(
-    name: 'Technology',
-    areas: [
+  },
+  {
+    'name': 'Technology',
+    'areas': [
       'Artificial intellligence',
       'Cloud computing',
       'Cyber-security',
@@ -45,5 +43,5 @@ List<Industry> industries = [
       'Software development',
       'Web development'
     ]
-  )
+  }
 ];

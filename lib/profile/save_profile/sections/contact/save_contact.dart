@@ -40,15 +40,15 @@ class _SaveContactState extends State<SaveContact> {
             InputField(
               enabled: false,
               labelText: editContactEmailAddress, 
-              formField: buildEmailAddressField(state.contact.emailAddress)
+              formField: buildEmailAddressField(state.emailAddress)
             ),
             InputField(
               labelText: editContactPhoneNumber, 
-              formField: buildPhoneNumberField(state)
+              formField: buildPhoneNumberField(state.phoneNumber)
             ),
             InputField(
               labelText: editContactWebsite, 
-              formField: buildWebsiteField(state)
+              formField: buildWebsiteField(state.website)
             ),
           ],
         )
@@ -87,10 +87,10 @@ class _SaveContactState extends State<SaveContact> {
     );
   }
 
-  buildPhoneNumberField(SaveProfileState state) {
+  buildPhoneNumberField(String phoneNumber) {
     return FormBuilderPhoneField(
       attribute: 'phoneNumber',
-      initialValue: state.contact.phoneNumber,
+      initialValue: phoneNumber,
       decoration: fieldDecoration(),
       style: fieldTextStyle,
       dialogTitle: Text(
@@ -99,13 +99,7 @@ class _SaveContactState extends State<SaveContact> {
       ),
       titlePadding: EdgeInsets.all(0.0),
       isSearchable: false,
-      onChanged: (value) => store.dispatch(
-        UpdateContact(
-          state.contact.copyWith(
-            phoneNumber: value
-          )
-        )
-      ),
+      onChanged: (value) => store.dispatch(UpdatePhoneNumber(value)),
       defaultSelectedCountryIsoCode: isoCodeCA,
       priorityListByIsoCode: [isoCodeCA, isoCodeUS],
       validators: [FormBuilderValidators.numeric(
@@ -115,19 +109,13 @@ class _SaveContactState extends State<SaveContact> {
     );
   }
 
-  buildWebsiteField(SaveProfileState state) {
+  buildWebsiteField(String website) {
     return FormBuilderTextField(
       attribute: 'website',
-      initialValue: state.contact.website,
+      initialValue: website,
       decoration: fieldDecoration(),
       style: fieldTextStyle,
-      onChanged: (value) => store.dispatch(
-        UpdateContact(
-          state.contact.copyWith(
-            website: value
-          )
-        )
-      ),
+      onChanged: (value) => store.dispatch(UpdateWebsite(value)),
       validators: [
         FormBuilderValidators.url(),
         FormBuilderValidators.maxLength(100),

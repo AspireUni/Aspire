@@ -16,6 +16,12 @@ SaveProfileState _saveProfileStateReducer(
   if (action is UpdateFullName) {
     return state.copyWith(fullName: action.payload);
   }
+  if (action is UpdatePhoneNumber) {
+    return state.copyWith(phoneNumber: action.payload);
+  }
+    if (action is UpdateWebsite) {
+    return state.copyWith(website: action.payload);
+  }
   if (action is UpdateSummary) {
     return state.copyWith(summary: action.payload);
   }
@@ -104,11 +110,6 @@ SaveProfileState _saveProfileStateReducer(
     );
     return state.copyWith(
       saveSkillState: Skill.initial()
-    );
-  }
-  if (action is UpdateContact) {
-    return state.copyWith(
-      contact: action.payload
     );
   }
   if (action is UpdateSaveEducationState) {

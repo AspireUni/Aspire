@@ -54,14 +54,10 @@ Future<void> addMentee(
   var user = User.initial().copyWith(
     id: id,
     type: UserType.mentee,
-    industry: Industry(
-      name: industry,
-      areas: areasOfInterest
-    ),
+    industry: industry,
+    areas: areasOfInterest,
     fullName: fullName,
-    contact: Contact.initial().copyWith(
-      emailAddress: emailAddress
-    )
+    emailAddress: emailAddress
   ).toJson();
 
   Firestore
@@ -85,14 +81,10 @@ Future<void> addMentor(
   var user = User.initial().copyWith(
     id: id,
     type: UserType.mentor,
-    industry: Industry(
-      name: industry,
-      areas: areasOfExpertise
-    ),
+    industry: industry,
+    areas: areasOfExpertise,
     fullName: fullName,
-    contact: Contact.initial().copyWith(
-      emailAddress: emailAddress
-    ),
+    emailAddress: emailAddress,
     jobs: [
       Job(
         id: randomAlphaNumeric(15), 

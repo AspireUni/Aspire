@@ -11,10 +11,6 @@ String userIdSelector(Store<AppState> store) {
   return store.state.userState.id
 ;}
 
-Contact contactSelector(Store<AppState> store) {
-  return store.state.userState.saveProfileState.contact;
-}
-
 List<School> schoolListSelector(Store<AppState> store) {
   return store.state.userState.saveProfileState.schools;
 }
