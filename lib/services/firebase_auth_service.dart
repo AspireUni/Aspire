@@ -34,7 +34,9 @@ Future<FirebaseUser> getCurrentAuthUser() async {
 }
 
 Future<void> authSignOut() async {
-  return FirebaseAuth.instance.signOut();
+  await FirebaseAuth
+    .instance
+    .signOut();
 }
 
 Future<void> sendEmailVerification() async {
@@ -48,8 +50,8 @@ Future<void> resetPassword(String email) async {
   await FirebaseAuth
     .instance
     .sendPasswordResetEmail(
-    email: email
-  );
+      email: email
+    );
 }
 
 Future<bool> isEmailVerified() async {
