@@ -18,7 +18,6 @@ import '../../../common/date_picker.dart';
 import '../../../common/input_field.dart';
 import '../../../common/picker_field.dart';
 
-
 class SaveEducationItem extends StatefulWidget {
   final bool editMode;
   final String schoolId;
@@ -89,9 +88,8 @@ class _SaveEducationItemState extends State<SaveEducationItem> {
             iconSize: screenHeight * 0.02,
             onPressed: () {
               handleClose();
-              Navigator.pop(context);
-              },
-              icon: Icon(
+            },
+            icon: Icon(
                 Icons.arrow_back_ios,
                 color: Theme.of(context).accentColor
               )
@@ -149,7 +147,7 @@ class _SaveEducationItemState extends State<SaveEducationItem> {
   }
 
   void showStartYearPicker(School school) {
-    DatePicker(
+    ProfileDatePicker(
       yearOnly: true,
       initialValue: school.startYear != null
         ? convertYearStringToDateTime(school.startYear)
@@ -160,7 +158,7 @@ class _SaveEducationItemState extends State<SaveEducationItem> {
   }
 
   void showEndYearPicker(School school) {
-    DatePicker(
+    ProfileDatePicker(
       yearOnly: true,
       initialValue: school.endYear != null 
         ? convertYearStringToDateTime(school.endYear) 
@@ -171,10 +169,14 @@ class _SaveEducationItemState extends State<SaveEducationItem> {
   }
 
   void handleSaveEducation() {
-    store.dispatch(SaveSchool(payload: widget.editMode));
-    setState(() { isActive = false; });
-    unfocusFields();
-    Navigator.pop(context);
+    if (_saveEducationItemKey.currentState.saveAndValidate()) {
+        store.dispatch(SaveSchool(payload: widget.editMode));
+        setState(() { isActive = false; });
+        unfocusFields();
+        Navigator.pop(context);
+    } else {
+       print("Validation failed.");
+    }
   }
 
   void handleDeleteEducation() {
@@ -187,6 +189,7 @@ class _SaveEducationItemState extends State<SaveEducationItem> {
   void handleClose() {
     store.dispatch(UpdateSaveEducationState(School.initial()));
     setState(() { isActive = false; });
+    Navigator.pop(context);
   }
 
   void handleStartYearConfirm(Picker picker, School school) {
@@ -345,13 +348,13 @@ class _SaveEducationItemState extends State<SaveEducationItem> {
           school.copyWith(
             name: value,
             endYear: school.endYear
+            )
           )
-        )
-      ),
+        ),
         decoration: fieldDecoration(
           isFocused: isSchoolNameFocused,
           isInvalid: isSchoolNameInvalid,
-          hintText: "Enter your institution",
+          hintText: buildSchoolNameHint,
           icon: AspireIcons.lock
         ),
         validators: [
@@ -378,13 +381,13 @@ class _SaveEducationItemState extends State<SaveEducationItem> {
           school.copyWith(
             program: value,
             endYear: school.endYear
+            )
           )
-        )
-      ),
+        ),
         decoration: fieldDecoration(
           isFocused: isDegreeFocused,
           isInvalid: isDegreeInvalid,
-          hintText: "Enter your credential",
+          hintText: buildDegreeFieldHint,
           icon: AspireIcons.lock
         ),
         validators: [
@@ -404,12 +407,7 @@ class _SaveEducationItemState extends State<SaveEducationItem> {
         isLight: true,
         text: widget.editMode ? 'Edit' : 'Add',
         onPressed: () {
-          if (_saveEducationItemKey.currentState.saveAndValidate()) {
-            handleSaveEducation();
-          } else {
-            print("Validation failed.");
-          }
-          
+          handleSaveEducation();  
         },
       )
     );

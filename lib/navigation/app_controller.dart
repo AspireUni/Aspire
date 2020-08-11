@@ -46,8 +46,7 @@ class _AppControllerState extends State<AppController> {
     uid = userIdSelector(store);
     _screens = [UserProfile(profileId: uid), Pairings(), Chat()];
     return Scaffold(
-        body: 
-        _screens[pageIndex],
+        body: _screens[pageIndex],
         bottomNavigationBar: CustomNavigationBar(
           elevation: 0.0,
           onTap: tapNavItem,
@@ -59,7 +58,7 @@ class _AppControllerState extends State<AppController> {
           unSelectedColor: Colors.grey,
           backgroundColor: Colors.white,
         ),
-      ); 
+    ); 
   }
 
 
