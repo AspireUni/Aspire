@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import './common.dart';
+import 'common.dart';
 
 class InfoBorder extends StatelessWidget {
   final String text;

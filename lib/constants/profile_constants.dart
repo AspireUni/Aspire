@@ -69,3 +69,7 @@ const String invalidPhoneNumberErrorMessage = 'Enter a valid phone number.';
 // ISO codes
 const String isoCodeUS = 'US';
 const String isoCodeCA = 'CA';
+
+// Education Item 
+const String SchoolNameHint = 'Enter your institution';
+const String DegreeFieldHint = 'Enter your credential';

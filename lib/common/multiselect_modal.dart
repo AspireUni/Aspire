@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:smart_select/smart_select.dart';
 
 import '../constants/constants.dart';
-import './common.dart';
+import 'common.dart';
 
 class MultiSelectModal extends StatelessWidget {
   final String hintText;

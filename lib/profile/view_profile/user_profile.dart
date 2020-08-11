@@ -84,7 +84,6 @@ class _UserProfileState extends State<UserProfile> {
         materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
         onPressed: () => logout(context),
         color: Colors.red,
-        
         child: Text(
           'LOGOUT',
           style: TextStyle(

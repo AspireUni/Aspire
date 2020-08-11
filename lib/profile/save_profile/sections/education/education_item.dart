@@ -8,16 +8,15 @@ import 'package:random_string/random_string.dart';
 import 'package:redux/redux.dart';
 
 import '../../../../actions/actions.dart';
+import '../../../../common/common.dart';
 import '../../../../constants/profile_constants.dart';
 import '../../../../helpers/helpers.dart';
+import '../../../../icons/aspire_icons.dart';
 import '../../../../models/models.dart';
 import '../../../../selectors/selectors.dart';
-import '../../../common/app_bar.dart';
 import '../../../common/date_picker.dart';
-import '../../../common/delete_button.dart';
 import '../../../common/input_field.dart';
 import '../../../common/picker_field.dart';
-import '../../../common/styles.dart';
 
 class SaveEducationItem extends StatefulWidget {
   final bool editMode;
@@ -37,8 +36,12 @@ class _SaveEducationItemState extends State<SaveEducationItem> {
   final FocusNode degreeFocus = FocusNode();
   
   bool isStartYearFocused, isEndYearFocused, isActive;
+  bool isSchoolNameFocused, isDegreeFocused;
+  bool isSchoolNameInvalid, isDegreeInvalid;
+
   Store<AppState> store; 
   String generatedId;
+  double screenHeight, screenWidth;
 
   @override
   void initState() {
@@ -47,6 +50,13 @@ class _SaveEducationItemState extends State<SaveEducationItem> {
     isStartYearFocused = false;
     isEndYearFocused = false;
     isActive = true;
+    isSchoolNameInvalid = false;
+    isDegreeInvalid = false;
+    isSchoolNameFocused = false;
+    isDegreeFocused = false;
+
+    schoolNameFocusListener();
+    degreeFocusListener();
 
     textFieldFocusListener(schoolFocus, 'school');
     textFieldFocusListener(degreeFocus, 'degree');
@@ -67,15 +77,23 @@ class _SaveEducationItemState extends State<SaveEducationItem> {
   Widget build(BuildContext context) {
     store = StoreProvider.of<AppState>(context);
 
+    screenWidth = MediaQuery.of(context).size.width;
+    screenHeight = MediaQuery.of(context).size.height;
+  
     return GestureDetector(
       onTap: unfocusFields,
       child: Scaffold(
-        appBar: AppBarWithSave(
-          appBarTitle: widget.editMode ? editEducation : addEducation,
-          formKey: _saveEducationItemKey,
-          closeActionEnabled: true,
-          onCloseActionTap: handleClose,
-          onSaveActionTap: handleSaveEducation,
+        appBar: AppBar(
+          elevation: 0.0,
+          leading: IconButton(
+          iconSize: screenHeight * 0.02,
+          onPressed: handleClose,
+          icon: Icon(
+              Icons.arrow_back_ios,
+              color: Theme.of(context).accentColor
+            )
+          ),
+          backgroundColor: Colors.white,
         ),
         backgroundColor: Colors.white,
         body: StoreConnector<AppState, School>(
@@ -86,16 +104,11 @@ class _SaveEducationItemState extends State<SaveEducationItem> {
             isPageActive: isActive
           ),
           builder: (context, school) => Container(
-            padding: EdgeInsets.all(20.0),
               child: ListView(
               children: <Widget>[
+                buildCenterAno(),
                 ...buildSaveEducationItemForm(school),
-                widget.editMode
-                ? DeleteButton(
-                  labelText: deleteEducation,
-                  onPressed: handleDeleteEducation
-                )
-                : SizedBox()
+                buildAddButton()
               ]
             )
           )
@@ -132,8 +145,20 @@ class _SaveEducationItemState extends State<SaveEducationItem> {
     });
   }
 
+  void schoolNameFocusListener() {
+    schoolFocus.addListener(() {
+      setState(() { isSchoolNameFocused = schoolFocus.hasFocus; });
+    });
+  }
+
+  void degreeFocusListener() {
+    degreeFocus.addListener(() {
+      setState(() { isDegreeFocused = degreeFocus.hasFocus; });
+    });
+  }
+
   void showStartYearPicker(School school) {
-    DatePicker(
+    ProfileDatePicker(
       yearOnly: true,
       initialValue: school.startYear != null
         ? convertYearStringToDateTime(school.startYear)
@@ -144,7 +169,7 @@ class _SaveEducationItemState extends State<SaveEducationItem> {
   }
 
   void showEndYearPicker(School school) {
-    DatePicker(
+    ProfileDatePicker(
       yearOnly: true,
       initialValue: school.endYear != null 
         ? convertYearStringToDateTime(school.endYear) 
@@ -155,10 +180,14 @@ class _SaveEducationItemState extends State<SaveEducationItem> {
   }
 
   void handleSaveEducation() {
-    store.dispatch(SaveSchool(payload: widget.editMode));
-    setState(() { isActive = false; });
-    unfocusFields();
-    Navigator.pop(context);
+    if (_saveEducationItemKey.currentState.saveAndValidate()) {
+        store.dispatch(SaveSchool(payload: widget.editMode));
+        setState(() { isActive = false; });
+        unfocusFields();
+        Navigator.pop(context);
+    } else {
+       print("Validation failed.");
+    }
   }
 
   void handleDeleteEducation() {
@@ -171,6 +200,7 @@ class _SaveEducationItemState extends State<SaveEducationItem> {
   void handleClose() {
     store.dispatch(UpdateSaveEducationState(School.initial()));
     setState(() { isActive = false; });
+    Navigator.pop(context);
   }
 
   void handleStartYearConfirm(Picker picker, School school) {
@@ -216,51 +246,6 @@ class _SaveEducationItemState extends State<SaveEducationItem> {
       .validate();
   }
 
-  Widget buildSchoolNameField(School school) {
-    return FormBuilderTextField(
-      attribute: 'school',
-      initialValue: school.name,
-      decoration: fieldDecoration(),
-      style: fieldTextStyle,
-      onChanged: (value) => store.dispatch(
-        UpdateSaveEducationState(
-          school.copyWith(
-            name: value,
-            endYear: school.endYear
-          )
-        )
-      ),
-      focusNode: schoolFocus,
-      validators: [
-        FormBuilderValidators.required(),
-        FormBuilderValidators.maxLength(100),
-      ],
-      keyboardType: TextInputType.text,
-    );
-  }
-
-  Widget buildDegreeField(School school) {
-    return FormBuilderTextField(
-      attribute: 'degree',
-      initialValue: school.program,
-      decoration: fieldDecoration(),
-      style: fieldTextStyle,
-      onChanged: (value) => store.dispatch(
-        UpdateSaveEducationState(
-          school.copyWith(
-            program: value,
-            endYear: school.endYear
-          )
-        )
-      ),
-      focusNode: degreeFocus,
-      validators: [
-        FormBuilderValidators.required(),
-        FormBuilderValidators.maxLength(100),
-      ],
-      keyboardType: TextInputType.text,
-    );
-  }
 
   Widget buildDateRangeRow(School school) {
     return Row(
@@ -268,7 +253,7 @@ class _SaveEducationItemState extends State<SaveEducationItem> {
       children: <Widget>[
         Expanded(
           child: Container(
-            padding: EdgeInsets.only(right: 10.0),
+            padding: EdgeInsets.only(left: 60.0, right: 10.0),
             child: InputField(
               labelText: saveEducationStartYear,
               formField: buildStartYearField(school),
@@ -277,7 +262,7 @@ class _SaveEducationItemState extends State<SaveEducationItem> {
         ),
         Expanded(
           child: Container(
-            padding: EdgeInsets.only(left: 10.0),
+            padding: EdgeInsets.only(left: 10.0, right: 60.0),
             child: InputField(
               enabled: school.startYear != null,
               labelText: saveEducationEndYear,
@@ -331,19 +316,110 @@ class _SaveEducationItemState extends State<SaveEducationItem> {
         key: _saveEducationItemKey,
         child: Column(
           children: <Widget>[
-            InputField(
-              labelText: saveEducationSchool,
-              formField: buildSchoolNameField(school)
-            ),
-            InputField(
-              labelText: saveEducationDegree,
-              formField: buildDegreeField(school)
-            ),
+            buildSchoolNameField(school),
+            buildDegreeField(school),
             buildDateRangeRow(school)
           ]
         )
       ),
     ];
+  }
+
+  Widget buildCenterAno() {
+    return Container(
+      padding: EdgeInsets.only(bottom: 60.0),
+      width: screenWidth,
+      child: Column(
+        children: <Widget>[
+          Image.asset(
+            'images/two_anos_talking.png',
+            height: screenHeight * 0.20,
+          ),
+          Container(
+            height: 1.5,
+            color: Colors.black
+          )
+        ]
+      )
+    );
+  }
+
+
+  Widget buildSchoolNameField(School school) {
+    return Container(
+      padding: EdgeInsets.only(bottom: 20.0, left: 60.0, right: 60.0),
+      child: FormBuilderTextField(
+        attribute: 'school',
+        initialValue: school.name,
+        focusNode: schoolFocus,
+        maxLines: 1,
+        style: fieldTextStyle(color: Theme.of(context).primaryColor),
+        onChanged: (value) => store.dispatch(
+        UpdateSaveEducationState(
+          school.copyWith(
+            name: value,
+            endYear: school.endYear
+            )
+          )
+        ),
+        decoration: fieldDecoration(
+          isFocused: isSchoolNameFocused,
+          isInvalid: isSchoolNameInvalid,
+          hintText: SchoolNameHint,
+          icon: AspireIcons.lock
+        ),
+        validators: [
+          FormBuilderValidators.required(),
+          FormBuilderValidators.maxLength(100),
+        ],
+        keyboardType: TextInputType.text,
+      )
+    );
+  }
+
+
+  Widget buildDegreeField(School school) {
+    return Container(
+      padding: EdgeInsets.only(bottom: 20.0, left: 60.0, right: 60.0),
+      child: FormBuilderTextField(
+        attribute: 'degree',
+        initialValue: school.program,
+        focusNode: degreeFocus,
+        maxLines: 1,
+        style: fieldTextStyle(color: Theme.of(context).primaryColor),
+        onChanged: (value) => store.dispatch(
+        UpdateSaveEducationState(
+          school.copyWith(
+            program: value,
+            endYear: school.endYear
+            )
+          )
+        ),
+        decoration: fieldDecoration(
+          isFocused: isDegreeFocused,
+          isInvalid: isDegreeInvalid,
+          hintText: DegreeFieldHint,
+          icon: AspireIcons.lock
+        ),
+        validators: [
+          FormBuilderValidators.required(),
+          FormBuilderValidators.maxLength(100),
+        ],
+        keyboardType: TextInputType.text,
+      )
+    );
+  }
+
+  Widget buildAddButton() {
+    return Container(
+      padding: EdgeInsets.only(top:100.0, bottom: 20.0, 
+      left: 60.0, right: 60.0),
+      child: PrimaryButton(
+        isLight: true,
+        text: widget.editMode ? 'Edit' : 'Add',
+        onPressed: handleSaveEducation,
+      )
+    );
   }
 
 }

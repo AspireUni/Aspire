@@ -13,7 +13,6 @@ import '../selectors/selectors.dart';
 
 class AppController extends StatefulWidget {
   final int tabIndex;
-
   AppController({Key key, this.tabIndex}) : super(key: key);
 
   @override
@@ -33,7 +32,6 @@ class _AppControllerState extends State<AppController> {
   @override
   void initState() {
     super.initState();
-
     pageIndex = widget.tabIndex ?? 1;
   }
 
@@ -59,8 +57,9 @@ class _AppControllerState extends State<AppController> {
           unSelectedColor: Colors.grey,
           backgroundColor: Colors.white,
         )
-      ); 
+    ); 
   }
+
 
   List<CustomNavigationBarItem> buildNavItems() {
     var navItems = <CustomNavigationBarItem>[];
