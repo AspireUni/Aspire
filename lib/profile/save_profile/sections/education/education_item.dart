@@ -145,7 +145,6 @@ class _SaveEducationItemState extends State<SaveEducationItem> {
     });
   }
 
-
   void schoolNameFocusListener() {
     schoolFocus.addListener(() {
       setState(() { isSchoolNameFocused = schoolFocus.hasFocus; });
