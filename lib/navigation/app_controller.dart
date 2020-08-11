@@ -16,7 +16,6 @@ class AppController extends StatefulWidget {
   AppController({Key key, this.tabIndex}) : super(key: key);
 
   @override
-
   State<StatefulWidget> createState() => _AppControllerState();
 }
 
@@ -57,7 +56,7 @@ class _AppControllerState extends State<AppController> {
           strokeColor: navItemColor, 
           unSelectedColor: Colors.grey,
           backgroundColor: Colors.white,
-        ),
+        )
     ); 
   }
 

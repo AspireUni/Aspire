@@ -36,7 +36,6 @@ class _SaveEducationItemState extends State<SaveEducationItem> {
   final FocusNode degreeFocus = FocusNode();
   
   bool isStartYearFocused, isEndYearFocused, isActive;
-
   bool isSchoolNameFocused, isDegreeFocused;
   bool isSchoolNameInvalid, isDegreeInvalid;
 
@@ -51,6 +50,13 @@ class _SaveEducationItemState extends State<SaveEducationItem> {
     isStartYearFocused = false;
     isEndYearFocused = false;
     isActive = true;
+    isSchoolNameInvalid = false;
+    isDegreeInvalid = false;
+    isSchoolNameFocused = false;
+    isDegreeFocused = false;
+
+    schoolNameFocusListener();
+    degreeFocusListener();
 
     textFieldFocusListener(schoolFocus, 'school');
     textFieldFocusListener(degreeFocus, 'degree');
@@ -73,29 +79,22 @@ class _SaveEducationItemState extends State<SaveEducationItem> {
 
     screenWidth = MediaQuery.of(context).size.width;
     screenHeight = MediaQuery.of(context).size.height;
-    
-    isSchoolNameInvalid = false;
-    isDegreeInvalid = false;
-    isSchoolNameFocused = false;
-    isDegreeFocused = false;
-
+  
     return GestureDetector(
       onTap: unfocusFields,
       child: Scaffold(
         appBar: AppBar(
-            elevation: 0.0,
-            leading: IconButton(
-            iconSize: screenHeight * 0.02,
-            onPressed: () {
-              handleClose();
-            },
-            icon: Icon(
-                Icons.arrow_back_ios,
-                color: Theme.of(context).accentColor
-              )
-            ),
-            backgroundColor: Colors.white,
+          elevation: 0.0,
+          leading: IconButton(
+          iconSize: screenHeight * 0.02,
+          onPressed: handleClose,
+          icon: Icon(
+              Icons.arrow_back_ios,
+              color: Theme.of(context).accentColor
+            )
           ),
+          backgroundColor: Colors.white,
+        ),
         backgroundColor: Colors.white,
         body: StoreConnector<AppState, School>(
           converter: (store) => saveEducationStateSelector(
@@ -143,6 +142,19 @@ class _SaveEducationItemState extends State<SaveEducationItem> {
         _saveEducationItemKey.currentState.fields[attribute].currentState
           .validate();
       }
+    });
+  }
+
+
+  void schoolNameFocusListener() {
+    schoolFocus.addListener(() {
+      setState(() { isSchoolNameFocused = schoolFocus.hasFocus; });
+    });
+  }
+
+  void degreeFocusListener() {
+    degreeFocus.addListener(() {
+      setState(() { isDegreeFocused = degreeFocus.hasFocus; });
     });
   }
 
@@ -354,7 +366,7 @@ class _SaveEducationItemState extends State<SaveEducationItem> {
         decoration: fieldDecoration(
           isFocused: isSchoolNameFocused,
           isInvalid: isSchoolNameInvalid,
-          hintText: buildSchoolNameHint,
+          hintText: SchoolNameHint,
           icon: AspireIcons.lock
         ),
         validators: [
@@ -387,7 +399,7 @@ class _SaveEducationItemState extends State<SaveEducationItem> {
         decoration: fieldDecoration(
           isFocused: isDegreeFocused,
           isInvalid: isDegreeInvalid,
-          hintText: buildDegreeFieldHint,
+          hintText: DegreeFieldHint,
           icon: AspireIcons.lock
         ),
         validators: [
@@ -406,9 +418,7 @@ class _SaveEducationItemState extends State<SaveEducationItem> {
       child: PrimaryButton(
         isLight: true,
         text: widget.editMode ? 'Edit' : 'Add',
-        onPressed: () {
-          handleSaveEducation();  
-        },
+        onPressed: handleSaveEducation,
       )
     );
   }

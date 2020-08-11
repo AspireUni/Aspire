@@ -71,6 +71,5 @@ const String isoCodeUS = 'US';
 const String isoCodeCA = 'CA';
 
 // Education Item 
-
-const String buildSchoolNameHint = 'Enter your institution';
-const String buildDegreeFieldHint = 'Enter your credential';
+const String SchoolNameHint = 'Enter your institution';
+const String DegreeFieldHint = 'Enter your credential';
