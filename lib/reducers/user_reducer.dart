@@ -21,8 +21,10 @@ UserState _userReducer(UserState userState, dynamic action) {
         authStatus: AuthStatus.loggedIn,
         saveProfileState: SaveProfileState.initial().copyWith(
           fullName: user.fullName,
+          emailAddress: user.emailAddress,
+          phoneNumber: user.phoneNumber,
+          website: user.website,
           summary: user.summary,
-          contact: user.contact,
           schools: user.schools,
           skills: user.skills,
           jobs: user.jobs

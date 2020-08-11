@@ -13,7 +13,6 @@ import '../models/models.dart';
 import '../navigation/root.dart';
 import '../selectors/selectors.dart';
 import '../services/services.dart';
-import './firebase_authentication.dart';
 import './sign_up/funnel.dart';
 import 'password/reset_link.dart';
 
@@ -124,8 +123,8 @@ class _Login extends State<Login> {
 
   Future<void> login() async {
     try {
-      var userId = await Auth().signIn(emailAddress, password);
-      var isVerified = await Auth().isEmailVerified();
+      var userId = await authSignIn(emailAddress, password);
+      var isVerified = await isEmailVerified();
       if (isVerified) {
         var userData = await getUser(userId);
         store.dispatch(ConvertToUserState(userData));

@@ -13,10 +13,12 @@ dynamic convertProfileStateToUserEntity(Store<AppState> store) async {
     id: userState.id,
     isFtu: userState.isFtu,
     fullName: saveProfileState.fullName,
+    emailAddress: saveProfileState.emailAddress,
+    phoneNumber: saveProfileState.phoneNumber,
+    website: saveProfileState.website,
     summary: saveProfileState.summary,
     schools: saveProfileState.schools,
     jobs: saveProfileState.jobs,
     skills: saveProfileState.skills,
-    contact: saveProfileState.contact,
   ).toJson();
 }

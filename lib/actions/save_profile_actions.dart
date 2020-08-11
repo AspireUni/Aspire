@@ -10,14 +10,19 @@ class UpdateFullName {
   UpdateFullName(this.payload);
 }
 
+class UpdatePhoneNumber {
+  final String payload;
+  UpdatePhoneNumber(this.payload);
+}
+
+class UpdateWebsite {
+  final String payload;
+  UpdateWebsite(this.payload);
+}
+
 class UpdateSummary {
   final String payload;
   UpdateSummary(this.payload);
-}
-
-class UpdateContact {
-  final Contact payload;
-  UpdateContact(this.payload);
 }
 
 class SaveSchool {

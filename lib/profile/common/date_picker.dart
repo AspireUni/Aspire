@@ -5,14 +5,14 @@ import 'package:flutter_picker/flutter_picker.dart';
 import '../../common/common_context.dart';
 import '../common/styles.dart';
 
-class DatePicker {
+class ProfileDatePicker {
   final bool yearOnly;
   final DateTime initialValue;
   final DateTime minValue;
   final DateTime maxValue;
   final void Function(Picker, List<int>) onConfirm;
 
-  DatePicker({
+  ProfileDatePicker({
     this.yearOnly,
     this.initialValue,
     this.minValue,

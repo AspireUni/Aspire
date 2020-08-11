@@ -135,7 +135,7 @@ class _SaveExperienceItemState extends State<SaveExperienceItem> {
   }
 
   void showStartDatePicker(Job job) {
-    DatePicker(
+    ProfileDatePicker(
       yearOnly: false,
       initialValue: job.startDate != null 
         ? convertMonthYearStringToDateTime(job.startDate)
@@ -146,7 +146,7 @@ class _SaveExperienceItemState extends State<SaveExperienceItem> {
   }
 
   void showEndDatePicker(Job job) {
-    DatePicker(
+    ProfileDatePicker(
       yearOnly: false,
       initialValue: job.endDate != null 
         ? convertMonthYearStringToDateTime(job.endDate)

@@ -2,7 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_picker/flutter_picker.dart';
 
-import './common.dart';
+import 'common.dart';
 
 class DatePicker {
   final String titleText;

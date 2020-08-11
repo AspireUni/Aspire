@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 import '../constants/common_constants.dart';
-import './common.dart';
+import 'common.dart';
 
 class GlobalHeader extends StatelessWidget implements PreferredSizeWidget {
   final String actionText;
