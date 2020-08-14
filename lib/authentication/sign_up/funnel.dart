@@ -122,7 +122,7 @@ class SignUpFunnel extends StatelessWidget {
       PrimaryButton(
         text: isMentorAction,
         isLight: isLight, 
-        onPressed: () => Navigator.pushReplacement(
+        onPressed: () => Navigator.push(
           context, MaterialPageRoute(
             builder: (context) => MentorSignUp()
           )
@@ -131,7 +131,7 @@ class SignUpFunnel extends StatelessWidget {
       PrimaryButton(
         text: isMenteeAction,
         isLight: isLight, 
-        onPressed: () => Navigator.pushReplacement(
+        onPressed: () => Navigator.push(
           context, MaterialPageRoute(
             builder: (context) => MenteeSignUp()
           )
